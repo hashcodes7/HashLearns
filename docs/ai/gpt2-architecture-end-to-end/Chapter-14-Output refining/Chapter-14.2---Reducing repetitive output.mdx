@@ -1,0 +1,71 @@
+---
+title: "Chapter 13.1 - Introduction to Finetuning"
+description: "The content will be uploaded soon"
+---
+
+# Chapter 14.2 - Reducing repetitive output
+Now on generation our model gives this kind of result :
+
+``` python
+Tell me about AI. 
+
+I'm not sure what you mean by AI. I think it's a term that's used to describe a computer program that can learn from experience. It's not a computer program that can learn from experience. It's a computer program that can learn from experience. I think that's a very important distinction.
+I think that's a very important distinction.
+I think that's a very important distinction.
+I think that's a very important distinction.
+I think that's a very important distinction.
+I think that's a very important distinction.
+I think that's a very important distinction.
+I think that's a very important distinction.
+```
+
+This is because we are generating without randomness. always the top answer is being picked
+we do this by introducing randomness in our generation
+so change the generation call from 
+
+``` python
+from g_text_generator import generate_text
+import tiktoken
+tokenizer = tiktoken.get_encoding("gpt2")
+generated_text = generate_text(
+    model=model,
+    tokenizer=tokenizer,
+    prompt="Tell me about AI",
+    device=device,
+    max_new_tokens=256,
+)
+print(generated_text)
+```
+
+to 
+``` python
+from g_text_generator import stream_text
+import tiktoken
+tokenizer = tiktoken.get_encoding("gpt2")
+# We use the for loop to iterate over the generator and print live
+for text_chunk in stream_text(
+    model=model,
+    tokenizer=tokenizer,
+    prompt="Tell me about AI",
+    device=device,
+    max_new_tokens=256,
+    temperature=0.7,   # Added temperature to fix repetition
+    top_k=40           # Added top_k to fix repetition
+):
+    print(text_chunk, end="", flush=True)
+print()
+```
+
+we introduced 2 things
+- top_k=40 
+- temperature=0.7, 
+These will introduce some randomness and make our answer not be repeatitive
+
+now our answer is like 
+``` python
+.
+
+I think there is this idea that AI is like a machine or a computer. It's like a computer that's been designed and is made to do certain things. These are the things that we are trying to do with AI. It is about how we create an AI that is designed to be good for us. So the idea that AI can do anything is just wrong. What is AI? Well, AI is an artificial intelligence. A computer is any machine that has some kind of logic inside of it to decide to do an action. It's not like a human has a brain. A human is a human. So our machine is our AI, our computer. That's right, that is the way that we think of artificial intelligence. But when you look at it from what I mean, what we are trying to do is, how can we make these things better able to learn from us and make us better at understanding what the other people are going to do than we are? What, are you trying to create a machine that has no emotions? No. Or is it a machine that doesn't have a sense of right and wrong? No. How
+```
+
+This is much better. 

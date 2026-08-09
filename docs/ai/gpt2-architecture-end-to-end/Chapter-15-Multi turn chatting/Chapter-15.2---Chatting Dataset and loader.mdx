@@ -1,0 +1,52 @@
+---
+title: "Chapter 13.1 - Introduction to Finetuning"
+description: "The content will be uploaded soon"
+---
+# Chapter-15.2---Chatting Dataset and loader
+
+Until now, we used a finetuning dataset of ~5000 lines 
+- Training set length: 935 
+- Validation set length: 55 
+- Test set length: 110
+- Average length: 57.4 
+- Max length: 92 
+- 95th percentile: 72
+
+To train LLM to chatting pattern, chat type dataset must be used. lets import it
+``` python
+from datasets import load_dataset
+dataset = load_dataset("HuggingFaceH4/ultrachat_200k")
+print(dataset)
+```
+
+we import Ultrachat and this will be of DatasetDict format for better handling. We are using this because its well made to handle large dataset with pyarrow and it is also already splitted and has custom splitting operations like .map, .shuffle etc.
+
+We now move to chat based data which has 
+- Training set length: 206865 
+- Validation set length: 1000 
+- Test set length: 23110
+- Average length: 1235.2 
+- Max length: 35018 
+- 95th percentile: 2353
+## Conclusion
+- This tells us 2 things , our current dataset is much much bigger than earlier one, it has many more examples, and since now its a chat, it has a more max length convo of some chat with 35k tokens.
+- we have max_length set up to 1024. so if we were to consume this data , only initial 1024 tokens from each dataset will be consumed and model will have high idea about starting a sentance but low idea about how to conclude it.
+- we can solve this issue by using stride , so that a sliding window is implemented which slides over our data and takes part of it at a time to train on it. this window can be overlapping also , explained below
+### Stride
+
+If `stride = 1024` (your current code)
+```
+0---------1023
+              1024---------2047
+                               2048---------3071
+```
+ 
+ If `stride = 512`
+```
+0---------1023
+      512---------1535
+            1024---------2047
+                  1536---------2559
+```
+
+This way if a paragraph is of 2000 length, max tokens is 1024 and stride is 1024, we cover it in 2 training passes, 0-1023 in one go and 1024-1999 in next pass.

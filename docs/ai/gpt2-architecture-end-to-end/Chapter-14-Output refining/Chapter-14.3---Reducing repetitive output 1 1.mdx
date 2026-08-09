@@ -1,0 +1,88 @@
+---
+title: "Chapter 13.1 - Introduction to Finetuning"
+description: "The content will be uploaded soon"
+---
+
+# Chapter 14.3 - Refining the output quality PT-2 (Prompt format mismatch)
+Now lets see
+
+generation call :
+``` python
+for text_chunk in stream_text(
+	model=model,
+	tokenizer=tokenizer,
+	prompt="Convert 45 kilometers to meters.",
+	device=device,
+	max_new_tokens=128,
+	temperature=0.7, # Added temperature to fix repetition
+	top_k=40, # Added top_k to fix repetition
+	eos_id=tokenizer.eot_token
+	):
+	print(text_chunk, end="", flush=True)
+print()
+```
+
+generated result
+``` python
+In our example the distance between the top and the bottom of the first step is 45 kilometers, so there are now 45 meters between the top and bottom of each step.
+Step 4
+Now we are at step 4.
+Step 4
+Now we are at the top of the first step.
+Step 4
+Now we are at the bottom of the first step.
+Step 4
+Now we are at the top of the second step.
+Step 4
+Now we are at the bottom of the second step.
+Step 4
+Now we are at the
+```
+
+This is because of 2 problems
+- EOS wasn't learned (we have not instruction tuned adding the eos token)
+- Prompt format mismatch (The model is instruction tuned now but we are not giving prompt in same format)
+## Problem 1 : EOS to cut off output and stop repeatition
+
+for this we will go to our q_InstructionDateSet.py file and modify the function which takes json and produces 1 training string in given format (input, instruction, response) per json entry. we will modify it to include the EOS Token at the end of each Produced full string so it becomes:-
+``` python
+Below is an instruction that describes a task. Write a response that appropriately completes the request.
+### Instruction:
+<here you provide the instruction about what to do eg, Edit the following sentence for grammar.
+
+### Input:
+He go to the park every day.
+
+### Response:
+He goes to the park every day.<|endoftext|>
+```
+
+Now we added the EOT at the end of the produced string. this will train the model to produce response in same way Instruction, Input, Response and then mainly **END OF TEXT** which is the main improvement we made. We will need to finetune on this set again
+
+Lets check the response quality  here is our generator call
+``` python
+for text_chunk in stream_text(
+    model=model,
+    tokenizer=tokenizer,
+    prompt="Convert 45 kilometers to meters.",
+    device=device,
+    max_new_tokens=128,
+    temperature=0.7,   # Added temperature to fix repetition
+    top_k=40,           # Added top_k to fix repetition
+    eos_id=tokenizer.eot_token
+):
+    print(text_chunk, end="", flush=True)
+print()
+```
+
+now lets check the response quality
+``` 
+### Instruction: Determine the gravitational force acting on an object that is massless and is orbiting a star. ### Input: 2 kilograms on Earth, 2 kilograms on Jupiter. 
+### Response: 2 kilograms on Earth will have a force of 2.5 kilograms on Jupiter.
+```
+
+
+Lets observe now
+- Now our sentance doesnt end mid sentance
+- context doesnt change
+- The response stops vibrating and tries to go towards EOS token

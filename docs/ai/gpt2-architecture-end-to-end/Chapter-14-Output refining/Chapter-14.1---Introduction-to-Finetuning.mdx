@@ -1,0 +1,77 @@
+---
+title: "Chapter 13.1 - Introduction to Finetuning"
+description: "The content will be uploaded soon"
+---
+
+# Chapter 14.1 - Streaming text
+we switch from text generation print into typewriter like text
+
+currently generate_next_tokens in f_token_generator.py file generates all tokens at once
+once done it gives all tokens to generate_text in g_text_generator.py file which converts all tokens into words and throws all at once in the end once generation is finished
+
+we will modify these 2 files 
+- f_token_generator.py
+- g_text_generator.py
+to include 2 more functions called 
+- stream_next_tokens (in f_token_generator.py)
+- stream_text (in g_text_generator.py)
+and use the newly made functions to stream tokens and convert the token stream to text stream on the fly.
+
+``` python
+def stream_next_tokens(model, idx, max_new_tokens, context_size, temperature=0.0, top_k=None, eos_id=None):
+    """
+    Generator version of generate_next_tokens.
+
+    Yields each new token as it is generated.
+    """
+    for _ in range(max_new_tokens):
+        idx_cond = idx[:, -context_size:]
+        with torch.no_grad():
+            logits = model(idx_cond)
+        logits = logits[:, -1, :]
+        if top_k is not None:
+            top_logits, _ = torch.topk(logits, top_k)
+            min_val = top_logits[:, -1]
+            logits = torch.where(logits < min_val, torch.tensor(float("-inf")).to(logits.device), logits)
+        if temperature > 0.0:
+            logits = logits / temperature
+            logits = logits - logits.max(dim=-1, keepdim=True).values
+            probs = torch.softmax(logits, dim=-1)
+            idx_next = torch.multinomial(probs, num_samples=1)
+        else:
+            idx_next = torch.argmax(logits, dim=-1, keepdim=True)
+        if idx_next == eos_id:
+            break
+        idx = torch.cat((idx, idx_next), dim=1)
+        yield idx_next
+```
+
+``` python
+def stream_text(
+    model,
+    tokenizer,
+    prompt,
+    device,
+    max_new_tokens=50,
+    temperature=0.0,
+    top_k=None,
+    eos_id=None,
+):
+    was_training = model.training
+    model.eval()
+    token_generator = stream_next_tokens(
+        model=model,
+        idx=text_to_token_ids(prompt, tokenizer, device),
+        max_new_tokens=max_new_tokens,
+        context_size=model.pos_emb.weight.shape[0],
+        temperature=temperature,
+        top_k=top_k,
+        eos_id=eos_id,
+    )
+    for new_token_id in token_generator:
+        text_piece = token_ids_to_text(new_token_id, tokenizer)
+        yield text_piece
+    if was_training:
+        model.train()
+```
+
