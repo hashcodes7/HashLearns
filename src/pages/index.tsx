@@ -12,8 +12,8 @@ import styles from './index.module.css';
 const codeSnippet = `import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-# Initialize the HashLearn AI Model
-model_id = "hashlearn/SuperIntelligence-v1"
+# Initialize the HashLearns AI Model
+model_id = "HashLearns/SuperIntelligence-v1"
 tokenizer = AutoTokenizer.from_pretrained(model_id)
 model = AutoModelForCausalLM.from_pretrained(model_id)
 

@@ -7,7 +7,7 @@ import rehypeKatex from 'rehype-katex';
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
 const config: Config = {
-  title: 'HashLearn',
+  title: 'HashLearns',
   tagline: '"People call me RobinHood, I learn things and Distribute the knowledge for free, forever. You just have to be smart enough to understand it"',
   favicon: 'img/favicon.ico',
 
@@ -79,9 +79,9 @@ const config: Config = {
       respectPrefersColorScheme: true,
     },
     navbar: {
-      title: 'HashLearn',
+      title: 'HashLearns',
       logo: {
-        alt: 'HashLearn Logo',
+        alt: 'HashLearns Logo',
         src: 'img/logo.svg',
       },
       items: [
@@ -142,7 +142,7 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} HashLearn. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} HashLearns. Built with Docusaurus.`,
     },
     prism: {
       theme: prismThemes.github,
