@@ -1,3 +1,4 @@
+import React, {useState, useEffect} from 'react';
 import type {ReactNode} from 'react';
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
@@ -9,19 +10,48 @@ import CodeBlock from '@theme/CodeBlock';
 
 import styles from './index.module.css';
 
-const codeSnippet = `import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer
+const snippets = [
+  "while True:\n    coffee.drink()\n    code.write()",
+  "if bug.found():\n    panic()\nelse:\n    say_its_a_feature()",
+  "def success():\n    return passion + persistence",
+  "import future\n\nmy_career = future.bright()"
+];
 
-# Initialize the HashLearn AI Model
-model_id = "hashlearn/SuperIntelligence-v1"
-tokenizer = AutoTokenizer.from_pretrained(model_id)
-model = AutoModelForCausalLM.from_pretrained(model_id)
+function TypewriterCode() {
+  const [text, setText] = useState('');
+  const [snippetIndex, setSnippetIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
 
-# Generate an insight
-inputs = tokenizer("Explain quantum computing", return_tensors="pt")
-outputs = model.generate(**inputs, max_new_tokens=50)
+  useEffect(() => {
+    const currentSnippet = snippets[snippetIndex];
+    
+    if (!isDeleting && text === currentSnippet) {
+      const timeout = setTimeout(() => setIsDeleting(true), 2500);
+      return () => clearTimeout(timeout);
+    } 
+    
+    if (isDeleting && text === '') {
+      setIsDeleting(false);
+      setSnippetIndex((prev) => (prev + 1) % snippets.length);
+      const timeout = setTimeout(() => {}, 500);
+      return () => clearTimeout(timeout);
+    }
 
-print(tokenizer.decode(outputs[0]))`;
+    const typingSpeed = isDeleting ? 30 : Math.random() * 50 + 50;
+
+    const timeout = setTimeout(() => {
+      setText(currentSnippet.substring(0, text.length + (isDeleting ? -1 : 1)));
+    }, typingSpeed);
+
+    return () => clearTimeout(timeout);
+  }, [text, isDeleting, snippetIndex]);
+
+  return (
+    <div style={{ minHeight: '135px' }}>
+      <CodeBlock language="python">{text + (isDeleting ? '' : '█')}</CodeBlock>
+    </div>
+  );
+}
 
 function HomepageHeader() {
   const {siteConfig} = useDocusaurusContext();
@@ -56,10 +86,10 @@ function HomepageHeader() {
             <span className={styles.windowDot} style={{backgroundColor: '#ff5f56'}}></span>
             <span className={styles.windowDot} style={{backgroundColor: '#ffbd2e'}}></span>
             <span className={styles.windowDot} style={{backgroundColor: '#27c93f'}}></span>
-            <span className={styles.windowTitle}>inference.py</span>
+            <span className={styles.windowTitle}>career.py</span>
           </div>
           <div className={styles.windowBody}>
-            <CodeBlock language="python">{codeSnippet}</CodeBlock>
+            <TypewriterCode />
           </div>
         </div>
       </div>
