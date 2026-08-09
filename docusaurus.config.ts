@@ -1,5 +1,5 @@
-import {themes as prismThemes} from 'prism-react-renderer';
-import type {Config} from '@docusaurus/types';
+import { themes as prismThemes } from 'prism-react-renderer';
+import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
@@ -7,8 +7,8 @@ import rehypeKatex from 'rehype-katex';
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
 const config: Config = {
-  title: 'HashCode Learns',
-  tagline: 'Dinosaurs are cool',
+  title: 'HashLearn',
+  tagline: '"People call me RobinHood, I learn things and Distribute the knowledge for free, forever. You just have to be smart enough to understand it"',
   favicon: 'img/favicon.ico',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
@@ -79,9 +79,9 @@ const config: Config = {
       respectPrefersColorScheme: true,
     },
     navbar: {
-      title: 'HashCode Learns',
+      title: 'HashLearn',
       logo: {
-        alt: 'HashCode Learns Logo',
+        alt: 'HashLearn Logo',
         src: 'img/logo.svg',
       },
       items: [
@@ -91,7 +91,7 @@ const config: Config = {
           position: 'left',
           label: 'Tutorial',
         },
-        {to: '/blog', label: 'Blog', position: 'left'},
+        { to: '/blog', label: 'Blog', position: 'left' },
         {
           href: 'https://github.com/facebook/docusaurus',
           label: 'GitHub',
@@ -100,7 +100,7 @@ const config: Config = {
       ],
     },
     footer: {
-      style: 'dark',
+      style: 'light',
       links: [
         {
           title: 'Docs',
@@ -142,7 +142,7 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} HashCode Learns. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} HashLearn. Built with Docusaurus.`,
     },
     prism: {
       theme: prismThemes.github,

@@ -28,3 +28,100 @@
   --ifm-color-primary-lightest: #4fddbf;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
+
+html {
+  background-image: 
+    linear-gradient(var(--ifm-color-emphasis-200) 1px, transparent 1px),
+    linear-gradient(90deg, var(--ifm-color-emphasis-200) 1px, transparent 1px) !important;
+  background-size: 40px 40px !important;
+  background-color: var(--ifm-background-color) !important;
+}
+
+html[data-theme='dark'] {
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px) !important;
+  background-color: #0b0f19 !important; /* Deep dark aesthetic for the whole site */
+}
+
+/* Ensure Docusaurus layout wrappers don't block the HTML background */
+body,
+#__docusaurus,
+.main-wrapper,
+main {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+/* Custom OpenTofu-Style Footer */
+.custom-footer {
+  padding: 3rem 0;
+  background-color: transparent;
+  border-top: 1px solid var(--ifm-color-emphasis-200);
+}
+
+[data-theme='dark'] .custom-footer {
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.custom-footer__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+  gap: 1.5rem;
+}
+
+.custom-footer__logo a {
+  text-decoration: none;
+  color: var(--ifm-heading-color);
+}
+
+.custom-footer__title {
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+.custom-footer__links {
+  display: flex;
+  gap: 2rem;
+  font-weight: 600;
+}
+
+.custom-footer__links a {
+  color: var(--ifm-font-color-base);
+  text-decoration: none;
+}
+.custom-footer__links a:hover {
+  color: var(--ifm-color-primary);
+}
+
+.custom-footer__socials {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.custom-footer__socials a {
+  color: var(--ifm-font-color-base);
+  transition: color 0.2s;
+  display: flex;
+}
+.custom-footer__socials a:hover {
+  color: var(--ifm-color-primary);
+}
+
+.custom-footer__copyright {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--ifm-color-emphasis-600);
+  margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+  .custom-footer__row {
+    flex-direction: column;
+    justify-content: center;
+  }
+}

@@ -1,4 +1,4 @@
-import type {ReactNode} from 'react';
+import type { ReactNode } from 'react';
 import clsx from 'clsx';
 import Heading from '@theme/Heading';
 import styles from './styles.module.css';
@@ -99,29 +99,29 @@ const FeatureList: FeatureItem[] = [
 
 import Link from '@docusaurus/Link';
 
-function Feature({title, Svg, description, courses}: FeatureItem) {
+function Feature({ title, Svg, description, courses }: FeatureItem) {
   return (
-    <div className={clsx('col col--4')} style={{marginBottom: '2rem'}}>
+    <div className={clsx('col col--4')} style={{ marginBottom: '2rem' }}>
       <div className={styles.flipCard}>
         <div className={styles.flipCardInner}>
           {/* Front of the Card */}
-          <div className={clsx(styles.flipCardFront, "card shadow--md")} style={{padding: '2rem'}}>
+          <div className={clsx(styles.flipCardFront, "card shadow--md")} style={{ padding: '2rem' }}>
             <div className="text--center">
               <Svg className={styles.featureSvg} role="img" />
             </div>
-            <div className="text--center padding-horiz--md" style={{marginTop: '1rem'}}>
+            <div className="text--center padding-horiz--md" style={{ marginTop: '1rem' }}>
               <Heading as="h3">{title}</Heading>
               <p>{description}</p>
             </div>
           </div>
-          
+
           {/* Back of the Card */}
           <div className={clsx(styles.flipCardBack, "card shadow--md")}>
-            <Heading as="h4" style={{marginBottom: '1rem'}}>{title} Courses</Heading>
+            <Heading as="h4" style={{ marginBottom: '1rem' }}>{title} Courses</Heading>
             {courses && courses.length > 0 ? (
-              <ul style={{listStyleType: 'none', padding: 0, width: '100%'}}>
+              <ul style={{ listStyleType: 'none', padding: 0, width: '100%' }}>
                 {courses.map((course, idx) => (
-                  <li key={idx} style={{marginBottom: '0.5rem'}}>
+                  <li key={idx} style={{ marginBottom: '0.5rem' }}>
                     <Link to={course.link} className="button button--secondary button--block">
                       {course.title}
                     </Link>
