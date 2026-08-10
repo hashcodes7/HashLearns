@@ -1,12 +1,11 @@
 ---
-title: "Chapter 2.1 - Tokenizing Text"
-description: "Tokenization is the very first step. It is how we convert human-readable text into small, structured pieces."
+title: "Chapter 3.1 - Tokenization & Input Prompt"
+terminologies: []
+prior understanding: []
 ---
 
-# Chapter 2.1 - Tokenizing Text
-
 :::info[Overview]
-Tokenization is the very first step. It is how we convert human-readable text into small, structured pieces (like syllables or words) that a computer program can understand.
+Tokenization is the very first step. Tokenization serves as the foundational mechanism to transform human-readable text into small, structured pieces (like syllables or words) that a computer program can understand.
 :::
 
 ---
@@ -14,12 +13,12 @@ Tokenization is the very first step. It is how we convert human-readable text in
 
 ## 🎯 Why we do it
 :::info[Rationale]
-Artificial intelligence models and neural networks cannot read raw letters. They only understand math and numbers. We tokenize text to chop it up into smaller pieces, and then we use a dictionary (called a [vocabulary](#vocab)) to assign a unique number to every single piece.
+Modern neural architectures and language models inherently cannot process raw letters. They only understand math and numbers. We tokenize text to chop it up into smaller pieces, and then we use a dictionary (called a [vocabulary](#vocab)) to assign a unique number to every single piece.
 :::
 
 ## 🛠️ How we do it
 :::info[Methodology]
-We use a tool called a [tokenizer](#tokenizer) (specifically, [Byte Pair Encoding or BPE](#bpe)). It acts like a smart dictionary that breaks down rare words into smaller chunks and keeps common words whole.
+The standard industry approach relies on a specialized utility known as a [tokenizer](#tokenizer) (specifically, [Byte Pair Encoding or BPE](#bpe)). It acts like a smart dictionary that breaks down rare words into smaller chunks and keeps common words whole.
 :::
 
 ## 📥 Input

@@ -5,27 +5,27 @@ description: "Tokenization is the very first step. It is how we convert human-re
 
 # Chapter 2.1 - Tokenizing Text
 
-<Callout type="info" title="Overview">
+:::info[Overview]
 Tokenization is the very first step. It is how we convert human-readable text into small, structured pieces (like syllables or words) that a computer program can understand.
-</Callout>
+:::
 
 ---
 
 
 ## 🎯 Why we do it
-<Callout type="info" title="Rationale">
-Artificial intelligence models and neural networks cannot read raw letters. They only understand math and numbers. We tokenize text to chop it up into smaller pieces, and then we use a dictionary (called a [[#^vocab|vocabulary]]) to assign a unique number to every single piece.
-</Callout>
+:::info[Rationale]
+Artificial intelligence models and neural networks cannot read raw letters. They only understand math and numbers. We tokenize text to chop it up into smaller pieces, and then we use a dictionary (called a [vocabulary](#vocab)) to assign a unique number to every single piece.
+:::
 
 ## 🛠️ How we do it
-<Callout type="info" title="Methodology">
-We use a tool called a [[#^tokenizer|tokenizer]] (specifically, [[#^bpe|Byte Pair Encoding or BPE]]). It acts like a smart dictionary that breaks down rare words into smaller chunks and keeps common words whole.
-</Callout>
+:::info[Methodology]
+We use a tool called a [tokenizer](#tokenizer) (specifically, [Byte Pair Encoding or BPE](#bpe)). It acts like a smart dictionary that breaks down rare words into smaller chunks and keeps common words whole.
+:::
 
 ## 📥 Input
-<Callout type="info" title="Input Format">
+:::info[Input Format]
 - **Description:** A regular text string, exactly as a human would write or read it. This will be our master example sentence.
-</Callout>
+:::
 >
 > - **Example:** 
 > ```python
@@ -33,9 +33,9 @@ We use a tool called a [[#^tokenizer|tokenizer]] (specifically, [[#^bpe|Byte Pai
 > ```
 
 ## 📤 Output
-<Callout type="info" title="Resulting State">
-- **Description:** A simple list of numbers (a 1-dimensional [[#^tensor|tensor]]). Each number directly corresponds to a specific text piece from our vocabulary dictionary.
-</Callout>
+:::info[Resulting State]
+- **Description:** A simple list of numbers (a 1-dimensional [tensor](#tensor)). Each number directly corresponds to a specific text piece from our vocabulary dictionary.
+:::
 >
 > - **Example:** 
 > ```python
@@ -53,7 +53,7 @@ We use a tool called a [[#^tokenizer|tokenizer]] (specifically, [[#^bpe|Byte Pai
 > | `21831`| " fox" |
 
 ## ⚙️ Working
-<Callout type="info" title="Under the Hood">
+:::info[Under the Hood]
 1. The tokenizer looks at the raw sentence.
 2. It chops the sentence up based on spaces, punctuation, and common word fragments.
 3. It looks up each fragment in the vocabulary and swaps it out for its ID number.
@@ -63,13 +63,13 @@ graph TD
     A[Raw Text: 'The quick, brown...'] -->|Chop it up| B['The', ' quick', ',', ' brown', ...]
     B -->|Look up in Dictionary| C[Token IDs: 464, 2068, 11, 7586...]
 ```
-</Callout>
+:::
 
 ---
 
 ## 📖 Terminologies
 
-- **Vocabulary:** A dictionary that assigns a unique number to every single piece of text. ^vocab
-- **Tokenizer:** A tool that breaks down text into smaller pieces called tokens. ^tokenizer
-- **Byte Pair Encoding (BPE):** A smart tokenizer algorithm that breaks down rare words into smaller chunks while keeping common words whole. ^bpe
-- **Tensor:** A container for mathematical data; a 1-dimensional tensor is essentially a simple list of numbers. ^tensor
+- **Vocabulary:** A dictionary that assigns a unique number to every single piece of text. <a id="vocab"></a>
+- **Tokenizer:** A tool that breaks down text into smaller pieces called tokens. <a id="tokenizer"></a>
+- **Byte Pair Encoding (BPE):** A smart tokenizer algorithm that breaks down rare words into smaller chunks while keeping common words whole. <a id="bpe"></a>
+- **Tensor:** A container for mathematical data; a 1-dimensional tensor is essentially a simple list of numbers. <a id="tensor"></a>

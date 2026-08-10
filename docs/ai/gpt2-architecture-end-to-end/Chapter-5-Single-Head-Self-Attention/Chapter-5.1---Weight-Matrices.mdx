@@ -8,31 +8,31 @@ description: "The content will be uploaded soon"
 ---
 
 
-<Callout type="info" title="Overview">
+:::info[Overview]
 Bro, scene yeh hai ki hum ek LLM model bana rahe hain. Model ko context samajhna padta hai. Attention ka matlab hai ki ek word doosre kis word ko kitni "importance" (ya attention) dega ek sentence ke andar. Jaise "journey" word "starts" aur "step" se related hai. Ye chapter usi baatcheet ke baare mein hai.
-</Callout>
+:::
 
 ---
 
 ## 🎯 Why we do it
-<Callout type="info" title="Rationale">
+:::info[Rationale]
 Kyun kar rahe hain hum ye? Kyunki ek word akela kuch nahi hota. Jab words ek doosre se "connect" hote hain, tabhi sentence ka meaning banta hai. Hum chahte hain ki humara AI har word ko dekhe, aur samajh sake ki uska baki sentence ke kis word ke saath sabse deep connection hai!
-</Callout>
+:::
 
 ## 🛠️ How we do it
-<Callout type="info" title="Methodology">
+:::info[Methodology]
 Isko aise samjho: 
 1. Humare paas input sentence ke saare words vectors mein hain.
 2. Ek word (jisko hum **Query** bolte hain) baaki sab words ke paas jaata hai aur poochta hai: "Bhai, humara rishta kitna strong hai?"
 3. Dono words ka ek "rishta score" nikalta hai (jisey **Attention Score** bolte hain).
 4. In scores ko percentages mein convert karte hain.
 5. End mein sabko mila kar ek super-charged vector banta hai (jisey **Context Vector** bolte hain).
-</Callout>
+:::
 
 ## 📥 Input
-<Callout type="info" title="Input Format">
+:::info[Input Format]
 - **Description:** Humara basic input wohi puraane embedded vectors hain jo humne pehle banaye the. Har word ek vector ban chuka hai.
-</Callout>
+:::
 >
 > - **Example:** 
 > ```python
@@ -40,14 +40,14 @@ Isko aise samjho:
 > ```
 
 ## 📤 Output
-<Callout type="info" title="Resulting State">
+:::info[Resulting State]
 - **Description:** Result ek naya vector hota hai, jisko **Context Vector** kehte hain. Is vector mein sirf us word ki akele ki meaning nahi hoti, balki baaki doston (words) ki bhi thodi-thodi khasiyat judi hoti hai!
-</Callout>
+:::
 
 ## ⚙️ Working
-<Callout type="info" title="Under the Hood">
+:::info[Under the Hood]
 Chal bhai, ab is poori kahani ko code mein dekhte hain!
-</Callout>
+:::
 
 *Sabse pehle, dekho humare paas ek sentence hai. Puraane chapters mein humne har word ko ek 3-dimensional vector mein convert kar diya tha. Sentence hai: "Your journey starts with one step". Dekho har word ka apna 3 numbers ka dabba hai.*
 ![Embedding Setup](https://sebastianraschka.com/images/LLMs-from-scratch-images/ch03_compressed/07.webp)

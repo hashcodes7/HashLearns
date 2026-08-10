@@ -1,6 +1,123 @@
 ---
-title: "Chapter 13.1 - Introduction to Finetuning"
-description: "The content will be uploaded soon"
+title: "Chapter 15.4 - Collate function"
 ---
-# Chapter-15.4---Collate function
+# Chapter 15.4 - The Collate Function (Loss Masking)
 
+The Collate Function (`r_collate.py` in our architecture) acts as the final preparation stage before a batch of conversations is sent into the neural network for training. It performs two critical jobs: **Padding** and **Loss Masking**.
+
+---
+
+## 🧱 Job 1: Padding
+
+Neural networks require batches of data to be perfectly rectangular tensors (e.g., a matrix of `Batch Size` × `Sequence Length`). However, conversations naturally have different lengths! 
+
+To fix this, we find the longest conversation in our batch, and pad the shorter ones using a special `<|pad|>` token (often mapped to token ID `50256` in GPT-2).
+
+```text
+Batch 1: [Hello] [World] [PAD] [PAD] [PAD]
+Batch 2: [Can] [you] [explain] [this] [?]
+```
+
+---
+
+## 🎭 Job 2: Loss Masking
+
+This is the most crucial concept in Chat Finetuning. 
+
+During standard pre-training, an LLM learns to predict *every single next word*. But in a conversation, we **do not** want the model to learn how to predict the *User's* messages. The user is a human—the AI shouldn't waste brainpower trying to memorize what the human is going to ask! We only want the AI to learn how to predict the *Assistant's* replies.
+
+:::tip[The -100 Trick]
+In PyTorch, the `CrossEntropyLoss` function automatically ignores any target label that is set to `-100`. We use this to our advantage!
+:::
+
+We iterate through our tokenized conversation and find all the tokens that belong to the "User". In our `labels` tensor, we replace those token IDs with `-100`.
+
+### Example
+
+**Input Tokens (What the model sees):**
+```python
+["User:", "Who", "made", "Python?", "Assistant:", "Guido", "van", "Rossum."]
+```
+
+**Target Labels (What the model tries to predict):**
+```python
+[ -100 ,  -100,  -100,    -100   ,     -100    , "Guido", "van", "Rossum."]
+```
+
+By masking the user tokens, the Loss gradient is only calculated on the assistant's response. The model is penalized if it generates a bad response, but it is not penalized for failing to predict the user's question!
+
+
+---
+
+## 💻 Code Implementation
+
+Here is the exact PyTorch implementation for the concepts discussed above:
+
+```python
+import torch
+
+
+def collate_fn(
+    batch,
+    pad_token_id=50256,
+    ignore_index=-100,
+    allowed_max_length=None,
+    device="cpu"
+):
+    # New: Find the longest sequence in the batch
+    batch_max_length = max(len(item["input_ids"]) for item in batch)
+
+    inputs_lst = []
+    targets_lst = []
+
+    for item in batch:
+
+        # New: Extract token ids and assistant loss mask
+        input_ids = item["input_ids"]
+        loss_mask = item["loss_mask"]
+
+        # New: Copy sequence (EOS already appended by ChatDataset)
+        new_item = input_ids.copy()
+        new_loss_mask = loss_mask.copy()
+
+        # New: Pad token ids
+        padded = (
+            new_item
+            + [pad_token_id] * (batch_max_length - len(new_item))
+        )
+
+        # New: Pad loss mask
+        padded_loss_mask = (
+            new_loss_mask
+            + [0] * (batch_max_length - len(new_loss_mask))
+        )
+
+        # Shift inputs and targets for next-token prediction
+        inputs = torch.tensor(padded[:-1], dtype=torch.long)
+        targets = torch.tensor(padded[1:], dtype=torch.long)
+        target_loss_mask = torch.tensor(padded_loss_mask[1:], dtype=torch.long)
+
+        # New: Ignore non-assistant tokens during loss computation
+        targets[target_loss_mask == 0] = ignore_index
+
+        # Existing: Ignore padding after the first EOS
+        mask = targets == pad_token_id
+        indices = torch.nonzero(mask).squeeze()
+
+        if indices.numel() > 1:
+            targets[indices[1:]] = ignore_index
+
+        # Existing: Optionally truncate sequence length
+        if allowed_max_length is not None:
+            inputs = inputs[:allowed_max_length]
+            targets = targets[:allowed_max_length]
+
+        inputs_lst.append(inputs)
+        targets_lst.append(targets)
+
+    # Stack tensors and move to device
+    inputs_tensor = torch.stack(inputs_lst).to(device)
+    targets_tensor = torch.stack(targets_lst).to(device)
+
+    return inputs_tensor, targets_tensor
+```

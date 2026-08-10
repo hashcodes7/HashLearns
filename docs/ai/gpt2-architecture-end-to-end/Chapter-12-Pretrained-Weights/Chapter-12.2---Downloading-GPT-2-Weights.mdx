@@ -47,7 +47,7 @@ The function `load_weights_into_gpt(gpt, params)` carefully walks through our mo
    - The final LayerNorm parameters are copied over.
    - **Weight Tying:** The output projection head `gpt.out_head.weight` gets the exact same weights as the token embedding (`wte`). This saves memory and helps the model predict tokens using the exact same representations it uses to read them!
 
-<Callout type="info" title="The Result">
+:::info[The Result]
 
-</Callout>
+:::
 > After running the loader, our custom, from-scratch PyTorch model is suddenly infused with the knowledge of billions of text documents!

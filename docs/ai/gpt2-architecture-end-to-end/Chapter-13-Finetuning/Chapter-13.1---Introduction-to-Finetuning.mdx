@@ -38,10 +38,10 @@ Since our instructions are all different lengths, we can't easily stack them int
 2. **Pad:** We add `<|endoftext|>` padding tokens to the shorter sequences so everything is perfectly rectangular.
 3. **Shift:** Inputs are `tokens[:-1]` and Targets are `tokens[1:]`.
 
-<Callout type="info" title="Masking the Loss">
+:::info[Masking the Loss]
 A crucial step in fine-tuning is that we only want to calculate loss on the model's actual *Response*, not the padding! 
 In `collate_fn`, we set the target token for padding to `ignore_index = -100`. PyTorch's `CrossEntropyLoss` automatically ignores any target with a value of `-100`. This ensures the model isn't penalized for (or trained on) the padding tokens!
-</Callout>
+:::
 
 ## 🏋️ 3. Fine-Tuning (The Training Loop)
 In `s-Finetuning.ipynb`, we put it all together. We load the pretrained weights (so the model already understands English) and train it on our formatted instruction dataset.

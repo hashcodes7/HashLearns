@@ -5,21 +5,21 @@ description: "How the AI learns from its mistakes!"
 
 # Chapter 11.3 - Calculating the Batch Loss
 
-<Callout type="info" title="Overview">
+:::info[Overview]
 When you take a test in school, your teacher gives you a grade based on how many mistakes you made. For an AI, this grade is called the "Loss". The lower the loss, the smarter the AI!
-</Callout>
+:::
 
 ---
 
 ## 🎯 Why we do it
-<Callout type="info" title="Rationale">
+:::info[Rationale]
 The AI starts off completely clueless. It just guesses random words. To make it smarter, we have to measure exactly *how wrong* it is. If the AI was supposed to say "Apple" but said "Car", we give it a big penalty (high loss). If it said "Orange", we give it a smaller penalty.
-</Callout>
+:::
 
 ## 🛠️ How we do it
-<Callout type="info" title="Methodology">
+:::info[Methodology]
 We use a math formula called **Cross-Entropy Loss**. It compares the percentages the AI guessed with the actual 100% correct answer. It calculates the difference for the whole "batch" (group) of words it just tried to guess.
-</Callout>
+:::
 
 ```python
 import torch
@@ -34,4 +34,54 @@ correct_answers = torch.tensor([1])
 # Calculate the penalty!
 loss = F.cross_entropy(ai_guesses, correct_answers)
 print("The AI's penalty score is:", loss.item())
+```
+
+
+---
+
+## 💻 Code Implementation
+
+Here is the exact PyTorch implementation for the concepts discussed above:
+
+```python
+import torch
+import torch.nn.functional as F
+
+
+def calc_loss_batch(input_batch, target_batch, model, device):
+    input_batch = input_batch.to(device)
+    target_batch = target_batch.to(device)
+
+    logits = model(input_batch)
+
+    return F.cross_entropy(
+        logits.flatten(0, 1),
+        target_batch.flatten(),
+    )
+
+
+def calc_loss_loader(data_loader, model, device, num_batches=None):
+    if len(data_loader) == 0:
+        return float("nan")
+
+    if num_batches is None:
+        num_batches = len(data_loader)
+    else:
+        num_batches = min(num_batches, len(data_loader))
+
+    total_loss = 0.0
+
+    with torch.no_grad():
+        for i, (input_batch, target_batch) in enumerate(data_loader):
+            if i >= num_batches:
+                break
+
+            total_loss += calc_loss_batch(
+                input_batch,
+                target_batch,
+                model,
+                device,
+            ).item()
+
+    return total_loss / num_batches
 ```

@@ -1,25 +1,25 @@
 ---
-title: "Chapter 14.2 - Normalization"
+title: "Chapter 17.2 - Normalization (LayerNorm vs. RMSNorm)"
 description: "Faster showers! (LayerNorm vs RMSNorm)"
 ---
 
-# Chapter 14.2 - Normalization (LayerNorm vs. RMSNorm)
+# Chapter 17.2 - Normalization (LayerNorm vs. RMSNorm)
 
-<Callout type="info" title="Overview">
+:::info[Overview]
 Remember how Layer Normalization is like a shower for our data? Well, scientists realized that taking a full shower takes too much math. They invented **RMSNorm**, which is like a super-fast 30-second rinse that works just as well!
-</Callout>
+:::
 
 ---
 
 ## 🎯 Why we do it
-<Callout type="info" title="Rationale">
+:::info[Rationale]
 LayerNorm calculates the "average" of the numbers and subtracts it. But subtraction takes time on a GPU! RMSNorm skips the subtraction completely and only divides the numbers by their size. It saves 10% of the training time for massive models like LLaMA!
-</Callout>
+:::
 
 ## 🛠️ How we do it
-<Callout type="info" title="Methodology">
+:::info[Methodology]
 RMSNorm just squares all the numbers, finds the average of those squares, takes the square root, and divides the original numbers by that result. Simple and lightning fast!
-</Callout>
+:::
 
 ```python
 import torch

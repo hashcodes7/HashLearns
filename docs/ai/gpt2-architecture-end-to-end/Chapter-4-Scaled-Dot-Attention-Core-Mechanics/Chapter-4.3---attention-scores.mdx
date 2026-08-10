@@ -52,9 +52,9 @@ print(atn_scores)
 
 
 
-<Callout type="info" title="FAST METHOD">
+:::info[FAST METHOD]
 
-</Callout>
+:::
 for fast working we use @ sign
 ```python
 query = inputs[1]  
@@ -65,9 +65,9 @@ print(attn_scores2)
 so @ means "Take each row of the matrix LHS and compute its dot product with the vector RHS."
 
 
-<Callout type="info" title="Resulting State">
+:::info[Resulting State]
 now By this we simply that are query vector journey Is most related to itself (1.4950) as it has the maximum attention score while its least related to "another" word (0.7070).
-</Callout>
+:::
 #### **Mathematically, this full matrix multiplication looks like this:**
 $$
 \begin{bmatrix}

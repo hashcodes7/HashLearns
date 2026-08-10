@@ -5,21 +5,21 @@ description: "Squeezing the data back down"
 
 # Chapter 8.3 - Second Linear Layer
 
-<Callout type="info" title="Overview">
+:::info[Overview]
 After the GELU function, our data is all puffed up like a balloon because the first linear layer made it really wide. Now, we need to let the air out and squeeze it back down to its normal size so it can move on to the next step!
-</Callout>
+:::
 
 ---
 
 ## 🎯 Why we do it
-<Callout type="info" title="Rationale">
+:::info[Rationale]
 The AI temporarily expanded the data so it could find hidden patterns (using GELU). But the rest of the model expects the data to be a very specific size. The second linear layer acts like a funnel, compressing the expanded data back into its original shape.
-</Callout>
+:::
 
 ## 🛠️ How we do it
-<Callout type="info" title="Methodology">
+:::info[Methodology]
 It's just another matrix multiplication! If our puffed-up data has a size of 400, and our normal size is 100, we multiply it by a matrix that transforms it from 400 back to 100.
-</Callout>
+:::
 
 ```python
 import torch.nn as nn
@@ -34,4 +34,28 @@ funnel = nn.Linear(400, 100)
 
 normal_data = funnel(puffed_data)
 print("Back to normal size:", normal_data.shape)
+```
+
+
+---
+
+## 💻 Code Implementation
+
+Here is the exact PyTorch implementation for the concepts discussed above:
+
+```python
+import torch
+import torch.nn as nn
+
+class FeedForward(nn.Module):
+    def __init__(self, cfg):
+        super().__init__()
+        self.layers = nn.Sequential(
+            nn.Linear(cfg["emb_dim"], 4 * cfg["emb_dim"]),
+            GELU(),
+            nn.Linear(4 * cfg["emb_dim"], cfg["emb_dim"]),
+        )
+
+    def forward(self, x):
+        return self.layers(x)
 ```

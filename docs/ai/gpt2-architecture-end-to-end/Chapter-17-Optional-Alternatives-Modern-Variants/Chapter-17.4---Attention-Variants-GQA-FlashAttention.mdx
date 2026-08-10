@@ -1,25 +1,25 @@
 ---
-title: "Chapter 14.4 - Attention Variants"
+title: "Chapter 17.4 - Attention Variants (GQA FlashAttention)"
 description: "Sharing the brain! (GQA, FlashAttention)"
 ---
 
-# Chapter 14.4 - Attention Variants (GQA FlashAttention)
+# Chapter 17.4 - Attention Variants (GQA FlashAttention)
 
-<Callout type="info" title="Overview">
+:::info[Overview]
 Multi-Head Attention is awesome, but it takes up way too much computer memory. Scientists invented **GQA** (Grouped Query Attention) and **FlashAttention** to make the AI's brain run 10x faster while using way less memory!
-</Callout>
+:::
 
 ---
 
 ## 🎯 Why we do it
-<Callout type="info" title="Rationale">
+:::info[Rationale]
 In standard attention, every "Query" head gets its very own "Key" and "Value" head. This uses huge amounts of RAM. GQA says, "Hey, why don't 4 Query heads just share 1 Key and 1 Value head?" It's like carpooling! It saves a ton of space.
-</Callout>
+:::
 
 ## 🛠️ How we do it
-<Callout type="info" title="Methodology">
+:::info[Methodology]
 FlashAttention is even cooler. It's a hardware trick. Instead of saving the attention scores to the GPU's slow memory, it does all the math instantly in the GPU's super-fast brain cache!
-</Callout>
+:::
 
 ```python
 # Standard Attention:

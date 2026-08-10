@@ -5,26 +5,26 @@ description: "Data sampling is how we organize our massive list of numbers into 
 
 # Chapter 2.2 - Data Sampling
 
-<Callout type="info" title="Overview">
+:::info[Overview]
 Data sampling is how we organize our massive list of numbers into bite-sized, overlapping flashcards so the model can actually practice learning.
-</Callout>
+:::
 
 ---
 
 ## 🎯 Why we do it
-<Callout type="info" title="Rationale">
+:::info[Rationale]
 We can't feed an entire book to the model at once. We have to break the data into small chunks. The model learns by looking at a chunk of text (the Input) and trying to guess the very next word (the Target). We group these chunks into "batches" so the computer can process many of them at the exact same time.
-</Callout>
+:::
 
 ## 🛠️ How we do it
-<Callout type="info" title="Methodology">
+:::info[Methodology]
 We use a "sliding window" trick. Imagine a tiny window that only lets you see 3 words at a time. We take what's in the window (the Input sequence), and then we slide the window over by exactly one word to get the correct answer (the Target sequence).
-</Callout>
+:::
 
 ## 📥 Input
-<Callout type="info" title="Input Format">
+:::info[Input Format]
 - **Description:** A massive, single-file line of numbers representing our entire training book or dataset. Here is our tokenized master sentence: "The quick, brown fox jumps over the lazy dog!"
-</Callout>
+:::
 >
 > - **Example:** 
 > ```python
@@ -32,9 +32,9 @@ We use a "sliding window" trick. Imagine a tiny window that only lets you see 3 
 > ```
 
 ## 📤 Output
-<Callout type="info" title="Resulting State">
+:::info[Resulting State]
 - **Description:** Two distinct grids of numbers. One grid is the "Inputs" and the other is the "Targets". The grids are sized by `(Batch Size, Sequence Length)`.
-</Callout>
+:::
 >
 > - **Example:** 
 > ```python
@@ -57,7 +57,7 @@ We use a "sliding window" trick. Imagine a tiny window that only lets you see 3 
 > | **Batch 2 (Target)** | 11 (,) | 7586 (brown) | 21831 (fox) |
 
 ## ⚙️ Working
-<Callout type="info" title="Under the Hood">
+:::info[Under the Hood]
 1. We carve out an input chunk of a specific length.
 2. We carve out the target chunk (the exact same length, just shifted to the right by one).
 3. We bundle a bunch of these pairs together into a "Batch" to speed up training.
@@ -69,4 +69,4 @@ graph TD
     B --> D[Bundle into a Batch]
     C --> D
 ```
-</Callout>
+:::

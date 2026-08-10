@@ -6,9 +6,9 @@ title: "Chapter 2.2 - Human-in-the-Loop & Persistence"
 
 For high-stakes applications (e.g. executing financial transactions, modifying production databases, sending emails), autonomous agents must not execute destructive actions without explicit human verification.
 
-<Callout type="tip" title="LangGraph Checkpointing">
+:::tip[LangGraph Checkpointing]
 LangGraph includes built-in checkpointers (SQLite, PostgreSQL, Memory) that snapshot agent state at every step, allowing execution to pause, wait for human input, and resume seamlessly.
-</Callout>
+:::
 
 ---
 

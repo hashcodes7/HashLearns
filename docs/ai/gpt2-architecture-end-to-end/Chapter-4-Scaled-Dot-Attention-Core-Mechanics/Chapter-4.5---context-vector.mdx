@@ -53,9 +53,9 @@ z^{(2)} = [0.4419, 0.6515, 0.5683]
 $$
 
 
-<Callout type="info" title="FAST METHOD (Matrix Multiplication)">
+:::info[FAST METHOD (Matrix Multiplication)]
 Instead of using a `for` loop to calculate the context vector for just one word, we can use matrix multiplication (`@`) to instantly calculate the context vectors for **ALL** words in the sentence simultaneously!
-</Callout>
+:::
 
 ```python
 # Calculate the full 6x6 matrix of attention weights for all words
@@ -68,9 +68,9 @@ all_context_vecs = attn_weights @ inputs
 print("All context vectors:\n", all_context_vecs)
 ```
 
-<Callout type="info" title="Resulting State">
+:::info[Resulting State]
 Look closely at the second row of `all_context_vecs`. You'll see `[0.4419, 0.6515, 0.5683]` — this is the exact same context vector we calculated manually for "journey"!
-</Callout>
+:::
 
 #### **Mathematically, this full matrix multiplication looks like this:**
 $$

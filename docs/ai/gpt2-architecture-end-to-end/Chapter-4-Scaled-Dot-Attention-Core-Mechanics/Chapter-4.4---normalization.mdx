@@ -34,17 +34,17 @@ Softmax does two magical things:
 1. It uses exponents ($e^x$) to ensure all numbers (even negatives) become strictly positive.
 2. It divides by the new total sum so everything perfectly adds up to 1 (100%).
 
-<Callout type="info" title="FAST METHOD">
+:::info[FAST METHOD]
 For fast, optimized, and numerically stable working, we always use PyTorch's built-in function!
-</Callout>
+:::
 ```python
 attn_weights = torch.softmax(attn_scores, dim=0)
 print(attn_weights)
 ```
 
-<Callout type="info" title="Resulting State">
+:::info[Resulting State]
 By applying Softmax, our raw attention score of `1.4950` for "journey" becomes a clean attention weight of `0.2379` (or ~23.8%).
-</Callout>
+:::
 
 **So attention weight of journey = 0.2379**
 

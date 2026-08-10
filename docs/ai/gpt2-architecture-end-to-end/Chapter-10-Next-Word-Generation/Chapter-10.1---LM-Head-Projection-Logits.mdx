@@ -5,21 +5,21 @@ description: "Turning raw guesses into percentages"
 
 # Chapter 10.1 - Logits to Probabilities
 
-<Callout type="info" title="Overview">
+:::info[Overview]
 At the very end of our model, the AI spits out raw scores for every single word in the dictionary. These raw scores are called "Logits". But logits can be any random number like 42.5 or -10. We need to turn them into nice, neat percentages!
-</Callout>
+:::
 
 ---
 
 ## 🎯 Why we do it
-<Callout type="info" title="Rationale">
+:::info[Rationale]
 It's really hard to understand a score of 42.5. But if we turn it into "95% chance", it makes total sense! We need percentages so the AI can easily pick the most likely next word.
-</Callout>
+:::
 
 ## 🛠️ How we do it
-<Callout type="info" title="Methodology">
+:::info[Methodology]
 We bring back our good old friend, **Softmax**! Softmax takes all those crazy Logit numbers and squishes them so that they are all between 0% and 100%, and they all add up to exactly 100%.
-</Callout>
+:::
 
 ```python
 import torch
