@@ -1,0 +1,51 @@
+---
+sidebar_position: 2
+---
+
+# Chapter 2: Rendering 3D Vectors
+
+In this chapter, we look at how the same mathematical data behaves when projected into a 3D vector space, and how to scale this up.
+
+## Generating Custom Projections
+
+The components are tightly coupled. Whenever you pass an `initialMatrix`, the `VectorSpace3D` component automatically runs an isometric projection to visualize the three dimensions.
+
+Here is another example of rendering both the matrix and 3D vectors for a different dataset:
+
+```mdx
+import MatrixVectorVisualizer from '@site/src/components/MatrixVectorVisualizer';
+
+<MatrixVectorVisualizer 
+  showMatrix={false}
+  initialMatrix={[
+    [-0.5, 0.5, 0.0],
+    [0.8, -0.2, 0.6],
+    [0.0, 0.9, -0.4],
+    [-0.8, -0.7, 0.5],
+    [0.3, 0.1, -0.9]
+  ]}
+  tokens={["Node 1", "Node 2", "Node 3", "Node 4", "Node 5"]}
+  colors={["#ef4444", "#3b82f6", "#10b981", "#f59e0b", "#6366f1"]}
+/>
+```
+
+### Interactive Visualization
+
+import MatrixVectorVisualizer from '@site/src/components/MatrixVectorVisualizer';
+
+<MatrixVectorVisualizer 
+  showMatrix={false}
+  initialMatrix={[
+    [-0.5, 0.5, 0.0],
+    [0.8, -0.2, 0.6],
+    [0.0, 0.9, -0.4],
+    [-0.8, -0.7, 0.5],
+    [0.3, 0.1, -0.9]
+  ]}
+  tokens={["Node 1", "Node 2", "Node 3", "Node 4", "Node 5"]}
+  colors={["#ef4444", "#3b82f6", "#10b981", "#f59e0b", "#6366f1"]}
+/>
+
+### Handling Higher Dimensions
+
+If you need to render $n$-dimensional vectors (e.g. 512 dimensions for an LLM), you must project them down to 3D using dimensionality reduction algorithms like **PCA** or **t-SNE** before passing them into the `initialMatrix` array. The table component can handle $n$ dimensions easily, but the human eye and 3D projection algorithms are limited to 3!

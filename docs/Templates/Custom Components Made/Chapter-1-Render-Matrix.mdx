@@ -1,0 +1,43 @@
+---
+sidebar_position: 1
+---
+
+# Chapter 1: Rendering Matrices
+
+In this chapter, we explore how to render any custom matrix dynamically inside the documentation using the `MatrixVectorVisualizer` component.
+
+## Custom Matrix Example
+
+Because we updated our component to accept props, we can inject a completely random matrix directly from our `.mdx` file.
+
+```mdx
+import MatrixVectorVisualizer from '@site/src/components/MatrixVectorVisualizer';
+
+<MatrixVectorVisualizer 
+  showVector={false}
+  initialMatrix={[
+    [0.9, 0.2, 0.5],
+    [0.1, 0.8, 0.3],
+    [0.5, 0.5, 0.9]
+  ]}
+  tokens={["Word A", "Word B", "Word C"]}
+  colors={["#8b5cf6", "#ec4899", "#14b8a6"]}
+/>
+```
+
+### Try it out!
+
+Here is the actual component rendering the custom matrix on its own!
+
+import MatrixVectorVisualizer from '@site/src/components/MatrixVectorVisualizer';
+
+<MatrixVectorVisualizer 
+  showVector={false}
+  initialMatrix={[
+    [0.9, 0.2, 0.5],
+    [0.1, 0.8, 0.3],
+    [0.5, 0.5, 0.9]
+  ]}
+  tokens={["Word A", "Word B", "Word C"]}
+  colors={["#8b5cf6", "#ec4899", "#14b8a6"]}
+/>

@@ -25,6 +25,7 @@ const FeatureList: FeatureItem[] = [
       </>
     ),
     courses: [
+      { title: 'LLM Components', link: '/docs/ai/LLM Components/Chapter-0-Architecture-Explorer' },
       { title: 'GPT 2 end to end', link: '/docs/ai/gpt2-architecture-end-to-end' },
       { title: 'Modern Qwen end to end', link: '/docs/ai/modern-qwen-end-to-end' },
       { title: 'Frameworks', link: '/docs/ai/frameworks' },
@@ -93,6 +94,7 @@ const FeatureList: FeatureItem[] = [
     ),
     courses: [
       { title: 'Docusaurus', link: '/docs/templates/docusaurus' },
+      { title: 'Custom Components Made', link: '/docs/templates/custom-components-made' },
     ],
   },
 ];
