@@ -17,21 +17,43 @@ type FeatureItem = {
 
 const FeatureList: FeatureItem[] = [
   {
-    title: 'AI & Machine Learning',
+    title: 'AI Applications & Orchestration',
     Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
     description: (
       <>
-        Explore tutorials, algorithms, and projects in AI & Machine Learning.
+        Projects & frameworks for AI Applications built on top of LLMs.
       </>
     ),
     courses: [
-      { title: 'LLM Components', link: '/docs/ai/LLM Components/Chapter-0-Architecture-Explorer' },
-      { title: 'GPT 2 end to end', link: '/docs/ai/gpt2-architecture-end-to-end' },
-      { title: 'Modern Qwen end to end', link: '/docs/ai/modern-qwen-end-to-end' },
-      { title: 'Frameworks', link: '/docs/ai/frameworks' },
-      { title: 'Interview Questions', link: '/docs/ai/interview-questions' },
-      { title: 'RAG Architecture', link: '/docs/ai/rag-architecture' },
-      { title: 'Recommendation Systems', link: '/docs/ai/recommendation-systems' },
+      { title: 'Frameworks', link: '/docs/ai-applications-orchestration/frameworks' },
+      { title: 'RAG Architecture', link: '/docs/ai-applications-orchestration/rag-architecture' },
+      { title: 'Recommendation Systems', link: '/docs/ai-applications-orchestration/recommendation-systems' },
+    ],
+  },
+  {
+    title: 'LLMs from Scratch',
+    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
+    description: (
+      <>
+        Build large language models entirely from scratch and understand their components.
+      </>
+    ),
+    courses: [
+      { title: 'LLM Components', link: '/docs/llms-from-scratch/llm-components' },
+      { title: 'Modern Qwen end to end', link: '/docs/llms-from-scratch/modern-qwen-end-to-end' },
+      { title: 'GPT 2 end to end', link: '/docs/llms-from-scratch/gpt2-architecture-end-to-end' },
+    ],
+  },
+  {
+    title: 'QnA & Interview',
+    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
+    description: (
+      <>
+        Prepare for your next technical AI interview with comprehensive QnA.
+      </>
+    ),
+    courses: [
+      { title: 'Interview Questions', link: '/docs/qna-interview/interview-questions' },
     ],
   },
   {
