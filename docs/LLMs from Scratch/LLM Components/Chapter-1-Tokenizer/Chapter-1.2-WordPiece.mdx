@@ -3,6 +3,26 @@ title: "Chapter 1.2 WordPiece"
 description: "Implementation details for Chapter 1.2 WordPiece"
 ---
 
-# Chapter 1.2 WordPiece
+# Chapter 1.2 WordPiece Tokenizer
 
-Details coming soon.
+**WordPiece** is a subword tokenization algorithm widely used in natural language processing architectures, most notably in models like **BERT**. It functions as a middle ground between word-level tokenization (which suffers from massive vocabularies and "unknown" words) and character-level tokenization (which results in overly long sequences).
+
+### How WordPiece Works
+
+#### 1. Vocabulary Construction (Training)
+WordPiece builds a fixed-size vocabulary by learning which subword units best represent the training data.
+*   **Initialization:** It starts with a base vocabulary of individual characters.
+*   **Iterative Merging:** Unlike Byte Pair Encoding (BPE), which simply merges the most frequent pair, WordPiece uses a **probabilistic approach**. It selects the merge that maximizes the likelihood of the training data under a language model.
+*   **Result:** This process continues until the desired vocabulary size is reached. The final output is a vocabulary of subwords.
+
+#### 2. Tokenization (Inference)
+When given a new piece of text, WordPiece follows a **maximum-matching (longest match-first)** strategy:
+*   The text is first pre-tokenized into words (typically by splitting on whitespace and punctuation).
+*   For each word, it searches for the longest subword present in its learned vocabulary.
+*   If a word cannot be found in its entirety, it is broken down into smaller subword units. 
+*   **Continuations:** Subword tokens that are not the start of a word are typically marked with a prefix (like `##` in BERT) to indicate they are a continuation of the previous token. For example, the word "unbelievable" might be split into `un`, `##believ`, and `##able`.
+
+### Key Characteristics
+*   **Handles Out-of-Vocabulary (OOV) Words:** Because it can break unknown words into smaller, familiar subword pieces, the model can still process words it hasn't seen before by relying on the meaning of the components (morphemes).
+*   **Semantic Meaning:** By preferring subwords that appear frequently and increase the likelihood of the training data, WordPiece often captures meaningful linguistic units like prefixes and suffixes.
+*   **Comparison to BPE:** While BPE and WordPiece are very similar—both being subword algorithms—BPE is often simpler (based on frequency), whereas WordPiece is specifically designed to optimize a likelihood objective.

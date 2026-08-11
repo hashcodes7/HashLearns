@@ -3,6 +3,28 @@ title: "Chapter 1.1 BPE"
 description: "Implementation details for Chapter 1.1 BPE"
 ---
 
-# Chapter 1.1 BPE
+# Chapter 1.1 Byte Pair Encoding (BPE)
 
-Details coming soon.
+Byte Pair Encoding (BPE) is a **subword tokenization algorithm** that serves as a critical bridge between human language and the numerical representations processed by Large Language Models (LLMs). Because models cannot understand raw text, they must first break it down into smaller units called **tokens**, which are then mapped to unique numerical IDs. BPE is the standard method for determining how to split that text efficiently.
+
+### Why BPE is Needed
+Before BPE, engineers typically used one of two flawed approaches:
+*   **Word-Level Tokenization:** The model treats every word as a token. This leads to an "exploding" vocabulary size (hundreds of thousands of words) and causes the "out-of-vocabulary" (OOV) problem, where the model encounters unknown words (like misspellings or rare names) and cannot process them.
+*   **Character-Level Tokenization:** The model treats every character as a token. The vocabulary is tiny and manageable, but the resulting sequences are extremely long. This makes the model computationally expensive and forces it to learn the structure of language from scratch.
+
+**BPE "threads the needle"** by creating a subword vocabulary. Common words are kept as single tokens, while rare or complex words are broken down into meaningful subword units (e.g., "teaching" might become "teach" + "ing").
+
+### How BPE Works
+BPE is an iterative, greedy algorithm. It builds a vocabulary by repeatedly merging the most frequently occurring adjacent pair of symbols in a dataset.
+
+1.  **Initialization:** The process starts by splitting all words into their individual characters. The initial vocabulary consists of these unique characters.
+2.  **Counting:** The algorithm scans the text to count the frequency of all adjacent pairs of tokens.
+3.  **Merging:** It selects the most frequent pair and merges them into a single, new token. This new token is added to the vocabulary.
+4.  **Iteration:** This cycle repeats for a predetermined number of merges or until the vocabulary reaches a target size.
+
+### Key Benefits
+*   **Efficiency:** By using subwords, BPE keeps sequences reasonably short while maintaining a manageable, fixed-size vocabulary.
+*   **Flexibility:** It can represent any word, even those it has never seen before, by decomposing them into known subword pieces.
+*   **Generalization:** Since morphologically related words (like "run," "running," and "ran") often share subword tokens, the model can better identify patterns across different forms of words.
+
+Today, BPE and its variants (like those used in GPT, Llama, and other Transformer models) are foundational to the performance of modern AI, directly influencing everything from the model's "context window" to its speed and cost of operation.

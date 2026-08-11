@@ -3,6 +3,23 @@ title: "Chapter 2.1 Learned Embeddings"
 description: "Implementation details for Chapter 2.1 Learned Embeddings"
 ---
 
-# Chapter 2.1 Learned Embeddings
+# Chapter 2.1 Learned Token Embeddings
 
-Details coming soon.
+Learned token embeddings are a foundational component of Large Language Models (LLMs) that allow computers to translate human language into a mathematical format they can process and "understand." Because machines cannot process raw text, they must first convert it into numerical representations via **tokenization** and **embedding**.
+
+### 1. From Text to Tokens
+Before a model can process text, it is broken down into smaller units called **tokens**. These can be whole words, parts of words (subwords), or even individual characters or punctuation marks. Each unique token in the model's vocabulary is assigned a unique integer ID (e.g., the word "apple" might be assigned the ID `452`).
+
+### 2. What are Learned Token Embeddings?
+Once you have these integer IDs, they are still just labels and don't carry any inherent meaning. This is where **learned token embeddings** come in:
+
+*   **The Embedding Matrix:** The model maintains a massive lookup table—the embedding matrix—where each row corresponds to a specific token ID.
+*   **Vector Representation:** Each row contains a vector (a long list of numbers, such as 768 or 2048 dimensions). These numbers represent the "meaning" of the token in a high-dimensional space.
+*   **"Learned" Meaning:** The term "learned" is key. At the start of training, these vectors are initialized randomly. As the model trains on billions of sentences, it uses backpropagation to adjust the numbers in these vectors. 
+*   **Semantic Closeness:** Through this learning process, tokens that appear in similar contexts or have similar meanings (like "cat" and "dog," or "happy" and "joyful") are pushed closer together in this mathematical space. Unrelated tokens are placed further apart.
+
+### 3. Why are they essential?
+Learned embeddings act as the "semantic backbone" of the model:
+*   **Mathematical Reasoning:** By converting words into vectors, the model can perform mathematical operations to identify relationships. A classic example is the vector arithmetic `king - man + woman` which results in a vector very close to `queen`.
+*   **Contextual Foundation:** While static embeddings provide the initial identity of a word, the Transformer architecture then uses these vectors as the starting point to build complex, context-aware representations as the data passes through the model's attention layers.
+*   **Efficiency:** Using a lookup table (the embedding matrix) is a computationally efficient way to feed text into a neural network, allowing the model to quickly retrieve the dense vector representation for any token it encounters.
