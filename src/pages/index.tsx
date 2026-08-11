@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import type {ReactNode} from 'react';
+import React, { useState, useEffect } from 'react';
+import type { ReactNode } from 'react';
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
@@ -24,16 +24,16 @@ function TypewriterCode() {
 
   useEffect(() => {
     const currentSnippet = snippets[snippetIndex];
-    
+
     if (!isDeleting && text === currentSnippet) {
       const timeout = setTimeout(() => setIsDeleting(true), 2500);
       return () => clearTimeout(timeout);
-    } 
-    
+    }
+
     if (isDeleting && text === '') {
       setIsDeleting(false);
       setSnippetIndex((prev) => (prev + 1) % snippets.length);
-      const timeout = setTimeout(() => {}, 500);
+      const timeout = setTimeout(() => { }, 500);
       return () => clearTimeout(timeout);
     }
 
@@ -54,7 +54,7 @@ function TypewriterCode() {
 }
 
 function HomepageHeader() {
-  const {siteConfig} = useDocusaurusContext();
+  const { siteConfig } = useDocusaurusContext();
   return (
     <header className={clsx('hero', styles.heroBanner)}>
       <div className={clsx('container', styles.heroContainer)}>
@@ -80,12 +80,12 @@ function HomepageHeader() {
             </Link>
           </div>
         </div>
-        
+
         <div className={styles.heroCodeWindow}>
           <div className={styles.windowHeader}>
-            <span className={styles.windowDot} style={{backgroundColor: '#ff5f56'}}></span>
-            <span className={styles.windowDot} style={{backgroundColor: '#ffbd2e'}}></span>
-            <span className={styles.windowDot} style={{backgroundColor: '#27c93f'}}></span>
+            <span className={styles.windowDot} style={{ backgroundColor: '#ff5f56' }}></span>
+            <span className={styles.windowDot} style={{ backgroundColor: '#ffbd2e' }}></span>
+            <span className={styles.windowDot} style={{ backgroundColor: '#27c93f' }}></span>
             <span className={styles.windowTitle}>career.py</span>
           </div>
           <div className={styles.windowBody}>
@@ -98,10 +98,10 @@ function HomepageHeader() {
 }
 
 export default function Home(): ReactNode {
-  const {siteConfig} = useDocusaurusContext();
+  const { siteConfig } = useDocusaurusContext();
   return (
     <Layout
-      title={`Hello from ${siteConfig.title}`}
+      title={`${siteConfig.title}`}
       description="Description will go into a meta tag in <head />">
       <HomepageHeader />
       <main id="features">
