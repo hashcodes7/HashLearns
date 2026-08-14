@@ -1,0 +1,52 @@
+---
+
+description: "Comprehensive interview questions about RAG vs Fine-tuning and advanced architectures."
+---
+> **Info**
+> Comprehensive interview questions about RAG vs Fine-tuning and advanced architectures.
+
+---
+### Q1: What is Retrieval-Augmented Generation (RAG), and why is it preferred over pure LLM generation for enterprise applications?
+
+**Answer:**
+RAG connects a Large Language Model (LLM) to external, dynamically updated data sources. Instead of relying solely on parametric knowledge stored in the LLM's weights, RAG retrieves relevant document chunks from a vector database or search index during runtime and injects them into the prompt context.
+
+#### Key Advantages
+* **Mitigates Hallucinations:** Provides explicit grounded context for the model to reference.
+* **Freshness:** Enables access to real-time or frequently updated data without retraining.
+* **Data Privacy & Access Control:** Retains data governance by filtering enterprise documents based on user permissions before context injection.
+* **Cost Efficiency:** Significantly cheaper than continually fine-tuning or pre-training proprietary models.
+
+---
+
+### Q2: How do you choose between RAG and Fine-Tuning?
+
+**Answer:**
+Think of fine-tuning as teaching a model **a new style, tone, or format**, while RAG is giving the model an **open-book reference library**.
+
+| Dimension | RAG | Fine-Tuning |
+| :--- | :--- | :--- |
+| **Primary Use Case** | Injecting factual, dynamic knowledge | Changing model behavior, tone, style, or specific syntax |
+| **Data Freshness** | Real-time / Instant updates | Static (requires re-training) |
+| **Auditability** | High (can cite specific retrieved chunks) | Low (black-box model weights) |
+| **Hallucination Rate** | Low (when context is constrained) | Moderate to High |
+| **Cost** | Storage & vector search infra | Compute-heavy GPU training |
+
+**Rule of thumb:** Use **RAG** for factual grounding and dynamic content; use **Fine-Tuning** for output structure alignment or domain-specific language nuances. Combining both (Fine-tuning an LLM to better adhere to retrieved RAG contexts) often yields peak performance.
+
+---
+
+### Q3: What is "Chunking" and how do you choose a chunking strategy?
+
+**Answer:**
+Chunking is the process of breaking down large documents into smaller, coherent text segments before creating vector embeddings.
+
+* **Fixed-size Chunking:** Splits text by character/token count (e.g., 512 tokens with 50-token overlap). Fast and simple, but risks breaking sentences mid-thought.
+* **Sentence / Paragraph Chunking:** Respects natural boundaries using delimiters (`\n\n`, `.`), preserving semantic context.
+* **Semantic Chunking:** Calculates embedding distance between consecutive sentences and splits where semantic similarity drops sharply.
+* **Document Structure-Aware Chunking:** Parses structural markup (Markdown, HTML, PDF headers) to keep sections, tables, and sub-headings intact.
+
+*Trade-off:* Smaller chunks (128–256 tokens) yield higher retrieval precision, but may lack surrounding context. Larger chunks (512–1024 tokens) provide rich context to the LLM, but risk polluting the prompt with irrelevant information.
+
+---
+

@@ -2,7 +2,408 @@
 title: "Chapter 3.2 RoPE"
 description: "Implementation details for Chapter 3.2 RoPE"
 ---
+# Sinusoidal Positional Encoding
 
-# Chapter 3.2 RoPE
+## 1. What is it?
 
-Details coming soon.
+Sinusoidal positional encoding is a way to give a Transformer information about the **position of each token**.
+
+Unlike learned positional embeddings, the positional values are **not learned**.
+
+They are generated using fixed mathematical functions:
+
+$$  
+\boxed{  
+PE(pos,2i)=\sin\left(\frac{pos}{10000^{2i/d}}\right)  
+}  
+$$
+
+$$  
+\boxed{  
+PE(pos,2i+1)=\cos\left(\frac{pos}{10000^{2i/d}}\right)  
+}  
+$$
+
+Where:
+- $pos$ = position of the token
+- $i$ = dimension-pair index
+- $d$ = embedding dimension
+
+---
+
+# 2. Example
+
+Suppose our sentence has 5 tokens:
+
+```text
+I   am   very   cool   today
+```
+
+Positions:
+
+|Token|Position|
+|---|--:|
+|I|0|
+|am|1|
+|very|2|
+|cool|3|
+|today|4|
+
+Assume each token has a **4-dimensional embedding**:
+
+$$  
+d=4  
+$$
+
+---
+
+# 3. Token Embeddings
+
+For example:
+
+$$  
+X=  
+\begin{bmatrix}  
+0.43 & 0.15 & 0.89 & 0.22 \\  
+0.55 & 0.87 & 0.66 & 0.31 \\ 
+0.57 & 0.85 & 0.64 & 0.44 \\  
+0.22 & 0.58 & 0.33 & 0.72 \\  
+0.77 & 0.25 & 0.10 & 0.63  
+\end{bmatrix}  
+$$
+
+Each row represents one token.
+
+---
+
+# 4. Calculate the frequency denominator
+
+The sinusoidal formula contains:
+
+$$  
+10000^{2i/d}  
+$$
+For:
+$$  
+d=4  
+$$
+
+we have:
+$$  
+i=0,1  
+$$
+because each $i$ controls a pair of dimensions.
+### For $i=0$
+
+# $$  
+10000^{2(0)/4}
+
+# 10000^0
+
+1  
+$$
+
+### For $i=1$
+
+# $$  
+10000^{2(1)/4}
+
+# 10000^{1/2}
+
+100  
+$$
+
+Therefore:
+
+$$  
+\boxed{  
+[1,;100]  
+}  
+$$
+
+These are the denominators used by the two frequency pairs.
+
+---
+
+# 5. Why two values?
+
+Our embedding has 4 dimensions:
+
+$$  
+[x_0,x_1,x_2,x_3]  
+$$
+
+The sinusoidal encoding uses:
+
+```text
+dimension 0 → sin using denominator 1
+dimension 1 → cos using denominator 1
+
+dimension 2 → sin using denominator 100
+dimension 3 → cos using denominator 100
+```
+
+So:
+
+$$  
+PE(pos)=  
+[  
+\sin(pos/1),  
+\cos(pos/1),  
+\sin(pos/100),  
+\cos(pos/100)  
+]  
+$$
+
+---
+
+# 6. Position 0
+
+For:
+$$  
+pos=0  
+$$
+we get:
+
+$$  
+PE(0)=  
+[  
+\sin(0/1),  
+\cos(0/1),  
+\sin(0/100),  
+\cos(0/100)  
+]  
+$$
+Therefore:
+$$  
+PE(0)=  
+[  
+\sin(0),  
+\cos(0),  
+\sin(0),  
+\cos(0)  
+]  
+$$
+
+$$  
+\boxed{  
+PE(0)=[0,;1,;0,;1]  
+}  
+$$
+
+---
+
+# 7. Position 1
+
+For:
+
+$$  
+pos=1  
+$$
+
+$$  
+PE(1)=  
+[  
+\sin(1),  
+\cos(1),  
+\sin(1/100),  
+\cos(1/100)  
+]  
+$$
+
+Using:
+
+$$  
+\sin(1)\approx0.84147  
+$$
+
+$$  
+\cos(1)\approx0.54030  
+$$
+
+$$  
+\sin(0.01)\approx0.0099998  
+$$
+
+$$  
+\cos(0.01)\approx0.99995  
+$$
+
+Therefore:
+
+$$  
+\boxed{  
+PE(1)\approx  
+[0.84147,;0.54030,;0.01000,;0.99995]  
+}  
+$$
+
+---
+
+# 8. Position 2
+
+$$  
+PE(2)=  
+[  
+\sin(2),  
+\cos(2),  
+\sin(2/100),  
+\cos(2/100)  
+]  
+$$
+
+Approximately:
+
+$$  
+\boxed{  
+PE(2)\approx  
+[0.90930,;-0.41615,;0.02000,;0.99980]  
+}  
+$$
+
+---
+
+# 9. Position 3
+
+$$  
+PE(3)=  
+[  
+\sin(3),  
+\cos(3),  
+\sin(3/100),  
+\cos(3/100)  
+]  
+$$
+
+Approximately:
+
+$$  
+\boxed{  
+PE(3)\approx  
+[0.14112,;-0.98999,;0.03000,;0.99955]  
+}  
+$$
+
+---
+
+# 10. Position 4
+
+$$  
+PE(4)=  
+[  
+\sin(4),  
+\cos(4),  
+\sin(4/100),  
+\cos(4/100)  
+]  
+$$
+
+Approximately:
+
+$$  
+\boxed{  
+PE(4)\approx  
+[-0.75680,;-0.65364,;0.03999,;0.99920]  
+}  
+$$
+
+---
+
+# 11. Complete positional encoding matrix
+
+Putting all positions together:
+
+$$  
+PE=  
+\begin{bmatrix}  
+0 & 1 & 0 & 1 \\  
+0.84147 & 0.54030 & 0.01000 & 0.99995 \\  
+0.90930 & -0.41615 & 0.02000 & 0.99980 \\  
+0.14112 & -0.98999 & 0.03000 & 0.99955 \\  
+-0.75680 & -0.65364 & 0.03999 & 0.99920  
+\end{bmatrix}  
+$$
+
+Notice:
+**This matrix was not learned.**
+It was calculated directly from the mathematical formulas.
+
+---
+# 12. Add positional encoding to token embeddings
+The Transformer adds the two matrices element-by-element:
+$$  
+X_{\text{final}}=
+
+X_{\text{token}}  
++  
+PE  
+$$
+
+Token embeddings:
+
+$$  
+\begin{bmatrix}  
+0.43 & 0.15 & 0.89 & 0.22 \\  
+0.55 & 0.87 & 0.66 & 0.31 \\  
+0.57 & 0.85 & 0.64 & 0.44 \\  
+0.22 & 0.58 & 0.33 & 0.72 \\  
+0.77 & 0.25 & 0.10 & 0.63  
+\end{bmatrix}  
+$$
+
+Positional encoding:
+$$  
++  
+\begin{bmatrix}  
+0 & 1 & 0 & 1 \\  
+0.84147 & 0.54030 & 0.01000 & 0.99995 \\  
+0.90930 & -0.41615 & 0.02000 & 0.99980 \\  
+0.14112 & -0.98999 & 0.03000 & 0.99955 \\  
+-0.75680 & -0.65364 & 0.03999 & 0.99920  
+\end{bmatrix}  
+$$
+Result:
+
+$$  
+\boxed{  
+\begin{bmatrix}  
+0.43 & 1.15 & 0.89 & 1.22 \\  
+1.39147 & 1.41030 & 0.67000 & 1.30995 \\  
+1.47930 & 0.43385 & 0.66000 & 1.43980 \\  
+0.36112 & -0.40999 & 0.36000 & 1.71955 \\  
+0.01320 & -0.40364 & 0.13999 & 1.62920  
+\end{bmatrix}  
+}  
+$$
+
+This resulting matrix is what gets passed to the next part of the Transformer.
+
+---
+
+# 13. Flow
+
+```text
+Position
+   ↓
+mathematical formula
+   ↓
+different sin/cos values
+   ↓
+positional vector
+   ↓
+add to token embedding
+```
+
+---
+
+# 14. Fast vs slow frequencies
+
+The first pair changes quickly:
+$$  
+\sin(pos)  ,\cos(pos)  
+$$
+The second pair changes slowly:
+$$  
+\sin(pos/100)  ,\cos(pos/100)  
+$$
+---

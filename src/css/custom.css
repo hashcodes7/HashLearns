@@ -29,7 +29,11 @@
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
 
-html {
+html[data-theme='dark'] {
+  background-color: #0b0f19 !important;
+}
+
+html.homepage {
   background-image: 
     linear-gradient(var(--ifm-color-emphasis-200) 1px, transparent 1px),
     linear-gradient(90deg, var(--ifm-color-emphasis-200) 1px, transparent 1px) !important;
@@ -37,7 +41,7 @@ html {
   background-color: var(--ifm-background-color) !important;
 }
 
-html[data-theme='dark'] {
+html.homepage[data-theme='dark'] {
   background-image: 
     linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px) !important;

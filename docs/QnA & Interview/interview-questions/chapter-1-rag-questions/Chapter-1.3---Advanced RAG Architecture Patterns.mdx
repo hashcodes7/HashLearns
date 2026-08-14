@@ -1,0 +1,29 @@
+---
+
+description: "Comprehensive interview questions about RAG vs Fine-tuning and advanced architectures."
+---
+### Q6: How do you solve the "Lost in the Middle" problem?
+
+**Answer:**
+Research shows that LLMs pay stronger attention to context placed at the **very beginning** and **very end** of the prompt context window, often ignoring details tucked in the middle.
+
+**Mitigation Tactics:**
+* **Re-ranking & Re-ordering:** Sort retrieved chunks so that the highest-scoring context sits at the very top or bottom of the context window.
+* **Context Compression:** Summarize or extract key statements from retrieved chunks before appending them to the prompt.
+* **Parent-Child Retriever:** Embed small chunks (e.g., 100 tokens) for precise vector matching, but return the larger parent chunk (e.g., 500 tokens) or full section to the LLM prompt.
+
+---
+
+### Q7: What is Hypothetical Document Embeddings (HyDE)?
+
+**Answer:**
+In standard RAG, matching a short user query (e.g., *"How do I fix error code 404?"*) directly against document chunks often leads to a semantic mismatch because questions look different from answer text.
+
+**HyDE Workflow:**
+1. Send the user query to an LLM to generate a **hypothetical answer** (even if factually inaccurate).
+2. Embed the **hypothetical answer** using the embedding model.
+3. Perform vector search using this hypothetical text vector.
+
+*Rationale:* The hypothetical answer lives in the same semantic space as the target document chunks, leading to significantly higher retrieval similarity.
+
+---
