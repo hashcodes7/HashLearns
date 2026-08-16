@@ -80,6 +80,8 @@ const FeatureList: FeatureItem[] = [
     courses: [
       { title: 'Deploy', link: '/docs/sys/deploy' },
       { title: 'Static Website Deployment', link: '/docs/sys/static-website-deployment/Chapter-1-Cloudflare-Pages/deploy-docusaurus' },
+      { title: 'Dockerization Manually', link: '/docs/sys/dockerization-manually' },
+      { title: 'Dockerization using CI/CD', link: '/docs/sys/dockerization-using-ci-cd' },
     ],
   },
   {

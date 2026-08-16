@@ -24,9 +24,9 @@ export default function Footer() {
 
           {/* Center: Links */}
           <div className="custom-footer__links">
-            <Link to="/docs/intro">FAQs</Link>
+            <Link to="/">FAQs</Link>
             <Link to="/blog">Blog</Link>
-            <Link to="/docs/intro">Docs</Link>
+            <Link to="/">Docs</Link>
           </div>
 
           {/* Right: Socials */}

@@ -12,9 +12,7 @@ const docsDir = path.resolve(__dirname, 'docs');
 const sidebars: SidebarsConfig = {
   // We start with the base manual links for the main sidebar
   tutorialSidebar: [
-    'intro',
-    'hello',
-    'my-doc-id',
+    
   ],
 };
 
@@ -66,7 +64,7 @@ if (fs.existsSync(docsDir)) {
           {
             type: 'link',
             label: '← Back to Main Docs',
-            href: '/docs/intro'
+            href: '/'
           },
           {
             type: 'category',
