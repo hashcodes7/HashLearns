@@ -1,4 +1,9 @@
-# Putting It On GitHub
+---
+sidebar_label: "1. Putting It On GitHub"
+sidebar_position: 1
+---
+
+# 1. Putting It On GitHub
 
 :::info
 We have 2 Spring projects, so we are making 2 separate repositories, one for each microservice.

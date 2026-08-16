@@ -1,4 +1,9 @@
-# Pushing Docker Image To DockerHub
+---
+sidebar_label: "8. Pushing Docker Image To DockerHub"
+sidebar_position: 8
+---
+
+# 8. Pushing Docker Image To DockerHub
 
 :::info
 This is the final step where we upload our locally built container image to the cloud repository.

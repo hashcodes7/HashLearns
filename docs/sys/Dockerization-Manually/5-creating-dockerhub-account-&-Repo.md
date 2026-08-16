@@ -1,4 +1,9 @@
-# Creating DockerHub Account & Repo
+---
+sidebar_label: "5. Creating DockerHub Account & Repo"
+sidebar_position: 5
+---
+
+# 5. Creating DockerHub Account & Repo
 
 :::info
 DockerHub is a cloud registry where you can safely store and share your built Docker images.

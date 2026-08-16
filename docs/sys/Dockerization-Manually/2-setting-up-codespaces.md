@@ -1,4 +1,9 @@
-# Setting Up Codespaces
+---
+sidebar_label: "2. Setting Up Codespaces"
+sidebar_position: 2
+---
+
+# 2. Setting Up Codespaces
 
 :::info
 GitHub Codespaces provides an isolated cloud environment where you can build and test your Docker images without cluttering your local machine.

@@ -1,4 +1,9 @@
-# Building Docker Image
+---
+sidebar_label: "6. Building Docker Image"
+sidebar_position: 6
+---
+
+# 6. Building Docker Image
 
 :::info
 Now that you have created a Docker account and a repository using [Creating DockerHub Account & Repo](./5-creating-dockerhub-account-&-Repo.md), we will physically build the image.

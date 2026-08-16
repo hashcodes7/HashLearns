@@ -1,4 +1,9 @@
-# Logging In To DockerHub
+---
+sidebar_label: "7. Logging In To DockerHub"
+sidebar_position: 7
+---
+
+# 7. Logging In To DockerHub
 
 :::info
 We have created a Docker repository and we have a built Docker image on our system, but we have not securely connected the two environments yet.

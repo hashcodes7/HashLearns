@@ -1,4 +1,9 @@
-# Creating Dockerfile
+---
+sidebar_label: "3. Creating Dockerfile"
+sidebar_position: 3
+---
+
+# 3. Creating Dockerfile
 
 :::info
 Even though the build process is fully automated via CI/CD, GitHub Actions still requires a `Dockerfile` in the root of the repository to understand how to construct the image.

@@ -1,4 +1,9 @@
-# Creating DockerHub Account
+---
+sidebar_label: "4. Creating DockerHub Account"
+sidebar_position: 4
+---
+
+# 4. Creating DockerHub Account
 
 :::info
 DockerHub is a cloud registry where your CI/CD pipeline will automatically push the built Docker images.

@@ -1,4 +1,9 @@
-# Converting To JAR File
+---
+sidebar_label: "3. Converting To JAR File"
+sidebar_position: 3
+---
+
+# 3. Converting To JAR File
 
 :::info
 Before we can containerize our Spring Boot application, we must compile it into an executable JAR file.

@@ -1,4 +1,9 @@
-# Connecting DockerHub to GitHub
+---
+sidebar_label: "7. Connecting DockerHub to GitHub"
+sidebar_position: 7
+---
+
+# 7. Connecting DockerHub to GitHub
 
 :::danger
 Never hardcode your passwords or tokens inside your GitHub Actions pipeline files (`.yml`). They must be securely stored in GitHub Secrets!

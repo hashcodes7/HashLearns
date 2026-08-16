@@ -1,4 +1,9 @@
-# Building Jar And Docker Image
+---
+sidebar_label: "2. Building Jar And Docker Image"
+sidebar_position: 2
+---
+
+# 2. Building Jar And Docker Image
 
 :::info
 Instead of building manually on our local machine, we will utilize GitHub Actions to automatically compile our JAR file and build our Docker Image on every push!

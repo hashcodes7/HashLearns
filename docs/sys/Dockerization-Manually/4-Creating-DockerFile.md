@@ -1,4 +1,9 @@
-# Creating Dockerfile
+---
+sidebar_label: "4. Creating Dockerfile"
+sidebar_position: 4
+---
+
+# 4. Creating Dockerfile
 
 :::info
 A `Dockerfile` is a script that contains a collection of instructions for building your Docker image. It specifies the base OS, Java runtime, and how to execute your application.
