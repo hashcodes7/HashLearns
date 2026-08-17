@@ -16,7 +16,7 @@ Create the file quickly using the `touch` command inside your project:
 touch Dockerfile
 ```
 
-![Dockerfile Creation](./images/Pasted%20image%2020260815120337.png)
+![Dockerfile Creation](DevOps/4-%20Dockerization-using-CI-CD/images/Pasted%20image%2020260815120337.png)
 
 Once done, you will see a `Dockerfile` built right in your project sidebar.
 
@@ -39,5 +39,5 @@ ENTRYPOINT ["java", "-jar", "app.jar"]
 Save and close this file. Ensure it gets committed to the repository so the pipeline can access it!
 
 :::tip
-To deeply understand what each line in this file does, check this optional reference: [Understanding DockerFile Commands](./3.1-Optional-Understanding-DockerFile-Commands-1.md).
+To deeply understand what each line in this file does, check this optional reference: [Understanding DockerFile Commands](3.1-Optional-Understanding-DockerFile-Commands-1.md).
 :::

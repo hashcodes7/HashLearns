@@ -41,4 +41,4 @@ Set up a CI/CD pipeline to build the Docker image from the compiled JAR file.
 But we have not connected our DockerHub to GitHub yet! The pipeline will fail without proper authentication. We need to do that by making a Docker account and injecting secure tokens.
 :::
 
-If you haven't created an account yet, follow the steps here: [Creating DockerHub Account](./4-creating-dockerhub-account.md).
+If you haven't created an account yet, follow the steps here: [Creating DockerHub Account](4-creating-dockerhub-account.md).

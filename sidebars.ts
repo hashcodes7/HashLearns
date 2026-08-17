@@ -16,19 +16,28 @@ const sidebars: SidebarsConfig = {
   ],
 };
 
-// Only run filesystem logic if docs directory exists (safety check)
-if (fs.existsSync(docsDir)) {
-  const fields = fs.readdirSync(docsDir, { withFileTypes: true })
-    .filter(dirent => dirent.isDirectory() && !dirent.name.startsWith('.'))
-    .map(dirent => dirent.name);
+let fields = [];
+try {
+  if (fs.existsSync(docsDir)) {
+    fields = fs.readdirSync(docsDir, { withFileTypes: true })
+      .filter(dirent => dirent.isDirectory() && !dirent.name.startsWith('.'))
+      .map(dirent => dirent.name);
+  }
+} catch (err) {
+  console.warn('[sidebars.ts] Could not read docs directory:', err.message);
+}
 
   fields.forEach(field => {
     const fieldSlug = toSlug(field);
     const fieldDir = path.join(docsDir, field);
-    
-    const courses = fs.readdirSync(fieldDir, { withFileTypes: true })
-      .filter(dirent => dirent.isDirectory() && !dirent.name.startsWith('.'))
-      .map(dirent => dirent.name);
+    let courses = [];
+    try {
+      courses = fs.readdirSync(fieldDir, { withFileTypes: true })
+        .filter(dirent => dirent.isDirectory() && !dirent.name.startsWith('.'))
+        .map(dirent => dirent.name);
+    } catch (err) {
+      console.warn(`[sidebars.ts] Could not read field directory ${fieldDir}:`, err.message);
+    }
 
     if (courses.length > 0) {
       // 1. Add this field and its courses to the main tutorial sidebar
@@ -84,6 +93,4 @@ if (fs.existsSync(docsDir)) {
       });
     }
   });
-}
-
 export default sidebars;

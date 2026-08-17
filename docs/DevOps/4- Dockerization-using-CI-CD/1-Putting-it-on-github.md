@@ -2,7 +2,6 @@
 sidebar_label: "1. Putting It On GitHub"
 sidebar_position: 1
 ---
-
 # 1. Putting It On GitHub
 
 :::info
@@ -44,8 +43,6 @@ Next, simply go to the left-side **Source Control** panel in VS Code and perform
 If it asks to create an upstream branch, accept it!
 :::
 
-![Publish Branch](./images/Pasted%20image%2020260815025248.png)
+![Publish Branch](DevOps/4-%20Dockerization-using-CI-CD/images/Pasted%20image%2020260815025248.png)
 
 Just select **OK** and create a remote branch. If authentication is requested, sign in with your GitHub credentials and your code will be pushed.
-
-Now proceed to [Setting Up Codespaces](./2-setting-up-codespaces.md).

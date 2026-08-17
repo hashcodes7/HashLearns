@@ -16,7 +16,7 @@ Create the file quickly using the `touch` command inside your Codespaces termina
 touch Dockerfile
 ```
 
-![Dockerfile Creation](./images/Pasted%20image%2020260815120337.png)
+![Dockerfile Creation](DevOps/3-%20Dockerization-Manually/images/Pasted%20image%2020260815120337.png)
 
 Once done, you will see a `Dockerfile` built right in your project sidebar. 
 
@@ -39,7 +39,7 @@ ENTRYPOINT ["java", "-jar", "app.jar"]
 Save and close this file.
 
 :::tip
-To check what each command does, refer to [Understanding DockerFile Commands](./4.1-Optional-Understanding-DockerFile-Commands.md).
+To check what each command does, refer to [Understanding DockerFile Commands](4.1-Optional-Understanding-DockerFile-Commands.md).
 :::
 
-Now proceed to [Creating DockerHub Account & Repo](./5-creating-dockerhub-account-&-Repo.md).
+Now proceed to [Creating DockerHub Account & Repo](5-creating-dockerhub-account-&-Repo.md).

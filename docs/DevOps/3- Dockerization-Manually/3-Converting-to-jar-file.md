@@ -55,6 +55,6 @@ mvn clean package -DskipTests
 
 Once successful, you should see a `target` folder generated in your project directory containing the compiled JAR file.
 
-![Target Directory](./images/Pasted%20image%2020260815115948.png)
+![Target Directory](Pasted%20image%2020260815115948.png)
 
-Now proceed to [Creating DockerFile](./4-Creating-DockerFile.md).
+Now proceed to [Creating DockerFile](4-Creating-DockerFile.md).
