@@ -3,6 +3,7 @@ import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
+import obsidianImages from './plugins/remark-obsidian-images';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
@@ -54,7 +55,7 @@ const config: Config = {
           // Remove this to remove the "edit this page" links.
           editUrl:
             'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
-          remarkPlugins: [remarkMath],
+          remarkPlugins: [remarkMath, obsidianImages],
           rehypePlugins: [rehypeKatex],
         },
         blog: {
