@@ -15,11 +15,11 @@ DockerHub is a cloud registry where your CI/CD pipeline will automatically push 
 2. Create an account, set a unique username, and choose the free plan.
 3. Once logged in, click the **Create Repository** button.
 
-![Create Repository](DevOps/4-%20Dockerization-using-CI-CD/images/Pasted%20image%2020260815133804.png)
+![Create Repository](DevOps/6-%20Dockerization-using-CI-CD/images/Pasted%20image%2020260815133804.png)
 
 After creating it, your repository dashboard will look like this:
 
-![Repository Dashboard](DevOps/4-%20Dockerization-using-CI-CD/images/Pasted%20image%2020260815134031.png)
+![Repository Dashboard](DevOps/6-%20Dockerization-using-CI-CD/images/Pasted%20image%2020260815134031.png)
 
 ### Naming Convention
 As shown, the repository namespace is `hashcodes7/smallkart_customer`.
