@@ -2,18 +2,18 @@
 
 ![[Pasted image 20260820151812.png]]
 
-so based on this connection to our RDS can be made by 
-ip address: port number
-mysql://bigkart-db-server.c9cuu68as97f.ap-south-1.rds.amazonaws.com:3306
+#### So based on this, connection to our RDS can be made in this format
+format ---->>    ip address   : port number  /   database_name
 
-in addition we also add database name in end to specify which database in case of multiple databases
-mysql://bigkart-db-server.c9cuu68as97f.ap-south-1.rds.amazonaws.com:3306/Bigkart_admin_db
-so mofify this in your application.properties file to connect to database in following format
+mysql://bigkart-db-server.c9cuu68as97f.ap-south-1.rds.amazonaws.com:3306/bigkart_admin_db
+
+- so modify this in your application. Properties file (at \src\main\resources\application.properties) 
+to connect to database in following format
 
 ``` python
 spring.application.name=bigkart-admin
 
-spring.datasource.url=jdbc:mysql://bigkart-db-server.c9cuu68as97f.ap-south-1.rds.amazonaws.com:3306/Bigkart_admin_db
+spring.datasource.url=jdbc:mysql://bigkart-db-server.c9cuu68as97f.ap-south-1.rds.amazonaws.com:3306/bigkart_admin_db
 spring.datasource.username=admin
 spring.datasource.password=YOUR_RDS_PASSWORD
 
