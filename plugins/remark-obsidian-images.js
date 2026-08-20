@@ -1,3 +1,6 @@
+const fs = require('fs');
+const path = require('path');
+
 // A simple AST visitor to avoid ESM require issues with unist-util-visit
 function visit(tree, type, callback) {
   function traverse(node, index, parent) {
@@ -25,7 +28,9 @@ function visit(tree, type, callback) {
 }
 
 function plugin() {
-  return (tree) => {
+  return (tree, vfile) => {
+    const fileDir = vfile && vfile.dirname ? vfile.dirname : null;
+
     visit(tree, 'text', (node, index, parent) => {
       // Obsidian image syntax: ![[image.png]] or ![[image.png|alt text]]
       const regex = /!\[\[(.*?)\]\]/g;
@@ -57,9 +62,26 @@ function plugin() {
           alt = parts[1];
         }
         
+        // Smart Resolution:
+        // Obsidian can place attachments in the same folder, or in an 'assets' or 'images' subfolder.
+        // We will check the filesystem to see where it actually is and point Webpack to it.
+        let finalUrl = url;
+        if (fileDir) {
+          if (fs.existsSync(path.join(fileDir, url))) {
+            finalUrl = `./${url}`;
+          } else if (fs.existsSync(path.join(fileDir, 'assets', url))) {
+            finalUrl = `./assets/${url}`;
+          } else if (fs.existsSync(path.join(fileDir, 'images', url))) {
+            finalUrl = `./images/${url}`;
+          } else {
+            // fallback if not found directly
+            finalUrl = `./${url}`;
+          }
+        }
+        
         newNodes.push({
           type: 'image',
-          url: url,
+          url: finalUrl.replace(/ /g, '%20'),
           alt: alt
         });
 
