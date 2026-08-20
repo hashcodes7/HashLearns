@@ -50,10 +50,6 @@ Both `bigkart_admin` and `bigkart_customer` rely on the following key dependenci
 
 - `spring-kafka`: For Spring Boot Kafka integration.
 
-- `tomcat-embed-jasper` and `jstl`: To enable JSP support for the frontend views.
-
-  
-
 ### 2. Admin Service (bigkart_admin)
 
 The admin service acts as the **Producer**. It runs on the default port `8080`.
