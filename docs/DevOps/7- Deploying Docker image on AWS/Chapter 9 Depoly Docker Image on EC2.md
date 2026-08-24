@@ -17,19 +17,8 @@ Spring Boot container :8080
 ```
 
 ## 1. Connect to EC2
-
-From your local machine:
-
-```bash
-ssh -i "your-key.pem" ec2-user@<EC2-PUBLIC-DNS>
-```
-
-Example:
-
-```bash
-ssh -i "backend-test-key.pem" ec2-user@ec2-16-16-138-182.eu-north-1.compute.amazonaws.com
-```
-
+open cmd of instance
+![[Pasted image 20260824214619.png]]
 ## 2. Install Docker
 
 On Amazon Linux 2023:
@@ -38,25 +27,25 @@ On Amazon Linux 2023:
 sudo dnf update -y
 sudo dnf install -y docker
 ```
-
-Start Docker:
+![[Pasted image 20260824214841.png]]
+### Start Docker:
 
 ```bash
 sudo systemctl start docker
 ```
-
+![[Pasted image 20260824215541.png]]
 Enable Docker on boot:
 
 ```bash
 sudo systemctl enable docker
 ```
-
+![[Pasted image 20260824215554.png]]
 Allow the current user to run Docker:
 
 ```bash
 sudo usermod -aG docker ec2-user
 ```
-
+![[Pasted image 20260824215533.png]]
 Log out and SSH back in so the group change takes effect.
 
 Check:
@@ -64,7 +53,7 @@ Check:
 ```bash
 docker --version
 ```
-
+![[Pasted image 20260824215528.png]]
 ## 3. Get your Docker image
 
 If your image is on Docker Hub:
@@ -79,25 +68,22 @@ Example:
 docker pull hashcodes7/smallkart-customer:latest
 ```
 
+![[Pasted image 20260824215447.png]]
+
 Check:
 
 ```bash
 docker images
 ```
-
+![[Pasted image 20260824215702.png]]
 ## 4. Run the container
 
 If your Spring Boot application listens on port `8080` inside the container:
 
 ```bash
-docker run -d   --name backend   -p 8080:8080   <dockerhub-username>/<image-name>:<tag>
+docker run -d   --name BigKartDeployedCustomer   -p 8080:8080   sarwvidya/bigkart_customer:latest
 ```
-
-Example:
-
-```bash
-docker run -d   --name backend   -p 8080:8080   hashcodes7/smallkart-customer:latest
-```
+![[Pasted image 20260824220312.png]]
 
 The mapping means:
 
