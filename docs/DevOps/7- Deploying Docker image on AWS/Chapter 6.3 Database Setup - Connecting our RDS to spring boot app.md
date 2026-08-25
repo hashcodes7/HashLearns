@@ -23,3 +23,4 @@ spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
 ```
 
+Once this is done, your database is now created and now is connected also, to the spring boot app.

@@ -18,15 +18,21 @@ sudo systemctl enable docker
 #### (optional)Configure to let users use docker instead of just Superuser
 check your identity using command `whoami`
 ![[Pasted image 20260825012226.png]]
+
 now give docker permission to yourself so you wont have to touch it with root user everytime
+```
+sudo usermod -aG docker <whichever user you are in above pic>
+```
+
 ![[Pasted image 20260825012347.png]]
+
+
 after this restart the ssm session
 ![[Pasted image 20260825012424.png]]
 and run a new ssm session
 ![[Pasted image 20260825012458.png]]
 
 and this time you should be able to run command without using root user
-
 now we can continue with our setup
 
 # Here we are at a special Junction. we have to make a architectural choice
@@ -71,3 +77,5 @@ docker compose version
 ![[Pasted image 20260825014157.png]]
 
 next you can start setting up project since everything is installed in EC2 Machine
+
+
