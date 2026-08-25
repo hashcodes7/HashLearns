@@ -32,7 +32,7 @@ docker build -t hashcodes7/smallkart_customer:latest .
 
 Wait for the build to finish. It will look like this:
 
-![Docker Build Progress](Pasted%20image%2020260815160335.png)
+![Docker Build Progress](./images/Pasted%20image%2020260815160335.png)
 
 :::tip
 Before pushing to production, you might want to test your image locally! See [Testing Docker Image Locally](6.1-optional-testing-docker-image-locally-before-deploying.md).

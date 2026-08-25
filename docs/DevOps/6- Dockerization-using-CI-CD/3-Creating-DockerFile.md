@@ -16,7 +16,7 @@ Create the file quickly using the `touch` command inside your project:
 touch Dockerfile
 ```
 
-![Dockerfile Creation](DevOps/6-%20Dockerization-using-CI-CD/images/Pasted%20image%2020260815120337.png)
+![Dockerfile Creation](./images/Pasted%20image%2020260815120337.png)
 
 Once done, you will see a `Dockerfile` built right in your project sidebar.
 

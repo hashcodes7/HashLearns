@@ -14,11 +14,11 @@ GitHub Codespaces provides an isolated cloud environment where you can build and
 1. Navigate to your GitHub repository.
 2. Click on the **Code** button, select the **Codespaces** tab, and click the `+` to create a new Codespace.
 
-![Codespaces Creation](Pasted%20image%2020260815030310.png)
+![Codespaces Creation](./images/Pasted%20image%2020260815030310.png)
 
 Once it launches, it will open a fully functional VS Code environment in your browser!
 
-![Codespaces UI](Pasted%20image%2020260815115105.png)
+![Codespaces UI](./images/Pasted%20image%2020260815115105.png)
 
 ## Configuring the Environment
 
@@ -52,10 +52,10 @@ Create a file at `.devcontainer/devcontainer.json` and paste the following confi
 After saving this file, VS Code will prompt you to **Rebuild the Container**. You **must** click **Rebuild** to apply these configurations.
 :::
 
-![Rebuild Prompt](Pasted%20image%2020260815030501.png)
+![Rebuild Prompt](./images/Pasted%20image%2020260815030501.png)
 
 Wait for the container to rebuild completely.
 
-![Rebuild Progress](Pasted%20image%2020260815030555.png)
+![Rebuild Progress](./images/Pasted%20image%2020260815030555.png)
 
 Now proceed to [Converting To Jar File](3-Converting-to-jar-file.md).

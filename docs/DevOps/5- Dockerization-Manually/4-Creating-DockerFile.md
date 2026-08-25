@@ -16,7 +16,7 @@ Create the file quickly using the `touch` command inside your Codespaces termina
 touch Dockerfile
 ```
 
-![Dockerfile Creation](DevOps/5-%20Dockerization-Manually/images/Pasted%20image%2020260815120337.png)
+![Dockerfile Creation](./images/Pasted%20image%2020260815120337.png)
 
 Once done, you will see a `Dockerfile` built right in your project sidebar. 
 

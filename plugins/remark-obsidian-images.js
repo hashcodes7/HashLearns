@@ -29,7 +29,8 @@ function visit(tree, type, callback) {
 
 function plugin() {
   return (tree, vfile) => {
-    const fileDir = vfile && vfile.dirname ? vfile.dirname : null;
+    const filePath = vfile && (vfile.path || (vfile.history && vfile.history[0]));
+    const fileDir = filePath ? path.dirname(filePath) : (vfile && vfile.dirname ? vfile.dirname : null);
 
     visit(tree, 'text', (node, index, parent) => {
       // Obsidian image syntax: ![[image.png]] or ![[image.png|alt text]]
@@ -81,7 +82,7 @@ function plugin() {
         
         newNodes.push({
           type: 'image',
-          url: finalUrl.replace(/ /g, '%20'),
+          url: finalUrl,
           alt: alt
         });
 

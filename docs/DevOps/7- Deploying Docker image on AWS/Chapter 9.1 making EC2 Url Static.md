@@ -1,5 +1,3 @@
-# Step 3 — Make the EC2 URL Static
-
 ## Goal
 
 Understand how to keep the URL stable when the EC2 public IP changes.

@@ -1,174 +1,73 @@
-# Step 2 — Deploy the Docker Image on EC2
-
-## Goal
-
-Take your existing Docker image and run it inside the EC2 instance.
-
-Target:
-
-```text
-Internet
-   ↓
-EC2
-   ↓
-Docker
-   ↓
-Spring Boot container :8080
+#### Lets start by installing Docker
 ```
-
-## 1. Connect to EC2
-open cmd of instance
-![[Pasted image 20260824214619.png]]
-## 2. Install Docker
-
-On Amazon Linux 2023:
-
-```bash
 sudo dnf update -y
 sudo dnf install -y docker
 ```
-![[Pasted image 20260824214841.png]]
-### Start Docker:
-
-```bash
+![[Pasted image 20260825011547.png]]
+#### Once Installed, Run docker
+```
 sudo systemctl start docker
 ```
-![[Pasted image 20260824215541.png]]
-Enable Docker on boot:
-
-```bash
+#### Make it Start Automatically, Enable Docker
+```
 sudo systemctl enable docker
 ```
-![[Pasted image 20260824215554.png]]
-Allow the current user to run Docker:
 
-```bash
-sudo usermod -aG docker ec2-user
-```
-![[Pasted image 20260824215533.png]]
-Log out and SSH back in so the group change takes effect.
+![[Pasted image 20260825011622.png]]
 
-Check:
+#### (optional)Configure to let users use docker instead of just Superuser
+check your identity using command `whoami`
+![[Pasted image 20260825012226.png]]
+now give docker permission to yourself so you wont have to touch it with root user everytime
+![[Pasted image 20260825012347.png]]
+after this restart the ssm session
+![[Pasted image 20260825012424.png]]
+and run a new ssm session
+![[Pasted image 20260825012458.png]]
 
-```bash
-docker --version
-```
-![[Pasted image 20260824215528.png]]
-## 3. Get your Docker image
+and this time you should be able to run command without using root user
 
-If your image is on Docker Hub:
+now we can continue with our setup
 
-```bash
-docker pull <dockerhub-username>/<image-name>:<tag>
-```
+# Here we are at a special Junction. we have to make a architectural choice
+## Kafka: Inside Docker vs Outside Docker
 
-Example:
+| Factor | Kafka inside Docker | Kafka outside Docker |
+|---|---|---|
+| Installation | Only Docker needed | Kafka installed on EC2 |
+| Networking | Simple: `kafka:9092` | More configuration required |
+| Deployment | `docker compose up` | Kafka managed separately |
+| Reproducibility | 🟢 High | 🟡 Medium |
+| EC2 cleanliness | 🟢 Clean | 🟡 Kafka files/processes on EC2 |
+| BigKart fit | 🟢 **Recommended** | 🟡 Good |
+| Production AWS | Usually managed Kafka (MSK) | Usually managed Kafka (MSK) |
 
-```bash
-docker pull hashcodes7/smallkart-customer:latest
-```
-
-![[Pasted image 20260824215447.png]]
-
-Check:
-
-```bash
-docker images
-```
-![[Pasted image 20260824215702.png]]
-## 4. Run the container
-
-If your Spring Boot application listens on port `8080` inside the container:
-
-```bash
-docker run -d   --name BigKartDeployedCustomer   -p 8080:8080   sarwvidya/bigkart_customer:latest
-```
-![[Pasted image 20260824220312.png]]
-
-The mapping means:
+### Our choice
+**Kafka inside Docker**
 
 ```text
-EC2 port 8080
-      ↓
-container port 8080
+EC2
+└── Docker Compose
+     ├── bigkart_admin
+     ├── bigkart_customer
+     └── kafka
+```
+why? because we want easy manageability of everything using docker
+for this we made 1 change in our app's application.properties file. 
+### Whats Docker Compose
+its a plugin of docker which reduces the managability of handling multiple docker images, eg one for admin, one for customer and one for kafka. 
+we can simply write our configuration of all apps inside the docker-compose.yml file and thats it.
+Install docker compose easily by these commands
+``` bash
+sudo mkdir -p /usr/local/lib/docker/cli-plugins
+
+sudo curl -SL https://github.com/docker/compose/releases/download/v5.5.0/docker-compose-linux-x86_64 \
+  -o /usr/local/lib/docker/cli-plugins/docker-compose
+
+sudo chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
+docker compose version
 ```
 
-## 5. Check the container
+![[Pasted image 20260825014157.png]]
 
-```bash
-docker ps
-```
-
-You should see something similar to:
-
-```text
-CONTAINER ID   IMAGE                              PORTS
-xxxxxxx        hashcodes7/smallkart-customer     0.0.0.0:8080->8080/tcp
-```
-
-## 6. Check application logs
-
-```bash
-docker logs backend
-```
-
-For live logs:
-
-```bash
-docker logs -f backend
-```
-
-Wait until Spring Boot reports that it has started.
-
-## 7. Test from your browser
-
-Use:
-
-```text
-http://<EC2-PUBLIC-DNS>:8080/
-```
-
-For Swagger, commonly:
-
-```text
-http://<EC2-PUBLIC-DNS>:8080/swagger-ui/index.html
-```
-
-The exact path depends on your Spring Boot / Swagger configuration.
-
-## 8. If it does not open
-
-Check the container:
-
-```bash
-docker ps
-```
-
-Check logs:
-
-```bash
-docker logs backend
-```
-
-Check that the application is listening on `0.0.0.0` inside the container rather than only `localhost`.
-
-Also verify the EC2 Security Group has:
-
-```text
-TCP 8080
-Source: 0.0.0.0/0
-```
-
-## Final result
-
-You now have:
-
-```text
-http://ec2-<public-ip>.<region>.compute.amazonaws.com:8080
-```
-
-Your Dockerized backend is live.
-
-However, the public IP can change if the EC2 instance is **stopped and started**.
-
-Step 3 addresses that issue.
+next you can start setting up project since everything is installed in EC2 Machine

@@ -15,11 +15,11 @@ DockerHub is a cloud registry where you can safely store and share your built Do
 2. Create an account, set a unique username, and choose the free plan.
 3. Once logged in, click the **Create Repository** button.
 
-![Create Repository](DevOps/5-%20Dockerization-Manually/images/Pasted%20image%2020260815133804.png)
+![Create Repository](./images/Pasted%20image%2020260815133804.png)
 
 After creating it, your repository dashboard will look like this:
 
-![Repository Dashboard](DevOps/5-%20Dockerization-Manually/images/Pasted%20image%2020260815134031.png)
+![Repository Dashboard](./images/Pasted%20image%2020260815134031.png)
 
 ### Naming Convention
 As shown, the repository namespace is `hashcodes7/smallkart_customer`.
