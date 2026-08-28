@@ -1,0 +1,6 @@
+- **Existing System:** Integrate recommendations with the existing BigKart ecommerce backend without replacing core systems.
+- **Infrastructure:** Operate within available infrastructure and compute budgets, with additional resources justified by measurable business value.
+- **Data:** Recommendation quality depends on the availability, volume, quality, and granularity of existing user, product, and interaction data.
+- **Cold Start:** Provide fallback recommendations when historical customer or product behavior is unavailable.
+- **Operational Independence:** Ensure recommendation failures do not impact core ecommerce operations.
+- **Scope:** The initial release focuses exclusively on product recommendations, excluding search ranking, dynamic pricing, and advertising optimization.
