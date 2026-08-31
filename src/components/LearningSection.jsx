@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { learningTopics } from '../data/learningData.js';
+import { usePluginData } from '@docusaurus/useGlobalData';
 import { TopicCard } from './TopicCard.jsx';
 import { SearchIcon, CloseIcon } from './Icons.jsx';
 
@@ -7,8 +7,37 @@ export function LearningSection() {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeFilter, setActiveFilter] = useState('All');
 
-  const filters = ['All', 'Backend', 'Core CS', 'Frontend', 'Architecture', 'DevOps'];
-  const topics = learningTopics || [];
+  const filters = ['All'];
+
+  // Fetch dynamically generated categories/courses from feature-cards-plugin
+  const pluginData = usePluginData('feature-cards-plugin') || [];
+  
+  const topics = pluginData.map((item, idx) => {
+    // Attempt to map graphic from title
+    const t = item.title.toLowerCase();
+    let graphic = 'dsa';
+    let color = '#38bdf8';
+    
+    if (t.includes('system design')) { graphic = 'system-design'; color = '#a855f7'; }
+    else if (t.includes('devops') || t.includes('cloud')) { graphic = 'devops'; color = '#f43f5e'; }
+    else if (t.includes('java')) { graphic = 'java'; color = '#f59e0b'; }
+    else if (t.includes('react') || t.includes('frontend')) { graphic = 'react'; color = '#06b6d4'; }
+    else if (t.includes('spring')) { graphic = 'spring'; color = '#10b981'; }
+
+    return {
+      id: item.title,
+      title: item.title,
+      tag: 'All',
+      description: item.description,
+      graphic: graphic,
+      color: color,
+      docCategory: item.courses && item.courses.length > 0 ? item.courses[0].link.split('/').slice(0, 3).join('/') : '/docs',
+      chapters: item.courses ? item.courses.map(course => ({
+        title: course.title,
+        docPath: course.link
+      })) : []
+    };
+  });
 
   const filteredTopics = useMemo(() => {
     return topics.filter((topic) => {
