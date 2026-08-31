@@ -3,7 +3,7 @@
 sudo dnf update -y
 sudo dnf install -y docker
 ```
-![[Pasted image 20260825011547.png]]
+![](assets/Pasted%20image%2020260825011547.png)
 #### Once Installed, Run docker
 ```
 sudo systemctl start docker
@@ -13,24 +13,24 @@ sudo systemctl start docker
 sudo systemctl enable docker
 ```
 
-![[Pasted image 20260825011622.png]]
+![](assets/Pasted%20image%2020260825011622.png)
 
 #### (optional)Configure to let users use docker instead of just Superuser
 check your identity using command `whoami`
-![[Pasted image 20260825012226.png]]
+![](assets/Pasted%20image%2020260825012226.png)
 
 now give docker permission to yourself so you wont have to touch it with root user everytime
 ```
 sudo usermod -aG docker <whichever user you are in above pic>
 ```
 
-![[Pasted image 20260825012347.png]]
+![](assets/Pasted%20image%2020260825012347.png)
 
 
 after this restart the ssm session
-![[Pasted image 20260825012424.png]]
+![](assets/Pasted%20image%2020260825012424.png)
 and run a new ssm session
-![[Pasted image 20260825012458.png]]
+![](assets/Pasted%20image%2020260825012458.png)
 
 and this time you should be able to run command without using root user
 now we can continue with our setup
@@ -74,7 +74,7 @@ sudo chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
 docker compose version
 ```
 
-![[Pasted image 20260825014157.png]]
+![](assets/Pasted%20image%2020260825014157.png)
 
 next you can start setting up project since everything is installed in EC2 Machine
 

@@ -12,7 +12,7 @@ AWS Console → **EC2** → **Instances** → **Launch instances**
 
 ## Step 03: Click link "Launch instance"
 
-![[Pasted image 20260824203452.png]]
+![](assets/Pasted%20image%2020260824203452.png)
 ## Step 04: Instance name
 
 Use any name, for example:
@@ -27,42 +27,42 @@ Select **Proceed without a key pair (Not recommended)**.
 
 We will use **EC2 Instance Connect** to access the instance directly from the AWS Console, so a key pair `.pem` file is not needed for this setup.
 
-![[Pasted image 20260824203716.png]]
+![](assets/Pasted%20image%2020260824203716.png)
 ## Step 08: Addition of a vpc 
 A VPC is a private ip address range which identifies your newly created machine inside AWS network using its IP address. One default VPC is already made in AWS and if you accidentally deleted it you can create one using this guide -  [[Chapter 4 Making a default vpc]] 
 ## Step 09: Attaching/creating a Security Group
 This step is common while creating RDS and EC2 both.
 A security group tells who in world can connect to this app. Security group has security rules attached to it. Here we are quickly creating one and allowing everyone in world in aws and outside aws to be able to connect to our app. **You can use same security group for multiple apps** also but for this time we are creating one specific for EC2.
-![[Pasted image 20260824204200.png]]
+![](assets/Pasted%20image%2020260824204200.png)
 
 ## Step 10: (totally optional) Click Edit
 you can click edit to change the security rules inside security group. for changing the name of our security group we are editing it but you can keep as it is with a random name
 
-![[Pasted image 20260824203848.png]]
+![](assets/Pasted%20image%2020260824203848.png)
 
-![[Pasted image 20260824205006.png]]
+![](assets/Pasted%20image%2020260824205006.png)
 ## Step 10:(optional) Scroll down and click Additional Details
 We are now attaching a IAM role with this EC2 because we want to connect to our machine from AWS SSM manager (cmd inside aws) instead of having a saperate app for it. 
 for SSM manager we need to attach a IAM role to our EC2 Machine
-![[Pasted image 20260824205137.png]]
+![](assets/Pasted%20image%2020260824205137.png)
 ## Step 18: Click Create new IAM profile
 
 This step will create an IAM role (profile) 
 
-![[Pasted image 20260824211346.png]]
+![](assets/Pasted%20image%2020260824211346.png)
 
 ## Step 19: Give a name to your IAM Role
 
-![[Pasted image 20260824205353.png]]
+![](assets/Pasted%20image%2020260824205353.png)
 
 ## Step 20: Attach Policy
 Select option -> to use existing policy and enter ssmmanaged to (search) select this policy. This will let our IAM role to use EC2
-![[Pasted image 20260824210900.png]]
+![](assets/Pasted%20image%2020260824210900.png)
 
 
 ## Step 25: Click Launch instance
 
-![[Pasted image 20260824211004.png]]
+![](assets/Pasted%20image%2020260824211004.png)
 
 ## Step 26: Click link "Instances"
 
@@ -71,15 +71,15 @@ Select option -> to use existing policy and enter ssmmanaged to (search) select 
 Once your instance is launched, go back to see all instances.
 
 Select your instance and click on connect.
-![[Pasted image 20260824211053.png]]
+![](assets/Pasted%20image%2020260824211053.png)
 
 After that click SSM session manager -> then click connect (we created IAM profile to connect with SSM session manager)
 
 (Other options will require separate software but SSM session manager will open in browser, its own CMD)
-![[Pasted image 20260824211128.png]]
+![](assets/Pasted%20image%2020260824211128.png)
 
 This is how the cmd open now run this sudo command.
 
-![[Pasted image 20260824211150.png]]
+![](assets/Pasted%20image%2020260824211150.png)
 
 Done your EC2 is created and started

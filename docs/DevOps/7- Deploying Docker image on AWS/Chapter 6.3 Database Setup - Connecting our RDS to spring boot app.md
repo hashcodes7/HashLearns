@@ -1,6 +1,6 @@
-![[Pasted image 20260820151654.png]]
+![](assets/Pasted%20image%2020260820151654.png)
 
-![[Pasted image 20260820151812.png]]
+![](assets/Pasted%20image%2020260820151812.png)
 
 #### So based on this, connection to our RDS can be made in this format
 format ---->>    ip address   : port number  /   database_name

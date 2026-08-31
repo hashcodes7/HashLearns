@@ -40,4 +40,4 @@ IAM Role
 RDS
 ```
 
-![[Pasted image 20260818030909.png]]
+![](assets/Pasted%20image%2020260818030909.png)

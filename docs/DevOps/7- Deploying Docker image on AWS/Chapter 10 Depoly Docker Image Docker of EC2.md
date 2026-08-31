@@ -1,6 +1,6 @@
 go to home location of user using `cd ~` command
 check location using pwd command
-![[Pasted image 20260825014840.png]]
+![](assets/Pasted%20image%2020260825014840.png)
 
 now we will quickly check some things before moving
 use these commands -
@@ -15,7 +15,7 @@ docker compose version
 docker ps
 ```
 
-![[Pasted image 20260825020012.png]]
+![](assets/Pasted%20image%2020260825020012.png)
 
 ### now we will write script to install and run all 3 images
 from `/home/ssm-user/bigkart` use this command
@@ -98,15 +98,15 @@ volumes:
 This compose script contains all options of running your docker image
 Press Ctrl + O to save it and CTRL + X to come out of editor
 check using `docker componse config` to see all went good
-![[Pasted image 20260825020619.png]]
+![](assets/Pasted%20image%2020260825020619.png)
 
 ## Running Docker Images all at once
 use `docker componse up -d` to run all images
-![[Pasted image 20260825020700.png]]
+![](assets/Pasted%20image%2020260825020700.png)
 
 ## Verify Images are running
 use `docker compose ps` and see which images are running
-![[Pasted image 20260825020735.png]]
+![](assets/Pasted%20image%2020260825020735.png)
 
 you can see performance of both apps by
 ```
@@ -119,19 +119,19 @@ This marks your local deployment. app is running.
 
 for your global deployment, you need to enable these ports in your security rules
 go to EC2 -> Security -> Security Group
-![[Pasted image 20260825030719.png]]
+![](assets/Pasted%20image%2020260825030719.png)
 
 and open it
-![[Pasted image 20260825030737.png]]
+![](assets/Pasted%20image%2020260825030737.png)
 
 click add rule and add these 2 rules to open these 2 ports of our ec2
-![[Pasted image 20260825030845.png]]
-![[Pasted image 20260825030807.png]]
+![](assets/Pasted%20image%2020260825030845.png)
+![](assets/Pasted%20image%2020260825030807.png)
 
 save it and its done. now you can access backend from anywhere. to access it go to EC2
-![[Pasted image 20260825030957.png]]
+![](assets/Pasted%20image%2020260825030957.png)
 add 8080 or 8081 in end according to application you want to access
 
-![[Pasted image 20260825031035.png]]
+![](assets/Pasted%20image%2020260825031035.png)
 
 Thats it.
