@@ -16,6 +16,6 @@ If not done, then obsidian will path them incorrectly (by default) so make sure 
 - in New link format  -> Relative path to file
 - turn on Automatically update internal links
 - turn off use WikiLinks (obsidian's way to link image). We are turning it off because we want native Markdown way of referencing a image, not a obsidian way otherwise it will not work on other platforms.
-
+-
 Refer to attachment below.
 ![](assets/Pasted%20image%2020260831203523.png)
