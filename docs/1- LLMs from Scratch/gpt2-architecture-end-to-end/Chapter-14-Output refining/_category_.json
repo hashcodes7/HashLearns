@@ -1,4 +1,8 @@
 {
   "label": "Output refining",
-  "position": 14
+  "position": 14,
+  "link": {
+    "type": "generated-index",
+    "description": "Explore courses and concepts related to Output refining."
+  }
 }

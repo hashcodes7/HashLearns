@@ -1,4 +1,8 @@
 {
   "label": "Llm Question",
-  "position": 2
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "description": "Explore courses and concepts related to Llm Question."
+  }
 }

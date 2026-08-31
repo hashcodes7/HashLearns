@@ -1,4 +1,8 @@
 {
   "label": "Finetuning",
-  "position": 13
+  "position": 13,
+  "link": {
+    "type": "generated-index",
+    "description": "Explore courses and concepts related to Finetuning."
+  }
 }

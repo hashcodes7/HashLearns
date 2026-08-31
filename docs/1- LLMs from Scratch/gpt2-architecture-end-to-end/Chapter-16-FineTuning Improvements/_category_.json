@@ -1,4 +1,8 @@
 {
   "label": "FineTuning Improvements",
-  "position": 16
+  "position": 16,
+  "link": {
+    "type": "generated-index",
+    "description": "Explore courses and concepts related to FineTuning Improvements."
+  }
 }

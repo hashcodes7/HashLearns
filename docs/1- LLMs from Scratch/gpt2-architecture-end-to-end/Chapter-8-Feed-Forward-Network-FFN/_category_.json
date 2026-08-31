@@ -1,4 +1,8 @@
 {
   "label": "Feed Forward Network (FFN)",
-  "position": 8
+  "position": 8,
+  "link": {
+    "type": "generated-index",
+    "description": "Explore courses and concepts related to Feed Forward Network (FFN)."
+  }
 }

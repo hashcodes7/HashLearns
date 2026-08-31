@@ -1,3 +1,7 @@
 {
-  "label": "Ai"
+  "label": "Ai",
+  "link": {
+    "type": "generated-index",
+    "description": "Explore courses and concepts related to Ai."
+  }
 }

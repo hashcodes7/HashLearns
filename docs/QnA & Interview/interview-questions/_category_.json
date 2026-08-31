@@ -1,3 +1,7 @@
 {
-  "label": "Interview Questions"
+  "label": "Interview Questions",
+  "link": {
+    "type": "generated-index",
+    "description": "Explore courses and concepts related to Interview Questions."
+  }
 }

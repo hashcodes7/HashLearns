@@ -1,3 +1,7 @@
 {
-  "label": "Flutter"
+  "label": "Flutter",
+  "link": {
+    "type": "generated-index",
+    "description": "Explore courses and concepts related to Flutter."
+  }
 }

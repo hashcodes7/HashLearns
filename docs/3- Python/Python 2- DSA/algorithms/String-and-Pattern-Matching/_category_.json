@@ -1,3 +1,7 @@
 {
-  "label": "String And Pattern Matching"
+  "label": "String And Pattern Matching",
+  "link": {
+    "type": "generated-index",
+    "description": "Explore courses and concepts related to String And Pattern Matching."
+  }
 }

@@ -1,4 +1,8 @@
 {
   "label": "LlamaIndex",
-  "position": 3
+  "position": 3,
+  "link": {
+    "type": "generated-index",
+    "description": "Explore courses and concepts related to LlamaIndex."
+  }
 }

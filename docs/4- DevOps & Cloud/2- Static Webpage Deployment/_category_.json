@@ -1,3 +1,7 @@
 {
-  "label": "Static Website Deployment"
+  "label": "Static Website Deployment",
+  "link": {
+    "type": "generated-index",
+    "description": "Explore courses and concepts related to Static Website Deployment."
+  }
 }

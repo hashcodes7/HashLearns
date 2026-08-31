@@ -1,4 +1,8 @@
 {
   "label": "Single Head Self Attention",
-  "position": 5
+  "position": 5,
+  "link": {
+    "type": "generated-index",
+    "description": "Explore courses and concepts related to Single Head Self Attention."
+  }
 }

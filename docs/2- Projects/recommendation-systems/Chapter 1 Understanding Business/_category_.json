@@ -1,4 +1,8 @@
 {
   "label": " Matrix Factorization",
-  "position": 1
+  "position": 1,
+  "link": {
+    "type": "generated-index",
+    "description": "Explore courses and concepts related to  Matrix Factorization."
+  }
 }

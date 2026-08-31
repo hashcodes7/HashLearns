@@ -1,4 +1,8 @@
 {
   "label": "Scaled Dot Attention Core Mechanics",
-  "position": 4
+  "position": 4,
+  "link": {
+    "type": "generated-index",
+    "description": "Explore courses and concepts related to Scaled Dot Attention Core Mechanics."
+  }
 }

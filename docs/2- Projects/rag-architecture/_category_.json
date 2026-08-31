@@ -1,3 +1,7 @@
 {
-  "label": "Rag Architecture"
+  "label": "Rag Architecture",
+  "link": {
+    "type": "generated-index",
+    "description": "Explore courses and concepts related to Rag Architecture."
+  }
 }

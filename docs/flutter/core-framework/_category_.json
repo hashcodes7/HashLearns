@@ -1,3 +1,7 @@
 {
-  "label": "Core Framework"
+  "label": "Core Framework",
+  "link": {
+    "type": "generated-index",
+    "description": "Explore courses and concepts related to Core Framework."
+  }
 }

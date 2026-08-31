@@ -1,4 +1,8 @@
 {
   "label": "Retrieval Fusion And Reranking",
-  "position": 5
+  "position": 5,
+  "link": {
+    "type": "generated-index",
+    "description": "Explore courses and concepts related to Retrieval Fusion And Reranking."
+  }
 }
