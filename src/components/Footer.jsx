@@ -1,59 +1,39 @@
-import { Mail } from "lucide-react";
-import { FaGithub, FaLinkedin } from "react-icons/fa";
+import React from 'react';
+import { userProfile } from '../data/learningData';
+import { GitHubIcon, LinkedInIcon } from './Icons';
 
-const Footer = () => {
+export function Footer() {
+  const currentYear = new Date().getFullYear();
+
   return (
-    <footer
-      className="glass-panel"
-      style={{
-        marginTop: "4rem",
-        padding: "2rem 0",
-        borderRadius: "2rem 2rem 0 0",
-        borderBottom: "none",
-      }}
-    >
-      <div
-        className="container"
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "1.5rem",
-        }}
-      >
-        <h2 style={{ fontSize: "1.5rem", fontWeight: 600 }}>
-          Harsh Vardhan Verma
-        </h2>
-
-        <div style={{ display: "flex", gap: "1rem" }}>
-          <a
-            href="mailto:harshjobs07@gmail.com"
-            className="btn-icon"
-            aria-label="Email"
+    <footer className="footer">
+      <div className="footer-container">
+        <div className="footer-links">
+          <a 
+            href={userProfile.github} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="footer-link"
           >
-            <Mail size={24} />
+            <GitHubIcon size={16} />
+            <span>GitHub</span>
           </a>
-          <a href="#" className="btn-icon" aria-label="LinkedIn">
-            <FaLinkedin size={24} />
-          </a>
-          <a href="#" className="btn-icon" aria-label="GitHub">
-            <FaGithub size={24} />
+
+          <a 
+            href={userProfile.linkedin} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="footer-link"
+          >
+            <LinkedInIcon size={16} />
+            <span>LinkedIn</span>
           </a>
         </div>
 
-        <p
-          style={{
-            color: "var(--text-secondary)",
-            fontSize: "0.875rem",
-            textAlign: "center",
-          }}
-        >
-          © {new Date().getFullYear()} Harsh Vardhan Verma. Built with React &
-          Vite.
+        <p className="footer-text">
+          © {currentYear} {userProfile.name} • Built with React
         </p>
       </div>
     </footer>
   );
-};
-
-export default Footer;
+}

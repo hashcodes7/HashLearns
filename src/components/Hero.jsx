@@ -1,169 +1,170 @@
-import { Typewriter } from "react-simple-typewriter";
-import me1 from "../assets/me1.png";
-import me2 from "../assets/me2.png";
+import React, { useState } from 'react';
+import { userProfile } from '../data/learningData';
+import { SparklesIcon, GitHubIcon, LinkedInIcon, BookOpenIcon, CopyIcon, CheckIcon, CodeIcon } from './Icons';
 
-const Hero = () => {
+export function Hero({ completedCount, totalChapters }) {
+  const [copiedCode, setCopiedCode] = useState(false);
+
+  const heroCode = `// Sarvy.java - Developer & Educator Profile
+public class DeveloperInfo {
+    public final String name = "Sarvy";
+    public final String role = "Full-Stack Engineer & Tech Mentor";
+    public final String[] coreStack = {
+        "Java 21", "Spring Boot", "React.js", 
+        "Kafka", "PostgreSQL", "Docker", "DSA"
+    };
+    public final String mission = "Demystifying complex concepts into actionable notes.";
+    
+    public boolean isOpenForHire() {
+        return true;
+    }
+}`;
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(heroCode);
+    setCopiedCode(true);
+    setTimeout(() => setCopiedCode(false), 2000);
+  };
+
   return (
-    <section
-      id="about"
-      className="section flex-center"
-      style={{ minHeight: "100vh", paddingTop: "6rem", position: "relative" }}
-    >
-      <div
-        style={{
-          width: "100%",
-          maxWidth: "1100px",
-          display: "flex",
-          gap: "3rem",
-          alignItems: "center",
-          padding: "0 2rem",
-          zIndex: 10,
-          flexWrap: "wrap",
-          justifyContent: "center",
-        }}
-      >
-        {/* Left: Profile Images */}
-        <div
-          style={{
-            flex: "0 0 320px",
-            display: "flex",
-            justifyContent: "center",
-            position: "relative",
-          }}
-        >
-          <div
-            style={{
-              width: 260,
-              height: 260,
-              borderRadius: 18,
-              overflow: "hidden",
-              boxShadow: "0 20px 50px rgba(2,6,23,0.6)",
-              border: "1px solid var(--glass-border)",
-              background:
-                "linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01))",
-            }}
-          >
-            <img
-              src={me1}
-              alt="Harsh profile"
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                display: "block",
-              }}
-            />
+    <section id="about" className="hero-section">
+      {/* Background ambient lighting */}
+      <div className="hero-glow-blob blob-1"></div>
+      <div className="hero-glow-blob blob-2"></div>
+
+      <div className="hero-content-grid">
+        {/* Left Column: Intro & Bio */}
+        <div className="hero-text-col">
+          <div className="status-badge">
+            <span className="pulse-dot"></span>
+            <span>{userProfile.status}</span>
           </div>
 
-          {/* small secondary image */}
-          <div
-            style={{
-              position: "absolute",
-              right: -18,
-              bottom: -18,
-              width: 110,
-              height: 110,
-              borderRadius: 14,
-              overflow: "hidden",
-              border: "3px solid var(--background)",
-              boxShadow: "0 8px 24px rgba(2,6,23,0.5)",
-            }}
-          >
-            <img
-              src={me2}
-              alt="Harsh casual"
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                display: "block",
-              }}
-            />
+          <h1 className="hero-title">
+            Hi, I'm <span className="gradient-text">{userProfile.name}</span>
+            <br />
+            <span className="sub-title-text">Building Systems & Sharing Knowledge.</span>
+          </h1>
+
+          <p className="hero-bio">
+            {userProfile.bio}
+          </p>
+
+          {/* Key highlights tags */}
+          <div className="tech-tags-wrapper">
+            <span className="tag-pill">☕ Java & Spring Boot</span>
+            <span className="tag-pill">⚛️ React.js</span>
+            <span className="tag-pill">🧩 DSA Masterclass</span>
+            <span className="tag-pill">🗄️ System Architecture</span>
+            <span className="tag-pill">☁️ Docker & Cloud</span>
+          </div>
+
+          {/* Action CTAs */}
+          <div className="hero-cta-group">
+            <a href="#study-hub" className="btn btn-primary">
+              <BookOpenIcon size={18} />
+              <span>Explore Study Hub</span>
+            </a>
+            
+            <a 
+              href={userProfile.socialLinks.linkedin} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="btn btn-secondary"
+            >
+              <LinkedInIcon size={18} />
+              <span>LinkedIn</span>
+            </a>
+
+            <a 
+              href={userProfile.socialLinks.github} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="btn btn-outline"
+            >
+              <GitHubIcon size={18} />
+              <span>GitHub</span>
+            </a>
+          </div>
+
+          {/* Quick Metrics Bar */}
+          <div className="hero-stats-bar">
+            <div className="stat-item">
+              <span className="stat-number">6+</span>
+              <span className="stat-label">Core Domains</span>
+            </div>
+            <div className="stat-divider"></div>
+            <div className="stat-item">
+              <span className="stat-number">{totalChapters}</span>
+              <span className="stat-label">Detailed Chapters</span>
+            </div>
+            <div className="stat-divider"></div>
+            <div className="stat-item">
+              <span className="stat-number">{completedCount}</span>
+              <span className="stat-label">Mastered by You</span>
+            </div>
+            <div className="stat-divider"></div>
+            <div className="stat-item">
+              <span className="stat-number">100%</span>
+              <span className="stat-label">Free & Interactive</span>
+            </div>
           </div>
         </div>
 
-        {/* Right: Text */}
-        <div
-          style={{
-            flex: "1 1 420px",
-            minWidth: 280,
-            color: "var(--text-primary)",
-          }}
-        >
-          <div
-            style={{
-              marginBottom: "1.25rem",
-              display: "flex",
-              alignItems: "center",
-              gap: "0.6rem",
-            }}
-          >
-            <div className="glass-pill">AI AUTOMATION ENGINEER</div>
-          </div>
+        {/* Right Column: Interactive Terminal Preview */}
+        <div className="hero-preview-col">
+          <div className="code-window-card">
+            <div className="code-window-header">
+              <div className="window-dots">
+                <span className="dot dot-red"></span>
+                <span className="dot dot-yellow"></span>
+                <span className="dot dot-green"></span>
+              </div>
+              <div className="window-title">
+                <CodeIcon size={14} />
+                <span>SarvyProfile.java</span>
+              </div>
+              <button 
+                onClick={handleCopy} 
+                className="code-copy-btn"
+                title="Copy snippet"
+              >
+                {copiedCode ? <CheckIcon size={14} className="copied" /> : <CopyIcon size={14} />}
+                <span>{copiedCode ? 'Copied!' : 'Copy'}</span>
+              </button>
+            </div>
 
-          <h1
-            style={{
-              fontSize: "clamp(2.4rem, 6vw, 4rem)",
-              fontWeight: 800,
-              lineHeight: 1.05,
-              margin: "0 0 1rem 0",
-            }}
-          >
-            Engineering
-            <br />
-            <span style={{ color: "var(--accent-color)" }}>
-              <Typewriter
-                words={[
-                  "AI Systems",
-                  "Mechanical Logic",
-                  "LLM Pipelines",
-                  "Scalable Apps",
-                ]}
-                loop={true}
-                cursor
-                cursorStyle="|"
-                cursorColor="var(--accent-color)"
-                typeSpeed={70}
-                deleteSpeed={50}
-                delaySpeed={1500}
-              />
-            </span>
-          </h1>
+            <div className="code-window-body">
+              <pre className="code-content">
+                <code>
+                  <span className="token-comment">// Sarvy.java - Developer & Educator Profile</span>{'\n'}
+                  <span className="token-keyword">public class</span> <span className="token-class">DeveloperInfo</span> {'{\n'}
+                  {'    '}<span className="token-keyword">public final</span> <span className="token-type">String</span> name = <span className="token-string">"Sarvy"</span>;{'\n'}
+                  {'    '}<span className="token-keyword">public final</span> <span className="token-type">String</span> role = <span className="token-string">"Full-Stack Java & React Engineer"</span>;{'\n'}
+                  {'    '}<span className="token-keyword">public final</span> <span className="token-type">String</span>[] coreStack = {'{\n'}
+                  {'        '}<span className="token-string">"Java 21"</span>, <span className="token-string">"Spring Boot 3"</span>, <span className="token-string">"React.js"</span>,{'\n'}
+                  {'        '}<span className="token-string">"Kafka"</span>, <span className="token-string">"PostgreSQL"</span>, <span className="token-string">"Docker"</span>, <span className="token-string">"DSA"</span>{'\n'}
+                  {'    '}{'}'};{'\n'}
+                  {'    '}<span className="token-keyword">public final</span> <span className="token-type">String</span> mission = <span className="token-string">"Demystifying complex concepts."</span>;{'\n'}
+                  {'\n'}
+                  {'    '}<span className="token-keyword">public boolean</span> <span className="token-function">isOpenForHire</span>() {'{\n'}
+                  {'        '}<span className="token-keyword">return</span> <span className="token-boolean">true</span>;{'\n'}
+                  {'    '}{'}\n'}
+                  {'}'}
+                </code>
+              </pre>
+            </div>
 
-          <p
-            style={{
-              fontSize: "1rem",
-              color: "var(--text-secondary)",
-              lineHeight: 1.7,
-              marginBottom: "1.25rem",
-            }}
-          >
-            I build production-ready AI products — retrieval systems, LLM-driven
-            interfaces and full-stack apps. I bridge applied research and
-            engineering to deliver scalable systems with strong UX and reliable
-            infra.
-          </p>
-
-          <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
-            <a
-              href="#/resume"
-              className="btn"
-              style={{ padding: "0.6rem 1rem" }}
-            >
-              Resume
-            </a>
-            <a
-              href="#/articles"
-              className="btn ghost"
-              style={{ padding: "0.6rem 1rem" }}
-            >
-              Projects
-            </a>
+            {/* Quick interactive footer on card */}
+            <div className="code-window-footer">
+              <div className="card-quick-tip">
+                <SparklesIcon size={14} className="sparkle-gold" />
+                <span>Scroll down to dive into 30+ structured learning chapters</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </section>
   );
-};
-
-export default Hero;
+}
