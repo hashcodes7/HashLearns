@@ -3,11 +3,9 @@ import json
 import re
 
 def format_title(name):
-    # Remove leading numbers (e.g. "1- ", "01-")
+    # Just remove leading numbers (e.g. "1- ", "01-") and keep original casing
     clean_name = re.sub(r'^\d+[\s-]*\.*[\s-]*', '', name)
-    # Split by hyphen or underscore and capitalize
-    words = re.split(r'[-_]', clean_name)
-    return ' '.join(word.capitalize() for word in words if word).strip()
+    return clean_name.strip()
 
 def main():
     docs_dir = os.path.join(os.getcwd(), 'docs')
@@ -31,11 +29,9 @@ def main():
             except json.JSONDecodeError:
                 pass
                 
-        changed = False
+        changed = True
         
-        if 'label' not in category_data:
-            category_data['label'] = format_title(folder_name)
-            changed = True
+        category_data['label'] = format_title(folder_name)
             
         if 'link' not in category_data:
             category_data['link'] = {

@@ -7,7 +7,7 @@ export function LearningSection() {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeFilter, setActiveFilter] = useState('All');
 
-  const filters = ['All'];
+  const filters = ['All', 'AI / ML', 'Backend', 'Core CS', 'Frontend', 'Architecture', 'DevOps'];
 
   // Fetch dynamically generated categories/courses from feature-cards-plugin
   const pluginData = usePluginData('feature-cards-plugin') || [];
@@ -17,17 +17,22 @@ export function LearningSection() {
     const t = item.title.toLowerCase();
     let graphic = 'dsa';
     let color = '#38bdf8';
+    let tag = 'Core CS';
     
-    if (t.includes('system design')) { graphic = 'system-design'; color = '#a855f7'; }
-    else if (t.includes('devops') || t.includes('cloud')) { graphic = 'devops'; color = '#f43f5e'; }
-    else if (t.includes('java')) { graphic = 'java'; color = '#f59e0b'; }
-    else if (t.includes('react') || t.includes('frontend')) { graphic = 'react'; color = '#06b6d4'; }
-    else if (t.includes('spring')) { graphic = 'spring'; color = '#10b981'; }
+    if (t.includes('system design') || t.includes('distributed')) { graphic = t.includes('distributed') ? 'distributed' : 'system-design'; color = t.includes('distributed') ? '#f97316' : '#a855f7'; tag = 'Architecture'; }
+    else if (t.includes('devops') || t.includes('cloud')) { graphic = 'devops'; color = '#f43f5e'; tag = 'DevOps'; }
+    else if (t.includes('java') || t.includes('python')) { graphic = t.includes('java') ? 'java' : 'python'; color = t.includes('java') ? '#f59e0b' : '#3b82f6'; tag = 'Backend'; }
+    else if (t.includes('react') || t.includes('frontend') || t.includes('flutter')) { graphic = t.includes('flutter') ? 'flutter' : 'react'; color = t.includes('flutter') ? '#0284c7' : '#06b6d4'; tag = 'Frontend'; }
+    else if (t.includes('spring')) { graphic = 'spring'; color = '#10b981'; tag = 'Backend'; }
+    else if (t.includes('llm') || t.includes('scratch') || t.includes('vision')) { graphic = t.includes('vision') ? 'vision' : 'llms'; color = t.includes('vision') ? '#14b8a6' : '#ec4899'; tag = 'AI / ML'; }
+    else if (t.includes('project')) { graphic = 'projects'; color = '#eab308'; tag = 'Core CS'; }
+    else if (t.includes('qna') || t.includes('interview')) { graphic = 'interview'; color = '#84cc16'; tag = 'Core CS'; }
+    else if (t.includes('template')) { graphic = 'templates'; color = '#64748b'; tag = 'Core CS'; }
 
     return {
       id: item.title,
       title: item.title,
-      tag: 'All',
+      tag: tag,
       description: item.description,
       graphic: graphic,
       color: color,

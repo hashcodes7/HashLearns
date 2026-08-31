@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { 
   JavaGraphic, DSAGraphic, SpringGraphic, 
-  ReactGraphic, SystemDesignGraphic, DevOpsGraphic 
+  ReactGraphic, SystemDesignGraphic, DevOpsGraphic,
+  LLMGraphic, ProjectsGraphic, VisionGraphic,
+  PythonGraphic, DistributedSystemsGraphic, FlutterGraphic,
+  InterviewGraphic, TemplatesGraphic
 } from './TopicGraphics.jsx';
 
 export function TopicCard({ topic }) {
@@ -17,7 +20,15 @@ export function TopicCard({ topic }) {
       case 'react': return <ReactGraphic color={topic.color} />;
       case 'system-design': return <SystemDesignGraphic color={topic.color} />;
       case 'devops': return <DevOpsGraphic color={topic.color} />;
-      default: return <JavaGraphic color={topic.color} />;
+      case 'llms': return <LLMGraphic color={topic.color} />;
+      case 'projects': return <ProjectsGraphic color={topic.color} />;
+      case 'vision': return <VisionGraphic color={topic.color} />;
+      case 'python': return <PythonGraphic color={topic.color} />;
+      case 'distributed': return <DistributedSystemsGraphic color={topic.color} />;
+      case 'flutter': return <FlutterGraphic color={topic.color} />;
+      case 'interview': return <InterviewGraphic color={topic.color} />;
+      case 'templates': return <TemplatesGraphic color={topic.color} />;
+      default: return <DSAGraphic color={topic.color} />;
     }
   };
 
