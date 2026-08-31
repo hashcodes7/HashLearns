@@ -642,9 +642,24 @@ body,
   flex-direction: column;
   gap: 7px;
   overflow-y: auto;
+  overflow-x: hidden;
   flex: 1;
   padding: 0;
   margin: 0;
+}
+
+.back-chapters-list::-webkit-scrollbar {
+  width: 5px;
+}
+.back-chapters-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+.back-chapters-list::-webkit-scrollbar-thumb {
+  background: var(--border-color, rgba(255, 255, 255, 0.2));
+  border-radius: 10px;
+}
+.back-chapters-list::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted, rgba(255, 255, 255, 0.4));
 }
 
 .back-chapter-item {
@@ -680,6 +695,7 @@ body,
   font-weight: 500;
   color: var(--text-primary);
   flex: 1;
+  min-width: 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

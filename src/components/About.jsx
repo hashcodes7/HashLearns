@@ -19,7 +19,14 @@ export function About() {
           </p>
 
           <div className="hero-buttons-row">
-            <a href="#docs" className="btn-hero-primary">
+            <a 
+              href="#docs" 
+              className="btn-hero-primary"
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById('docs')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
               Get Started
             </a>
 
