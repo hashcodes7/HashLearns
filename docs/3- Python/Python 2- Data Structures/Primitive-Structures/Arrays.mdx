@@ -1,13 +1,9 @@
----
-title: "Arrays"
-description: "Fundamental sequential or graph-based memory structures."
----
 
-# Arrays in Python
+## Arrays in Python
 
 In Python, there are several ways to implement and use arrays, depending on your needs for performance, memory, and data flexibility. Below is a detailed look based on GeeksforGeeks and Python documentation.
 
-## 1. Lists (Built-in Dynamic Arrays)
+### 1. Lists (Built-in Dynamic Arrays)
 Lists are the most commonly used "array-like" structure in Python.
 * **Characteristics:** They are dynamic (they can grow or shrink in size) and heterogeneous (allowing elements of different data types in a single list).
 * **Implementation:** Internally, Python lists are implemented as dynamic arrays of pointers.
@@ -20,7 +16,7 @@ my_list.append("World")
 print(my_list)
 ```
 
-## 2. The `array` Module
+### 2. The `array` Module
 For scenarios requiring strict data types and memory efficiency, Python provides the built-in `array` module.
 * **Characteristics:** These are true arrays that store elements of the same data type (homogeneous) in contiguous memory locations.
 * **Implementation:** You must specify a "type code" (e.g., `'i'` for signed integers, `'f'` for floats) when creating the array.
@@ -35,7 +31,7 @@ arr.append(6)
 print(arr)
 ```
 
-## 3. NumPy Arrays
+### 3. NumPy Arrays
 For scientific computing and advanced data manipulation, the NumPy library is the industry standard.
 * **Characteristics:** NumPy arrays are highly optimized for mathematical operations, support multi-dimensional data, and are significantly faster than built-in lists for large-scale computations.
 * **Structured Arrays:** NumPy also supports "structured arrays," which allow you to group data of different types (similar to a C `struct`), with each field accessible by name.
@@ -55,5 +51,3 @@ print(np_arr * 2) # Vectorized operation
 | **Memory** | Higher | Lower | Lowest (optimized) |
 | **Performance** | Slower | Faster (for numbers) | Fastest |
 | **Flexibility** | High | Low | Moderate (specialized) |
-
-> *Content sourced and adapted from GeeksforGeeks and official Python Documentation.*

@@ -19,3 +19,6 @@ If not done, then obsidian will path them incorrectly (by default) so make sure 
 - turn <span style="color:#2f9e44">off</span> use <span style="color:#e0313a">WikiLinks</span> (obsidian's way to link image). We are turning it off because we want native Markdown way of referencing a image, not a obsidian way otherwise it will not work on other platforms.
 Refer to attachment below.
 ![](assets/Pasted%20image%2020260831203523.png)
+
+Then go to editor tab and toggle on strict Line breaks so that it matches the deployed version
+![](assets/Pasted%20image%2020260901183809.png)
