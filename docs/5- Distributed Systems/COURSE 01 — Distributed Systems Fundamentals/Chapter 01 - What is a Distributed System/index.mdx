@@ -1,0 +1,32 @@
+---
+title: "What is a Distributed System"
+---
+
+# What is a Distributed System
+
+A distributed system is a collection of independent computers (nodes) that communicate and coordinate their actions over a network to appear to the user as a single, unified system. Unlike centralized systems, where all processing happens on one machine, distributed systems spread workloads across multiple nodes to improve performance, scalability, and reliability.
+
+## Core Concepts
+* **Nodes:** Independent computational units (physical servers, virtual machines, containers, or serverless functions).
+* **Message Passing:** Since nodes do not share memory, they communicate and synchronize by sending messages over a network.
+* **Transparency:** Ideally, the system hides its distributed nature from the user, making it feel like a single cohesive service.
+* **Concurrency:** Multiple nodes process tasks simultaneously to handle high workloads.
+
+## Key Benefits vs. Challenges
+| **Benefits** | **Challenges** |
+| :--- | :--- |
+| **Scalability:** Easily add more nodes to handle increased demand. | **Complexity:** Much harder to design, build, and debug than monolithic systems. |
+| **Fault Tolerance:** If one node fails, others can continue to work. | **Consistency:** Ensuring all nodes have the same data at the same time is difficult. |
+| **Resource Sharing:** Efficiently utilize hardware and data across the network. | **Network Reliability:** Unpredictable network latency or partitions can cause failures. |
+
+## Common Architecture Models
+
+### System Architecture Styles
+* **Client-Server:** A foundational model where clients request services and servers provide them.
+* **Peer-to-Peer (P2P):** Nodes act as both clients and servers, sharing resources directly with each other.
+
+### Software Architecture Styles
+* **Layered:** Components are organized into horizontal layers where each layer provides services to the one above it.
+* **Event-Based:** Components communicate by publishing and subscribing to events, promoting loose coupling.
+* **Data-Centered:** Components access a central data repository.
+* **Object-Based:** Distributed objects communicate via remote procedure calls (RPCs).

@@ -1,0 +1,25 @@
+---
+title: "Building Images"
+---
+
+# Building Images
+
+To build Docker images, you primarily use a **Dockerfile**—a text file containing the instructions needed to assemble your application into a portable, standardized package.
+
+![Docker Build](https://docs.docker.com/images/buildx-architecture.svg)
+
+### Core Steps to Build a Docker Image
+
+1.  **Install Docker:** Ensure Docker Desktop or the Docker Engine is installed on your machine.
+2.  **Create a Dockerfile:** In your project root, create a file named `Dockerfile`.
+3.  **Build the Image:** Use the `docker build` command in your terminal.
+    *   Example: `docker build -t my-image-name .`
+    *   The `-t` flag tags your image with a name, and the `.` specifies the current directory as the "build context".
+4.  **Test Locally:** Once built, you can run your image to ensure it works as expected using `docker run my-image-name`.
+5.  **Push to a Registry (Optional):** To share your image, you can push it to a registry like Docker Hub.
+
+### Best Practices for Building Images
+*   **Use Official Base Images:** Start with Docker Official Images (e.g., `node`, `python`, `nginx`) to ensure security and reliability.
+*   **Leverage Build Caching:** Docker caches layers; order your instructions from least-frequently changed to most-frequently changed (e.g., copy `requirements.txt` and run `pip install` *before* copying your application source code) to speed up future builds.
+*   **Multi-Stage Builds:** Use multi-stage builds to keep your final images small and secure by separating the build environment from the final runtime environment.
+*   **Use .dockerignore:** Create a `.dockerignore` file to prevent unnecessary files (like local logs, git history, or build artifacts) from being copied into your image.

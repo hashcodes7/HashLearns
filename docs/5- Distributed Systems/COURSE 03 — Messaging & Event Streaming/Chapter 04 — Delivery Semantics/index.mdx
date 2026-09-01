@@ -1,0 +1,17 @@
+---
+title: "Delivery Semantics"
+---
+# Delivery Semantics
+
+Message delivery semantics define the guarantees a messaging system provides regarding the delivery of messages.
+
+![Delivery Semantics](https://miro.medium.com/max/1400/1*C6oI9yvVdG-rUeQ6N9B9bA.png)
+
+## At-Most-Once
+Messages are delivered once or not at all. (Fire and forget).
+
+## At-Least-Once
+Messages are guaranteed to be delivered, but duplicates may occur.
+
+## Exactly-Once
+Messages are delivered exactly once. This is the hardest to achieve and requires coordination between producers, brokers, and consumers.

@@ -1,0 +1,33 @@
+---
+title: "Reliability"
+---
+
+# Reliability in Distributed Systems
+
+In distributed systems, **reliability** and **availability** are distinct but complementary quality attributes. While both are essential for high-quality services, they address different aspects of system performance.
+
+## At a Glance: The Core Difference
+
+| Feature | Reliability | Availability |
+| :--- | :--- | :--- |
+| **Primary Focus** | **Correctness:** Does it perform the intended function correctly without failure? | **Accessibility:** Is the system up and ready to respond to requests? |
+| **Key Metric** | Mean Time Between Failures (MTBF), Error Rate | Uptime percentage (e.g., "nines" like 99.9%) |
+| **Failure Mode** | Returns incorrect data, crashes, or produces bugs | System is down, unreachable, or unresponsive |
+
+## Reliability: "Does it work correctly?"
+Reliability is the probability that a system will perform its intended function accurately over a specified period. A reliable system is one that behaves predictably, even when faced with faults like hardware failures, software bugs, or human error.
+
+* **Key Aspect:** Even if a system is "up" (available), it is not reliable if it returns corrupted data, produces incorrect results, or suffers from frequent logic errors.
+* **How to achieve it:** Focus on fault prevention (clean code), fault removal (testing), and fault tolerance (redundancy and correct error handling).
+
+## Availability: "Is it ready to use?"
+Availability measures the proportion of time a system is operational and accessible to the user. It is a measure of uptime.
+
+* **Key Aspect:** A system can be technically "available" but unreliable if it is running but providing broken or stale information. Conversely, a highly reliable system might have lower availability if it requires frequent downtime for maintenance or recovery.
+* **How to achieve it:** Often achieved through load balancing, replication across geographic regions, and failover mechanisms that reroute traffic when a component goes down.
+
+## The Relationship in Distributed Systems
+* **The "Nines" Gap:** Many teams focus heavily on availability ("five nines" or 99.999% uptime) but still receive user complaints. This is often because they have achieved high uptime while neglecting **reliability**—the system is "always on" but consistently returning errors or performing incorrectly.
+* **CAP Theorem Context:** In the context of the CAP theorem, the "Availability" guarantee (every request gets a response) is often prioritized over "Consistency". However, this trade-off highlights that being available does not mean the system is always providing the most accurate or "reliable" (consistent) version of the data.
+
+**Summary:** Think of **availability** as the system’s ability to stay "awake," and **reliability** as the system’s ability to "do its job correctly" while awake. Both are required for a truly robust distributed system.

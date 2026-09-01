@@ -1,0 +1,39 @@
+---
+title: "Non-Functional Requirements"
+---
+
+Non-functional requirements (NFRs) are the "invisible guardrails" of system design. While functional requirements define **what** a system does (its features and behaviors), non-functional requirements define **how** the system performs those tasks.
+
+They are essentially the quality attributes and constraints that determine the system's overall effectiveness, reliability, and user experience.
+
+---
+
+### Core Non-Functional Requirements
+In system design, the following are considered the most critical NFRs:
+
+*   **Performance:** Defines the speed and efficiency of the system. This is often measured by:
+    *   **Latency:** The time taken for a single operation.
+    *   **Throughput:** The number of operations the system can handle per unit of time.
+*   **Scalability:** The system's ability to handle increased load (e.g., more users, data, or requests) by adding resources without sacrificing performance.
+*   **Availability:** The percentage of time a system is operational and accessible. It is often expressed as "uptime" (e.g., 99.9% availability).
+*   **Reliability:** The ability of a system to consistently perform its intended function without failure.
+*   **Security:** Measures taken to protect data and system integrity, such as encryption, authentication, and authorization.
+*   **Maintainability:** How easily a system can be modified, updated, or fixed by engineers over time.
+*   **Observability:** The ability to monitor and understand the internal state of the system, usually through logs, metrics, and traces.
+
+---
+
+### Why NFRs Matter
+Ignoring non-functional requirements is a common "red flag" in system design. Even if a system fulfills all its features (functional requirements), it will be considered a failure if it:
+*   **Performs slowly** for the end user.
+*   **Crashes** under high traffic.
+*   **Leaks sensitive data** due to poor security.
+*   **Is impossible to update** or scale as the business grows.
+
+### How They Shape Architecture
+NFRs are the primary drivers of architectural decisions. For example:
+*   If your **performance** requirement is sub-100ms latency, you might decide to implement **caching**.
+*   If your **availability** requirement is high, you will likely incorporate **load balancing** and **redundancy**.
+*   If your **scalability** requirement is high, you may choose a microservices architecture to isolate and scale components independently.
+
+By defining these requirements early, you bridge the gap between what customers expect and what the technical design delivers, ultimately preventing costly rework later in the development lifecycle.

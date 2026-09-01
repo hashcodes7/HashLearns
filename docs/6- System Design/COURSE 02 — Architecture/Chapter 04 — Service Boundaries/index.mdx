@@ -1,0 +1,33 @@
+---
+title: "Service Boundaries"
+---
+
+Service boundaries are the architectural "lines" that define what a specific service owns, controls, and is responsible for within a system. Establishing these boundaries correctly is widely considered the most critical task in system design, as they determine whether your architecture will be flexible and scalable or a "distributed monolith" that is harder to manage than the original system.
+
+### Core Principles of Service Boundaries
+
+To define effective boundaries, architects typically focus on three foundational concepts:
+
+*   **High Cohesion:** Grouping related functionality and data together. A service should be focused on a single, clear business capability (e.g., "Order Fulfillment" rather than just "Order CRUD").
+*   **Loose Coupling:** Ensuring services are as independent as possible. They should communicate through well-defined APIs or events, allowing them to be developed, deployed, and scaled without requiring changes or coordination across other services.
+*   **Information Hiding:** Encapsulating implementation details behind a boundary. The internal logic and data schema of a service should be private, and only the necessary interfaces should be exposed to the outside world.
+
+### Strategies for Defining Boundaries
+
+*   **Domain-Driven Design (DDD):** This is the most common framework for defining boundaries. By using **Bounded Contexts**, you map services to specific business domains, ensuring that the language and rules within a service are consistent and isolated from others.
+*   **Data Ownership:** A boundary is only effective if it includes exclusive control over the data required for its business capabilities. If multiple services share a database or table, they are functionally coupled, regardless of how the code is structured.
+*   **Change Patterns:** If two features frequently need to be changed together, they likely belong within the same service boundary. Conversely, if they evolve at different speeds or are managed by different teams, they are strong candidates for separate services.
+*   **Team Alignment (Two-Pizza Rule):** Boundaries often mirror organizational structure. A service should be sized so that it can be fully owned, developed, and deployed by a single, small, autonomous team.
+
+### Common Pitfalls to Avoid
+
+*   **The Distributed Monolith:** This occurs when you have the complexity of distributed services (network calls, latency, deployment overhead) without the benefits (independent deployability, fault isolation). Signs include needing to update multiple services to deploy a single feature or cascading failures.
+*   **Over-Engineering:** Introducing boundaries where they aren't needed adds significant operational complexity. If you have a small team or a simple project, start with coarser-grained services and refine them as the system evolves.
+*   **Chatty Interfaces:** If two services require excessive back-and-forth communication to complete a simple task, it is often a symptom that the boundary was drawn incorrectly and those functions should be merged.
+
+### Summary Checklist for a Good Boundary
+A well-defined service boundary typically provides:
+*   **Independent Deployability:** You can release it without coordinating with other teams.
+*   **Clear Ownership:** It has a single, well-defined business purpose and owns its data.
+*   **Fault Isolation:** Failures are contained; one service going down doesn't necessarily bring down the entire system.
+*   **Defined Contracts:** It exposes clear, stable APIs for others to use, keeping internal details hidden.

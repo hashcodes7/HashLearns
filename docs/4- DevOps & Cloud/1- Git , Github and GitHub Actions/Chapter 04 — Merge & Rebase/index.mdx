@@ -1,0 +1,32 @@
+---
+title: "Merge & Rebase"
+---
+
+In Git, **merge** and **rebase** are two different methods for integrating changes from one branch into another. While both achieve the same goal of combining code, they handle the project history in fundamentally different ways.
+
+### **Git Merge**
+Merging is the process of taking the contents of a source branch and integrating them into a target branch. 
+*   **How it works:** Git creates a new "merge commit" that ties the histories of both branches together. 
+*   **Key Characteristic:** It is **non-destructive**. It preserves the existing history of both branches exactly as it happened, including the chronological order of commits.
+*   **Best for:** Projects where you want to maintain a complete, accurate record of when and how features were integrated.
+
+### **Git Rebase**
+Rebasing is the process of moving or combining a sequence of commits to a new base commit.
+*   **How it works:** Git takes the commits from your feature branch, temporarily saves them, resets your branch to the latest commit of the target branch, and then "replays" your saved commits one by one on top.
+*   **Key Characteristic:** It **rewrites history**. Because it creates new commits for your changes, the resulting project history is clean and linear, appearing as if the work was done sequentially.
+*   **Best for:** Local branches or cleaning up a feature branch before merging it into the main codebase.
+
+---
+
+### **Comparison at a Glance**
+
+| Feature | Git Merge | Git Rebase |
+| :--- | :--- | :--- |
+| **History** | Preserves original history | Rewrites history to be linear |
+| **Commit Type** | Creates a new "merge commit" | Creates new commits for existing work |
+| **Complexity** | Simple, easy to understand | Can be complex; requires caution |
+| **Safety** | Very safe; non-destructive | Risky if used on shared, public branches |
+
+### **When to Use Which?**
+*   **Use `git merge`** when you want to preserve the full history of your project, including when branches were created and merged. It is the safest and most standard way to combine branches.
+*   **Use `git rebase`** when you want to keep a clean, linear project history. It is highly effective for cleaning up your local commits before submitting a pull request, but **avoid rebasing branches that have already been pushed to a shared remote repository**, as it can cause significant confusion for other team members.

@@ -1,0 +1,32 @@
+---
+title: "RPC"
+---
+
+# Remote Procedure Call (RPC)
+
+**Remote Procedure Call (RPC)** is a communication protocol used in distributed systems that allows a program to execute a procedure or function on a remote server as if it were a local function call.
+
+By abstracting the complexities of network communication—such as serialization, transport, and message passing—RPC enables developers to build modular, distributed applications without needing to explicitly manage the underlying network details.
+
+## How RPC Works
+The RPC process typically follows these steps to maintain transparency:
+1. **Client Call:** The client program calls a local procedure, known as a **client stub**.
+2. **Marshalling:** The client stub packs (marshals) the procedure parameters into a message suitable for network transmission.
+3. **Transmission:** The message is sent across the network to the server.
+4. **Unmarshalling:** The server-side **stub** receives the message, unpacks (unmarshals) the parameters, and calls the actual procedure on the server.
+5. **Execution & Return:** The server executes the procedure and sends the results back to the client using the same process in reverse.
+
+## Key Concepts
+* **Interface Definition Language (IDL):** Used to define the contract between client and server, specifying the procedures, parameters, and data types to ensure consistent communication.
+* **Transparency:** The goal of RPC is to make the remote call feel local, though distributed systems inherently face challenges like network latency and partial failures that this abstraction can sometimes hide.
+* **Modern Frameworks:** Technologies like **gRPC** and **Apache Thrift** are modern implementations that provide high-performance, cross-language communication for distributed systems and microservices.
+
+## Advantages and Disadvantages
+
+| **Advantages** | **Disadvantages** |
+| :--- | :--- |
+| **Simplified Development:** Hides network complexities, making code easier to write. | **Hidden Complexity:** Can create a "false sense of security" by masking network-specific issues like latency. |
+| **Modularity:** Enables components to be developed and deployed independently. | **Failure Vulnerability:** More susceptible to network, machine, or process failures than local calls. |
+| **Scalability:** Services can be easily distributed across multiple servers. | **Performance Overhead:** Marshalling and network transmission add latency compared to local calls. |
+
+RPC is widely used in microservices architectures, cloud computing, and internal service-to-service communication where high-speed, machine-to-machine interaction is required.

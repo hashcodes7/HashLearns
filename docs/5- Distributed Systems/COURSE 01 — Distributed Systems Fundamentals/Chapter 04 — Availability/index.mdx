@@ -1,0 +1,28 @@
+---
+title: "Availability"
+---
+
+# Availability in Distributed Systems
+
+In distributed systems, **availability** is a measure of the system's ability to remain operational and accessible to users when required. It reflects the system's resilience against various failures—such as hardware crashes, software bugs, or network partitions—ensuring that services continue to be delivered.
+
+## Key Concepts
+
+* **Definition:** Availability is typically defined as the proportion of time a system is functional and able to return a response for requests within a reasonable or bounded amount of time.
+* **The "Nines" Notation:** Availability is often expressed as a percentage of uptime. Higher percentages, or "nines," indicate less allowable downtime:
+    * **99.9% ("three nines"):** ~8.77 hours of downtime per year.
+    * **99.999% ("five nines"):** ~5.26 minutes of downtime per year.
+* **CAP Theorem:** A foundational concept in distributed systems that highlights the trade-offs between **C**onsistency, **A**vailability, and **P**artition Tolerance. In the event of a network partition, a system must often choose between maintaining strict consistency or remaining available.
+
+## Achieving High Availability (HA)
+High availability is achieved by designing systems that can withstand component failures without significant service interruption. Core strategies include:
+
+* **Redundancy:** Eliminating single points of failure by duplicating critical components (e.g., servers, databases, or network paths) so that a backup can take over if the primary fails.
+* **Load Balancing:** Distributing incoming traffic across multiple nodes to prevent any single node from becoming a bottleneck or failing due to overload.
+* **Replication:** Storing data on multiple nodes or across different geographic regions to ensure data remains accessible even if a local storage node fails.
+* **Failover Mechanisms:** Automated processes that detect a failure and redirect traffic to healthy, redundant systems.
+* **Fault Tolerance:** Designing the system to continue operating seamlessly even when specific parts fail, often with little to no noticeable impact on the end user.
+* **Chaos Engineering:** Proactively injecting failures into a system to test its resilience and identify weaknesses before they cause real-world outages.
+
+## Measurement
+Availability is generally measured as the ratio of uptime to total time. In modern distributed environments, this is often managed through **Service Level Agreements (SLAs)**, which define the expected uptime and provide metrics for evaluating the system's reliability over a specific period.

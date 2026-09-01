@@ -1,0 +1,30 @@
+---
+title: "Build Pipelines"
+---
+
+A **CI/CD pipeline** is an automated workflow that streamlines the process of software delivery by bridging the gap between development and operations teams. It serves as an "automated assembly line" that moves code from a developer's workstation into a production environment.
+
+### Core Concepts
+*   **Continuous Integration (CI):** The practice of frequently merging code changes into a shared repository. Each merge triggers an automated process to build and test the application, ensuring that new changes do not break existing functionality.
+*   **Continuous Delivery (CD):** An extension of CI that automatically prepares code changes for a release to production. While the code is always in a deployable state, the actual release to customers may still require a manual sign-off.
+*   **Continuous Deployment (CD):** The most automated form of CD, where every change that passes the automated pipeline is automatically deployed directly to the production environment without human intervention.
+
+### Typical Pipeline Stages
+While configurations vary, most pipelines follow these core phases:
+1.  **Source Stage:** Developers commit code to a version control system (like Git).
+2.  **Build Stage:** The application is compiled or packaged into an artifact (e.g., a Docker container or binary).
+3.  **Test Stage:** Automated tests (unit, integration, security scans) are executed to validate code quality and integrity.
+4.  **Deploy Stage:** The application is released to staging or production environments.
+5.  **Monitoring:** Once deployed, the system is monitored for performance and errors, providing feedback to the developers.
+
+### Key Benefits
+*   **Increased Speed & Frequency:** Teams can release updates more often, reducing the time from code commit to production.
+*   **Improved Quality & Reliability:** Automated testing catches bugs early, and consistent deployment processes reduce human error.
+*   **Faster Rollbacks:** If a deployment fails, pipelines often allow for quick reverts to the last stable state.
+*   **Enhanced Collaboration:** By removing manual handoffs between teams, it fosters shared responsibility and visibility.
+
+### Common Tools
+Organizations often choose tools based on their specific infrastructure and workflow needs:
+*   **All-in-One Platforms:** **GitHub Actions**, **GitLab CI/CD**, and **Azure DevOps** integrate directly with code repositories.
+*   **Automation Servers:** **Jenkins** is widely used for its immense plugin ecosystem and flexibility, though it requires more maintenance.
+*   **Cloud-Native & Specialized:** **CircleCI** and **Travis CI** are popular for cloud-based pipelines, while tools like **Argo CD** and **Spinnaker** are often used for advanced Kubernetes-based deployments.

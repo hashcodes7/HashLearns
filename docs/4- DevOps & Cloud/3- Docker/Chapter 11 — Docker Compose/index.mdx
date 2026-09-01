@@ -1,0 +1,19 @@
+---
+title: "Docker Compose"
+---
+
+# Docker Compose
+
+Docker Compose is a tool for defining and running multi-container Docker applications. With Compose, you use a YAML file to configure your application's services. Then, with a single command, you create and start all the services from your configuration.
+
+![Docker Compose](https://docs.docker.com/images/compose-architecture.webp)
+
+### Key Features
+*   **Multiple isolated environments:** You can run multiple environments of a Compose application on a single host.
+*   **Preserve volume data:** Compose preserves all volumes used by your services.
+*   **Only recreate changed containers:** Compose caches the configuration used to create a container. When you restart a service that has not changed, Compose re-uses the existing containers.
+
+### Basic Workflow
+1.  Define your app's environment with a `Dockerfile` so it can be reproduced anywhere.
+2.  Define the services that make up your app in `docker-compose.yml` so they can be run together in an isolated environment.
+3.  Run `docker compose up` and the Docker compose command starts and runs your entire app.

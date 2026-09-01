@@ -1,0 +1,28 @@
+---
+title: "Images"
+---
+
+# Images
+
+The primary difference between Docker images and containers is the distinction between a **blueprint** and a **running instance**.
+
+![Docker Images](https://docs.docker.com/images/architecture.svg)
+
+### Docker Image (The Blueprint)
+*   **Definition:** An image is a read-only, immutable file that serves as a template or "snapshot" for your application.
+*   **Purpose:** It contains the source code, libraries, dependencies, and configuration files required to run a specific piece of software.
+*   **Analogy:** Think of an image as the **blueprint for a house** or a recipe. It describes exactly what should be inside but does not "do" anything on its own.
+
+### Docker Container (The Running Instance)
+*   **Definition:** A container is a runnable, live instance of a Docker image. 
+*   **Purpose:** It is the actual, active process where your application runs. When you start a container, Docker takes the read-only image and adds a thin, temporary read-write layer on top so that the application can function and store data during its execution.
+
+### Comparison Summary
+
+| Feature | Docker Image | Docker Container |
+| :--- | :--- | :--- |
+| **Nature** | Static, read-only template | Dynamic, running process |
+| **State** | Immutable (does not change) | Mutable (can change while running) |
+| **Creation** | Built from a `Dockerfile` | Created/Started from an Image |
+
+In short, you use a **Dockerfile** to build an **image**, and you run that **image** to create a **container**.

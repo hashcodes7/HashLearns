@@ -1,0 +1,10 @@
+---
+title: "Transactional Outbox"
+---
+# Transactional Outbox Pattern
+
+The Transactional Outbox pattern reliably publishes events regarding state changes in the application.
+
+![Transactional Outbox](https://microservices.io/img/TransactionalOutbox.png)
+
+When updating the database, the application also inserts an event into an outbox table in the same transaction. A separate process then reads these events and publishes them to a message broker.

@@ -1,0 +1,28 @@
+---
+title: "Running Containers"
+---
+
+# Running Containers
+
+Managing Docker containers is a fundamental skill for containerization. Below is a guide to the most common commands for listing, managing, and inspecting your containers.
+
+![Docker Containers Running](https://docs.docker.com/images/desktop-dashboard-containers.png)
+
+### 1. Listing Containers
+To see which containers are on your system, you can use the following commands:
+*   **List running containers:** `docker ps`
+*   **List all containers (including stopped ones):** `docker ps -a`
+
+### 2. Lifecycle Management
+Use these commands to control the state of your containers. You can refer to a container by its Container ID or Name.
+*   **Start a stopped container:** `docker start <container_id_or_name>`
+*   **Stop a running container:** `docker stop <container_id_or_name>`
+*   **Restart a container:** `docker restart <container_id_or_name>`
+*   **Remove a container:** `docker rm <container_id_or_name>` (Note: The container must be stopped first.)
+
+### 3. Inspection and Debugging
+When you need to look inside a container or monitor its health:
+*   **Get detailed information:** `docker inspect <container_id_or_name>`
+*   **View container logs:** `docker logs -f <container_id_or_name>`
+*   **Run a command inside a running container:** `docker exec -it <container_id_or_name> /bin/bash`
+*   **Monitor resource usage:** `docker stats <container_id_or_name>`

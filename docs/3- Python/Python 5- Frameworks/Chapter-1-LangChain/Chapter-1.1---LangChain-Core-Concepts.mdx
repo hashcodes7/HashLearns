@@ -1,0 +1,67 @@
+---
+title: "Chapter 1.1 - LangChain Core Concepts"
+---
+
+# LangChain Architecture Fundamentals
+
+LangChain provides a unified interface for composing Large Language Models with external data, tools, and memory modules.
+
+:::info[Core Abstractions]
+LangChain standardizes model interactions across providers (OpenAI, Google Gemini, Anthropic, Ollama, HuggingFace) into modular primitives.
+:::
+
+## Key Modules
+
+### 1. Models
+Interfaces for LLMs and Chat Models. 
+- **ChatModels**: Take a sequence of structured messages (`SystemMessage`, `HumanMessage`, `AIMessage`) and return a `ChatResult`.
+- **LLMs**: Take a plain text string and return a plain text completion string.
+
+```python
+from langchain_core.messages import SystemMessage, HumanMessage
+from langchain_openai import ChatOpenAI
+
+model = ChatOpenAI(model="gpt-4o", temperature=0.2)
+messages = [
+    SystemMessage(content="You are an expert AI systems architect."),
+    HumanMessage(content="Explain the difference between Bi-Encoders and Cross-Encoders.")
+]
+
+response = model.invoke(messages)
+print(response.content)
+```
+
+### 2. Prompts
+Templates for structuring inputs to the model.
+
+```python
+from langchain_core.prompts import ChatPromptTemplate
+
+prompt = ChatPromptTemplate.from_messages([
+    ("system", "You are an expert code reviewer specializing in {language}."),
+    ("user", "Review the following code snippet:\n{code}")
+])
+```
+
+### 3. Output Parsers
+Tools for structuring model responses (e.g., extracting JSON or Pydantic models from text).
+
+```python
+from langchain_core.output_parsers import StrOutputParser
+
+parser = StrOutputParser()
+```
+
+### 4. Retrieval and Memory
+Mechanisms for Retrieval-Augmented Generation (RAG) including Document Loaders, Text Splitters, Embeddings, and Vector Stores. Memory allows persisting state across interactions.
+
+```python
+from langchain_core.tools import tool
+
+@tool
+def calculate_matrix_norm(vector: list[float]) -> float:
+    """Calculates the Euclidean norm of a floating point vector."""
+    return sum(x**2 for x in vector) ** 0.5
+
+model_with_tools = model.bind_tools([calculate_matrix_norm])
+```

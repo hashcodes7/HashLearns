@@ -1,0 +1,42 @@
+---
+title: "Strings"
+description: "Fundamental sequential or graph-based memory structures."
+---
+
+# Strings in Python
+
+To understand Python strings and their role within data structures, we must look at how they are stored and manipulated in memory.
+
+## Definition & Characteristics
+In Python, strings are **immutable** sequences of Unicode characters. They can be defined using single (`' '`), double (`" "`), or triple quotes (`''' '''`). 
+Because they are immutable, any modification to a string (like concatenation or replacement) results in the creation of a newly allocated string rather than changing the original one in place.
+
+## Internal Implementation
+Internally, Python strings are represented as dynamic arrays of Unicode characters. Depending on the characters used, Python optimizes the memory under the hood by choosing the most memory-efficient character representation (ASCII, UTF-8, etc.).
+
+## Common Operations & Methods
+Python strings support various operations, including slicing, concatenation, and a wide array of built-in methods.
+
+```python
+# String definition
+text = "Data Structures"
+
+# Slicing
+print(text[0:4])  # Output: Data
+
+# Immutability check
+# text[0] = "d" # This will raise a TypeError!
+
+# Common Methods
+print(text.lower())       # data structures
+print(text.upper())       # DATA STRUCTURES
+print(text.replace("Data", "Memory")) # Memory Structures
+```
+
+## Applications of Strings
+Strings are fundamental in computer science and software development. Typical use cases include:
+* **Plagiarism Checking:** Using string matching algorithms (e.g., KMP, Rabin-Karp) to find similarities.
+* **Encoding/Decoding:** Converting data into a specific format for secure transmission or storage.
+* **Text Processing & NLP:** Tokenizing sentences, cleaning text, and building lexers for parsers.
+
+> *Content sourced and adapted from GeeksforGeeks DSA with Python guides.*

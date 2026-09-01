@@ -1,0 +1,44 @@
+---
+title: "Chapter 2 - Inheritance & Polymorphism"
+---
+
+# Inheritance and Polymorphism
+
+## Inheritance
+Inheritance is the process by which one class takes on the attributes and methods of another. Newly formed classes are called **child classes**, and the classes that child classes are derived from are called **parent classes**.
+
+It promotes code reusability and establishes an "is-a" relationship.
+
+### Using `super()`
+The `super()` built-in function returns a temporary object of the superclass that allows you to call that superclass's methods. It's often used in the `__init__` method of a child class to ensure the parent class is properly initialized.
+
+## Polymorphism and Method Overriding
+Polymorphism means "many forms." In Python, it allows child classes to have methods with the same name as methods in their parent classes but with different implementations. This is called **method overriding**.
+
+```python
+class Animal:
+    def __init__(self, name):
+        self.name = name
+
+    def speak(self):
+        return "Some generic sound"
+
+class Cat(Animal):
+    def __init__(self, name, breed):
+        super().__init__(name)  # Call parent constructor
+        self.breed = breed
+
+    # Method Overriding
+    def speak(self):
+        return "Meow!"
+
+class Dog(Animal):
+    # Method Overriding
+    def speak(self):
+        return "Woof!"
+
+animals = [Cat("Whiskers", "Siamese"), Dog("Rex")]
+
+for animal in animals:
+    print(f"{animal.name} says {animal.speak()}")
+```

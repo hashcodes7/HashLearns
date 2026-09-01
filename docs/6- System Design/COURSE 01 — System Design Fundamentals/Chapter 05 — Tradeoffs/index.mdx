@@ -1,0 +1,50 @@
+---
+title: "Tradeoffs"
+---
+
+In system design, there is no "perfect" architecture; every decision involves a trade-off where optimizing for one quality often compromises another. Mastering system design is fundamentally about understanding these constraints and making informed choices that align with business requirements.
+
+### Core Trade-offs in System Design
+
+#### 1. Scalability vs. Performance
+*   **Performance** focuses on speed and efficiency (e.g., low latency or high throughput) for a given workload.
+*   **Scalability** focuses on the system's ability to handle increasing load by adding resources.
+*   **Trade-off:** Strategies that improve scalability—such as distributing data across multiple nodes—can introduce network overhead and complexity that may hurt individual request latency.
+
+#### 2. Consistency vs. Availability (CAP Theorem)
+The CAP theorem states that in the event of a network partition, a distributed system can provide either **Consistency** (all nodes see the same data) or **Availability** (every request receives a response, even if potentially stale).
+*   **CP Systems:** Prioritize data integrity; they may return an error or time out if they cannot guarantee the most recent data.
+*   **AP Systems:** Prioritize uptime; they will serve data even if it is potentially stale.
+*   *Note:* Partition tolerance is generally considered non-negotiable in modern distributed systems, so the real choice is between consistency and availability during network failures.
+
+#### 3. Latency vs. Throughput
+*   **Latency** is the time it takes to process a single request.
+*   **Throughput** is the number of requests a system can handle per unit of time.
+*   **Trade-off:** Batching requests can significantly increase total throughput by reducing overhead, but it increases the latency for each individual request.
+
+#### 4. Vertical vs. Horizontal Scaling
+*   **Vertical Scaling (Scale-Up):** Adding more CPU/RAM to a single server. It is simple to implement but limited by hardware ceilings and creates a single point of failure.
+*   **Horizontal Scaling (Scale-Out):** Adding more machines to a fleet. It offers near-limitless scalability and better fault tolerance but requires more complex infrastructure (e.g., load balancing, data sharding).
+
+#### 5. SQL vs. NoSQL
+*   **SQL (Relational):** Best for complex queries, transactions, and scenarios requiring strong consistency and ACID compliance.
+*   **NoSQL:** Offers superior horizontal scalability and schema flexibility, often by sacrificing strong consistency for higher availability.
+
+#### 6. Complexity vs. Simplicity (Maintainability)
+*   Adding components like microservices, caches, or message queues can solve specific problems (e.g., resilience, speed) but increases **operational complexity**.
+*   Simple, monolithic architectures are easier to develop, test, and debug but may become bottlenecks as the system grows.
+
+### Summary Table
+
+| Trade-off | Sacrifice | Goal |
+| :--- | :--- | :--- |
+| **Consistency** | Availability | Data Integrity |
+| **Availability** | Consistency | Uptime/Responsiveness |
+| **Throughput** | Latency | High Capacity |
+| **Horizontal Scaling**| Simplicity | Elasticity/Resilience |
+| **Normalization** | Read Performance | Data Integrity/Storage |
+
+### How to Approach These Decisions
+*   **Start with Business Needs:** Do not chase "best practices" or trendy technologies. A system designed for high consistency is a poor choice if your business prioritizes low-latency user experiences above all else.
+*   **Understand the Context:** Every architectural component (e.g., Redis, Kafka) is an answer to a specific problem. Before adding one, ensure you can articulate which trade-off you are accepting.
+*   **Document Reasoning:** Future teams need to understand *why* a certain path was chosen over another. This is vital for managing technical debt as the system evolves.

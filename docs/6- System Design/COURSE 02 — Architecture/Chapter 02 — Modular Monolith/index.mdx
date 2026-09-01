@@ -1,0 +1,27 @@
+---
+title: "Modular Monolith Architecture"
+---
+
+Modular Monolith architecture is a software design approach that balances the simplicity of a traditional monolith with the organized structure of microservices. It is designed as a single, unified deployment unit while enforcing strict logical boundaries between different business domains.
+
+### Core Concepts
+*   **Single Deployment Unit:** Unlike microservices, the entire application is deployed as a single artifact. This eliminates the operational overhead of managing distributed systems, such as network latency, complex service discovery, and distributed transaction management.
+*   **Well-Defined Boundaries:** The system is divided into modules based on business capabilities or "bounded contexts" (often using Domain-Driven Design). Each module encapsulates its own business logic, data models, and API surfaces.
+*   **Loose Coupling:** Modules are designed to be independent. They communicate through internal APIs, events, or messaging systems rather than direct, tight integration.
+
+### Why Choose Modular Monolith?
+*   **Development Speed:** You avoid the "distributed system tax"—the extra time and complexity required to manage multiple services, inter-service communication, and infrastructure.
+*   **Evolutionary Path:** It is often considered the ideal "starting" architecture. If a module eventually needs to scale independently or use a different technology stack, it is much easier to extract a well-defined, loosely coupled module into a microservice later.
+*   **Easier Testing & Debugging:** Because the system is unified, end-to-end testing, refactoring, and debugging are significantly simpler than in a fragmented microservices environment.
+
+### Best Practices for Implementation
+*   **Enforce Boundaries:** Use architectural testing tools or framework-specific features (e.g., Spring Modulith for Java or specialized folder structures in .NET) to ensure modules do not bypass each other’s public APIs.
+*   **Data Isolation:** Ideally, modules should own their own data tables or schemas. Even if they share the same database instance, keeping their schemas logically separate prevents cross-module data coupling.
+*   **Internal Communication:** Prefer event-driven communication for cross-module interactions. This keeps modules decoupled, as they only need to know about the events being emitted rather than the internal implementation details of other modules.
+*   **DDD Approach:** Use Domain-Driven Design to identify your modules. A common mistake is to split by "technical layers" (e.g., Controllers, Services, Repositories). Instead, split by business domains (e.g., Catalog, Ordering, Shipping).
+
+### When to Avoid
+While powerful, the modular monolith may not be the right choice if:
+*   You have a **hard requirement** for different teams to use different technology stacks or programming languages.
+*   Your application has **extreme, granular scaling requirements** where one specific function needs to scale independently of everything else at all times.
+*   The team is already highly experienced with distributed systems and the operational complexity is already handled by your infrastructure.

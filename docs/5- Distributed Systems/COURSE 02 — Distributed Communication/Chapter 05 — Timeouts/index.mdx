@@ -1,0 +1,16 @@
+---
+title: "Timeouts"
+---
+
+# Timeouts in Distributed Systems
+
+Timeouts serve as an upper bound on how long a component will wait for an operation to complete, preventing stalled requests from holding resources indefinitely.
+
+### Why They Are Essential
+* Prevents resource exhaustion and cascading failures.
+* Maintains responsiveness.
+* Isolates faults.
+
+**Best Practices:** Avoid hardcoding, distinguish per-attempt vs overall budgets, and beware of retry storms.
+
+![Timeouts](https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Timeout_icon.svg/200px-Timeout_icon.svg.png)

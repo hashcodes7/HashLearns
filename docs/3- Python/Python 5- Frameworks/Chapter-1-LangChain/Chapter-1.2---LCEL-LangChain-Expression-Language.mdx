@@ -1,0 +1,47 @@
+---
+title: "Chapter 1.2 - LCEL Pipeline Architecture"
+---
+
+# LangChain Expression Language (LCEL)
+
+**LangChain Expression Language (LCEL)** is a declarative way to compose chains of components in LangChain. It is designed to facilitate the transition from prototypes to production-ready applications with minimal code changes.
+
+:::tip[Why LCEL?]
+LCEL pipelines automatically support **streaming token delivery**, **async execution**, **parallel execution**, and **built-in observability tracking** out of the box without changing code logic.
+:::
+
+## The Pipe Operator Syntax
+
+LCEL uses the pipe operator (`|`) to connect AI building blocks—such as prompts, models, retrievers, and parsers—allowing data to flow smoothly between them.
+
+```python
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.output_parsers import StrOutputParser
+from langchain_openai import ChatOpenAI
+
+prompt = ChatPromptTemplate.from_template("Explain {topic} in 2 concise sentences.")
+model = ChatOpenAI(model="gpt-4o")
+output_parser = StrOutputParser()
+
+# Construct the Runnable Chain using the Pipe Operator '|'
+chain = prompt | model | output_parser
+
+# Execute
+result = chain.invoke({"topic": "Quantization in Edge AI"})
+print(result)
+```
+
+## Core Runnable Capabilities
+
+All LCEL objects implement the `Runnable` interface, which provides a consistent set of methods:
+
+- `invoke()`: Run the chain on a single input.
+- `stream()`: Real-time output streaming of chunks as they are generated.
+- `batch()`: Execute the chain across a list of inputs in parallel.
+- `ainvoke()`: Asynchronous execution for better performance.
+
+```python
+# Streaming example
+for chunk in chain.stream({"topic": "HNSW Vector Indexes"}):
+    print(chunk, end="", flush=True)
+```

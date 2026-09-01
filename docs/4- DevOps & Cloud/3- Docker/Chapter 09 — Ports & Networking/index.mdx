@@ -1,0 +1,29 @@
+---
+title: "Ports & Networking"
+---
+
+# Ports & Networking
+
+By default, Docker containers are isolated. Networking is the layer that allows them to communicate with each other, the host machine, and the outside world.
+
+![Docker Networking](https://docs.docker.com/network/images/bridge-network.webp)
+
+### 1. Understanding Docker Networking Basics
+Docker uses **network drivers** to manage connectivity:
+*   **Bridge (Default):** The standard driver for standalone containers. Containers on the same bridge can communicate, but to access them from outside, you must use port mapping.
+*   **Host:** The container shares the host's networking namespace directly. There is no isolation.
+*   **None:** Disables all networking for the container.
+
+### 2. Port Mapping: Exposing Services
+Because containers are isolated, traffic from the outside world cannot reach them by default. **Port mapping** (or "publishing ports") acts as a bridge that forwards traffic from a specific port on your host machine to a port inside the container.
+*   **Command Syntax:** Use the `-p` flag when running a container.
+    ```bash
+    docker run -p <Host_Port>:<Container_Port> <Image_Name>
+    ```
+    *Example:* `docker run -p 8080:80 nginx` maps port 80 inside the container to port 8080 on your host.
+
+### 3. Container-to-Container Communication
+When you have multiple containers that need to talk to each other, the best practice is to use **User-Defined Bridge Networks** instead of the default bridge.
+1.  **Create a custom network:** `docker network create my-app-net`
+2.  **Attach containers to the network:** `docker run --network my-app-net ...`
+3.  **Communicate by name:** Because they are on the same user-defined network, your application can connect to the database simply by using the container name as the hostname.

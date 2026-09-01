@@ -1,0 +1,27 @@
+---
+title: "Repository & Commits"
+---
+
+In the context of Git, a **repository** and **commits** are the fundamental concepts that enable version control for your projects.
+
+### What is a Git Repository?
+A **Git repository** (or "repo") is the storage space for your project. It is essentially a folder that contains your project files along with a hidden `.git` folder.
+*   **Purpose:** It tracks, manages, and records the complete history of all changes made to your files over time.
+*   **Local vs. Remote:** 
+    *   **Local Repository:** Stored directly on your computer, allowing you to track changes and view history without needing an internet connection.
+    *   **Remote Repository:** Hosted on servers like GitHub, GitLab, or Bitbucket. These serve as a central hub for sharing code and collaborating with others.
+
+### What are Git Commits?
+A **commit** is a "save point" or a snapshot of your project's files at a specific moment in time.
+*   **How they work:** When you make changes, you first "stage" them (using `git add`) and then "commit" them (using `git commit`) to save that snapshot into the repository's history.
+*   **Structure:** Each commit includes:
+    *   **Metadata:** Information such as the author, timestamp, and the commit message describing the changes.
+    *   **Parent Reference:** Commits are linked together in a chain, forming a history that allows you to trace your project's evolution back to the beginning.
+*   **Best Practices:** Commits should represent "atomic" units of change—meaning each commit should ideally focus on a single, logical task.
+
+### How They Work Together
+The relationship between the two is central to version control:
+1.  **Tracking:** As you modify files, Git tracks the differences.
+2.  **Snapshotting:** When you are satisfied with a set of changes, you create a commit.
+3.  **History:** These commits are stored in the repository, creating a searchable and reversible timeline of your work.
+4.  **Collaboration:** You can "push" your local commits to a remote repository to share them with others, or "pull" commits from others into your local repository to stay updated.

@@ -1,0 +1,29 @@
+---
+title: "Monolithic Architecture"
+---
+
+Monolithic architecture is a traditional software design model where an application is built as a **single, unified, and self-contained unit**. In this structure, all components—including the user interface (UI), business logic, and data access layers—are tightly coupled and share the same codebase, memory space, and resources.
+
+### Key Characteristics
+*   **Single Codebase:** All application modules reside in one central repository.
+*   **Unified Deployment:** The entire application is deployed as a single artifact.
+*   **Shared Resources:** Components run in the same process and memory space, allowing for direct, fast communication between functions without needing network calls.
+*   **Interdependence:** Because components are tightly coupled, a change in one area can potentially impact others.
+
+### Advantages
+*   **Simplicity:** Easier to develop, test, and debug in the early stages since there is no need to manage complex inter-service communication or distributed systems.
+*   **Fast Development:** Requires minimal upfront planning compared to microservices, making it ideal for startups or prototyping.
+*   **Performance:** High performance for internal communication as there is no network overhead between modules.
+*   **Easier Operational Overhead:** Deployment is straightforward since you only manage one application and one database.
+
+### Disadvantages & Challenges
+*   **Scaling Difficulties:** You must scale the entire application even if only one specific function needs more resources, which is inefficient.
+*   **Tight Coupling:** As the codebase grows, it becomes harder to modify, maintain, and extend without causing unintended side effects.
+*   **Deployment Risks:** Any minor change requires a full redeployment of the entire application, which can increase the risk of downtime or bugs affecting the whole system.
+*   **Technology Constraints:** Since the entire app is built on a single stack, it is difficult to adopt new technologies or frameworks for specific components.
+
+### When to Use a Monolith
+A monolithic architecture is often the recommended starting point in the following scenarios:
+*   **Startups/Prototyping:** When you need to get a product to market quickly and validate your idea.
+*   **Simple Applications:** When the business logic is straightforward and does not require complex, independent scaling.
+*   **Small Teams:** When the organizational size does not yet necessitate the overhead of managing a distributed system.

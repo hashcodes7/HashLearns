@@ -1,0 +1,33 @@
+---
+title: "Scalability"
+---
+
+# Scalability in Distributed Systems
+
+Scalability in distributed systems is the ability of a system to maintain performance, reliability, and availability while handling an increasing workload (such as more users, higher traffic, or larger data volumes) by adding resources. A truly scalable system grows gracefully without requiring a fundamental redesign of its core architecture.
+
+## Core Strategies for Scalability
+
+### 1. Vertical Scaling (Scaling Up)
+* **Concept:** Increasing the capacity of a single machine or node by upgrading its hardware (e.g., adding more RAM, faster CPUs, or more storage).
+* **Pros:** Generally easier to implement as it does not require significant changes to the application architecture.
+* **Cons:** Limited by the physical constraints of a single machine. It also creates a "single point of failure" for that component.
+
+### 2. Horizontal Scaling (Scaling Out)
+* **Concept:** Adding more machines or nodes to the distributed system to share the workload.
+* **Pros:** Theoretically limitless scalability; improves fault tolerance and redundancy because if one node fails, others can take over the load.
+* **Cons:** Significantly more complex to design and maintain, as it requires handling network communication, data consistency, and load balancing between nodes.
+
+*(Diagonal Scaling is a hybrid approach that involves scaling vertically until a limit is reached, then adding more machines to continue growth.)*
+
+## Key Concepts & Terminology
+
+* **Elasticity:** Often confused with scalability. While scalability is a planned, long-term strategy to handle growth, elasticity is the system's ability to automatically and dynamically add or remove resources in real-time to match fluctuating demand (e.g., auto-scaling groups).
+* **Load Balancing:** A critical technique that distributes incoming requests across multiple nodes to ensure no single server becomes a bottleneck.
+* **Sharding:** A database-specific scaling technique that involves partitioning data across multiple servers to handle large volumes of information.
+
+## Common Challenges
+* **Data Consistency:** Keeping data synchronized across multiple nodes is difficult, especially when balancing performance versus strong consistency.
+* **Communication Latency:** As you add nodes, the overhead of network communication and coordination can eventually degrade performance.
+* **Complexity:** Managing failure modes (e.g., partial outages) and ensuring the system remains functional when nodes drop in and out is inherently more complex than managing a single-node system.
+* **Coordination Overhead:** If every node must coordinate with every other node for every operation, the system will not scale; effective distributed designs limit coordination to only what is strictly necessary.

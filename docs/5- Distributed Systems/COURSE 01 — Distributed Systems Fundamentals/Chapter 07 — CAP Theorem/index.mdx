@@ -1,0 +1,27 @@
+---
+title: "CAP Theorem"
+---
+
+# CAP Theorem
+
+The **CAP Theorem**, often referred to as Brewer's Theorem, is a foundational concept in distributed systems. It states that a distributed data store can provide at most two of the following three guarantees simultaneously:
+
+## The Three Pillars of CAP
+* **Consistency (C):** Every read request receives the most recent write or an error. Essentially, all nodes in the system see the same data at the same time.
+* **Availability (A):** Every request made to a non-failing node in the system receives a response (even if it is not the most recent data).
+* **Partition Tolerance (P):** The system continues to operate despite arbitrary network failures (partitions) that prevent nodes from communicating with each other.
+
+## The Core Trade-off
+In a real-world distributed system, **network partitions (P) are inevitable** because network failures can and will happen. Because you cannot avoid network failures, the theorem effectively forces architects to choose how the system behaves during a partition:
+
+* **CP (Consistency + Partition Tolerance):** The system prioritizes data accuracy. If a partition occurs, the system will return an error or time out rather than risk serving inconsistent (stale) data.
+* **AP (Availability + Partition Tolerance):** The system prioritizes staying online. If a partition occurs, all nodes will continue to respond to requests, but they might return older, potentially stale data because they cannot synchronize with the rest of the cluster.
+
+## Summary Table
+| Combination | Priority | Behavior During Partition |
+| :--- | :--- | :--- |
+| **CP** | Consistency | System shuts down non-consistent nodes/returns errors. |
+| **AP** | Availability | System returns the most recent *local* data, even if it is stale. |
+
+**Key Takeaway for System Design:** 
+The CAP theorem is not about choosing two out of three forever. It is a framework for deciding how your system should handle **network failures** when they occur. Most modern distributed systems are designed to be "partition-tolerant" by default, leaving the meaningful choice between consistency and availability.

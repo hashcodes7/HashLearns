@@ -1,0 +1,38 @@
+---
+title: "CI/CD Fundamentals"
+---
+
+CI/CD is a foundational DevOps practice that automates the steps required to deliver software. It combines **Continuous Integration (CI)** with **Continuous Delivery** or **Continuous Deployment (CD)** to help teams release high-quality code faster and more reliably.
+
+### Core Concepts
+
+#### 1. Continuous Integration (CI)
+CI is the practice of frequently merging code changes from multiple developers into a shared repository. 
+*   **Goal:** Catch bugs and integration issues early by running automated builds and tests every time code is committed.
+*   **Key Activities:** Automated compilation, unit testing, and static code analysis.
+
+#### 2. Continuous Delivery (CD)
+Continuous Delivery extends CI by automating the release process. 
+*   **Goal:** Ensure that code is *always* in a deployable state. 
+*   **Process:** After passing automated tests, code is automatically deployed to staging or testing environments. A manual, "one-click" approval is typically required to release the software to production.
+
+#### 3. Continuous Deployment (CD)
+Continuous Deployment takes automation one step further than Continuous Delivery.
+*   **Goal:** Eliminate manual intervention entirely.
+*   **Process:** Every code change that passes all stages of the production pipeline is automatically released to customers without manual approval.
+
+---
+
+### The CI/CD Pipeline
+A CI/CD pipeline is the automated workflow that moves code from a developer's machine to the production environment. While pipelines vary by organization, they generally follow these stages:
+
+1.  **Source Stage:** Code is committed to a version control system (e.g., Git).
+2.  **Build Stage:** The application is compiled, and dependencies are managed.
+3.  **Test Stage:** Automated tests (unit, integration, end-to-end) validate the code's integrity and quality.
+4.  **Deploy Stage:** The application is deployed to environments such as staging or production.
+
+### Why CI/CD Matters
+*   **Faster Feedback:** Developers receive immediate results on the quality of their code.
+*   **Risk Reduction:** Smaller, frequent updates are easier to troubleshoot and roll back than large, infrequent releases.
+*   **Efficiency:** By automating repetitive manual tasks (building, testing, deploying), teams can focus on writing code rather than managing releases.
+*   **Higher Quality:** Automated checks ensure that code meets predefined standards before it ever reaches the end user.

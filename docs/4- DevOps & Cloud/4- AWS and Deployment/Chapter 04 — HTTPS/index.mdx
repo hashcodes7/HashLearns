@@ -1,0 +1,15 @@
+---
+title: "HTTPS"
+---
+
+# AWS HTTPS
+
+To enable HTTPS for your applications on AWS, you generally use the AWS Certificate Manager (ACM).
+
+### Using a Load Balancer
+The most common way is placing instances behind a Load Balancer (ALB), which handles SSL/TLS termination.
+* Request a free certificate using ACM.
+* Configure an HTTPS listener on port 443.
+* Redirect HTTP to HTTPS.
+
+![AWS ACM](https://d1.awsstatic.com/webteam/architecture-icons/q1-2023/products/AWS-Certificate-Manager_Light.2a12903fc05e1dfc1db6c10b784a6c4293e5066a.png)

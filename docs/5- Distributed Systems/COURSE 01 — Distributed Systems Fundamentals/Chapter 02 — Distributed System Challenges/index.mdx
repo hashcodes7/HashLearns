@@ -1,0 +1,29 @@
+---
+title: "Distributed System Challenges"
+---
+
+# Distributed System Challenges
+
+Distributed systems are powerful for achieving scale, availability, and low latency, but they introduce significant complexities because they abandon the simple assumptions of single-machine computing (such as shared memory, identical clocks, and reliable execution).
+
+## 1. Fundamental Uncertainties
+* **Partial Failures:** Unlike a single machine, parts of a distributed system can fail while others remain functional. It is often impossible to instantly determine whether a component has failed, is merely slow, or if the communication channel is broken.
+* **Unreliable Networks:** Communication between nodes is never guaranteed. Messages can be delayed, lost, reordered, or duplicated.
+* **Clock Drift:** There is no "global clock" in a distributed system. Individual nodes have their own hardware clocks that drift, making it difficult to rely on timestamps for ordering events or managing consistency.
+
+## 2. Consistency and Coordination
+* **Data Consistency:** Maintaining a consistent view of data across multiple replicas is a classic challenge. Engineers must navigate the trade-offs between consistency, availability, and performance (often referred to as the CAP theorem).
+* **Concurrency:** When multiple nodes access or modify shared resources simultaneously, systems must implement concurrency control to prevent data corruption or race conditions.
+* **Consensus:** Coordinating decisions among independent nodes (e.g., agreeing on the state of a system) requires complex algorithms like Paxos or Raft.
+
+## 3. Operational and Architectural Complexity
+* **Scalability:** While distributed systems are designed to scale, doing so requires careful architecture to ensure that adding more nodes does not lead to bottlenecks or system collapse.
+* **Observability and Debugging:** Debugging a distributed system is significantly harder than a monolith. Tracing an error across dozens of interconnected services requires specialized tools and a "systems-thinking" approach.
+* **Heterogeneity:** Systems often consist of a mix of different hardware, operating systems, and programming languages, which must be made to interoperate seamlessly.
+* **Transparency:** A major design goal is to make the distributed nature of the system invisible to the user, which is difficult to achieve in practice.
+
+## Summary of Key Approaches
+To manage these challenges, architects typically adopt strategies such as:
+* **Designing for Retries:** Building operations to be idempotent so they can be safely retried.
+* **Redundancy:** Replicating data and services across multiple availability zones.
+* **Defense-in-Depth:** Treating uncertainty and failure as "default assumptions".

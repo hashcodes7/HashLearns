@@ -1,0 +1,39 @@
+---
+title: "Dockerfiles"
+---
+
+# Dockerfiles
+
+A **Dockerfile** is a plain text file that serves as a blueprint or "recipe" for creating a Docker container image. It contains a sequential list of instructions that Docker executes to assemble your application environment, dependencies, and configuration into a portable, consistent package.
+
+![Dockerfile Example](https://docs.docker.com/images/build-architecture.svg)
+
+### Core Instructions
+Every line in a Dockerfile is an instruction. Here are the most fundamental ones:
+
+*   **`FROM`**: Sets the base image (e.g., `FROM python:3.13` or `FROM node:18`). This must be the first instruction.
+*   **`WORKDIR`**: Sets the working directory inside the container where subsequent commands will run.
+*   **`COPY`**: Copies files from your local host machine into the container image.
+*   **`RUN`**: Executes commands (like installing packages) during the build process.
+*   **`ENV`**: Sets environment variables for the container.
+*   **`EXPOSE`**: Documents which port the container listens on.
+*   **`CMD`**: Specifies the default command to run when the container starts.
+
+### Example: A Simple Python App
+```dockerfile
+# Use an official base image
+FROM python:3.13
+
+# Set the working directory
+WORKDIR /app
+
+# Copy dependency file and install
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the rest of the application code
+COPY . .
+
+# Specify the command to run the app
+CMD ["python", "app.py"]
+```

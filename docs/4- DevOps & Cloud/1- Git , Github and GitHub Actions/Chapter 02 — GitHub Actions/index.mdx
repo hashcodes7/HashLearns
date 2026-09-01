@@ -1,0 +1,24 @@
+---
+title: "GitHub Actions"
+---
+
+GitHub Actions is a powerful automation and CI/CD (Continuous Integration and Continuous Delivery) platform built directly into GitHub. It allows you to automate repetitive tasks—such as building, testing, and deploying your code—whenever specific events occur in your repository.
+
+### Core Concepts
+To get started with GitHub Actions, you should understand these four fundamental building blocks:
+
+*   **Workflows:** These are automated processes that you define using YAML files. They are stored in your repository under the `.github/workflows/` directory and run in response to events.
+*   **Events:** Specific activities that trigger your workflow. Examples include pushing code to a branch, opening a pull request, creating an issue, or running a workflow on a set schedule.
+*   **Jobs:** A workflow is composed of one or more jobs. A job is a set of steps that execute on the same runner. By default, jobs run in parallel, but you can configure them to run sequentially with dependencies.
+*   **Runners:** The virtual machines (or containers) that execute your jobs. GitHub provides hosted runners (Linux, macOS, Windows), or you can use your own "self-hosted" runners for more control.
+
+### How It Works
+1.  **Configuration:** You create a YAML file in your repository that outlines the "recipe" for your automation.
+2.  **Triggering:** When an event (like a push) occurs, GitHub detects the event and starts your workflow.
+3.  **Execution:** The assigned runner picks up the job and executes the steps defined in your YAML file, such as installing dependencies, running tests, or deploying your application.
+4.  **Feedback:** You can view the live logs of your workflow execution directly within the GitHub interface to monitor progress or debug failures.
+
+### Getting Started
+*   **Use Templates:** GitHub provides preconfigured workflow templates based on your repository's code (e.g., Node.js, Python, Java) to help you get started quickly.
+*   **Marketplace:** You can browse the GitHub Marketplace to find pre-written actions created by the community, which you can plug into your own workflows to save time.
+*   **Documentation:** For a hands-on approach, you can visit the official GitHub Actions documentation or follow a "Quickstart" guide directly from your repository's **Actions** tab.

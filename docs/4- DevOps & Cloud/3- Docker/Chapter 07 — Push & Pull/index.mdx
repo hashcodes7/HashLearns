@@ -1,0 +1,31 @@
+---
+title: "Push & Pull"
+---
+
+# Push & Pull
+
+To work with Docker images, you primarily use the `docker push` and `docker pull` commands to move images between your local machine and a container registry (like Docker Hub).
+
+![Docker Push and Pull](https://docs.docker.com/images/registry-pull-push-architecture.svg)
+
+### 1. Docker Pull (Downloading Images)
+The `docker pull` command is used to download an image from a registry to your local machine.
+*   **Basic Syntax:**
+    ```bash
+    docker pull <image_name>:<tag>
+    ```
+*   **What happens:** Docker contacts the registry, downloads the image layers, and stores them in your local image cache. If you already have the image locally, Docker will skip the download.
+
+### 2. Docker Push (Uploading Images)
+The `docker push` command is used to upload your local images to a registry so they can be shared or used in other environments.
+*   **Prerequisite:** You must be logged in to the registry (e.g., `docker login`).
+*   **Basic Syntax:**
+    ```bash
+    docker push <registry_url>/<username>/<image_name>:<tag>
+    ```
+*   **Steps to Push:**
+    1.  **Build your image:** Tag it with your registry username.
+        `docker build -t your-username/my-app:latest .`
+    2.  **Push the image:**
+        `docker push your-username/my-app:latest`
+*   **What happens:** Docker calculates which layers have changed and only uploads the necessary layers to the registry, making the process efficient.

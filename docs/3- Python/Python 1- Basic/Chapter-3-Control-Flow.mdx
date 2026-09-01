@@ -1,0 +1,48 @@
+---
+title: "Chapter 3 - Control Flow"
+description: "Conditional statements and loops in Python."
+---
+
+# Control Flow: If/Else and Loops
+
+## Python Conditions and If statements
+
+Python supports the usual logical conditions from mathematics. These conditions can be used in several ways, most commonly in "if statements" and loops.
+
+An "if statement" is written by using the `if` keyword.
+
+```python
+a = 33
+b = 200
+if b > a:
+  print("b is greater than a")
+elif a == b:
+  print("a and b are equal")
+else:
+  print("a is greater than b")
+```
+
+## Python Loops
+
+Python has two primitive loop commands:
+* `while` loops
+* `for` loops
+
+### The while Loop
+With the `while` loop we can execute a set of statements as long as a condition is true.
+
+```python
+i = 1
+while i < 6:
+  print(i)
+  i += 1
+```
+
+### The for Loop
+A `for` loop is used for iterating over a sequence (that is either a list, a tuple, a dictionary, a set, or a string).
+
+```python
+fruits = ["apple", "banana", "cherry"]
+for x in fruits:
+  print(x)
+```

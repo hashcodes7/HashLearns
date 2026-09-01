@@ -1,0 +1,41 @@
+---
+title: "Chapter 1 - Classes & Objects"
+---
+
+# Classes and Objects in Python
+
+Object-Oriented Programming (OOP) in Python starts with the concepts of **classes** and **objects**. 
+
+## What is a Class?
+A class is a blueprint or a template for creating objects. It defines a set of attributes that will characterize any object that is instantiated from this class.
+
+## What is an Object?
+An object is an instance of a class. It is a realized version of the class, containing actual data.
+
+## Instance vs. Class Variables
+- **Class Variables:** Shared among all instances of a class. They are defined inside the class but outside any methods.
+- **Instance Variables:** Unique to each instance. They are defined inside methods, typically the `__init__` method.
+
+## The `__init__` Method
+The `__init__` method is the constructor in Python. It is automatically called when a new instance of a class is created. It is used to initialize the object's state.
+
+```python
+class Dog:
+    # Class variable
+    species = "Canis familiaris"
+
+    def __init__(self, name, age):
+        # Instance variables
+        self.name = name
+        self.age = age
+
+    def description(self):
+        return f"{self.name} is {self.age} years old."
+
+# Creating objects
+buddy = Dog("Buddy", 9)
+miles = Dog("Miles", 4)
+
+print(buddy.description())  # Output: Buddy is 9 years old.
+print(miles.species)        # Output: Canis familiaris
+```

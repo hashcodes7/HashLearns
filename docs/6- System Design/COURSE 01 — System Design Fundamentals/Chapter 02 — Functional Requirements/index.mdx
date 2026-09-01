@@ -1,0 +1,40 @@
+---
+title: "Functional Requirements"
+---
+
+In system design, **functional requirements** define the specific behaviors, features, and functions that a system must support. They essentially describe **"what"** the system does—the core capabilities that allow users to achieve their goals and the system to fulfill its business purpose.
+
+### Core Characteristics
+*   **Action-Oriented:** They often describe workflows and actions using verbs like *create, read, update, delete, search, send,* or *calculate*.
+*   **User & Business Focused:** They translate high-level business goals into concrete system behaviors.
+*   **Testable:** Each functional requirement should be verifiable; you can test whether the system actually performs the described action.
+*   **Implementation-Neutral:** Good functional requirements focus on *what* the system must do, not *how* it should be built (the latter is reserved for architectural design).
+
+---
+
+### Functional vs. Non-Functional Requirements
+It is critical to distinguish functional requirements from non-functional requirements (NFRs) early in the design process.
+
+| Feature | Functional Requirements | Non-Functional Requirements (NFRs) |
+| :--- | :--- | :--- |
+| **Focus** | **What** the system does | **How well** the system performs |
+| **Goal** | User features & business logic | Quality attributes (speed, security, scale) |
+| **Failure** | The system is missing a core feature | The system is too slow, insecure, or crashes |
+| **Example** | "Users can reset their password." | "Password reset emails must arrive in < 30s." |
+
+---
+
+### Examples of Functional Requirements
+If you were designing a system like an e-commerce platform, your functional requirements might include:
+*   **User Authentication:** "The system shall allow users to register, log in, and log out using an email and password."
+*   **Search/Discovery:** "Users shall be able to search for products by category, keyword, or price range."
+*   **Transaction Processing:** "The system shall allow users to add items to a shopping cart and complete a purchase using a credit card."
+*   **Data Management:** "The system shall generate a monthly sales report for administrators."
+
+---
+
+### Best Practices for System Design Interviews
+1.  **Extract Early:** In an interview, start by clarifying the functional requirements to "make the product concrete" before jumping into architecture.
+2.  **Define Scope:** Use these requirements to prevent scope creep. If a feature isn't in your functional requirements list, don't build it.
+3.  **Translate to APIs:** Once you have your functional requirements, map them directly to API endpoints (e.g., `POST /login`, `GET /products`) and data models.
+4.  **Use Precise Language:** Avoid vague terms like "fast" or "user-friendly" in functional requirements. Instead, describe the specific behavior or action.

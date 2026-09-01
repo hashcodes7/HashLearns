@@ -1,0 +1,31 @@
+---
+title: "System Design Requirements"
+---
+
+System design requirements are the foundational constraints and objectives that define what a system must do and how it should perform. They are typically categorized into two primary types: **Functional** and **Non-Functional** requirements.
+
+### 1. Functional Requirements
+These define the **core features and behaviors** of the system—what the system is actually supposed to do. They describe the interactions between the user and the system.
+*   **Examples:** User registration, login/authentication, sending messages, searching for content, or processing payments.
+*   **Goal:** Ensure the system delivers the necessary business logic and services.
+
+### 2. Non-Functional Requirements (NFRs)
+These define the **quality attributes and performance constraints**—how the system performs under various conditions. If functional requirements are the "what," NFRs are the "how well."
+*   **Key Attributes:**
+    *   **Scalability:** The ability to handle growth in users or data.
+    *   **Availability:** Ensuring the system remains accessible (often measured in "nines," e.g., 99.99%).
+    *   **Latency:** The speed of response, often requiring specific thresholds (e.g., < 200ms).
+    *   **Reliability & Security:** Protecting data and ensuring the system operates correctly without failure.
+*   **Goal:** Ensure the architecture is robust, efficient, and user-friendly.
+
+---
+
+### How to Approach Requirements in System Design
+When designing a system, especially in a professional or interview context, follow this structured approach:
+
+1.  **Clarify the Problem:** Never jump straight to the tech stack. Start by asking questions to understand the scope and the core problems you are solving.
+2.  **Define and Prioritize:**
+    *   Identify the top 3–5 functional features.
+    *   Quantify your non-functional requirements whenever possible (e.g., "support 100M+ DAU" instead of just "must be scalable").
+3.  **Balance Trade-offs:** Every design choice involves trade-offs. For example, you may need to choose between **Consistency** and **Availability** (as per the CAP theorem) based on the specific needs of your system.
+4.  **Validate:** Ensure your proposed architecture directly addresses the requirements you initially identified.

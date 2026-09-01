@@ -1,0 +1,31 @@
+---
+title: "Fault Tolerance"
+---
+
+# Fault Tolerance in Distributed Systems
+
+Fault tolerance is the ability of a distributed system to continue operating correctly and without interruption, even when one or more of its components (hardware, software, or network) fail. In distributed environments, failure is considered an inevitability rather than an exception; therefore, fault tolerance is a foundational principle for building resilient, reliable, and available systems.
+
+## Key Concepts
+* **Failure vs. Fault:** A **fault** is a weakness or defect in a component (e.g., a software bug or hardware glitch). An **error** is an incorrect result caused by a fault, and a **failure** is the final outcome where the system fails to achieve its assigned goal.
+* **Partial Failures:** Distributed systems are prone to partial failures, where some parts of the system stop working while others remain operational. A primary goal of fault tolerance is to isolate these failures so they do not cascade and bring down the entire system.
+* **Dependability:** This measures a system's quality, encompassing **availability** (the system is ready for use when needed) and **reliability** (the system performs as expected).
+
+## Common Techniques
+Fault tolerance is generally achieved by eliminating single points of failure through the following strategies:
+
+* **Redundancy:** Providing extra capacity or duplicate components so that if a primary component fails, a backup can take over.
+* **Replication:** Maintaining multiple copies of data or services across different nodes or geographical locations. This ensures data remains accessible even if a specific node or data center goes offline.
+* **Failover:** Automatically shifting workloads or traffic from a failed component to a healthy, redundant one without disrupting the user experience.
+* **Checkpointing:** Periodically saving the system's state to stable storage, allowing the system to roll back and recover to a known "good" state after a failure.
+* **Design Patterns:**
+    * **Circuit Breaker:** Stops the system from repeatedly trying to access a failing service, preventing cascading failures.
+    * **Bulkhead Isolation:** Isolates components so that a failure in one area does not impact the rest of the system.
+    * **Retry with Exponential Backoff:** Automatically retries failed operations after increasing delays, which helps handle transient network glitches.
+
+## Implementation Phases
+Achieving fault tolerance is an ongoing, multi-phase process that typically includes:
+1. **Fault Detection:** Identifying that a component is not behaving as expected.
+2. **Diagnosis:** Determining the nature and cause of the failure.
+3. **Evidence Generation & Assessment:** Gathering data to confirm the fault and assess its impact.
+4. **Recovery:** Automatically or manually restoring the system to a functional state.

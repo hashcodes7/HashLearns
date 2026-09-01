@@ -1,0 +1,27 @@
+---
+title: "Image Registries"
+---
+
+# Image Registries
+
+A **Docker Image Registry** is a centralized, server-side storage and distribution system designed to manage container images. It acts as a library where developers can upload (push) their built images and from which others can download (pull) them to run as containers.
+
+![Image Registry](https://docs.docker.com/images/registry-pull-push-architecture.svg)
+
+### How It Works
+*   **The Workflow:** When a developer builds an image, they "push" it to a registry. A user or an automated deployment system (like a CI/CD pipeline) then "pulls" that image from the registry to run it in a different environment.
+*   **Registry vs. Repository:** 
+    *   A **Registry** is the entire service (the "warehouse").
+    *   A **Repository** is a collection of related images within that registry, usually organized by project (e.g., `my-org/my-app`).
+    *   Images are often identified by **Tags** (e.g., `my-app:v1.0`), which represent specific versions of the software.
+
+### Types of Registries
+1.  **Public Registries:** These are accessible to anyone on the internet. They are typically used for sharing open-source software and official images. *Example:* **Docker Hub** is the default public registry.
+2.  **Private Registries:** These are restricted, offering secure, controlled access. They are essential for enterprises to store proprietary code and internal applications.
+
+### Popular Registry Options
+*   **Docker Hub:** The industry-standard public registry.
+*   **Amazon Elastic Container Registry (ECR):** AWS-native, highly integrated with AWS services.
+*   **Google Artifact Registry (GAR):** Google Cloud’s service.
+*   **Azure Container Registry (ACR):** Microsoft Azure’s managed registry service.
+*   **Self-Hosted/Third-Party:** Harbor, JFrog Artifactory, GitLab Container Registry.

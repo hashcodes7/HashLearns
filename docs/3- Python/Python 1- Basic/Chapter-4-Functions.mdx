@@ -1,0 +1,58 @@
+---
+title: "Chapter 4 - Functions & Scope"
+description: "Creating functions and understanding variable scope."
+---
+
+# Functions and Scope
+
+A function is a block of code which only runs when it is called. You can pass data, known as parameters, into a function. A function can return data as a result.
+
+## Creating and Calling a Function
+
+In Python a function is defined using the `def` keyword. To call a function, use the function name followed by parenthesis.
+
+```python
+def my_function():
+  print("Hello from a function")
+
+# Calling the function
+my_function()
+```
+
+## Arguments and Return Values
+
+Information can be passed into functions as arguments. Functions can also return a value using the `return` statement.
+
+```python
+def multiply_by_two(x):
+  return 5 * x
+
+print(multiply_by_two(3)) # Outputs 15
+```
+
+## Python Scope
+
+A variable is only available from inside the region it is created. This is called scope.
+
+### Local Scope
+A variable created inside a function belongs to the local scope of that function, and can only be used inside that function.
+
+```python
+def myfunc():
+  x = 300
+  print(x)
+
+myfunc()
+```
+
+### Global Scope
+A variable created in the main body of the Python code is a global variable and belongs to the global scope. Global variables are available from within any scope, global and local.
+
+```python
+x = 300
+
+def myfunc():
+  print(x)
+
+myfunc()
+```

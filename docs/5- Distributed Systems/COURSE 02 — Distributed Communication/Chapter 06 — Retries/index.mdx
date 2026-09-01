@@ -1,0 +1,15 @@
+---
+title: "Retries"
+---
+
+# Retries in Distributed Systems
+
+Retries handle transient faults like network hiccups or brief service overloads. 
+
+### Best Practices for Safe Retries
+1. **Backoff and Jitter:** Use exponential backoff and add randomness.
+2. **Idempotency:** Ensure operations can be retried safely.
+3. **Limit Retries:** Cap attempts and use retry budgets.
+4. **Circuit Breakers:** Stop traffic to failing services.
+
+![Retries](https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Retry_icon.svg/200px-Retry_icon.svg.png)

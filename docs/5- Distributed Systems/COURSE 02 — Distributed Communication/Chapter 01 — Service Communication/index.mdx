@@ -1,0 +1,36 @@
+---
+title: "Service Communication"
+---
+
+# Service Communication Patterns
+
+In distributed systems, service communication patterns are essential for coordinating independent services while maintaining system resilience, scalability, and performance. These patterns are generally categorized by how services interact and whether the sender waits for a response.
+
+## 1. Synchronous Communication
+In this pattern, the sender invokes a service and waits (blocks) for an immediate response.
+* **Request-Response (REST/gRPC):** The most common pattern where a client sends a request and expects an immediate reply. While simple to implement, it creates **temporal coupling**—if the receiver is down or slow, the caller is also affected.
+* **API Gateway Pattern:** Acts as a single entry point for clients, routing requests to various backend services and handling cross-cutting concerns like authentication and rate limiting.
+* **Best Practice:** Use synchronous communication when immediate, real-time results are required, but be cautious of "chaining" calls, which can lead to cascading failures and performance bottlenecks. Techniques like **Circuit Breakers** are often used to prevent failures from spreading across the system.
+
+## 2. Asynchronous Communication
+Services exchange messages without waiting for an immediate response, allowing them to operate independently and improving overall system resilience.
+* **Point-to-Point (One-to-One):** A producer sends a message to a specific queue, and one consumer processes it. This is ideal for background tasks or reliable, guaranteed processing (e.g., AWS SQS).
+* **Publish/Subscribe (One-to-Many):** A service publishes an event to a broker (e.g., Kafka, RabbitMQ), and multiple subscribers react to that event. This decouples services and is the foundation for event-driven architectures.
+* **Broadcast:** A message is sent to all interested recipients (often used for system-wide notifications or cache invalidation).
+* **Request-Asynchronous Response:** A hybrid approach where a service sends a request but does not block; it receives a reply eventually through a callback or separate message channel.
+
+## Summary Table: Choosing a Pattern
+
+| Feature | Synchronous | Asynchronous |
+| :--- | :--- | :--- |
+| **Coupling** | Tight (Temporal) | Loose |
+| **Performance** | Blocked/Latency-sensitive | Non-blocking/High-throughput |
+| **Resilience** | Lower (Cascading failures) | Higher (Buffering/Retries) |
+| **Complexity** | Simple to implement | Requires broker/event handling |
+| **Use Case** | Real-time CRUD operations | Background tasks, event-driven flows |
+
+## Best Practices for Robust Communication
+* **Avoid "Distributed Monoliths":** Prevent tight coupling where a chain of synchronous calls makes the entire system's availability a product of every individual service's uptime.
+* **Implement Error Handling:** Use retry mechanisms with exponential backoff and **dead-letter queues** for asynchronous messages that fail to process.
+* **Observability:** Because asynchronous flows are harder to trace, implement **distributed tracing** to monitor request paths across services.
+* **Versioning:** Always maintain backward compatibility in your service interfaces to avoid breaking downstream consumers.

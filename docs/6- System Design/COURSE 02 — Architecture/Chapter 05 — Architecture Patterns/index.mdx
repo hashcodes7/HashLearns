@@ -1,0 +1,26 @@
+---
+title: "Architecture Patterns"
+---
+
+Architectural patterns in system design are high-level, reusable strategies for structuring software systems. They provide proven blueprints to solve recurring design challenges related to scalability, maintainability, reliability, and performance.
+
+Unlike low-level design patterns (e.g., Factory or Strategy) which focus on code-level organization, architectural patterns address system-wide concerns like data flow, component interaction, and deployment strategy.
+
+### Common Architecture Patterns
+
+*   **Layered (N-Tier) Architecture:** Structures an application into distinct layers (e.g., Presentation, Business Logic, Data Access), where each layer has a specific responsibility. It promotes separation of concerns and is highly maintainable.
+*   **Microservices Architecture:** Decomposes an application into a collection of small, independent, and loosely coupled services that communicate over APIs. It is ideal for large, complex systems that require frequent updates and independent scaling.
+*   **Event-Driven Architecture (EDA):** Components communicate by emitting and consuming events through a message broker (e.g., Kafka, RabbitMQ). This promotes high decoupling and is excellent for asynchronous, real-time workflows.
+*   **Service-Oriented Architecture (SOA):** An older precursor to microservices that focuses on exposing discrete business functionalities as reusable services within an enterprise.
+*   **CQRS (Command Query Responsibility Segregation):** Separates the data modification (commands) from data retrieval (queries) paths, allowing each to be optimized independently for performance and scalability.
+*   **Hexagonal Architecture (Ports and Adapters):** Focuses on isolating the core business logic from external dependencies (like databases or UI) by using ports and adapters, making the system easier to test and evolve.
+*   **Monolithic Architecture:** A traditional approach where the entire application is built as a single, unified unit. While simpler to develop initially, it can become difficult to scale and maintain as the system grows.
+
+### Key Considerations for Selection
+When choosing an architectural pattern, consider the following trade-offs:
+*   **Scalability & Performance:** Patterns like Microservices and EDA excel in highly scalable environments but introduce operational complexity.
+*   **Maintainability:** Layered architectures offer clear boundaries, while monolithic architectures may become "unwieldy" over time.
+*   **Complexity:** Distributed patterns (like Microservices) require sophisticated infrastructure, monitoring, and transaction management (e.g., Saga pattern for data consistency).
+
+### Relationship Between Patterns
+Architectural patterns are not mutually exclusive; modern systems often use a hybrid approach. For example, a system might use a **Layered** structure within individual **Microservices**, while using an **Event-Driven** approach to handle communication between those services.

@@ -1,0 +1,56 @@
+---
+title: "Chapter 3 - Encapsulation & Abstraction"
+---
+
+# Encapsulation and Abstraction
+
+## Encapsulation
+Encapsulation is the bundling of data and the methods that operate on that data into a single unit (a class). It also involves restricting direct access to some of the object's components to prevent accidental modification.
+
+### Public, Protected, and Private Attributes
+- **Public:** Accessible from anywhere. No special prefix. (e.g., `self.name`)
+- **Protected:** Intended for internal use and subclasses. Prefixed with a single underscore. (e.g., `self._age`)
+- **Private:** Not accessible directly from outside the class. Prefixed with a double underscore. (e.g., `self.__id`)
+
+```python
+class BankAccount:
+    def __init__(self, account_holder, balance):
+        self.account_holder = account_holder  # Public
+        self._branch = "Main"                 # Protected
+        self.__balance = balance              # Private
+
+    def deposit(self, amount):
+        if amount > 0:
+            self.__balance += amount
+
+    def get_balance(self):
+        return self.__balance
+
+account = BankAccount("Alice", 1000)
+print(account.account_holder)  # Alice
+print(account.get_balance())   # 1000
+# print(account.__balance)     # AttributeError!
+```
+
+## Abstraction
+Abstraction hides complex implementation details and only shows the essential features of the object. In Python, this is strictly enforced using Abstract Base Classes (ABCs).
+
+```python
+from abc import ABC, abstractmethod
+
+class Shape(ABC):
+    @abstractmethod
+    def area(self):
+        pass
+
+class Circle(Shape):
+    def __init__(self, radius):
+        self.radius = radius
+
+    def area(self):
+        return 3.14 * self.radius ** 2
+
+# shape = Shape() # TypeError: Can't instantiate abstract class
+circle = Circle(5)
+print(circle.area()) # 78.5
+```

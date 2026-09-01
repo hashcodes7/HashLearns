@@ -1,0 +1,45 @@
+---
+title: "Capacity Estimation"
+---
+
+Capacity estimation—often referred to as **back-of-the-envelope calculation**—is a fundamental skill in system design. It involves using simplified math and reasonable assumptions to determine the scale, resources, and feasibility of an architecture before diving into detailed design.
+
+### 1. The Core Objective
+The goal is not to reach a perfectly precise number, but to arrive at an **order-of-magnitude estimate** (e.g., "do I need 10 servers or 10,000?"). These calculations serve as a "feasibility check" to justify architectural decisions such as:
+*   **Database partitioning (sharding):** Triggered by massive storage or throughput requirements.
+*   **Caching:** Necessary when QPS exceeds the capacity of your database.
+*   **Load balancers:** Required when the incoming traffic exceeds the capacity of a single server.
+
+---
+
+### 2. Standard Framework for Estimation
+Most experts suggest a repeatable 5-step approach to keep your thinking clear and prevent getting stuck in "arithmetic circles":
+
+1.  **Clarify Scale & Assumptions:** Ask the interviewer for baseline numbers (e.g., Daily Active Users, read-to-write ratio, data retention period). Explicitly state your assumptions during the interview.
+2.  **Traffic Estimation (QPS):** Calculate the Queries Per Second. 
+    *   *Formula:* `Total Daily Requests / 86,400 seconds` (often rounded to `100,000` for simplicity).
+3.  **Storage Estimation:** Determine how much data needs to be stored over a specific period (e.g., 5 years).
+    *   *Formula:* `Daily Active Users × Daily Actions × Average Size per Action`.
+4.  **Bandwidth Requirements:** Estimate incoming and outgoing data to determine network needs.
+5.  **Server/Resource Count:** Estimate the number of servers needed by dividing the total load (QPS or storage) by the capacity of a single unit.
+
+---
+
+### 3. Essential Numbers to Memorize
+To perform these calculations quickly, you should be familiar with common performance and size metrics:
+
+| Category | Typical Value / Reference |
+| :--- | :--- |
+| **Data Units** | 1 KB ($10^3$), 1 MB ($10^6$), 1 GB ($10^9$), 1 TB ($10^{12}$) |
+| **Time (Seconds)** | 1 day ≈ $10^5$ seconds (86,400s) |
+| **Memory Latency** | L1 cache (~0.5 ns), RAM (~100 ns) |
+| **Network Latency** | Within Datacenter (~0.5 ms), US Coast-to-Coast (~40-50 ms) |
+| **Common Sizes** | UUID (16 bytes), URL (~100 chars), Tweet (~300 bytes) |
+
+---
+
+### 4. Tips for Success
+*   **Focus on the Process:** Interviewers care more about *how* you arrive at your numbers than the numbers themselves. Clearly explain your logic.
+*   **Use Round Numbers:** Use powers of 10 or 2 to simplify math. Using 100,000 seconds in a day instead of 86,400 is standard practice for quick estimation.
+*   **Perform a Sanity Check:** After calculating, ask if the result seems reasonable compared to real-world systems. 
+*   **Identify the Crux:** If you get stuck, look for the most difficult part of the problem—the "crux"—and focus your estimation efforts there (e.g., the index size for a search engine).

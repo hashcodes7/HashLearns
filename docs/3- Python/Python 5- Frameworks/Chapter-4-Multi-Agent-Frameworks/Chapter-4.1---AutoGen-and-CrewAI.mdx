@@ -1,0 +1,65 @@
+---
+title: "Chapter 4.1 - AutoGen & CrewAI Orchestration"
+---
+
+# Multi-Agent Collaboration: AutoGen & CrewAI
+
+When tasks exceed the capability of a single prompt or agent loop, **Multi-Agent Frameworks** coordinate specialized teams of agents with complementary roles, skills, and tools.
+
+:::info[Multi-Agent Advantage]
+Assigning specific personas (e.g. Senior Software Architect, Security Auditor, Code Writer) reduces prompt dilution and improves complex problem solving.
+:::
+
+## 1. Microsoft AutoGen
+
+AutoGen is an open-source programming framework designed for building agentic AI applications that can act autonomously or work in collaboration with humans. It enables the creation of multi-agent systems where multiple agents, leveraging LLMs, tools, or human input, work together to solve complex tasks.
+
+- **AutoGen Core**: An event-driven framework for building scalable, distributed multi-agent systems.
+- **AgentChat**: A programming framework focused on conversational single and multi-agent applications.
+- **AutoGen Studio**: A web-based UI for prototyping and managing agents without writing code.
+
+```python
+from autogen import AssistantAgent, UserProxyAgent, GroupChat, GroupChatManager
+
+coder = AssistantAgent(name="Coder", llm_config=llm_config)
+reviewer = AssistantAgent(name="Code_Reviewer", llm_config=llm_config)
+user_proxy = UserProxyAgent(name="User", code_execution_config={"work_dir": "workspace"})
+
+group_chat = GroupChat(agents=[user_proxy, coder, reviewer], messages=[], max_round=12)
+manager = GroupChatManager(groupchat=group_chat, llm_config=llm_config)
+
+user_proxy.initiate_chat(manager, message="Build a FastAPI microservice for matrix multiplication.")
+```
+
+## 2. CrewAI
+
+CrewAI is a leading open-source framework designed for orchestrating autonomous AI agents and building complex, production-ready multi-agent systems. It combines the collaborative intelligence of Crews with the precise control of Flows.
+
+- **Flows (The Backbone):** Provide the structure, state management, and event-driven logic for AI applications.
+- **Crews (The Intelligence):** Collaborative teams of autonomous agents working together to solve delegated tasks.
+- **Agents:** Individual workers within a crew, equipped with tools, memory, knowledge, and structured outputs.
+- **Tasks & Processes:** Orchestrate how tasks are distributed among agents (e.g., sequential or hierarchical).
+
+```python
+from crewai import Agent, Task, Crew, Process
+
+researcher = Agent(
+    role="AI Research Analyst",
+    goal="Discover cutting edge papers on local quantization",
+    backstory="You are a veteran AI researcher tracking hardware efficiency trends."
+)
+
+task1 = Task(
+    description="Analyze recent GGUF 4-bit quantization benchmarks for mobile.",
+    agent=researcher,
+    expected_output="A bulleted summary of memory vs accuracy tradeoffs."
+)
+
+crew = Crew(
+    agents=[researcher],
+    tasks=[task1],
+    process=Process.sequential
+)
+
+result = crew.kickoff()
+```

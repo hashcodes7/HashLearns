@@ -1,0 +1,20 @@
+---
+title: "Image Tags"
+---
+
+# Image Tags
+
+Docker image tags are labels used to identify, version, and manage different iterations of a container image. Think of them as "sticky notes" that provide context about what is inside a specific image.
+
+![Docker Tags](https://docs.docker.com/images/desktop-dashboard-images.png)
+
+### Core Concepts
+*   **Syntax:** Tags are appended to an image name using a colon: `image_name:tag` (e.g., `my-app:1.0.0`).
+*   **Default Tag:** If you do not specify a tag, Docker automatically assigns the `latest` tag.
+*   **Flexibility:** A single image can have multiple tags, allowing you to point to the same build with different aliases (e.g., `my-app:1.2.3` and `my-app:latest`).
+
+### Best Practices
+
+*   **Avoid `:latest` in Production:** The `latest` tag is a "floating" tag, meaning it is constantly overwritten. In production environments, it can lead to unpredictable deployments. Always use specific, immutable versions for production.
+*   **Use Semantic Versioning (SemVer):** Tagging images with version numbers (e.g., `1.2.3`) is the industry standard. It provides a clear history of updates and makes rollbacks significantly easier.
+*   **Incorporate Traceability:** For development and CI/CD pipelines, consider tags that map directly to your source code, such as Git SHAs or Build IDs.

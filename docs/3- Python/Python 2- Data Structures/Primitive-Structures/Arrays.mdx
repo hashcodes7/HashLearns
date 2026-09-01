@@ -1,0 +1,59 @@
+---
+title: "Arrays"
+description: "Fundamental sequential or graph-based memory structures."
+---
+
+# Arrays in Python
+
+In Python, there are several ways to implement and use arrays, depending on your needs for performance, memory, and data flexibility. Below is a detailed look based on GeeksforGeeks and Python documentation.
+
+## 1. Lists (Built-in Dynamic Arrays)
+Lists are the most commonly used "array-like" structure in Python.
+* **Characteristics:** They are dynamic (they can grow or shrink in size) and heterogeneous (allowing elements of different data types in a single list).
+* **Implementation:** Internally, Python lists are implemented as dynamic arrays of pointers.
+* **Use Case:** Best for general-purpose programming where flexibility is preferred over strict memory efficiency.
+
+```python
+# Example of a Python List
+my_list = [1, "Hello", 3.14, True]
+my_list.append("World")
+print(my_list)
+```
+
+## 2. The `array` Module
+For scenarios requiring strict data types and memory efficiency, Python provides the built-in `array` module.
+* **Characteristics:** These are true arrays that store elements of the same data type (homogeneous) in contiguous memory locations.
+* **Implementation:** You must specify a "type code" (e.g., `'i'` for signed integers, `'f'` for floats) when creating the array.
+* **Use Case:** Ideal for large datasets consisting entirely of numeric data where memory usage is a concern.
+
+```python
+import array
+
+# Create an array of integers (type code 'i')
+arr = array.array('i', [1, 2, 3, 4, 5])
+arr.append(6)
+print(arr)
+```
+
+## 3. NumPy Arrays
+For scientific computing and advanced data manipulation, the NumPy library is the industry standard.
+* **Characteristics:** NumPy arrays are highly optimized for mathematical operations, support multi-dimensional data, and are significantly faster than built-in lists for large-scale computations.
+* **Structured Arrays:** NumPy also supports "structured arrays," which allow you to group data of different types (similar to a C `struct`), with each field accessible by name.
+
+```python
+import numpy as np
+
+# Create a numpy array
+np_arr = np.array([1, 2, 3, 4, 5])
+print(np_arr * 2) # Vectorized operation
+```
+
+### Key Differences at a Glance
+| Feature | Python List | `array` Module | NumPy Array |
+| :--- | :--- | :--- | :--- |
+| **Data Type** | Heterogeneous | Homogeneous | Homogeneous |
+| **Memory** | Higher | Lower | Lowest (optimized) |
+| **Performance** | Slower | Faster (for numbers) | Fastest |
+| **Flexibility** | High | Low | Moderate (specialized) |
+
+> *Content sourced and adapted from GeeksforGeeks and official Python Documentation.*

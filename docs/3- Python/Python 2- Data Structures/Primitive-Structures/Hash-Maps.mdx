@@ -1,0 +1,52 @@
+---
+title: "Hash Maps"
+description: "Fundamental sequential or graph-based memory structures."
+---
+
+# Hash Maps in Python
+
+In Python, dictionaries (`dict`) are the built-in implementation of the hash map data structure. They are designed to store key-value pairs and provide highly efficient average-case performance for lookups, insertions, and deletions.
+
+## Key Concepts
+
+* **Definition:** A hash map (or dictionary) is an associative array that maps unique keys to values.
+* **Internal Implementation:** Python dictionaries are implemented using **hash tables**. Internally, they use a hash function to compute an index into an array of buckets, where the actual key-value pairs are stored.
+* **Efficiency:** Hash maps allow for $O(1)$ average-case time complexity for search, insert, and delete operations.
+* **Memory Optimization:** Modern Python versions (3.6+) use a more compact, order-preserving dictionary implementation that stores data in a dense table, referenced by a sparse index table, significantly reducing memory overhead.
+
+## Collision Handling
+Because multiple keys might hash to the same index, hash maps must handle collisions. Techniques for this include:
+1. **Separate Chaining:** Storing multiple entries in the same bucket (e.g., using a linked list).
+2. **Open Addressing/Rehashing:** Finding an alternative empty bucket using probing methods. 
+*Note: Python's built-in `dict` resolves collisions using a form of open addressing.*
+
+## Python `dict` Example
+
+```python
+# Creating a dictionary (Hash Map)
+hash_map = {
+    "name": "Alice",
+    "age": 30,
+    "city": "New York"
+}
+
+# Insertion O(1)
+hash_map["profession"] = "Engineer"
+
+# Lookup O(1)
+print(f"Name: {hash_map['name']}")
+
+# Deletion O(1)
+del hash_map["age"]
+
+# Iteration
+for key, value in hash_map.items():
+    print(f"{key}: {value}")
+```
+
+## Applications
+* **Caching (Memoization):** Storing results of expensive function calls.
+* **Database Indexing:** Quickly locating a data record given its search key.
+* **Counting Frequencies:** Counting occurrences of elements in a list.
+
+> *Content sourced and adapted from GeeksforGeeks Data Structures implementations.*

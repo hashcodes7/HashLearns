@@ -1,0 +1,20 @@
+---
+title: "Containers"
+---
+
+# Containers
+
+Docker containers are lightweight, standalone, and executable software packages that include everything needed to run an application—such as code, runtime, system tools, system libraries, and settings. They provide a consistent, isolated environment that ensures software runs the same way regardless of the infrastructure.
+
+![Docker Containers](https://www.docker.com/wp-content/uploads/2021/11/docker-containerized-appliction-blue-logo.png)
+
+### Core Concepts
+*   **Containers vs. Images:** A Docker Image is a read-only blueprint or template that contains the instructions for the container. A Container is a running instance of that image.
+*   **How They Work:** Unlike Virtual Machines (VMs), which virtualize hardware and require a full guest operating system, Docker containers virtualize the operating system. They share the host machine's OS kernel, which makes them significantly more lightweight, faster to start, and more resource-efficient.
+*   **Isolation:** Each container acts as an isolated process. This separation prevents interference between applications running on the same host, allowing you to manage dependencies and versioning easily.
+
+### Key Benefits
+*   **Portability & Consistency:** Containers eliminate the "it works on my machine" problem by bundling all dependencies.
+*   **Resource Efficiency:** Because they share the host kernel, containers require far less disk space and RAM than VMs.
+*   **Speed:** Containers can be started, stopped, and replicated almost instantly.
+*   **Simplified Deployment:** Docker standardizes how applications are deployed, making it easier to automate release cycles.
