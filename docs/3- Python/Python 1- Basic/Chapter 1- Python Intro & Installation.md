@@ -1,5 +1,5 @@
 
-![[Pasted image 20260901162038.png|295]]
+![[assets/Pasted image 20260901162038.png|295]]
 Install from https://www.python.org/downloads/ , standalone scroll down and download
 
 3.12 <span style="color:#f76707">(a bit too new)</span> - https://www.python.org/downloads/latest/python3.10/
