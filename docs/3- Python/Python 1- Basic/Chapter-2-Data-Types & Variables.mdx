@@ -1,0 +1,57 @@
+
+## Variables and Data Types
+
+Variables are containers for storing data values. Python has no command for declaring a variable; it is created the moment you first assign a value to it.
+
+```python
+x = 5
+y = "John"
+print(x)
+print(y)
+```
+
+## Built-in Data Types
+
+In programming, data type is an important concept. Variables can store data of different types, and different types can do different things. Python has the following data types built-in by default:
+
+| Category           | Data Type                 | Example Syntax                      |
+| :----------------- | :------------------------ | :---------------------------------- |
+| **Text Type**      | `str`                     | `"Hello, World!"`                   |
+| **Numeric Types**  | `int`, `float`, `complex` | `10`, `3.14`, `2 + 3j`              |
+| **Sequence Types** | `list`, `tuple`, `range`  | `[1, 2, 3]`, `(1, 2)`, `range(5)`   |
+| **Mapping Type**   | `dict`                    | `{"name": "Alice", "age": 25}`      |
+| **Set Types**      | `set`, `frozenset`        | `{1, 2, 3}`, `frozenset({1, 2, 3})` |
+| **Boolean Type**   | `bool`                    | `True`, `False`                     |
+
+### Examples of Data Types
+
+```python
+# String
+greeting = "Hello World"
+
+# Integer
+age = 20
+
+# Float
+price = 19.99
+
+# List (ordered and changeable)
+fruits = ["apple", "banana", "cherry"]
+
+# Tuple (ordered and unchangeable)
+coordinates = (10, 20)
+
+# Dictionary (key-value pairs)
+person = {"name": "John", "age": 36}
+
+# Boolean
+is_active = True
+```
+
+and you can declare a variable simply by initializing it ,
+```
+x = int()
+```
+
+you can directly start a new variable with a data instead of even telling the data type eg.
+`x=5` is perfectly <span style="color:#2f9e44">valid</span> if x isn't even declared. (not exactly recommended for a project level development)
