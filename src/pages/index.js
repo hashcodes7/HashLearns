@@ -10,6 +10,7 @@ export default function Home() {
     <Layout
       title={`${siteConfig.title}`}
       description={siteConfig.tagline}
+      wrapperClassName="index-grid-bg"
     >
       <main className="content-wrap">
         <About />

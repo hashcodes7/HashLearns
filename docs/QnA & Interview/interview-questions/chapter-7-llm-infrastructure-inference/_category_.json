@@ -1,8 +1,4 @@
 {
   "label": "chapter-7-llm-infrastructure-inference",
-  "position": 7,
-  "link": {
-    "type": "generated-index",
-    "description": "Explore courses and concepts related to Llm Infrastructure Inference."
-  }
+  "position": 7
 }

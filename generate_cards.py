@@ -32,13 +32,20 @@ def main():
         changed = True
         
         category_data['label'] = format_title(folder_name)
-            
-        if 'link' not in category_data:
-            category_data['link'] = {
-                "type": "generated-index",
-                "description": f"Explore courses and concepts related to {category_data['label']}."
-            }
-            changed = True
+        
+        is_chapter = 'chapter' in folder_name.lower() or 'module' in folder_name.lower()
+        
+        if is_chapter:
+            if 'link' in category_data:
+                del category_data['link']
+                changed = True
+        else:
+            if 'link' not in category_data:
+                category_data['link'] = {
+                    "type": "generated-index",
+                    "description": f"Explore courses and concepts related to {category_data['label']}."
+                }
+                changed = True
             
         if changed:
             with open(category_file, 'w', encoding='utf-8') as f:

@@ -113,14 +113,27 @@ body,
 .main-wrapper,
 .footer {
   background-color: var(--bg-page) !important;
+  color: var(--text-primary);
+  transition: background-color var(--transition), color var(--transition);
+}
+
+/* Apply Grid only on Index Page by targeting the root html */
+html:has(.index-grid-bg) {
   background-image: 
     linear-gradient(to right, var(--bg-grid-color) 1px, transparent 1px),
     linear-gradient(to bottom, var(--bg-grid-color) 1px, transparent 1px) !important;
   background-size: 40px 40px !important;
   background-position: center top !important;
   background-attachment: fixed !important;
-  color: var(--text-primary);
-  transition: background-color var(--transition), color var(--transition);
+}
+
+html:has(.index-grid-bg) body,
+html:has(.index-grid-bg) #__docusaurus,
+html:has(.index-grid-bg) #__docusaurus > div,
+html:has(.index-grid-bg) .main-wrapper,
+html:has(.index-grid-bg) .footer {
+  background-color: transparent !important;
+  background-image: none !important;
 }
 
 /* Glassmorphic Navbar with Theme Adaptive Blur */
@@ -370,7 +383,6 @@ body,
    ========================================================================= */
 .learning-section-wide {
   padding: 48px 0 72px;
-  border-top: 1px solid var(--border-subtle);
 }
 
 .learning-section-header {
@@ -828,12 +840,6 @@ body,
 /* --- RESTORED FOOTER CSS --- */
 footer {
   background-color: var(--bg-page) !important;
-  background-image: 
-    linear-gradient(to right, var(--bg-grid-color) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--bg-grid-color) 1px, transparent 1px) !important;
-  background-size: 40px 40px !important;
-  background-position: center top !important;
-  background-attachment: fixed !important;
   color: var(--text-primary);
   transition: background-color var(--transition), color var(--transition);
 }

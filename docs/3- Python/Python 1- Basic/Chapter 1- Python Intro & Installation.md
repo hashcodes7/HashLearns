@@ -1,3 +1,4 @@
+Oh So you want to learn Python Eh?
 
 ![[assets/Pasted image 20260901162038.png|295]]
 Install from https://www.python.org/downloads/ , standalone scroll down and download
