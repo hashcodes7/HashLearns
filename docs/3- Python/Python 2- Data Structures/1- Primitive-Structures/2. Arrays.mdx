@@ -1,4 +1,3 @@
-
 ## Arrays in Python
 
 In Python, there are several ways to implement and use arrays, depending on your needs for performance, memory, and data flexibility. Below is a detailed look based on GeeksforGeeks and Python documentation.
@@ -16,7 +15,22 @@ my_list.append("World")
 print(my_list)
 ```
 
-### 2. The `array` Module
+#### Array Methods
+|Method|Description|
+|---|---|
+|[append()](https://www.w3schools.com/python/ref_list_append.asp)|Adds an element at the end of the list|
+|[clear()](https://www.w3schools.com/python/ref_list_clear.asp)|Removes all the elements from the list|
+|[copy()](https://www.w3schools.com/python/ref_list_copy.asp)|Returns a copy of the list|
+|[count()](https://www.w3schools.com/python/ref_list_count.asp)|Returns the number of elements with the specified value|
+|[extend()](https://www.w3schools.com/python/ref_list_extend.asp)|Add the elements of a list (or any iterable), to the end of the current list|
+|[index()](https://www.w3schools.com/python/ref_list_index.asp)|Returns the index of the first element with the specified value|
+|[insert()](https://www.w3schools.com/python/ref_list_insert.asp)|Adds an element at the specified position|
+|[pop()](https://www.w3schools.com/python/ref_list_pop.asp)|Removes the element at the specified position|
+|[remove()](https://www.w3schools.com/python/ref_list_remove.asp)|Removes the first item with the specified value|
+|[reverse()](https://www.w3schools.com/python/ref_list_reverse.asp)|Reverses the order of the list|
+|[sort()](https://www.w3schools.com/python/ref_list_sort.asp)|Sorts the list|
+## 2. Other Kind of Arrays
+### 2.1- The `array` Module
 For scenarios requiring strict data types and memory efficiency, Python provides the built-in `array` module.
 * **Characteristics:** These are true arrays that store elements of the same data type (homogeneous) in contiguous memory locations.
 * **Implementation:** You must specify a "type code" (e.g., `'i'` for signed integers, `'f'` for floats) when creating the array.
@@ -31,7 +45,7 @@ arr.append(6)
 print(arr)
 ```
 
-### 3. NumPy Arrays
+### 2.2- NumPy Arrays
 For scientific computing and advanced data manipulation, the NumPy library is the industry standard.
 * **Characteristics:** NumPy arrays are highly optimized for mathematical operations, support multi-dimensional data, and are significantly faster than built-in lists for large-scale computations.
 * **Structured Arrays:** NumPy also supports "structured arrays," which allow you to group data of different types (similar to a C `struct`), with each field accessible by name.
