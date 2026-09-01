@@ -1,25 +1,25 @@
 import { visit } from 'unist-util-visit';
 
 export default function remarkStyleStringToJsx() {
-  return (tree) => {
-    visit(tree, ['mdxJsxFlowElement', 'mdxJsxTextElement'], (node) => {
+  return (tree: any) => {
+    visit(tree, ['mdxJsxFlowElement', 'mdxJsxTextElement'], (node: any) => {
       if (node.attributes) {
         for (const attr of node.attributes) {
           if (attr.type === 'mdxJsxAttribute' && attr.name === 'style' && typeof attr.value === 'string') {
             const styleString = attr.value;
-            const styleObj = {};
+            const styleObj: Record<string, string> = {};
             
-            styleString.split(';').forEach(rule => {
+            styleString.split(';').forEach((rule: string) => {
               if (!rule.trim()) return;
               const parts = rule.split(':');
               if (parts.length >= 2) {
-                const key = parts[0].trim().replace(/-([a-z])/g, g => g[1].toUpperCase());
+                const key = parts[0].trim().replace(/-([a-z])/g, (g: string) => g[1].toUpperCase());
                 const value = parts.slice(1).join(':').trim();
                 styleObj[key] = value;
               }
             });
 
-            const objStr = Object.keys(styleObj).map(k => `${k}: '${styleObj[k]}'`).join(', ');
+            const objStr = Object.keys(styleObj).map((k: string) => `${k}: '${styleObj[k]}'`).join(', ');
 
             attr.value = {
               type: 'mdxJsxAttributeValueExpression',

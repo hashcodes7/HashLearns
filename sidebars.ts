@@ -16,26 +16,26 @@ const sidebars: SidebarsConfig = {
   ],
 };
 
-let fields = [];
+let fields: string[] = [];
 try {
   if (fs.existsSync(docsDir)) {
     fields = fs.readdirSync(docsDir, { withFileTypes: true })
       .filter(dirent => dirent.isDirectory() && !dirent.name.startsWith('.'))
       .map(dirent => dirent.name);
   }
-} catch (err) {
+} catch (err: any) {
   console.warn('[sidebars.ts] Could not read docs directory:', err.message);
 }
 
   fields.forEach(field => {
     const fieldSlug = toSlug(field);
     const fieldDir = path.join(docsDir, field);
-    let courses = [];
+    let courses: string[] = [];
     try {
       courses = fs.readdirSync(fieldDir, { withFileTypes: true })
         .filter(dirent => dirent.isDirectory() && !dirent.name.startsWith('.'))
         .map(dirent => dirent.name);
-    } catch (err) {
+    } catch (err: any) {
       console.warn(`[sidebars.ts] Could not read field directory ${fieldDir}:`, err.message);
     }
 
