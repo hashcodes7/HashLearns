@@ -1,0 +1,1261 @@
+# Python OOP — Practical Notes
+
+## 1. `__init__()` and Object Initialization
+
+`__init__()` is called when a new object is created.
+
+```python
+class User:
+    def __init__(self, user_id, name, email, age=None):
+        self.user_id = user_id
+        self.name = name
+        self.email = email
+        self.age = age
+```
+
+Creating an object:
+
+```python
+user = User("user1", "Harsh", "harsh@gmail.com")
+```
+
+Conceptually:
+
+```text
+User(...)
+   ↓
+__init__(self, user_id, name, email, age=None)
+   ↓
+self.user_id = "user1"
+self.name = "Harsh"
+self.email = "harsh@gmail.com"
+self.age = None
+```
+
+### Mandatory vs Optional Parameters
+
+```python
+def __init__(self, user_id, surname=None):
+```
+
+- `user_id` → mandatory
+    
+- `surname` → optional
+    
+- If `surname` isn't supplied → `None`
+    
+
+```python
+user1 = User("user1", "Verma")
+user2 = User("user2")
+```
+
+Result:
+
+```text
+user1.surname → "Verma"
+user2.surname → None
+```
+
+### Important terminology
+
+Prefer:
+
+> `__init__()` initializes an object using the values passed when the object is created.
+
+Rather than:
+
+> `__init__()` contains variables which should be passed.
+
+The things inside the method definition are **parameters**.
+
+The resulting:
+
+```python
+self.name
+self.age
+self.email
+```
+
+are **instance attributes**.
+
+---
+
+# 2. `self`
+
+`self` represents the **current object/instance**.
+
+```python
+class User:
+    def __init__(self, name):
+        self.name = name
+
+    def display(self):
+        print(self.name)
+```
+
+When:
+
+```python
+user = User("Harsh")
+user.display()
+```
+
+is called, Python conceptually does:
+
+```python
+display(user)
+```
+
+So:
+
+```text
+self → the current object
+```
+
+### Common mistake
+
+Inside an instance method:
+
+```python
+def validate_user(self):
+    if age < 13:
+        ...
+```
+
+`age` is not automatically known as the object's age.
+
+Use:
+
+```python
+if self.age < 13:
+```
+
+Similarly:
+
+```python
+age == None
+```
+
+should be:
+
+```python
+self.age is None
+```
+
+### Mental rule
+
+> If you mean **this object's attribute**, use `self.attribute`.
+
+Examples:
+
+```python
+self.name
+self.age
+self.email
+self.purchase_count
+```
+
+---
+
+# 3. `None` Checks
+
+You may write:
+
+```python
+age != None
+```
+
+but the preferred Python style is:
+
+```python
+age is not None
+```
+
+and:
+
+```python
+age is None
+```
+
+Example:
+
+```python
+if self.age is not None and self.age < 13:
+    return False
+```
+
+---
+
+# 4. Optional Attributes
+
+A common design is:
+
+```python
+class Dog:
+    def __init__(self, name, age, color=None):
+        self.name = name
+        self.age = age
+        self.color = color
+```
+
+Now:
+
+```python
+buddy = Dog("Buddy", 9)
+miles = Dog("Miles", 4, "brown")
+```
+
+Results:
+
+```text
+buddy
+├── name = "Buddy"
+├── age = 9
+└── color = None
+
+miles
+├── name = "Miles"
+├── age = 4
+└── color = "brown"
+```
+
+Both objects have a `color` attribute, but one has the value `None`.
+
+This is usually preferable when `color` is conceptually a valid attribute but is optional.
+
+---
+
+# 5. Conditional Expressions
+
+Instead of:
+
+```python
+if self.color:
+    return f"{self.name} is {self.age} years old and is {self.color}."
+return f"{self.name} is {self.age} years old."
+```
+
+Python allows a one-line conditional expression:
+
+```python
+return (
+    f"{self.name} is {self.age} years old and is {self.color}."
+    if self.color
+    else f"{self.name} is {self.age} years old."
+)
+```
+
+General syntax:
+
+```python
+value_if_true if condition else value_if_false
+```
+
+However, don't sacrifice readability just to make something one line.
+
+---
+
+# 6. Class Variables vs Instance Variables
+
+## Instance variable
+
+Belongs to an individual object:
+
+```python
+self.name
+self.age
+self.color
+```
+
+Different objects can have different values.
+
+## Class variable
+
+Belongs to the class:
+
+```python
+class Dog:
+    species = "Canis familiaris"
+```
+
+All objects can access it:
+
+```python
+Dog.species
+buddy.species
+miles.species
+```
+
+All produce:
+
+```text
+Canis familiaris
+```
+
+Mental model:
+
+```text
+                 Dog
+                  │
+          species = "Canis familiaris"
+                  │
+          ┌───────┴───────┐
+          ↓               ↓
+        buddy           miles
+          │               │
+      name=Buddy       name=Miles
+      age=9            age=4
+      color=None       color=brown
+```
+
+---
+
+# 7. Inheritance
+
+Python does **not** use Java's `extends` keyword.
+
+Java:
+
+```java
+class Cat extends Animal
+```
+
+Python:
+
+```python
+class Cat(Animal):
+```
+
+The class inside parentheses is the **parent/base class**.
+
+```python
+class Animal:
+    def speak(self):
+        return "Some generic sound"
+
+
+class Cat(Animal):
+    def speak(self):
+        return "Meow!"
+```
+
+Structure:
+
+```text
+Animal
+  │
+  ├── Cat
+  └── Dog
+```
+
+---
+
+# 8. Inheriting Everything
+
+If the child doesn't need any customization:
+
+```python
+class Animal:
+    def __init__(self, name):
+        self.name = name
+
+    def speak(self):
+        return "Some sound"
+
+
+class Dog(Animal):
+    pass
+```
+
+Then:
+
+```python
+dog = Dog("Buddy")
+```
+
+The inherited `Animal.__init__()` is used automatically.
+
+The dog gets:
+
+```python
+dog.name
+dog.speak()
+```
+
+### Three common situations
+
+```text
+1. Inherit unchanged
+   class Dog(Animal):
+       pass
+
+2. Inherit + add methods
+   class Dog(Animal):
+       def bark(self):
+           ...
+
+3. Customize __init__
+   class Dog(Animal):
+       def __init__(...):
+           super().__init__(...)
+           ...
+```
+
+---
+
+# 9. `super()`
+
+Suppose:
+
+```python
+class Animal:
+    def __init__(self, name):
+        self.name = name
+```
+
+and:
+
+```python
+class Cat(Animal):
+    def __init__(self, name, breed):
+        super().__init__(name)
+        self.breed = breed
+```
+
+`super().__init__(name)` means:
+
+> Run the parent's `__init__()`.
+
+So:
+
+```python
+super().__init__(name)
+```
+
+runs:
+
+```python
+Animal.__init__(name)
+```
+
+which creates:
+
+```python
+self.name = name
+```
+
+Then Cat adds:
+
+```python
+self.breed = breed
+```
+
+Mental model:
+
+```text
+Cat initialization
+       │
+       ├── super().__init__()
+       │       ↓
+       │   Animal initialization
+       │       ↓
+       │   self.name
+       │
+       └── Cat initialization
+               ↓
+           self.breed
+```
+
+---
+
+# 10. You Do NOT Pass `self` to `super()`
+
+A common mistake:
+
+```python
+Super().__init__(self, user_id, name, age, email)
+```
+
+Correct:
+
+```python
+super().__init__(user_id, name, email, age)
+```
+
+Why?
+
+The parent's `__init__()` is already being called through `super()`.
+
+Python handles the object automatically.
+
+So:
+
+```python
+super().__init__(user_id, name, email, age)
+```
+
+maps to:
+
+```text
+parent's user_id ← user_id
+parent's name    ← name
+parent's email   ← email
+parent's age     ← age
+```
+
+Do not manually pass `self`.
+
+---
+
+# 11. Child Class With Parent + Additional Attributes
+
+Parent:
+
+```python
+class User:
+    def __init__(self, user_id, name, email, age=None):
+        self.user_id = user_id
+        self.name = name
+        self.email = email
+        self.age = age
+```
+
+Child:
+
+```python
+class Customer(User):
+    def __init__(self, user_id, name, email, age, purchase_count):
+        super().__init__(user_id, name, email, age)
+        self.purchase_count = purchase_count
+```
+
+The child doesn't recreate:
+
+```python
+self.user_id = user_id
+self.name = name
+self.email = email
+self.age = age
+```
+
+The parent does that.
+
+The child only adds:
+
+```python
+self.purchase_count = purchase_count
+```
+
+### General pattern
+
+```python
+class Child(Parent):
+    def __init__(self, parent_data, child_data):
+        super().__init__(parent_data)
+        self.child_data = child_data
+```
+
+---
+
+# 12. Method Overriding
+
+A child can provide its own implementation of a parent method.
+
+```python
+class Animal:
+    def speak(self):
+        return "Some generic sound"
+
+
+class Cat(Animal):
+    def speak(self):
+        return "Meow!"
+
+
+class Dog(Animal):
+    def speak(self):
+        return "Woof!"
+```
+
+Now:
+
+```python
+cat = Cat()
+dog = Dog()
+
+cat.speak()
+# Meow!
+
+dog.speak()
+# Woof!
+```
+
+This is **method overriding**.
+
+The child replaces the inherited implementation for that method.
+
+---
+
+# 13. `super()` vs Method Overriding
+
+`super()` doesn't mean "inherit everything."
+
+It means:
+
+> Access the parent implementation from the child.
+
+For example:
+
+```python
+class Cat(Animal):
+    def speak(self):
+        return super().speak() + " — Meow!"
+```
+
+This can be useful when you want to **extend** the parent's behavior rather than completely replace it.
+
+---
+
+# 14. Class Methods and `cls`
+
+A class method is declared using:
+
+```python
+@classmethod
+```
+
+Example:
+
+```python
+class User:
+    count = 0
+
+    @classmethod
+    def get_count(cls):
+        return cls.count
+```
+
+`cls` represents the **class itself**.
+
+Conceptually:
+
+```python
+User.get_count()
+```
+
+becomes approximately:
+
+```python
+get_count(User)
+```
+
+So:
+
+```text
+cls → User
+```
+
+---
+
+# 15. `cls` Is NOT a Keyword
+
+Just like `self`, `cls` is a **convention**, not a Python keyword.
+
+This technically works:
+
+```python
+@classmethod
+def get_count(x):
+    return x.count
+```
+
+But Python programmers conventionally use:
+
+```python
+@classmethod
+def get_count(cls):
+```
+
+because it immediately communicates:
+
+> This is a class method and this parameter represents the class.
+
+Similarly:
+
+```python
+def display(self):
+```
+
+uses `self` by convention.
+
+Neither `self` nor `cls` is a reserved Python keyword.
+
+---
+
+# 16. Why Does `cls` Become the Class?
+
+The important part is:
+
+```python
+@classmethod
+```
+
+The decorator tells Python to bind the method to the **class**.
+
+Therefore:
+
+```python
+class User:
+    @classmethod
+    def get_count(cls):
+        ...
+```
+
+and:
+
+```python
+User.get_count()
+```
+
+conceptually becomes:
+
+```python
+get_count(User)
+```
+
+The first parameter receives the class automatically.
+
+---
+
+# 17. Additional Parameters in a Class Method
+
+If:
+
+```python
+class User:
+    @classmethod
+    def get_count(cls, name):
+        print(cls)
+        print(name)
+```
+
+then:
+
+```python
+User.get_count("Harsh")
+```
+
+maps conceptually to:
+
+```python
+get_count(User, "Harsh")
+```
+
+Therefore:
+
+```text
+cls  → User
+name → "Harsh"
+```
+
+The general pattern is:
+
+```python
+Class.method(user_supplied_argument)
+```
+
+becomes approximately:
+
+```python
+method(Class, user_supplied_argument)
+```
+
+---
+
+# 18. `self` vs `cls`
+
+|Method|Decorator|Automatically receives|Convention|
+|---|---|---|---|
+|Instance method|None|Object|`self`|
+|Class method|`@classmethod`|Class|`cls`|
+|Static method|`@staticmethod`|Nothing|No `self` / `cls`|
+
+### Instance method
+
+```python
+class User:
+    def hello(self, name):
+        ...
+```
+
+```python
+user.hello("Harsh")
+```
+
+Conceptually:
+
+```python
+hello(user, "Harsh")
+```
+
+Therefore:
+
+```text
+self → user
+name → "Harsh"
+```
+
+### Class method
+
+```python
+class User:
+    @classmethod
+    def hello(cls, name):
+        ...
+```
+
+```python
+User.hello("Harsh")
+```
+
+Conceptually:
+
+```python
+hello(User, "Harsh")
+```
+
+Therefore:
+
+```text
+cls  → User
+name → "Harsh"
+```
+
+---
+
+# 19. User Count — Class Variable + Class Method
+
+Requirement:
+
+> Keep track of how many users have been created.
+
+Use a class variable:
+
+```python
+class User:
+    user_count = 0
+
+    def __init__(self, user_id, name):
+        self.user_id = user_id
+        self.name = name
+
+        User.user_count += 1
+```
+
+Every time an object is created:
+
+```text
+User object created
+       ↓
+User.user_count += 1
+```
+
+Example:
+
+```python
+user1 = User(1, "Harsh")
+user2 = User(2, "Sarwvidya")
+user3 = User(3, "John")
+
+print(User.user_count)
+```
+
+Output:
+
+```text
+3
+```
+
+---
+
+# 20. Counting Child Objects
+
+Because `Customer` and `Admin` inherit from `User`, their constructors can call:
+
+```python
+super().__init__(...)
+```
+
+That causes the parent constructor to execute.
+
+Therefore:
+
+```python
+class Customer(User):
+    def __init__(self, ...):
+        super().__init__(...)
+```
+
+also increments:
+
+```python
+User.user_count
+```
+
+So:
+
+```python
+user1 = User(...)
+customer1 = Customer(...)
+admin1 = Admin(...)
+```
+
+can produce:
+
+```text
+User.user_count = 3
+```
+
+---
+
+# 21. Complete OOP Example
+
+```python
+class User:
+    user_count = 0
+
+    def __init__(self, user_id, name, email, age=None):
+        self.user_id = user_id
+        self.name = name
+        self.email = email
+        self.age = age
+
+        User.user_count += 1
+
+    def validate_user(self):
+        if '@' not in self.email:
+            return False
+
+        if self.age is not None and self.age < 13:
+            return False
+
+        return True
+
+    def display_user(self):
+        if self.age is None:
+            print(
+                'user name is', self.name,
+                'user email is', self.email
+            )
+        else:
+            print(
+                'user name is', self.name,
+                'user email is', self.email,
+                'user age is', self.age
+            )
+
+    def update_email(self, updated_email):
+        self.email = updated_email
+
+    def adult_check(self):
+        if self.age is not None and self.age >= 18:
+            return True
+
+        return False
+
+    def describe(self):
+        print('hi')
+
+    @classmethod
+    def get_user_count(cls):
+        return cls.user_count
+
+
+class Customer(User):
+
+    def __init__(
+        self,
+        user_id,
+        name,
+        email,
+        age,
+        purchase_count
+    ):
+        super().__init__(user_id, name, email, age)
+        self.purchase_count = purchase_count
+
+    def describe(self):
+        print('hello')
+
+
+class Admin(User):
+
+    def __init__(
+        self,
+        user_id,
+        name,
+        email,
+        age,
+        permissions
+    ):
+        super().__init__(user_id, name, email, age)
+        self.permissions = permissions
+
+    def describe(self):
+        print('meow')
+```
+
+Objects:
+
+```python
+user1 = Customer(
+    1,
+    'Harsh',
+    'harsh@gmail.com',
+    18,
+    200
+)
+
+admin1 = Admin(
+    2,
+    'Sarwvidya',
+    'sarwvidya@gmail.com',
+    18,
+    'can read'
+)
+```
+
+Count:
+
+```python
+print(User.get_user_count())
+```
+
+Output:
+
+```text
+2
+```
+
+---
+
+# 22. The Most Important Mental Models
+
+### Instance
+
+```text
+self
+ ↓
+this particular object
+```
+
+### Class
+
+```text
+cls
+ ↓
+the class itself
+```
+
+### Constructor
+
+```text
+__init__()
+ ↓
+initialize object
+```
+
+### Inheritance
+
+```text
+class Child(Parent)
+       ↓
+Child inherits Parent
+```
+
+### Parent initialization
+
+```text
+super().__init__(...)
+       ↓
+run Parent's __init__
+```
+
+### Class method
+
+```text
+@classmethod
+       ↓
+first parameter automatically receives the class
+```
+
+### Instance method
+
+```text
+object.method(...)
+       ↓
+first parameter automatically receives the object
+```
+
+---
+
+# 23. Mistakes to Watch For
+
+### ❌ Forgetting `self`
+
+```python
+if age < 13:
+```
+
+### ✅
+
+```python
+if self.age < 13:
+```
+
+---
+
+### ❌ Wrong attribute name
+
+```python
+self.user
+```
+
+when the attribute was actually:
+
+```python
+self.name
+```
+
+---
+
+### ❌ Wrong capitalization
+
+```python
+Super()
+```
+
+### ✅
+
+```python
+super()
+```
+
+Python is case-sensitive.
+
+---
+
+### ❌ Passing `self` to `super()`
+
+```python
+super().__init__(self, user_id, name)
+```
+
+### ✅
+
+```python
+super().__init__(user_id, name)
+```
+
+---
+
+### ❌ Thinking `self` is a keyword
+
+It isn't.
+
+### ❌ Thinking `cls` is a keyword
+
+It isn't.
+
+### ✅
+
+Both are conventional parameter names.
+
+```text
+self → instance
+cls  → class
+```
+
+---
+
+### ❌ Using Java inheritance syntax
+
+```python
+class Dog extends Animal:
+```
+
+### ✅
+
+```python
+class Dog(Animal):
+```
+
+---
+
+### ❌ Reimplementing the parent constructor unnecessarily
+
+Instead of:
+
+```python
+class Customer(User):
+    def __init__(self, user_id, name, email, age, purchase_count):
+        self.user_id = user_id
+        self.name = name
+        self.email = email
+        self.age = age
+        self.purchase_count = purchase_count
+```
+
+Prefer:
+
+```python
+class Customer(User):
+    def __init__(self, user_id, name, email, age, purchase_count):
+        super().__init__(user_id, name, email, age)
+        self.purchase_count = purchase_count
+```
+
+The parent owns initialization of the parent attributes.
+
+---
+
+# 24. Production-Oriented Rule of Thumb
+
+Think of inheritance as:
+
+```text
+Parent
+  │
+  │ owns common behavior/data
+  ↓
+Child
+  │
+  └── adds or specializes its own behavior/data
+```
+
+For example:
+
+```text
+User
+ ├── user_id
+ ├── name
+ ├── email
+ └── age
+       │
+       ├── Customer
+       │    └── purchase_count
+       │
+       └── Admin
+            └── permissions
+```
+
+The child should generally **reuse the parent's initialization and behavior rather than copy it**.
+
+Use:
+
+```python
+super()
+```
+
+to reuse the parent's implementation when overriding something.
