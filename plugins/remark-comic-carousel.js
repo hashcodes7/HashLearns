@@ -1,4 +1,4 @@
-// Custom Remark plugin to auto-inject folder={require.context('./assets')} into <ComicCarousel /> elements
+// Custom Remark plugin to auto-inject folder={require.context('./assets')} into <ComicStrip /> elements
 
 function visit(node, callback) {
   if (node.type === 'mdxJsxFlowElement' || node.type === 'mdxJsxTextElement') {
@@ -14,9 +14,9 @@ function visit(node, callback) {
 function plugin() {
   return (tree) => {
     visit(tree, (node) => {
-      if (node.name === 'ComicCarousel') {
+      if (node.name === 'ComicStrip' || node.name === 'ComicCarousel') {
         const hasFolderAttr = node.attributes && node.attributes.some(attr => attr.name === 'folder');
-        
+
         if (!hasFolderAttr) {
           if (!node.attributes) node.attributes = [];
 

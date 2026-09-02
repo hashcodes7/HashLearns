@@ -8,7 +8,6 @@ import styles from './ComicStrip.module.css';
 const getSrcString = (val) => {
   if (!val) return '';
   if (typeof val === 'string') {
-    // If it's a simple filename like 'git1.png', default to './assets/'
     if (!val.includes('/') && !val.startsWith('data:') && !val.startsWith('http')) {
       return `./assets/${val}`;
     }
@@ -87,7 +86,7 @@ export default function ComicStrip({
 
   // Parse custom direct JSX props like <ComicStrip git1="click on download" git2="click on install" />
   let inputList = [];
-
+  
   if (items && ((Array.isArray(items) && items.length > 0) || typeof items === 'object')) {
     inputList = items;
   } else if (images && ((Array.isArray(images) && images.length > 0) || typeof images === 'object')) {
@@ -156,7 +155,7 @@ export default function ComicStrip({
       }
       // Case 3: All images in assets folder
       else {
-        const sortedKeys = keys.sort((a, b) =>
+        const sortedKeys = keys.sort((a, b) => 
           a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' })
         );
         rawImages = sortedKeys.map((key) => {
@@ -171,7 +170,7 @@ export default function ComicStrip({
     rawImages = inputList;
   }
 
-  const normalizedImages = rawImages.map((item, idx) =>
+  const normalizedImages = rawImages.map((item, idx) => 
     normalizeImage(item, idx, descriptions[idx])
   );
   const totalImages = normalizedImages.length;
@@ -309,3 +308,5 @@ export default function ComicStrip({
     </div>
   );
 }
+
+export { ComicStrip as ComicCarousel };

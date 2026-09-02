@@ -5,7 +5,7 @@ import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import obsidianImages from './plugins/remark-obsidian-images';
 import remarkStyleStringToJsx from './plugins/remark-style-string-to-jsx';
-import remarkComicCarousel from './plugins/remark-comic-carousel';
+import remarkComicStrip from './plugins/remark-comic-carousel';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
@@ -32,14 +32,14 @@ const config: Config = {
 
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
-  
+
   markdown: {
     mermaid: true,
     hooks: {
       onBrokenMarkdownImages: 'warn',
     },
   },
-  
+
   themes: ['@docusaurus/theme-mermaid'],
 
   // Even if you don't use internationalization, you can use this field to set
@@ -60,7 +60,7 @@ const config: Config = {
           // Remove this to remove the "edit this page" links.
           editUrl:
             'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
-          beforeDefaultRemarkPlugins: [obsidianImages, remarkStyleStringToJsx, remarkComicCarousel],
+          beforeDefaultRemarkPlugins: [obsidianImages, remarkStyleStringToJsx, remarkComicStrip],
           remarkPlugins: [remarkMath],
           rehypePlugins: [rehypeKatex],
         },

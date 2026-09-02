@@ -5,7 +5,7 @@ sidebar_position: 2
 
 # Adding Comics: A Step-by-Step Guide
 
-The **`ComicCarousel`** component (`hashcomics😋`) is **globally registered** across the entire HashLearns site. You can use `<ComicCarousel />` anywhere in any `.md` or `.mdx` file **without writing any `import` statements at all**!
+The **`ComicStrip`** component (`hashcomics😋`) is **globally registered** across the entire HashLearns site. You can use `<ComicStrip />` anywhere in any `.md` or `.mdx` file **without writing any `import` statements at all**!
 
 ---
 
@@ -16,7 +16,7 @@ To render comics with optional descriptions, pass `folder={require.context('./as
 ```mdx
 # Downloading Git & Installing it
 
-<ComicCarousel 
+<ComicStrip 
   folder={require.context('./assets')}
   images={[
     ['img1.png', "click on the download button"],
@@ -38,7 +38,7 @@ To render comics with optional descriptions, pass `folder={require.context('./as
 
 Here is a live working preview:
 
-<ComicCarousel 
+<ComicStrip 
   folder={require.context('./assets')}
   images={[
     ['img1.png', "click on the download button"],

@@ -1,3 +1,3 @@
 import ComicStrip from './ComicStrip/ComicStrip';
 export default ComicStrip;
-export { ComicStrip as ComicCarousel };
+export { ComicStrip, ComicStrip as ComicCarousel };
