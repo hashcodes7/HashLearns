@@ -163,7 +163,8 @@ const config: Config = {
     },
   } satisfies Preset.ThemeConfig,
   plugins: [
-    './plugins/feature-cards-plugin'
+    './plugins/feature-cards-plugin',
+    './plugins/obsidian-webpack-plugin.js'
   ],
   stylesheets: [
     {

@@ -1,0 +1,36 @@
+---
+title: Obsidian Spans Integration
+sidebar_position: 3
+---
+
+# Obsidian Span Loader
+
+When writing markdown notes in Obsidian, you might frequently use Obsidian's rich text color highlighting. Obsidian natively generates standard HTML tags for this, like so:
+```html
+<span style="color: #1c7ed6">My colored text</span>
+```
+
+However, Docusaurus uses **MDX** (Markdown + JSX). MDX parses all HTML tags strictly as React JSX components, which introduces a few major friction points:
+
+1. **Style Props:** React requires the `style` prop to be an object (`style={{color: "#1c7ed6"}}`), so standard string styles crash the build.
+2. **Paragraph Breaks:** If an inline HTML tag spans across multiple lines and is broken by unexpected newlines, the MDX parser will crash with a "missing closing tag" error.
+3. **Overlapping Boundaries:** WYSIWYG editors (like Obsidian) often create overlapping HTML and Markdown tags if you drag your highlight across a markdown formatting character (like `*` or `_`). For example: `*<span ...>Text*</span>`. The MDX AST strictly forbids overlapping boundaries and will crash.
+
+## The Solution: A Custom Webpack Pre-Loader
+
+To allow you to write notes in Obsidian seamlessly without ever worrying about strict MDX rules, a custom Webpack pre-loader has been injected into the Docusaurus build pipeline.
+
+### Where is it located?
+- **Loader:** `plugins/obsidian-span-loader.js`
+- **Plugin Injector:** `plugins/obsidian-webpack-plugin.js`
+
+### How does it work?
+The loader uses the Webpack `enforce: 'pre'` directive to intercept all `.md` and `.mdx` files in memory **before** they ever reach the Docusaurus MDX compiler.
+
+During hot-reload and build time, it performs the following dynamic transformations entirely in memory (leaving your physical hard drive files untouched):
+
+1. **JSX Conversion:** It dynamically converts all Obsidian `<span style="color: ...">` string styles into strict React `<span style={{color: "..."}}>` object styles.
+2. **Newline Stripping:** It strips all `\n` and `\r` newline characters exclusively from the inside of the spans. This forces the MDX parser to evaluate the span on a single line, entirely bypassing paragraph fragmentation crashes.
+3. **Smart Boundary Ejection:** It counts the number of Markdown formatting characters (`*`, `_`, `` ` ``) inside the span. If it detects an odd number, it assumes an overlapping boundary caused by an imprecise text highlight. It then safely ejects the trapped formatting character to the *outside* of the span to mathematically restore a perfectly nested AST tree.
+
+Because this happens on the fly, you can freely use Obsidian's formatting tools without making any manual syntax adjustments for Docusaurus!

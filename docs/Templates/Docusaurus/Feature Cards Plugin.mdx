@@ -1,0 +1,18 @@
+---
+title: Feature Cards Plugin
+sidebar_position: 8
+---
+
+# Feature Cards Plugin (`feature-cards-plugin/index.js`)
+
+## What it is
+A local Docusaurus plugin module located at `plugins/feature-cards-plugin/index.js`.
+
+## When does it run?
+It is loaded during the initial Docusaurus bootstrapping phase, defined in the `plugins` array of your `docusaurus.config.ts`.
+
+## What does it do?
+This plugin handles custom Docusaurus lifecycle events. It is typically responsible for injecting global components, injecting custom CSS/JS, modifying the Webpack configuration, or globally registering React components (like custom feature cards) so they are available universally across the site.
+
+## Why is it necessary?
+Docusaurus requires standard markdown components to be explicitly imported in every file. By using a custom plugin, we can globally register complex UI elements (like the beautiful blue course navigation cards and feature grids) so you can use them freely in any `.mdx` file without needing to write tedious `import` statements at the top of your notes.

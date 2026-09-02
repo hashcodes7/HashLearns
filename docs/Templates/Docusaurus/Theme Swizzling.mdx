@@ -1,0 +1,22 @@
+---
+title: Theme Swizzling (UI Overrides)
+sidebar_position: 10
+---
+
+# Theme Swizzling (UI Overrides)
+
+In Docusaurus, "Swizzling" is the process of ejecting a core theme component so you can modify its source code directly. To bend the framework to our specific design needs, we have swizzled several core components located in `src/theme/`.
+
+## 1. `MDXComponents.tsx`
+- **Location:** `src/theme/MDXComponents.tsx`
+- **What we changed:** By default, if you want to use a custom React component (like `<ComicStrip />`) inside an `.mdx` file, you must `import` it at the top of every single file. We swizzled `MDXComponents` to **globally register** our custom components. 
+- **Result:** You can type `<ComicStrip />` or `<MatrixVectorVisualizer />` directly into your Obsidian notes, and Docusaurus will instantly know how to render them without any import boilerplate.
+
+## 2. `DocCard`
+- **Location:** `src/theme/DocCard/index.js`
+- **What we changed:** Docusaurus automatically generates grey, generic "Folder" and "Document" cards for category index pages. We swizzled the `DocCard` component to completely overhaul this UI.
+- **Result:** Instead of grey boxes, our category pages (used heavily in the course chapter navigations) render as beautiful, custom-styled blue feature cards.
+
+## 3. `Footer` & `ColorModeToggle`
+- **Location:** `src/theme/Footer/index.tsx` & `src/theme/ColorModeToggle/index.js`
+- **What we changed:** We ejected the default Docusaurus footer and dark/light mode toggle switches to apply our own custom branding, layout structures, and specific UI icons.

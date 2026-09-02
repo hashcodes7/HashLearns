@@ -5,61 +5,81 @@ sidebar_position: 2
 
 # Adding Comics: A Step-by-Step Guide
 
-The **`ComicStrip`** component (`hashcomics😋`) is **globally registered** across the entire HashLearns site. You can use `<ComicStrip />` anywhere in any `.md` or `.mdx` file **without writing any `import` statements at all**!
+The **`ComicStrip`** component (`hashcomics✨`) is **globally registered** across the entire HashLearns site. You can use `<ComicStrip />` anywhere in any `.md` or `.mdx` file **without writing any `import` statements at all**!
 
 ---
 
-## ⚡ The Minimal Working Syntax
+## 🛠 Why `folder={require.context('./assets')}` is Required:
 
-To render comics with optional descriptions, pass `folder={require.context('./assets')}` (which tells Webpack to bundle all local images in `./assets`) along with clean `['filename', 'description']` pairs:
+Before looking at the examples, remember this golden rule: 
+**Always include `folder={require.context('./assets')}`** in your `<ComicStrip />` tags. Webpack needs this line to find and bundle the local `.png` files from your `./assets/` folder into the final website build.
+
+---
+
+## 📖 The 4 Ways to Add Comics
+
+Here are the four complete examples showing how you can construct your comic carousels depending on your needs.
+### 1. Selecting Specific Images (No Descriptions)
+
+If your comic panels are self-explanatory and don't need captions, you can just pass a flat list of filenames to the `images` prop.
 
 ```mdx
-# Downloading Git & Installing it
-
 <ComicStrip 
-  folder={require.context('./assets')}
   images={[
-    ['img1.png', "click on the download button"],
-    ['img2.png', "click on the install button"]
+    'img1.png',
+    'img2.png',
+    'img3.png'
+  ]}
+/>
+```
+
+### 2. Selecting Specific Images + Descriptions
+
+Use this method when you want to manually pick specific images and provide a unique description for each one. You can use tuples `['filename', 'description']` in the `images` prop:
+
+```mdx
+<ComicStrip 
+  images={[
+    ['img1.png', "Click on the download button to start."],
+    ['img2.png', "Run the installer setup wizard."],
+    ['img3.png', "Complete the installation successfully."]
+  ]}
+/>
+```
+### 3. Selecting ALL Images (Auto-Filter, No Descriptions)
+
+The fastest and easiest method! Just give it the initial prefix of the image names, and it will load the entire sequence of images into a beautiful, caption-less carousel automatically.
+<span style="color:#e0313a">If no filter is passed, automatically all images will be selected from the assets folder.</span>
+
+```mdx
+<ComicStrip 
+  filter="comic"
+/>
+```
+
+### 4. Selecting ALL Images (Auto-Filter) + Descriptions
+
+<span style="color:#1c7ed6">If you have a bunch of images named sequentially (like `comic1.png`, `comic2.png`, `comic3.png`), you don't need to type out every single filename! Use the `filter` prop to grab them all, and map them to a `descriptions` array.
+
+*</span>Note: The number of descriptions in the array .will perfectly map to the images loaded by the filter, in numerical/alphabetical order*hiihello
+
+```mdx
+<ComicStrip 
+  filter="comic"
+  descriptions={[
+    "1. This text will show on comic1.png",
+    "2. This text will show on comic2.png",
+    "3. This text will show on comic3.png"
   ]}
 />
 ```
 
 ---
 
-## 🔍 Why `folder={require.context('./assets')}` is Required:
-
-1. **Webpack Image Bundling**: Webpack is a static site bundler. It needs `folder={require.context('./assets')}` so it can find, process, and copy your local `.png` screenshot files from disk into the website build assets folder.
-2. **Correct Filename**: Ensure the filename in your array (e.g. `img1.png` or `git1.png`) matches the exact filename inside your local `./assets/` folder.
-
----
-
-## 🎨 Live Interactive Demo
-
-Here is a live working preview:
-
-<ComicStrip 
-  folder={require.context('./assets')}
-  images={[
-    ['img1.png', "click on the download button"],
-    ['img2.png', "run the installer setup wizard"],
-    ['img3.png', "complete installation successfully"]
-  ]}
-/>
-
----
-
-### 🌟 Features Included:
+## 💡 Features Included Automatically:
 - **`Prev <` & `Next >` Controls**: Easy navigation through panels.
-- **Center Description**: Clean white text centered between buttons (supports up to 2 lines!).
+- **Center Description**: Clean white text centered between buttons.
 - **Lightbox Zoom**: Click any image panel to open a full-screen zoom overlay.
 - **`1 / 3` Pill Counter**: Real-time panel counter.
-- **`hashcomics😋` Signature**: Minimalist brand tag in top-left corner.
+- **`hashcomics✨` Signature**: Minimalist brand tag in top-left corner.
 - **Keyboard Support**: Navigate using `←` and `→` arrow keys on your keyboard.
-
-### 3. Using the Filter Prefix (The Easiest Way)
-
-If you have a bunch of images in your ssets folder named sequentially (like comic1.png, comic2.png), you don't need to specify each one individually! 
-
-Just use the ilter prop to pass the initial prefix, and Docusaurus will automatically load them all in numerical order:
-

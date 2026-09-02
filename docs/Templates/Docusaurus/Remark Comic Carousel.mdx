@@ -1,0 +1,18 @@
+---
+title: Remark Comic Carousel
+sidebar_position: 7
+---
+
+# Remark Comic Carousel (`remark-comic-carousel.js`)
+
+## What it is
+A custom Remark plugin located at `plugins/remark-comic-carousel.js`.
+
+## When does it run?
+It runs during the Docusaurus MDX compilation phase as part of the `beforeDefaultRemarkPlugins` pipeline.
+
+## What does it do?
+This plugin is designed to process custom markdown syntax or specific node structures and transform them into the interactive `<ComicStrip />` React component. 
+
+## Why is it necessary?
+It reduces the amount of boilerplate JSX you need to write in your markdown files. By intercepting your notes at the AST level, it automatically handles the heavy lifting of mapping standard markdown structures (like image sequences or custom directives) into the highly interactive, feature-rich carousel UI used across the course modules.

@@ -1,0 +1,26 @@
+---
+title: Architecture Overview
+sidebar_position: 1
+---
+
+# HashLearns Architecture Overview
+
+While this project is built on top of [Docusaurus](https://docusaurus.io/), it heavily deviates from a "vanilla" Docusaurus installation. A standard Docusaurus project simply converts Markdown files into a static HTML documentation site. 
+
+This project, however, is architected to act as a **bridge between Obsidian and an Interactive Educational Platform**.
+
+To satisfy our specific workflow needs, we have augmented the standard architecture with three major layers of customization:
+
+1. **The Pre-compilation Layer (Interception)**
+   - Custom Webpack Loaders (like our `obsidian-span-loader.js`) intercept markdown files in memory.
+   - They sanitize WYSIWYG artifacts (like overlapping HTML spans from Obsidian) before Docusaurus ever sees them, preventing strict AST parser crashes.
+
+2. **The AST Transformation Layer (Remark/Rehype)**
+   - Custom AST plugins (`remark-obsidian-images`, `remark-style-string-to-jsx`) dynamically translate Obsidian-flavored markdown (like `![[image.png]]` wiki-links) into standard React components.
+   - Mathematical plugins (`remark-math`, `rehype-katex`) natively parse LaTeX blocks into beautifully rendered equations.
+
+3. **The Presentation Layer (React & Swizzling)**
+   - We bypass standard Docusaurus UI elements by "Swizzling" core theme files (like `DocCard` and `MDXComponents`).
+   - We replace static text with massive, stateful React visualizers (DSA widgets, 3D Matrices, LLM Explorers) that are mapped globally so they can be written directly inside Obsidian notes without manual imports.
+
+Please refer to the subsequent pages in this folder for granular documentation on every single script, swizzled component, and plugin we use to make this pipeline work.

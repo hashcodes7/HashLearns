@@ -1,0 +1,21 @@
+---
+title: Utility Python Scripts
+sidebar_position: 9
+---
+
+# Utility Python Scripts
+
+## `fix_images.py` & `script.py`
+
+### What are they?
+These are standalone Python scripts located in the root of the project directory.
+
+### When do they run?
+They **do not** run automatically. They are manual utility scripts executed on an as-needed basis directly from the terminal (e.g., `python fix_images.py`).
+
+### What do they do?
+- **`fix_images.py`**: A batch-processing script written to traverse the markdown files in the Obsidian vault and systematically fix, rename, or update image links, paths, and assets.
+- **`script.py`**: A general-purpose scratchpad script used for one-off codebase refactoring, bulk text replacements, or temporary file migrations during major structural changes.
+
+### Why are they here?
+They serve as maintenance tools for the repository. When Obsidian's folder structure changes massively, or hundreds of images need to be renamed/re-linked to satisfy Docusaurus, these scripts automate the tedious manual labor.

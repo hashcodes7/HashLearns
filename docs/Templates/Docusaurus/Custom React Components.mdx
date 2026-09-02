@@ -1,0 +1,31 @@
+---
+title: Custom React Components
+sidebar_position: 11
+---
+
+# Custom React Components
+
+To transform the site from a simple documentation wiki into a highly interactive educational platform, we have built a massive library of custom React components in the `src/components/` directory.
+
+These components are typically injected globally via `MDXComponents.tsx` or used in dedicated page layouts.
+
+## 1. Data Structures & Algorithms (DSA) Visualizers
+Located in `src/components/dsa/`, these are stateful widgets designed to visually teach code logic:
+- **`ArrayVisualizer` & `LinkedListVisualizer`**: Renders dynamic memory representations of lists.
+- **`TreeVisualizer` & `StackQueueVisualizer`**: Used for algorithmic step-by-step breakdowns.
+- **`PythonTutorVisualizer` & `useAlgorithmController.js`**: Hooks and components to control playback and execution states of the visualizations.
+
+## 2. AI, Math, and Architecture Explorers
+- **`MatrixVectorVisualizer`**: Renders complex 3D vector spaces and matrix math tables for the Machine Learning courses.
+- **`LLMExplorer`**: An interactive node-graph UI (using `CustomNode.tsx` and `data.ts`) to map out and explore Large Language Model architectures.
+- **`AIJourney`**: A highly animated, interactive roadmap canvas using custom particle physics (`MorphingParticles.jsx`) and timeline rendering (`StageLines.jsx`, `JourneyLabels.jsx`).
+
+## 3. Storytelling & UI Wrappers
+- **`ComicStrip` & `ComicCarousel`**: Automates the rendering of sequential images (comics) into beautiful, caption-supported carousels using simple folder-filtering logic.
+
+## 4. Standalone App Pages
+Rather than using Markdown for everything, we built custom, full-page React layouts for specialized views:
+- `ArticlesPage.jsx` & `ArticleReader.jsx`
+- `PapersPage.jsx`
+- `TechStackPage.jsx`
+- `ConsultingPage.jsx`

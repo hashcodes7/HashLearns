@@ -1,0 +1,30 @@
+---
+title: Math and LaTeX Integration
+sidebar_position: 12
+---
+
+# Math and LaTeX Integration
+
+By default, standard Markdown and Docusaurus do not understand LaTeX mathematical equations (e.g., `$E = mc^2$`). Because this project relies heavily on Machine Learning, System Design, and algorithmic math, we had to fundamentally alter the markdown compilation pipeline to support LaTeX.
+
+## What we changed in `docusaurus.config.ts`
+
+### 1. `remarkMath`
+We injected the `remark-math` plugin into the AST pipeline. This intercepts inline `$` and block `$$` variables in your markdown files and parses them as mathematical nodes rather than standard text or code blocks.
+
+### 2. `rehypeKatex`
+Once `remarkMath` identifies the equations, the `rehype-katex` plugin takes over during the HTML rendering phase. It compiles the raw LaTeX strings into beautifully formatted HTML/CSS math blocks.
+
+### 3. KaTeX Stylesheet Injection
+Even after rendering the HTML, the math will look broken without the proper styling. We added the following global stylesheet to the `stylesheets` array in `docusaurus.config.ts`:
+```json
+{
+  href: 'https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css',
+  type: 'text/css',
+  integrity: 'sha384-odtC+0UGzz0/zFqN++lRoEbFlbXs33O4KxYL0B23T1L/hN4F0qUfB2yexQ1vOehb',
+  crossorigin: 'anonymous',
+}
+```
+
+## Result
+You can write complex matrices, calculus, and algebra directly inside Obsidian using standard `$` or `$$` syntax. Docusaurus will compile and render it exactly as Obsidian does.

@@ -1,0 +1,20 @@
+---
+title: Generate Cards Script
+sidebar_position: 4
+---
+
+# Generate Cards Script (`generate_cards.py`)
+
+## What it is
+This is a custom Python script located in the root directory of the project (`/generate_cards.py`).
+
+## When does it run?
+It is hooked into the `package.json` lifecycle scripts. It automatically runs every time you start or build the project (via the `prestart` and `prebuild` hooks).
+
+## What does it do?
+By default, Docusaurus automatically generates a grey category index page whenever a folder contains an `index.mdx` or `_category_.json` with the generated-index type. 
+
+This script recursively scans your `docs/` directory for `_category_.json` files. If it detects that a folder is a "Chapter" or "Module" folder, it dynamically deletes the `"link": {"type": "generated-index"}` property from the JSON. 
+
+## Why is it necessary?
+This prevents Docusaurus from rendering its ugly, default grey category pages for chapters. Instead, it forces Docusaurus to rely on our custom-built, beautifully styled blue index cards for all course navigation.

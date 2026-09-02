@@ -1,0 +1,22 @@
+---
+title: Remark Obsidian Images
+sidebar_position: 5
+---
+
+# Remark Obsidian Images (`remark-obsidian-images.js`)
+
+## What it is
+A custom Remark AST (Abstract Syntax Tree) plugin located at `plugins/remark-obsidian-images.js`.
+
+## When does it run?
+It runs during the Docusaurus MDX compilation phase, injected via the `beforeDefaultRemarkPlugins` array in `docusaurus.config.ts`.
+
+## What does it do?
+Obsidian natively uses a "wiki-link" style syntax for embedding images, which looks like this:
+```md
+![[my-image.png]]
+```
+Standard Markdown and MDX do not understand this syntax (they expect `![alt](my-image.png)`). This plugin scans the Markdown AST for these specific wiki-link image nodes and automatically translates them into standard, web-compatible image tags.
+
+## Why is it necessary?
+It allows you to seamlessly drag, drop, and paste images inside Obsidian using Obsidian's default settings, without having to manually rewrite the image links to satisfy Docusaurus when you build the site.
