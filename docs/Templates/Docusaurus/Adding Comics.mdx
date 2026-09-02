@@ -1,0 +1,97 @@
+---
+title: Adding Comics
+sidebar_position: 2
+---
+
+import ComicCarousel from '@site/src/components/ComicCarousel';
+
+# Adding Comics: A Step-by-Step Guide
+
+The **`ComicCarousel`** component (`hashcomics😋`) makes it effortless to display comic strips, step-by-step screenshots, or visual tutorials inside any `.mdx` file across HashLearns.
+
+---
+
+## ⚡ Quick Start: 3-Step Obsidian Workflow
+
+If you write notes in **Obsidian**, you can capture and render comics in seconds:
+
+### Step 1: Set Up Attachment Path in Obsidian *(One-Time Setup)*
+1. Open Obsidian **Settings** (`Ctrl + ,`) → **Files and links**.
+2. Set **Default location for new attachments** to: `In subfolder under current folder`.
+3. Set **Subfolder name** to: `assets`.
+
+### Step 2: Take & Paste Screenshots
+Take screenshots (`Win + Shift + S`) and paste them (`Ctrl + V`) into your Obsidian note. They are automatically saved into `./assets/` relative to your note.
+
+### Step 3: Add the 1-Liner Component in your `.mdx`
+Add these two lines anywhere in your `.mdx` file:
+
+```mdx
+import ComicCarousel from '@site/src/components/ComicCarousel';
+
+<ComicCarousel folder={require.context('./assets')} />
+```
+
+> **🎉 Result**: All images in your `./assets` folder are automatically loaded in numerical/chronological order! Any new screenshots added to `./assets` will appear automatically without updating your code.
+
+---
+
+## 🛠️ Usage Patterns
+
+### Pattern A: Automatically Load ALL Images from `./assets`
+Best for dedicated comic chapters where every image in `./assets` is a comic panel.
+
+```mdx
+import ComicCarousel from '@site/src/components/ComicCarousel';
+
+<ComicCarousel folder={require.context('./assets')} />
+```
+
+---
+
+### Pattern B: Pick Specific Images from `./assets`
+If your `./assets` folder contains extra diagrams and you only want specific image files in your comic:
+
+```mdx
+import ComicCarousel from '@site/src/components/ComicCarousel';
+
+<ComicCarousel 
+  folder={require.context('./assets')}
+  images={['img1.png', 'img3.png']} 
+/>
+```
+
+---
+
+### Pattern C: Filter by Keyword Pattern
+If you name your comic screenshots with a prefix (e.g., `comic-1.png`, `comic-2.png`):
+
+```mdx
+import ComicCarousel from '@site/src/components/ComicCarousel';
+
+<ComicCarousel 
+  folder={require.context('./assets')}
+  filter="comic" 
+/>
+```
+
+---
+
+## 🎨 Live Interactive Demo
+
+Here is a live working preview of the `ComicCarousel` component:
+
+<ComicCarousel 
+  folder={require.context('./assets')}
+  filter="img" 
+/>
+
+---
+
+### 🌟 Features Included:
+- **`Prev <` & `Next >` Controls**: Easy navigation through panels.
+- **Lightbox Zoom**: Click any image panel to open a full-screen zoom overlay.
+- **Thumbnail Strip**: Jump directly to any panel.
+- **`1 / 3` Pill Counter**: Real-time panel counter.
+- **`hashcomics😋` Signature**: Minimalist brand tag in top-left corner.
+- **Keyboard Support**: Navigate using `←` and `→` arrow keys on your keyboard.

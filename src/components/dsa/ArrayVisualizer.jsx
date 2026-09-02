@@ -1,5 +1,4 @@
 import React, { useMemo, useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { Play, Pause, SkipBack, SkipForward, RotateCcw, Shuffle, Sliders } from 'lucide-react';
 import { useAlgorithmController } from './useAlgorithmController';
 
@@ -586,11 +585,12 @@ export default function ArrayVisualizer({
             .map(([ptrName]) => ptrName) : [];
 
           return (
-            <motion.div layout key={itemId} style={{
+            <div key={itemId} style={{
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              position: 'relative'
+              position: 'relative',
+              transition: 'all 0.2s ease'
             }}>
               {/* Pointer Tag above box */}
               {matchingPointers.length > 0 && (
@@ -632,7 +632,7 @@ export default function ArrayVisualizer({
               <span style={{ fontSize: '0.8rem', color: '#94a3b8', marginTop: '8px' }}>
                 {idx}
               </span>
-            </motion.div>
+            </div>
           );
         })}
       </div>
@@ -704,14 +704,8 @@ export default function ArrayVisualizer({
             </div>
           </div>
           
-          {/* Animated Vertical Speed Slider Popup */}
-          <AnimatePresence>
             {showSpeedSlider && (
-              <motion.div
-                initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                transition={{ duration: 0.15 }}
+              <div
                 style={{
                   position: 'absolute',
                   right: '20px',
@@ -725,7 +719,8 @@ export default function ArrayVisualizer({
                   alignItems: 'center',
                   gap: '12px',
                   boxShadow: '0 4px 20px rgba(0,0,0,0.5)',
-                  zIndex: 50
+                  zIndex: 50,
+                  transition: 'all 0.15s ease'
                 }}
               >
                 <span style={{ fontSize: '0.75rem', color: '#00c3ff', fontWeight: 'bold' }}>
@@ -746,9 +741,8 @@ export default function ArrayVisualizer({
                     accentColor: '#00c3ff'
                   }}
                 />
-              </motion.div>
+              </div>
             )}
-          </AnimatePresence>
         </>
       )}
 

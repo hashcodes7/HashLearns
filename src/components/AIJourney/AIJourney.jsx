@@ -1,6 +1,4 @@
-"use client";
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { ArrowDown, CornerRightDown, ExternalLink } from "lucide-react";
 import AIJourneyCanvas from "./AIJourneyCanvas";
 import ProjectModal from "./ProjectModal";
@@ -295,13 +293,9 @@ const AIJourney = () => {
               gap: "1.5rem",
             }}
           >
-            <AnimatePresence mode="wait">
-              <motion.div
+            <div>
+              <div
                 key={activeStage}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -25 }}
-                transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
                 style={{
                   background: "rgba(15, 15, 15, 0.65)",
                   backdropFilter: "blur(20px)",
@@ -311,6 +305,7 @@ const AIJourney = () => {
                   padding: "2.25rem",
                   boxShadow:
                     "0 20px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05)",
+                  transition: "all 0.3s ease",
                 }}
               >
                 {/* Stage Indicator Pill */}
@@ -494,8 +489,8 @@ const AIJourney = () => {
                     ))}
                   </div>
                 )}
-              </motion.div>
-            </AnimatePresence>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -565,14 +560,8 @@ const AIJourney = () => {
           ))}
         </div>
 
-        {/* Hint to scroll down (initially visible, fades out) */}
-        <AnimatePresence>
           {!hasScrolled && (
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 10 }}
-              transition={{ duration: 0.5, delay: 1 }}
+            <div
               style={{
                 position: "absolute",
                 bottom: "2.5rem",
@@ -589,22 +578,15 @@ const AIJourney = () => {
                 letterSpacing: "0.1em",
                 textTransform: "uppercase",
                 pointerEvents: "none",
+                transition: "opacity 0.5s ease",
               }}
             >
               <span>Scroll to start journey</span>
-              <motion.div
-                animate={{ y: [0, 6, 0] }}
-                transition={{
-                  repeat: Infinity,
-                  duration: 1.5,
-                  ease: "easeInOut",
-                }}
-              >
+              <div>
                 <ArrowDown size={16} color="var(--accent-color)" />
-              </motion.div>
-            </motion.div>
+              </div>
+            </div>
           )}
-        </AnimatePresence>
       </div>
 
       {/* Details Modal for Stage 7 Projects */}

@@ -1,4 +1,3 @@
-import { motion, AnimatePresence } from "framer-motion";
 import { X, ExternalLink } from "lucide-react";
 import { FaGithub } from "react-icons/fa";
 
@@ -6,45 +5,41 @@ const ProjectModal = ({ project, onClose }) => {
   if (!project) return null;
 
   return (
-    <AnimatePresence>
+    <div
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        zIndex: 2000,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "1.5rem",
+        background: "rgba(5, 5, 5, 0.8)",
+        backdropFilter: "blur(8px)",
+        WebkitBackdropFilter: "blur(8px)",
+      }}
+      onClick={onClose}
+    >
       <div
         style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          zIndex: 2000,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: "1.5rem",
-          background: "rgba(5, 5, 5, 0.8)",
-          backdropFilter: "blur(8px)",
-          WebkitBackdropFilter: "blur(8px)",
+          width: "100%",
+          maxWidth: "600px",
+          background: "rgba(15, 15, 15, 0.85)",
+          border: "1px solid rgba(255, 255, 255, 0.1)",
+          boxShadow:
+            "0 24px 48px rgba(0, 0, 0, 0.8), 0 0 80px rgba(0, 240, 255, 0.05)",
+          borderRadius: "20px",
+          padding: "2.5rem",
+          position: "relative",
+          backdropFilter: "blur(20px)",
+          WebkitBackdropFilter: "blur(20px)",
+          transition: "transform 0.25s ease, opacity 0.25s ease",
         }}
-        onClick={onClose}
+        onClick={(e) => e.stopPropagation()}
       >
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9, y: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.9, y: 20 }}
-          transition={{ type: "spring", damping: 25, stiffness: 350 }}
-          style={{
-            width: "100%",
-            maxWidth: "600px",
-            background: "rgba(15, 15, 15, 0.85)",
-            border: "1px solid rgba(255, 255, 255, 0.1)",
-            boxShadow:
-              "0 24px 48px rgba(0, 0, 0, 0.8), 0 0 80px rgba(0, 240, 255, 0.05)",
-            borderRadius: "20px",
-            padding: "2.5rem",
-            position: "relative",
-            backdropFilter: "blur(20px)",
-            WebkitBackdropFilter: "blur(20px)",
-          }}
-          onClick={(e) => e.stopPropagation()}
-        >
           {/* Close button */}
           <button
             onClick={onClose}
@@ -202,9 +197,8 @@ const ProjectModal = ({ project, onClose }) => {
               </a>
             )}
           </div>
-        </motion.div>
+        </div>
       </div>
-    </AnimatePresence>
   );
 };
 
