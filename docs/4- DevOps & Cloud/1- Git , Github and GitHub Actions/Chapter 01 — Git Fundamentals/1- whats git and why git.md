@@ -1,5 +1,5 @@
 
-# Why Git - Version Control and Code Collaboration
+## Why Git - Version Control and Code Collaboration
 
 Git is a **distributed version control system (VCS)** used to track changes in source code and coordinate work between developers.
 

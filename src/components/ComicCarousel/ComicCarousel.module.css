@@ -117,6 +117,7 @@
   justify-content: space-between;
   gap: 12px;
   padding: 2px 4px 0 4px;
+  min-height: 40px;
 }
 
 .prevBtn {
@@ -130,6 +131,7 @@
   cursor: pointer;
   transition: all 0.2s ease;
   user-select: none;
+  flex-shrink: 0;
 }
 
 .prevBtn:hover:not(:disabled) {
@@ -154,6 +156,7 @@
   transition: all 0.2s ease;
   box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
   user-select: none;
+  flex-shrink: 0;
 }
 
 .nextBtn:hover:not(:disabled) {
@@ -165,6 +168,31 @@
   opacity: 0.35;
   cursor: not-allowed;
   box-shadow: none;
+}
+
+/* Center area for Description or Thumbnails */
+.centerControl {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 12px;
+  min-width: 0;
+}
+
+.descriptionText {
+  color: #f1f5f9;
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.4;
+  text-align: center;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 2.8em;
+  word-break: break-word;
 }
 
 /* Thumbnails Strip */

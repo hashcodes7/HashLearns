@@ -11,6 +11,7 @@ import LinkedListVisualizer from '@site/src/components/dsa/LinkedListVisualizer'
 import TreeVisualizer from '@site/src/components/dsa/TreeVisualizer';
 import StackQueueVisualizer from '@site/src/components/dsa/StackQueueVisualizer';
 import PythonTutorVisualizer from '@site/src/components/dsa/PythonTutorVisualizer';
+import ComicCarousel from '@site/src/components/ComicCarousel';
 
 export default {
   ...MDXComponents,
@@ -25,5 +26,6 @@ export default {
   TreeVisualizer,
   StackQueueVisualizer,
   PythonTutorVisualizer,
+  ComicCarousel,
 };
 

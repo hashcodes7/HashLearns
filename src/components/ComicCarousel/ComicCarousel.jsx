@@ -2,53 +2,148 @@ import React, { useState, useEffect, useCallback } from 'react';
 import styles from './ComicCarousel.module.css';
 
 /**
- * Normalizes image input: accepts imported modules, strings, require() calls, or objects.
+ * Safely extracts a string URL from an image input.
+ * If given a simple filename like 'git1.png', automatically pre-pends './assets/'.
  */
-const normalizeImage = (item, index) => {
-  if (!item) return { src: '', alt: `Panel ${index + 1}` };
-  if (typeof item === 'string') return { src: item, alt: `Panel ${index + 1}` };
-
-  let srcUrl = item;
-  if (typeof item === 'object') {
-    if (item.src) srcUrl = item.src;
-    else if (item.default) {
-      srcUrl = typeof item.default === 'string' ? item.default : item.default.src || item.default;
+const getSrcString = (val) => {
+  if (!val) return '';
+  if (typeof val === 'string') {
+    // If it's a simple filename like 'git1.png', default to './assets/'
+    if (!val.includes('/') && !val.startsWith('data:') && !val.startsWith('http')) {
+      return `./assets/${val}`;
+    }
+    return val;
+  }
+  if (typeof val === 'object') {
+    if (val.default) {
+      return getSrcString(val.default);
+    }
+    if (val.src) {
+      return getSrcString(val.src);
     }
   }
+  return String(val);
+};
 
-  return {
-    src: typeof srcUrl === 'string' ? srcUrl : String(srcUrl),
-    alt: item.alt || `Panel ${index + 1}`
-  };
+/**
+ * Normalizes image input into { src, alt, desc }.
+ */
+const normalizeImage = (item, index, extraDesc) => {
+  if (!item) return { src: '', alt: `Panel ${index + 1}`, desc: extraDesc };
+
+  // Handle tuple format: ['git1.png', 'description text']
+  if (Array.isArray(item)) {
+    return {
+      src: getSrcString(item[0]),
+      alt: `Panel ${index + 1}`,
+      desc: item[1] || extraDesc
+    };
+  }
+
+  if (typeof item === 'string') {
+    return { src: getSrcString(item), alt: `Panel ${index + 1}`, desc: extraDesc };
+  }
+
+  if (typeof item === 'object' && item !== null) {
+    // Handle single-key dictionary: { 'git1.png': 'description text' }
+    if (!item.src && !item.default) {
+      const entries = Object.entries(item);
+      if (entries.length > 0) {
+        const [key, val] = entries[0];
+        return {
+          src: getSrcString(key),
+          alt: `Panel ${index + 1}`,
+          desc: typeof val === 'string' ? val : extraDesc
+        };
+      }
+    }
+
+    let desc = extraDesc || item.desc || item.description || item.caption;
+    let rawSrc = item.src !== undefined ? item.src : item;
+    let srcUrl = getSrcString(rawSrc);
+
+    return {
+      src: srcUrl,
+      alt: item.alt || `Panel ${index + 1}`,
+      desc: desc
+    };
+  }
+
+  return { src: String(item), alt: `Panel ${index + 1}`, desc: extraDesc };
 };
 
 export default function ComicCarousel({
   folder,
-  images = [],
+  images,
+  items,
+  descriptions = [],
   filter,
-  loop = false
+  loop = false,
+  showThumbnails = true,
+  ...customProps
 }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [lightboxImage, setLightboxImage] = useState(null);
 
-  // Determine source images (supports Webpack require.context, filtered selection, or array)
+  // Parse custom direct JSX props like <ComicCarousel git1="click on download" git2="click on install" />
+  let inputList = [];
+  
+  if (items && ((Array.isArray(items) && items.length > 0) || typeof items === 'object')) {
+    inputList = items;
+  } else if (images && ((Array.isArray(images) && images.length > 0) || typeof images === 'object')) {
+    inputList = images;
+  } else if (Object.keys(customProps).length > 0) {
+    inputList = Object.entries(customProps).map(([key, desc]) => {
+      const srcName = (key.endsWith('.png') || key.endsWith('.jpg') || key.endsWith('.jpeg') || key.endsWith('.webp') || key.endsWith('.svg'))
+        ? key
+        : `${key}.png`;
+      return { src: srcName, desc: typeof desc === 'string' ? desc : undefined };
+    });
+  }
+
+  // Normalize dictionary map { 'git1.png': 'description' } into list of objects
+  if (typeof inputList === 'object' && !Array.isArray(inputList) && inputList !== null) {
+    inputList = Object.entries(inputList).map(([src, desc]) => ({ src, desc }));
+  }
+
+  // Determine source images (supports Webpack require.context, filtered selection, tuples, or arrays)
   let rawImages = [];
   if (folder && typeof folder === 'function' && typeof folder.keys === 'function') {
     try {
       const keys = folder.keys();
 
-      // Case 1: Specific filenames specified as string array in images prop
-      if (Array.isArray(images) && images.length > 0 && typeof images[0] === 'string') {
-        rawImages = images.map((name) => {
-          const matchKey = keys.find((k) => k.endsWith(name) || k === `./${name}`);
-          if (matchKey) {
-            const mod = folder(matchKey);
-            return mod?.default || mod;
+      const resolveKey = (candidate) => {
+        if (typeof candidate !== 'string') return candidate;
+        const cleanName = candidate.replace(/^\.\/assets\//, '').replace(/^\.\//, '');
+        const matchKey = keys.find((k) => k.endsWith(cleanName) || k === `./${cleanName}`);
+        if (matchKey) {
+          const mod = folder(matchKey);
+          return mod?.default || mod;
+        }
+        return candidate;
+      };
+
+      // Case 1: Array of items/tuples/objects/filenames passed
+      if (Array.isArray(inputList) && inputList.length > 0) {
+        rawImages = inputList.map((item) => {
+          if (Array.isArray(item)) {
+            return [resolveKey(item[0]), item[1]];
           }
-          return name;
+          if (typeof item === 'object' && item !== null) {
+            if (item.src) {
+              return { ...item, src: resolveKey(item.src) };
+            }
+            // single key dictionary: { 'git1.png': 'desc' }
+            const entries = Object.entries(item);
+            if (entries.length > 0) {
+              const [key, val] = entries[0];
+              return { src: resolveKey(key), desc: val };
+            }
+          }
+          return resolveKey(item);
         });
       }
-      // Case 2: Filter by keyword string (e.g. filter="comic1")
+      // Case 2: Filter by keyword string (e.g. filter="git")
       else if (filter && typeof filter === 'string') {
         const filteredKeys = keys
           .filter((k) => k.toLowerCase().includes(filter.toLowerCase()))
@@ -72,11 +167,13 @@ export default function ComicCarousel({
     } catch (err) {
       console.error('ComicCarousel require.context error:', err);
     }
-  } else if (Array.isArray(images)) {
-    rawImages = images;
+  } else if (Array.isArray(inputList)) {
+    rawImages = inputList;
   }
 
-  const normalizedImages = rawImages.map(normalizeImage);
+  const normalizedImages = rawImages.map((item, idx) => 
+    normalizeImage(item, idx, descriptions[idx])
+  );
   const totalImages = normalizedImages.length;
 
   const handleNext = useCallback(() => {
@@ -149,7 +246,7 @@ export default function ComicCarousel({
         )}
       </div>
 
-      {/* Bottom Controls Bar: Prev < | Thumbnails | Next > */}
+      {/* Bottom Controls Bar: Prev < | Description / Thumbnails | Next > */}
       <div className={styles.bottomBar}>
         <button
           className={styles.prevBtn}
@@ -159,20 +256,26 @@ export default function ComicCarousel({
           Prev &lt;
         </button>
 
-        {/* Thumbnail Preview Strip */}
-        {totalImages > 1 && (
-          <div className={styles.thumbStrip}>
-            {normalizedImages.map((img, idx) => (
-              <div
-                key={idx}
-                className={`${styles.thumbBox} ${idx === currentIndex ? styles.thumbBoxActive : ''}`}
-                onClick={() => setCurrentIndex(idx)}
-              >
-                <img src={img.src} alt={img.alt} className={styles.thumbImg} />
-              </div>
-            ))}
-          </div>
-        )}
+        {/* Center Area: Description Text or Thumbnail Strip */}
+        <div className={styles.centerControl}>
+          {currentImg.desc ? (
+            <div className={styles.descriptionText} title={currentImg.desc}>
+              {currentImg.desc}
+            </div>
+          ) : showThumbnails && totalImages > 1 ? (
+            <div className={styles.thumbStrip}>
+              {normalizedImages.map((img, idx) => (
+                <div
+                  key={idx}
+                  className={`${styles.thumbBox} ${idx === currentIndex ? styles.thumbBoxActive : ''}`}
+                  onClick={() => setCurrentIndex(idx)}
+                >
+                  <img src={img.src} alt={img.alt} className={styles.thumbImg} />
+                </div>
+              ))}
+            </div>
+          ) : null}
+        </div>
 
         <button
           className={styles.nextBtn}

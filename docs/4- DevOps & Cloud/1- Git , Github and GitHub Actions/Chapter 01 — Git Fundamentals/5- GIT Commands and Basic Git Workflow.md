@@ -32,4 +32,5 @@
 |`git config user.name "<name>"`|Set username for the current repository|
 |`git config user.email "<email>"`|Set email for the current repository|
 ## Basic Git Workflow
-![868](assets/animation.gif)
+<img src={require('./assets/animation.gif').default} alt="Basic Git Workflow" style={{ width: '100%', maxWidth: '850px', height: 'auto' }} />
+
