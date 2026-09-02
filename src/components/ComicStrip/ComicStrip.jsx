@@ -142,10 +142,14 @@ export default function ComicStrip({
           return resolveKey(item);
         });
       }
-      // Case 2: Filter by keyword string (e.g. filter="git")
+      // Case 2: Filter by keyword string (e.g. filter="comic")
       else if (filter && typeof filter === 'string') {
         const filteredKeys = keys
-          .filter((k) => k.toLowerCase().includes(filter.toLowerCase()))
+          .filter((k) => {
+             // Remove the leading './' to check the actual filename's initial
+             const filename = k.replace(/^.\//, '').toLowerCase();
+             return filename.startsWith(filter.toLowerCase());
+          })
           .sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }));
 
         rawImages = filteredKeys.map((key) => {

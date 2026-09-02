@@ -1,3 +1,7 @@
+
+<ComicStrip 
+  filter="image"
+/>
 ## git Commands
 
 |Command|Description|
