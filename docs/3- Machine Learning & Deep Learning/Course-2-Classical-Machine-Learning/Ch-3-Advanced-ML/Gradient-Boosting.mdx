@@ -1,0 +1,25 @@
+---
+title: "🚀 Gradient Boosting"
+---
+
+# 🚀 Gradient Boosting
+
+If Random Forests are a democracy, Gradient Boosting is a **relay race**.
+
+## 🏃 The Relay Race
+Instead of building 100 trees independently, it builds them one by one. Tree 2 is built specifically to look at Tree 1's mistakes and correct them.
+
+## 🐍 Python Implementation
+
+```python
+from sklearn.ensemble import GradientBoostingClassifier
+
+X = [[0, 0], [1, 1], [9, 9], [10, 10]]
+y = [0, 0, 1, 1]
+
+# Build 100 trees in a relay race, learning at a 0.1 rate
+gbm = GradientBoostingClassifier(n_estimators=100, learning_rate=0.1)
+gbm.fit(X, y)
+
+print("Prediction:", gbm.predict([[8, 8]]))
+```

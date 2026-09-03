@@ -1,0 +1,30 @@
+---
+title: "📦 Object Detection (YOLO)"
+---
+
+# 📦 Object Detection (YOLO)
+
+Classification tells you "There is a Dog in this image."
+Object Detection tells you "There is a Dog, and it is located inside this exact Box [X, Y, Width, Height]."
+
+## 🚀 You Only Look Once (YOLO)
+Older algorithms used to scan the image 2,000 times to find boxes. It was agonizingly slow.
+YOLO split the image into a grid and predicted all the boxes in a single, massive forward pass! It was so fast it could process real-time webcam video at 60 FPS!
+
+## 🐍 Python Implementation
+
+Today, developers use the `ultralytics` library to run YOLO in 3 lines of code!
+
+```python
+# pip install ultralytics
+# from ultralytics import YOLO
+
+# Load a pre-trained YOLOv8 model
+# model = YOLO('yolov8n.pt')
+
+# Run inference on an image
+# results = model('my_dog_photo.jpg')
+
+# Show the image with bounding boxes drawn!
+# results[0].show()
+```

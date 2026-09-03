@@ -1,0 +1,31 @@
+---
+title: "⛷️ Derivatives"
+---
+
+# ⛷️ Derivatives
+
+Forget all the complex equations from high school. For ML, you only need to know one thing: **A derivative is just a slope.**
+
+## ⛰️ The Ski Slope Analogy
+Imagine you are standing on a snowy mountain. The **derivative** tells you exactly how steep the ground is right under your feet, and which direction points downhill.
+
+## 🐍 Python Implementation
+
+Instead of doing calculus by hand, modern ML uses **Automatic Differentiation**. Frameworks like PyTorch can magically calculate the exact slope for you!
+
+```python
+import torch
+
+# Our location on the mountain (x = 3.0)
+# requires_grad=True tells PyTorch to track the slopes!
+x = torch.tensor(3.0, requires_grad=True)
+
+# Our mountain shape equation: y = x^2
+y = x ** 2
+
+# Calculate the derivative! (dy/dx)
+y.backward()
+
+# The slope at x=3 is 6.0!
+print("The slope (derivative) is:", x.grad)
+```

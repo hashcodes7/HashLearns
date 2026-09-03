@@ -1,0 +1,25 @@
+---
+title: "🔥 XGBoost"
+---
+
+# 🔥 XGBoost
+
+XGBoost is the steroid-injected version of Gradient Boosting.
+
+## 🏎️ Why "Extreme"?
+It re-engineered the math under the hood to make the tree-building process lightning fast using hardware optimization.
+
+## 🐍 Python Implementation
+
+```python
+# pip install xgboost
+import xgboost as xgb
+
+X = [[0, 0], [1, 1], [9, 9], [10, 10]]
+y = [0, 0, 1, 1]
+
+model = xgb.XGBClassifier(n_estimators=100, learning_rate=0.1)
+model.fit(X, y)
+
+print("Prediction:", model.predict([[2, 2]]))
+```

@@ -1,0 +1,26 @@
+---
+title: "📊 Evaluation Metrics"
+---
+
+# 📊 Evaluation Metrics
+
+Evaluation Metrics are for *humans* to understand if the model is actually good.
+
+## 🎯 The Accuracy Trap
+If 99 images are dogs and 1 is a cat, a model that *always* blindly guesses "Dog" gets 99% accuracy! It looks amazing, but is useless.
+
+Instead, we use Precision, Recall, and the F1-Score!
+
+## 🐍 Python Implementation
+
+```python
+from sklearn.metrics import classification_report
+
+# 0 = Normal Email, 1 = Spam
+true_emails = [0, 0, 0, 0, 0, 0, 0, 0, 0, 1] 
+# Model just lazily guessed "0" for everything!
+predictions = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0] 
+
+# Let's see the detailed report
+print(classification_report(true_emails, predictions, zero_division=0))
+```

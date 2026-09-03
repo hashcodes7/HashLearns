@@ -1,0 +1,42 @@
+---
+title: "📉 Learning Rate Schedules"
+---
+
+# 📉 Learning Rate Schedules
+
+You shouldn't use the exact same step size (Learning Rate) for the entire hike down the mountain.
+
+## 🏎️ The Racecar Driver
+When you are far away from the valley, you want to take massive steps (High Learning Rate) to get there fast.
+But as you get close to the absolute bottom, you need to slow down (Low Learning Rate) so you don't accidentally step entirely over the valley!
+
+A **Scheduler** automatically turns the learning rate down as training progresses.
+
+## 🐍 Python Implementation
+
+We attach a `Scheduler` to our `Optimizer`.
+
+```python
+import torch.nn as nn
+import torch.optim as optim
+from torch.optim.lr_scheduler import StepLR
+
+model = nn.Sequential(nn.Linear(10, 2))
+# Start with a fast learning rate (0.1)
+optimizer = optim.Adam(model.parameters(), lr=0.1)
+
+# Scheduler: Cut the learning rate in half (gamma=0.5) every 10 steps!
+scheduler = StepLR(optimizer, step_size=10, gamma=0.5)
+
+# Inside your training loop:
+for epoch in range(25):
+    # train model...
+    
+    # Update the scheduler at the end of the epoch
+    scheduler.step()
+    
+    # Print the current learning rate
+    current_lr = scheduler.get_last_lr()[0]
+    if epoch % 5 == 0:
+        print(f"Epoch {epoch}: LR is {current_lr:.4f}")
+```

@@ -1,0 +1,28 @@
+---
+title: "🤝 Covariance"
+---
+
+# 🤝 Covariance
+
+Covariance measures how two variables move *together*.
+
+* **Positive:** As Ice Cream sales go up, Sunburns go up.
+* **Negative:** As Winter Coat sales go up, Ice Cream sales go down.
+
+## 🐍 Python Implementation
+
+We can compute the Covariance Matrix using `numpy`. The diagonal is the variance of each variable, and the off-diagonal is the covariance between them.
+
+```python
+import numpy as np
+
+# Ice cream sales vs Sunburns (They go up together)
+ice_cream = [10, 20, 30, 40, 50]
+sunburns =  [1,   3,  5,  7,  9]
+
+# Calculate Covariance Matrix
+cov_matrix = np.cov(ice_cream, sunburns)
+
+print("Covariance Matrix:\n", cov_matrix)
+# The positive number off the diagonal means they are positively related!
+```

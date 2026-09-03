@@ -1,0 +1,22 @@
+---
+title: "👮 Regularization"
+---
+
+# 👮 Regularization
+
+Regularization is the "Police Force" of ML. It stops the model from cheating!
+
+## ⚖️ The Penalty
+It forces the model to find simple, smooth rules instead of jagged memorization lines (overfitting).
+* **L1 (Lasso):** Forces useless weights to zero (deletes useless features).
+* **L2 (Ridge):** Shrinks all weights to be very small.
+
+## 🐍 Python Implementation
+
+```python
+from sklearn.linear_model import Ridge # L2 Regularization
+
+# Alpha is the "strength" of the police force
+model = Ridge(alpha=1.0)
+# model.fit(X, y)
+```

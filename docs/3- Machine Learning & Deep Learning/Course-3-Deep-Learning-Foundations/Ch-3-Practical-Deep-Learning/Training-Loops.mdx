@@ -1,0 +1,53 @@
+---
+title: "🔁 The Training Loop"
+---
+
+# 🔁 The Training Loop
+
+This is the heartbeat of Deep Learning. Every training loop in PyTorch follows the exact same 5-step pattern. If you memorize this, you can train any AI in the world.
+
+## 🖐️ The 5 Steps
+1. Make a guess (Forward Pass)
+2. Calculate the mistake (Loss)
+3. Clear old gradients (Zero Grad)
+4. Calculate new gradients (Backward Pass)
+5. Update weights (Optimizer Step)
+
+## 🐍 Python Implementation
+
+Here is the holy grail of PyTorch code.
+
+```python
+import torch
+import torch.nn as nn
+import torch.optim as optim
+
+# Setup
+model = nn.Linear(10, 2)
+optimizer = optim.Adam(model.parameters(), lr=0.01)
+loss_fn = nn.CrossEntropyLoss()
+
+# Dummy Data
+data = torch.randn(5, 10)  # 5 items
+labels = torch.tensor([0, 1, 0, 1, 0]) # 5 answers
+
+model.train() # Turn on training mode
+
+for epoch in range(3):
+    # Step 1: Forward Pass
+    predictions = model(data)
+    
+    # Step 2: Calculate Loss
+    loss = loss_fn(predictions, labels)
+    
+    # Step 3: Zero Grad
+    optimizer.zero_grad()
+    
+    # Step 4: Backward Pass (Calculate Gradients)
+    loss.backward()
+    
+    # Step 5: Optimizer Step (Update Weights)
+    optimizer.step()
+    
+    print(f"Epoch {epoch} | Loss: {loss.item():.4f}")
+```

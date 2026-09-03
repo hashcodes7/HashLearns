@@ -1,0 +1,33 @@
+---
+title: "🔥 PyTorch Basics"
+---
+
+# 🔥 PyTorch Basics
+
+PyTorch is the undisputed king of Deep Learning frameworks. It's essentially just `numpy` but with two massive superpowers:
+1. It runs on GPUs (which are 100x faster than CPUs for matrix math).
+2. It automatically calculates derivatives (Autograd).
+
+## 🐍 Python Implementation: Tensors
+
+Everything in PyTorch is a `Tensor` (the word for Matrix/Vector).
+
+```python
+import torch
+
+# Create a Tensor
+x = torch.tensor([[1.0, 2.0], [3.0, 4.0]])
+print("Tensor:\n", x)
+
+# Superpower 1: Move it to the GPU!
+# (This code won't run unless you actually have a GPU)
+if torch.cuda.is_available():
+    x = x.to('cuda')
+    print("Tensor is now on the GPU!")
+    
+# Superpower 2: Autograd
+y = torch.tensor(2.0, requires_grad=True)
+z = y ** 3
+z.backward()
+print("Derivative of y^3 at y=2 is:", y.grad) # Should be 12!
+```

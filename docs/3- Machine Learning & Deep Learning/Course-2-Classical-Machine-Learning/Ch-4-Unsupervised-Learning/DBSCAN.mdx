@@ -1,0 +1,25 @@
+---
+title: "🦠 DBSCAN"
+---
+
+# 🦠 DBSCAN
+
+DBSCAN is a clustering algorithm based on **Density**.
+
+## 👥 The Crowd Analogy
+Unlike K-Means (which draws rigid circles), DBSCAN looks for organic "crowds" of data points. It doesn't require you to guess K!
+
+## 🐍 Python Implementation
+
+```python
+from sklearn.cluster import DBSCAN
+
+X = [[1, 2], [1, 4], [10, 2], [10, 4], [100, 100]] # the last one is an outlier!
+
+# eps = maximum distance between two points to be considered "friends"
+dbscan = DBSCAN(eps=3, min_samples=2)
+labels = dbscan.fit_predict(X)
+
+print("Cluster labels:", labels)
+# Notice the outlier gets a label of "-1" (Noise!)
+```

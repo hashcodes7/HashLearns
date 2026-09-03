@@ -1,0 +1,28 @@
+---
+title: "🧭 Gradients"
+---
+
+# 🧭 Gradients
+
+A **Gradient** is just a vector (list) of derivatives.
+
+## 🗺️ The Multidimensional Mountain
+A Neural Network has millions of weights! You are on a mountain with millions of dimensions. The gradient is a magic compass that collects the slopes for *every single weight* and points in the exact direction of the steepest ascent.
+
+## 🐍 Python Implementation
+
+```python
+import torch
+
+# Now we have 3 weights (a 3D mountain!)
+weights = torch.tensor([1.0, 2.0, 3.0], requires_grad=True)
+
+# A simple loss function (Error = sum of weights squared)
+loss = (weights ** 2).sum()
+
+# Calculate the gradient for all weights at once!
+loss.backward()
+
+# The compass points the way!
+print("Gradient vector:", weights.grad)
+```

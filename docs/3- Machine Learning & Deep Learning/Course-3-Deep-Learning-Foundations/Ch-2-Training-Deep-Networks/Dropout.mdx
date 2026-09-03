@@ -1,0 +1,44 @@
+---
+title: "🗑️ Dropout"
+---
+
+# 🗑️ Dropout
+
+The most counter-intuitive trick in Deep Learning: Randomly deleting parts of your brain!
+
+## 🏋️ The Gym Analogy
+Imagine a team of 5 people moving a couch. If Bob is really strong, the other 4 people might get lazy and let Bob do all the work. If Bob gets sick, the team fails.
+Dropout randomly tells 20% of the neurons to "go to sleep" during every training step. This forces *every* neuron to learn useful things, because they can't rely on their neighbors!
+
+It is the ultimate defense against Overfitting.
+
+## 🐍 Python Implementation
+
+In PyTorch, we add an `nn.Dropout` layer. Notice it only works during training!
+
+```python
+import torch
+import torch.nn as nn
+
+class RobustNetwork(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.layer1 = nn.Linear(10, 64)
+        # Dropout layer (randomly kills 20% of neurons)
+        self.dropout = nn.Dropout(p=0.2)
+        self.layer2 = nn.Linear(64, 2)
+        
+    def forward(self, x):
+        x = torch.relu(self.layer1(x))
+        # Apply Dropout!
+        x = self.dropout(x)
+        x = self.layer2(x)
+        return x
+
+model = RobustNetwork()
+# Sets the model to training mode (Dropout is ACTIVE)
+model.train() 
+
+# Sets the model to evaluation mode (Dropout is DEACTIVATED for real-world use!)
+# model.eval() 
+```

@@ -1,0 +1,32 @@
+---
+title: "📉 Pooling Layers"
+---
+
+# 📉 Pooling Layers
+
+Pooling layers are used to shrink the image down.
+
+## 🗺️ The Map Zoom
+When you open Google Maps, you don't need to see every single side street if you are zoomed out looking at the entire country. 
+Pooling takes a 2x2 square of pixels and squishes them into a single pixel (usually by just keeping the highest number, known as **Max Pooling**).
+
+This saves massive amounts of memory and helps the network look at the "big picture" rather than getting distracted by tiny details!
+
+## 🐍 Python Implementation
+
+```python
+import torch
+import torch.nn as nn
+
+# Our output from the last chapter: (1 batch, 16 channels, 64x64)
+features = torch.randn(1, 16, 64, 64)
+
+# Max Pooling (2x2 square)
+pool_layer = nn.MaxPool2d(kernel_size=2)
+
+# Shrunk!
+shrunk_features = pool_layer(features)
+
+# The width and height are cut exactly in half! (64 -> 32)
+print("Shrunk shape:", shrunk_features.shape) # (1, 16, 32, 32)
+```

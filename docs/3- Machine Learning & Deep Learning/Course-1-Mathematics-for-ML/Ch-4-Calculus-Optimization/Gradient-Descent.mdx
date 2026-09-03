@@ -1,0 +1,40 @@
+---
+title: "🧗 Gradient Descent"
+---
+
+# 🧗 Gradient Descent
+
+This is the master algorithm that trains almost every AI model on earth.
+
+## 🙈 The Blindfolded Hiker
+Imagine you are blindfolded on a mountain, trying to find the lowest valley (where Error is zero). 
+1. Feel the ground with your foot to find the downhill slope (**Calculate Gradient**).
+2. Take a small step in that downhill direction (**Update weights**).
+3. Repeat until flat!
+
+## 🐍 Python Implementation
+
+Let's build a tiny training loop from scratch!
+
+```python
+import torch
+
+weight = torch.tensor(5.0, requires_grad=True)
+learning_rate = 0.1
+
+for step in range(5):
+    # 1. Forward pass (Calculate Error)
+    loss = weight ** 2  
+    
+    # 2. Backward pass (Calculate Gradient / feel the slope)
+    loss.backward()
+    
+    # 3. Take a step downhill!
+    with torch.no_grad():
+        weight -= learning_rate * weight.grad
+        
+    # Reset gradient for next step
+    weight.grad.zero_()
+    
+    print(f"Step {step+1}: Weight is now {weight.item():.2f}")
+```

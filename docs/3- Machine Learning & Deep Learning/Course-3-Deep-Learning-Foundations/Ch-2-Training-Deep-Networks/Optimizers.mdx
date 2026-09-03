@@ -1,0 +1,38 @@
+---
+title: "🔧 Optimizers"
+---
+
+# 🔧 Optimizers
+
+Backpropagation calculates the "blame" (gradients). But the **Optimizer** is the worker who actually grabs a wrench and updates the weights!
+
+## 🧗 The Hiker's Shoes
+If Gradient Descent is a hiker walking down a mountain:
+* **SGD (Standard):** Wearing plain boots. Takes slow, steady steps downhill.
+* **Adam:** Wearing jet-boots with a compass. It remembers its momentum from previous steps and adjusts its step size for every single dimension dynamically. Adam is the default choice for 99% of Deep Learning today.
+
+## 🐍 Python Implementation
+
+We will use the exact same `model` structure from Chapter 1, but now we give it an Optimizer to update its weights!
+
+```python
+import torch
+import torch.nn as nn
+import torch.optim as optim
+
+model = nn.Sequential(nn.Linear(10, 2))
+
+# Create the Adam Optimizer
+# We hand it all the model's weights, and set the Learning Rate (step size)
+optimizer = optim.Adam(model.parameters(), lr=0.001)
+
+# ... inside a training loop ...
+# 1. Backpropagation calculates the gradients
+# loss.backward()
+
+# 2. Optimizer takes a step and updates the weights!
+# optimizer.step()
+
+# 3. Clear the gradients for the next round
+# optimizer.zero_grad()
+```

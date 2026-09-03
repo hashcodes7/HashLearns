@@ -1,0 +1,28 @@
+---
+title: "🏎️ EfficientNet"
+---
+
+# 🏎️ EfficientNet
+
+How do we make CNNs faster for mobile phones?
+
+## 📐 The Balancing Act
+To make a model better, you can:
+1. Make it Deeper (more layers)
+2. Make it Wider (more flashlights/channels)
+3. Increase Resolution (bigger images)
+
+EfficientNet was discovered by an AI that ran millions of experiments to find the mathematically perfect ratio between Depth, Width, and Resolution. It is significantly smaller and faster than ResNet, but achieves higher accuracy!
+
+## 🐍 Python Implementation
+
+```python
+import torch
+import torchvision.models as models
+
+# The smallest version (b0) is perfect for mobile!
+efficientnet = models.efficientnet_b0()
+
+dummy_img = torch.randn(1, 3, 224, 224)
+print("Output shape:", efficientnet(dummy_img).shape)
+```

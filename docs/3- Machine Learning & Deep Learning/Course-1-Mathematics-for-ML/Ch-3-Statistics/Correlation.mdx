@@ -1,0 +1,32 @@
+---
+title: "🔗 Correlation"
+---
+
+# 🔗 Correlation
+
+Correlation is just Covariance put on a standardized scale from `-1.0` to `1.0`.
+
+## 📏 The Scale
+* **+1.0:** Perfect Positive lockstep.
+* **-1.0:** Perfect Negative lockstep.
+* **0.0:** Pure random noise.
+
+## 🐍 Python Implementation
+
+`pandas` makes finding correlations across a whole dataset incredibly easy!
+
+```python
+import pandas as pd
+
+data = {
+    'Ice_Cream': [10, 20, 30, 40],
+    'Sunburns':  [2, 4, 6, 8],
+    'Coats':     [100, 80, 50, 20]
+}
+df = pd.DataFrame(data)
+
+# Calculate Correlation Matrix
+print(df.corr())
+
+# Notice Ice_Cream and Coats have a negative correlation near -1.0!
+```

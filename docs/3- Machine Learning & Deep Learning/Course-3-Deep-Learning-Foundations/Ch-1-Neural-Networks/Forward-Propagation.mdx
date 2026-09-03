@@ -1,0 +1,36 @@
+---
+title: "➡️ Forward Propagation"
+---
+
+# ➡️ Forward Propagation
+
+This is a fancy term for **"Making a Guess."**
+
+## 🌊 The River Analogy
+Forward propagation is just the data flowing down the river, from the Input Layer, through all the Hidden Layers, until it splashes out the Output Layer.
+
+During this phase, the network is not learning or updating anything. It is strictly calculating its best guess based on whatever weights it currently has.
+
+## 🐍 Python Implementation
+
+Whenever you call `model(data)` in PyTorch, you are executing Forward Propagation!
+
+```python
+import torch
+import torch.nn as nn
+
+# Re-using our network from the previous chapter
+model = nn.Sequential(
+    nn.Linear(10, 64),
+    nn.ReLU(),
+    nn.Linear(64, 2)
+)
+
+# 1. Collect Data
+data = torch.randn(1, 10) 
+
+# 2. Forward Propagation! (Data flows through the network)
+guess = model(data) 
+
+print("The model's forward pass result:", guess)
+```

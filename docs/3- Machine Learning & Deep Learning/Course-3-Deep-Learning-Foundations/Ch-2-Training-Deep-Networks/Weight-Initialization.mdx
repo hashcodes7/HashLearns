@@ -1,0 +1,35 @@
+---
+title: "🎲 Weight Initialization"
+---
+
+# 🎲 Weight Initialization
+
+How do we pick the starting weights before the model even begins training?
+
+## ⚖️ The Goldilocks Problem
+* **Start with all zeros?** The network is perfectly symmetrical. The neurons can never learn different things (they all get the exact same updates). The network fails.
+* **Start with numbers too big?** The outputs explode to infinity. The network crashes.
+* **Kaiming/Xavier Initialization:** The sweet spot. It pulls random numbers from a very specific distribution based on the size of the layer, keeping the math perfectly stable.
+
+## 🐍 Python Implementation
+
+PyTorch automatically initializes weights using good defaults, but here is how you do it manually if you need to!
+
+```python
+import torch
+import torch.nn as nn
+
+class SmartNetwork(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.layer1 = nn.Linear(10, 64)
+        
+        # Initialize weights using Kaiming Normal (perfect for ReLU!)
+        nn.init.kaiming_normal_(self.layer1.weight, nonlinearity='relu')
+        
+        # Initialize biases to exactly zero
+        nn.init.zeros_(self.layer1.bias)
+
+model = SmartNetwork()
+print("Initialized Weights (sample):", model.layer1.weight[0][:5])
+```

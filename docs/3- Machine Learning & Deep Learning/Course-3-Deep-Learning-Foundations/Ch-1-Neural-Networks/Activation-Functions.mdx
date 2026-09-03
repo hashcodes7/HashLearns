@@ -1,0 +1,46 @@
+---
+title: "⚡ Activation Functions"
+---
+
+# ⚡ Activation Functions
+
+Activation functions are the "decision makers" of the neuron. 
+
+## 🚪 The Bouncer Analogy
+Imagine the neuron's math calculates a score of `150`. What does that mean? Is it a "Yes" or a "No"?
+The Activation Function is a bouncer at a club. It takes that raw score and decides what to do with it.
+* **ReLU (The Strict Bouncer):** "If your score is negative, you get a 0 (you're ignored). If it's positive, you get to keep your exact score."
+* **Sigmoid (The Percentage Bouncer):** "I will squish your score into a clean percentage between 0% and 100%."
+
+Without activation functions, a Neural Network with 1,000 layers would just mathematically collapse into 1 single layer (because drawing 1,000 straight lines on top of each other is just one straight line). Activation functions add **curves** (non-linearity).
+
+## 🐍 Python Implementation
+
+We will update our neuron from the last chapter to include an activation function!
+
+```python
+import torch
+import torch.nn as nn
+
+class NeuronWithActivation(nn.Module):
+    def __init__(self, input_size):
+        super().__init__()
+        self.weights = nn.Parameter(torch.randn(input_size, 1))
+        self.bias = nn.Parameter(torch.zeros(1))
+        
+    def forward(self, x):
+        # 1. Raw Math
+        raw_output = (x @ self.weights) + self.bias
+        
+        # 2. The Bouncer (ReLU Activation)
+        # If raw_output is negative, it becomes 0!
+        activated_output = torch.relu(raw_output)
+        
+        return activated_output
+
+neuron = NeuronWithActivation(input_size=3)
+# We feed it negative numbers to see the ReLU block them!
+sample_input = torch.tensor([[-5.0, -2.0, -1.0]])
+
+print("Activated Output:", neuron.forward(sample_input)) # Will likely be 0.0
+```

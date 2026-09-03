@@ -1,0 +1,30 @@
+---
+title: "⚖️ Logistic Regression"
+---
+
+# ⚖️ Logistic Regression
+
+Despite the name, this is NOT a regression algorithm. It's for **Classification**!
+
+## 🐶 Cat vs. Dog
+Logistic Regression predicts probabilities (Is this a Cat or a Dog? Spam or Not Spam?).
+It squishes a straight line into an **S-shape** (the Sigmoid curve), guaranteeing the output is a clean percentage between 0% and 100%.
+
+## 🐍 Python Implementation
+
+```python
+from sklearn.linear_model import LogisticRegression
+import numpy as np
+
+# X = Hours Studied, y = Pass (1) or Fail (0)
+X_train = np.array([[1], [2], [5], [8], [10]])
+y_train = np.array([0, 0, 1, 1, 1])
+
+model = LogisticRegression()
+model.fit(X_train, y_train)
+
+# If a student studies 4 hours, what's the probability they pass?
+probabilities = model.predict_proba([[4]])
+# Output is [Prob(Fail), Prob(Pass)]
+print(f"Probability of passing: {probabilities[0][1]*100:.1f}%")
+```

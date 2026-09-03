@@ -1,0 +1,34 @@
+---
+title: "⚖️ Model Selection"
+---
+
+# ⚖️ Model Selection
+
+How do you choose which algorithm to use?
+
+## 🛠️ The Cheat Sheet
+* **Tabular Data?** Use XGBoost, LightGBM, or CatBoost.
+* **Images/Text?** Use Deep Learning (PyTorch).
+* **Need hyper-fast predictions?** Use Naive Bayes or Logistic Regression.
+* **Need to explain *why*?** Use a simple Decision Tree.
+
+## 🐍 Python Implementation (GridSearch)
+
+We use `GridSearchCV` to automatically test hundreds of models to find the best one!
+
+```python
+from sklearn.model_selection import GridSearchCV
+from sklearn.ensemble import RandomForestClassifier
+
+# Define the models and settings we want to test
+param_grid = {
+    'n_estimators': [10, 50, 100],
+    'max_depth': [None, 3, 5]
+}
+
+# The automated tester
+grid = GridSearchCV(RandomForestClassifier(), param_grid, cv=3)
+# grid.fit(X_train, y_train)
+
+# print("Best settings found:", grid.best_params_)
+```

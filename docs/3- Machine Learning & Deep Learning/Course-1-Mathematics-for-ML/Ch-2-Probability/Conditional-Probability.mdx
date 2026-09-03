@@ -1,0 +1,38 @@
+---
+title: "🕵️ Conditional Probability"
+---
+
+# 🕵️ Conditional Probability
+
+Conditional probability is answering the question: **"How does my guess change if I learn a new clue?"**
+
+## ☁️ The Rain Example
+* What is the probability it rains today? Maybe **20%**.
+* Now, what is the probability it rains today, **GIVEN** that you see dark clouds outside? Now it jumps to **80%**.
+
+The notation for "Probability of Rain GIVEN Clouds" is: $P(\text{Rain} | \text{Clouds})$.
+
+## 🐍 Python Implementation
+
+Let's calculate conditional probability from a dataset!
+
+```python
+import pandas as pd
+
+# 1 = Yes, 0 = No
+data = {
+    'Saw_Clouds': [1, 1, 0, 1, 0, 0, 1, 0],
+    'Rained':     [1, 1, 0, 0, 0, 0, 1, 0]
+}
+df = pd.DataFrame(data)
+
+# P(Rain) -> total rain days / total days
+p_rain = df['Rained'].mean()
+
+# P(Rain | Clouds) -> Only look at days where Saw_Clouds == 1
+cloudy_days = df[df['Saw_Clouds'] == 1]
+p_rain_given_clouds = cloudy_days['Rained'].mean()
+
+print(f"P(Rain) = {p_rain * 100}%")
+print(f"P(Rain | Clouds) = {p_rain_given_clouds * 100}%")
+```

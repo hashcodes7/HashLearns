@@ -1,0 +1,40 @@
+---
+title: "🧮 Matrix Multiplication"
+---
+
+# 🧮 Matrix Multiplication
+
+If you've ever seen an AI paper, you've probably seen $W \times X$. Matrix multiplication is the absolute workhorse of deep learning.
+
+## 🚂 The Transformation Engine
+When we multiply our data matrix $X$ by a weight matrix $W$, we are **transforming** our data (like applying an Instagram filter to a photo).
+
+## 🤝 The "Handshake" Rule
+You can't just mash any two matrices together. They have to fit perfectly like Lego pieces.
+If Matrix A is `(Rows x Columns)` and Matrix B is `(Rows x Columns)`, they can only multiply if **A's Columns == B's Rows**.
+
+## 🐍 Python Implementation
+
+Using `numpy`, matrix multiplication is done using the `@` operator or `np.dot()`.
+
+```python
+import numpy as np
+
+# A dataset of 3 items, each with 2 features (3x2 Matrix)
+X = np.array([
+    [1.0, 2.0],
+    [3.0, 4.0],
+    [5.0, 6.0]
+])
+
+# A weight matrix to transform our 2 features into 1 prediction (2x1 Matrix)
+W = np.array([
+    [0.5],
+    [1.5]
+])
+
+# Handshake rule check: (3x2) * (2x1) -> valid! Result will be (3x1)
+predictions = X @ W  # Matrix Multiplication!
+
+print("Predictions:\n", predictions)
+```

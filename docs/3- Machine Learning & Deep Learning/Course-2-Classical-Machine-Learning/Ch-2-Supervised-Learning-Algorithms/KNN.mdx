@@ -1,0 +1,26 @@
+---
+title: "🏘️ K-Nearest Neighbors (KNN)"
+---
+
+# 🏘️ K-Nearest Neighbors (KNN)
+
+KNN is the friendliest ML algorithm. 
+
+## 🤝 "You are the average of your closest friends"
+If you want to classify a new point, KNN just finds the **K** closest dots and takes a democratic vote based on distance!
+
+## 🐍 Python Implementation
+
+```python
+from sklearn.neighbors import KNeighborsClassifier
+
+X = [[0, 0], [1, 1], [9, 9], [10, 10]]
+y = [0, 0, 1, 1] # 0 = Group A, 1 = Group B
+
+# K = 3 (Look at the 3 closest neighbors)
+knn = KNeighborsClassifier(n_neighbors=3)
+knn.fit(X, y)
+
+# Predict a point near [9,9]
+print("Prediction:", knn.predict([[8, 8]])) # Outputs [1] (Group B)
+```

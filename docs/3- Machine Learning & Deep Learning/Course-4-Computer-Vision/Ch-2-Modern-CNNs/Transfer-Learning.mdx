@@ -1,0 +1,35 @@
+---
+title: "🧠 Transfer Learning"
+---
+
+# 🧠 Transfer Learning
+
+You don't need millions of images to train a CNN!
+
+## 🎓 The College Graduate
+Models like ResNet spent weeks on supercomputers learning to identify 1,000 different objects. They are college graduates.
+If you want a model to classify X-Ray images, you don't start a new model from kindergarten. You hire the ResNet college graduate, chop off its final layer (the one that guesses the 1,000 objects), and add a new layer that guesses "Healthy" or "Sick".
+
+Since it already knows how to detect edges and shapes, you can train it on just a few hundred X-Rays in a matter of minutes!
+
+## 🐍 Python Implementation
+
+```python
+import torch
+import torch.nn as nn
+import torchvision.models as models
+
+# 1. Hire the graduate (pretrained=True loads the smart weights!)
+model = models.resnet18(weights=models.ResNet18_Weights.DEFAULT)
+
+# 2. Freeze its brain (so we don't accidentally erase its memories)
+for param in model.parameters():
+    param.requires_grad = False
+
+# 3. Chop off the last layer (fc) and replace it with a new one
+# We want it to only predict 2 things (Healthy vs Sick)
+num_ftrs = model.fc.in_features
+model.fc = nn.Linear(num_ftrs, 2)
+
+# Now only the new `fc` layer will learn during training!
+```

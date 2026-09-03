@@ -1,0 +1,30 @@
+---
+title: "📊 Distributions"
+---
+
+# 📊 Distributions
+
+A distribution is just a map of where data tends to live.
+
+## 🔔 The Normal (Gaussian) Distribution
+The Bell Curve! Most people are average height, and very few are extremely short or tall.
+When initializing Neural Network weights, we usually pull numbers from a Normal distribution!
+
+## 🐍 Python Implementation
+
+We can generate and visualize these distributions using `numpy` and `matplotlib`.
+
+```python
+import numpy as np
+
+# Generate 1000 random weights from a Normal Distribution (mean=0, std=0.1)
+weights = np.random.normal(loc=0.0, scale=0.1, size=1000)
+
+print("First 5 weights:", weights[:5])
+print("Mean of weights:", np.mean(weights))  # Should be close to 0
+
+# If you wanted to plot this:
+# import matplotlib.pyplot as plt
+# plt.hist(weights, bins=50)
+# plt.show()
+```

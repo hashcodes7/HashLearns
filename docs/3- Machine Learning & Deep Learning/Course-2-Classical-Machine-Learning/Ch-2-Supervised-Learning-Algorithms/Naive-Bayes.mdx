@@ -1,0 +1,33 @@
+---
+title: "🕊️ Naive Bayes"
+---
+
+# 🕊️ Naive Bayes
+
+A fast, probability-based algorithm that powered early spam filters.
+
+## 🙈 Why is it "Naive"?
+It assumes every feature (word) is **completely independent** of every other feature. It thinks the word "New" and the word "York" have no connection! Despite this, it is shockingly accurate for text.
+
+## 🐍 Python Implementation
+
+```python
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.feature_extraction.text import CountVectorizer
+
+# Simple text data
+emails = ["Get free money now", "Hi mom how are you", "Free viagra click here"]
+labels = [1, 0, 1] # 1 = Spam, 0 = Normal
+
+# Convert text to word counts
+vectorizer = CountVectorizer()
+X = vectorizer.fit_transform(emails)
+
+# Train Naive Bayes
+model = MultinomialNB()
+model.fit(X, labels)
+
+# Test a new email
+test = vectorizer.transform(["free stuff here"])
+print("Is it spam?", bool(model.predict(test)[0]))
+```

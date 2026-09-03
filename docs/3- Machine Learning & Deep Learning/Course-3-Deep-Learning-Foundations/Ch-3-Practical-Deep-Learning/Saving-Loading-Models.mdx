@@ -1,0 +1,35 @@
+---
+title: "💾 Saving & Loading Models"
+---
+
+# 💾 Saving & Loading Models
+
+You just spent 4 days training a model. How do you save it so you don't lose it?
+
+## 📦 The State Dictionary
+A model is just a giant dictionary of weights and biases. PyTorch calls this the `state_dict`. When we save a model, we don't save the Python code, we just save the `state_dict` to a `.pt` or `.pth` file!
+
+## 🐍 Python Implementation
+
+```python
+import torch
+import torch.nn as nn
+
+model = nn.Linear(10, 2)
+
+# --- SAVING ---
+# We extract the state_dict and save it to a file
+torch.save(model.state_dict(), "my_awesome_weights.pt")
+print("Model saved!")
+
+# --- LOADING ---
+# 1. You must create a fresh, untrained model of the EXACT same shape
+new_model = nn.Linear(10, 2)
+
+# 2. Load the weights from the file
+weights_from_file = torch.load("my_awesome_weights.pt")
+
+# 3. Inject the weights into the empty model
+new_model.load_state_dict(weights_from_file)
+print("Model loaded and ready for predictions!")
+```

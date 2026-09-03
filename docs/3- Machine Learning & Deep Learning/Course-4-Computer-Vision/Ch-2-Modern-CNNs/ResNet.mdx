@@ -1,0 +1,32 @@
+---
+title: "🌉 ResNet"
+---
+
+# 🌉 ResNet (Residual Networks)
+
+In 2015, a huge problem was discovered: If you make a CNN too deep (like 50 layers), it stops learning and gets worse!
+
+## 🛣️ The Highway Analogy
+Imagine driving through a city where you *have* to stop at every single traffic light (Layer). It's exhausting, and the signal degrades.
+ResNet added **"Skip Connections"** (highways). It allows the data to skip over certain layers entirely if those layers aren't being useful.
+
+This allowed scientists to build networks with 152 layers that trained perfectly, revolutionizing deep learning forever!
+
+## 🐍 Python Implementation
+
+PyTorch's `torchvision` library contains pre-built, world-class ResNet models!
+
+```python
+import torch
+import torchvision.models as models
+
+# Download an entire ResNet-18 model built by Microsoft!
+resnet = models.resnet18()
+
+# The model expects a 224x224 image
+dummy_img = torch.randn(1, 3, 224, 224)
+output = resnet(dummy_img)
+
+# It outputs 1000 categories (from the ImageNet dataset)
+print("Output shape:", output.shape) 
+```

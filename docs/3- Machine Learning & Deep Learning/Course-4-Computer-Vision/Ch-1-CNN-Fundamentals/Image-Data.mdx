@@ -1,0 +1,30 @@
+---
+title: "🖼️ Image Data in ML"
+---
+
+# 🖼️ Image Data in ML
+
+How does a computer actually "see" an image?
+
+## 🔢 The Pixel Grid
+To a computer, an image is just a massive 2D matrix of numbers. 
+* A grayscale image has one channel (numbers from 0 to 255 representing brightness).
+* A color image has three channels: Red, Green, and Blue (RGB). So it's essentially three matrices stacked like pancakes!
+
+## 🐍 Python Implementation
+
+```python
+import torch
+
+# A tiny 3x3 Grayscale image
+grayscale_img = torch.tensor([
+    [255, 255, 255], # White
+    [0,   0,   0  ], # Black
+    [128, 128, 128]  # Gray
+])
+
+# PyTorch prefers image shapes to be: (Channels, Height, Width)
+# Let's create a fake 64x64 RGB image
+color_img = torch.rand(3, 64, 64) # 3 channels (RGB)
+print("Image Shape:", color_img.shape)
+```

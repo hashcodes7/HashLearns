@@ -1,0 +1,26 @@
+---
+title: "⚔️ Support Vector Machines (SVM)"
+---
+
+# ⚔️ Support Vector Machines (SVM)
+
+SVMs are the strict border-patrol agents.
+
+## 🛣️ The Widest Street
+An SVM tries to draw the **widest possible street** between two groups. It uses the "Kernel Trick" to magically warp 2D data into 3D so it can slice complex shapes!
+
+## 🐍 Python Implementation
+
+```python
+from sklearn.svm import SVC
+
+X = [[0, 0], [1, 1], [9, 9], [10, 10]]
+y = [0, 0, 1, 1]
+
+# SVC = Support Vector Classifier
+# kernel='linear' draws a straight line, 'rbf' allows curvy borders!
+svm = SVC(kernel='linear')
+svm.fit(X, y)
+
+print("Prediction:", svm.predict([[5, 5]]))
+```

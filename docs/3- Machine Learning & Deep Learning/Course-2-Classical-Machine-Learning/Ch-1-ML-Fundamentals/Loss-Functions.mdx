@@ -1,0 +1,23 @@
+---
+title: "💔 Loss Functions"
+---
+
+# 💔 Loss Functions
+
+A Loss Function is a scoreboard that tells the model **"How badly did you mess up?"**
+
+## 📉 Mean Squared Error (MSE)
+Used for predicting numbers. It takes the model's guess, subtracts the real answer, and squares the difference. It heavily punishes HUGE errors, but ignores tiny ones.
+
+## 🐍 Python Implementation
+
+```python
+from sklearn.metrics import mean_squared_error
+
+true_prices =      [100, 150, 200]
+predicted_prices = [105, 140, 205] # Model made some mistakes!
+
+# Calculate MSE
+mse = mean_squared_error(true_prices, predicted_prices)
+print("Mean Squared Error:", mse)
+```

@@ -1,0 +1,31 @@
+---
+title: "⛓️ The Chain Rule"
+---
+
+# ⛓️ The Chain Rule
+
+The Chain Rule is the mathematical trick that makes Neural Networks possible.
+
+## ⚙️ The Gear Analogy
+Imagine three gears connected together: Gear A turns Gear B, which turns Gear C.
+If you want to know how fast Gear C turns when you spin Gear A, you multiply the ratios together!
+
+## 🐍 Python Implementation
+
+PyTorch handles the chain rule automatically during `backward()`. We call this entire process **Backpropagation**.
+
+```python
+import torch
+
+x = torch.tensor(2.0, requires_grad=True)
+
+# Chain of operations
+a = x * 3      # Gear 1
+b = a ** 2     # Gear 2
+loss = b + 5   # Gear 3
+
+# PyTorch applies the chain rule instantly backwards through the chain!
+loss.backward()
+
+print("Derivative of loss with respect to x:", x.grad)
+```

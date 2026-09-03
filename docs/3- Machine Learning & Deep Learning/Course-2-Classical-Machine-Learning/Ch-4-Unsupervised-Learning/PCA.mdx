@@ -1,0 +1,30 @@
+---
+title: "🗜️ PCA (Principal Component Analysis)"
+---
+
+# 🗜️ PCA (Principal Component Analysis)
+
+PCA is a **Dimensionality Reduction** technique. It's like a ZIP file for data!
+
+## 📸 The Shadow Analogy
+Imagine casting a 2D shadow of a 3D teapot. You reduced dimensions but kept the shape!
+
+## 🐍 Python Implementation
+
+```python
+from sklearn.decomposition import PCA
+import numpy as np
+
+# A dataset with 3 columns (3D data)
+X = np.array([
+    [1, 2, 3],
+    [2, 4, 6],
+    [3, 6, 9]
+])
+
+# Compress it down to 2 columns!
+pca = PCA(n_components=2)
+X_compressed = pca.fit_transform(X)
+
+print("Compressed Data:\n", X_compressed)
+```

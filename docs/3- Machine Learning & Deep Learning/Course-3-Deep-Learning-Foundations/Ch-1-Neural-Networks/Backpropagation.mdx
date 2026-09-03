@@ -1,0 +1,40 @@
+---
+title: "⬅️ Backpropagation"
+---
+
+# ⬅️ Backpropagation
+
+This is the term for **"Learning from Mistakes."**
+
+## 🕵️ The Detective Analogy
+The model made a guess (Forward Propagation) and it was wrong.
+Now, the "Detective" (Backpropagation) works backward from the output layer to the input layer.
+It asks every single neuron: *"How much of this mistake was YOUR fault?"*
+
+It calculates exactly how much to adjust each weight so that the mistake won't happen next time. This relies on the **Chain Rule** from Calculus!
+
+## 🐍 Python Implementation
+
+In PyTorch, backpropagation takes exactly one line of code: `loss.backward()`.
+
+```python
+import torch
+import torch.nn as nn
+
+model = nn.Sequential(nn.Linear(10, 2))
+data = torch.randn(1, 10) 
+true_answer = torch.tensor([1]) # We want it to predict category 1
+
+# 1. Make a guess (Forward)
+guess = model(data) 
+
+# 2. Calculate the mistake (Loss)
+loss_fn = nn.CrossEntropyLoss()
+loss = loss_fn(guess, true_answer)
+
+# 3. Blame the neurons! (Backpropagation)
+loss.backward()
+
+# Now every weight has a .grad attached to it, telling it how to change!
+print("The gradient (blame) for the first layer:\n", model[0].weight.grad)
+```

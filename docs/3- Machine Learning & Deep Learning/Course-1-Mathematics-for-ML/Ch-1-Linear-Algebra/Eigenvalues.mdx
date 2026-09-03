@@ -1,0 +1,34 @@
+---
+title: "🧭 Eigenvalues & Eigenvectors"
+---
+
+# 🧭 Eigenvalues & Eigenvectors
+
+These sound scary, but represent an intuitive concept: **Finding the core directions of data.**
+
+## 🌪️ The Tornado Analogy
+Imagine a tornado hitting a house. The house gets twisted and stretched. 
+Most of the wooden planks change direction. But maybe there is one sturdy wooden pole in the center that doesn't change its orientation—it just gets stretched taller.
+
+* **Eigenvector:** That sturdy pole. A direction that *doesn't change*.
+* **Eigenvalue:** How much the pole got stretched (e.g., if it got twice as tall, the eigenvalue is 2).
+
+## 🐍 Python Implementation
+
+Finding eigenvectors is mathematically complex, but `numpy.linalg` does it in one line!
+
+```python
+import numpy as np
+
+# Define a transformation matrix (our "tornado")
+matrix = np.array([
+    [4, -2],
+    [1,  1]
+])
+
+# Calculate Eigenvalues and Eigenvectors
+eigenvalues, eigenvectors = np.linalg.eig(matrix)
+
+print("Eigenvalues (How much it stretched):\n", eigenvalues)
+print("Eigenvectors (The sturdy poles):\n", eigenvectors)
+```

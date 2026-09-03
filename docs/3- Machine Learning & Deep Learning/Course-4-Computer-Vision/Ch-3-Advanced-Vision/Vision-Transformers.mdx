@@ -1,0 +1,27 @@
+---
+title: "🤖 Vision Transformers (ViT)"
+---
+
+# 🤖 Vision Transformers (ViT)
+
+In 2020, Google asked: "Can we use ChatGPT's brain to process images?"
+
+## 🧩 The Puzzle Pieces
+Transformers (the 'T' in GPT) only understand text tokens. So Google took an image, chopped it up into 16x16 pixel puzzle pieces (Patches), flattened them, and fed them into the Transformer as if they were words in a sentence!
+
+It worked. Vision Transformers completely eliminated Convolutions (no more flashlights!) and are now the reigning champions of Computer Vision!
+
+## 🐍 Python Implementation
+
+```python
+import torch
+import torchvision.models as models
+
+# Load a Vision Transformer
+vit = models.vit_b_16(weights=models.ViT_B_16_Weights.DEFAULT)
+
+dummy_img = torch.randn(1, 3, 224, 224)
+output = vit(dummy_img)
+
+print("ViT Output Shape:", output.shape)
+```

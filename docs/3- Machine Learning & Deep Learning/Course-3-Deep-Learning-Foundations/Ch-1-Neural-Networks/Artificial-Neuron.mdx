@@ -1,0 +1,45 @@
+---
+title: "🧠 The Artificial Neuron"
+---
+
+# 🧠 The Artificial Neuron
+
+The foundational building block of all Deep Learning!
+
+## 🐜 The Ant Analogy
+A single ant is pretty dumb. It can only do a few simple things. But millions of ants working together can build complex bridges and cities.
+An **Artificial Neuron** is our ant. By itself, it only does one tiny piece of math. But when you connect millions of them, they can write Shakespeare or recognize faces.
+
+## 🧮 How it works
+1. **Inputs ($X$):** The data it receives.
+2. **Weights ($W$):** How much it "cares" about each input.
+3. **Bias ($b$):** A baseline starting value.
+4. **Output ($Y$):** $Y = (X \times W) + b$
+
+## 🐍 Python Implementation
+
+Let's build a single neuron from absolute scratch using consistent terminology that we will carry throughout the entire course!
+
+```python
+import torch
+import torch.nn as nn
+
+class SingleNeuron(nn.Module):
+    def __init__(self, input_size):
+        super().__init__()
+        # 1. Weights: How much we care about each input
+        self.weights = nn.Parameter(torch.randn(input_size, 1))
+        # 2. Bias: Our baseline value
+        self.bias = nn.Parameter(torch.zeros(1))
+        
+    def forward(self, x):
+        # 3. The Math: (Inputs * Weights) + Bias
+        output = (x @ self.weights) + self.bias
+        return output
+
+# Test our single ant!
+neuron = SingleNeuron(input_size=3)
+sample_input = torch.tensor([[1.0, 2.0, 3.0]])
+
+print("Neuron Output:", neuron.forward(sample_input))
+```

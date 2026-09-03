@@ -1,0 +1,27 @@
+---
+title: "😺 CatBoost"
+---
+
+# 😺 CatBoost
+
+Created by Yandex, CatBoost is the master of **Categorical Data** (text labels).
+
+## 🏷️ The Categorical Nightmare
+Usually, you have to convert text like "New York" into numbers. CatBoost handles text categories out of the box!
+
+## 🐍 Python Implementation
+
+```python
+# pip install catboost
+from catboost import CatBoostClassifier
+
+# Notice X has TEXT directly in it!
+X = [["New York", 10], ["Paris", 20], ["Tokyo", 30], ["New York", 15]]
+y = [1, 0, 0, 1]
+
+# We tell CatBoost which column has the text (index 0)
+model = CatBoostClassifier(iterations=10, cat_features=[0], verbose=0)
+model.fit(X, y)
+
+print("Prediction:", model.predict([["Paris", 10]]))
+```

@@ -1,0 +1,25 @@
+---
+title: "🌲 Random Forests"
+---
+
+# 🌲 Random Forests
+
+How do you fix a Decision Tree that memorizes too much? You build a whole forest of them!
+
+## 🗳️ The Wisdom of the Crowd
+A Random Forest creates 100 slightly randomized trees. When a new data point comes in, they take a **democratic vote**. 
+
+## 🐍 Python Implementation
+
+```python
+from sklearn.ensemble import RandomForestClassifier
+
+X = [[0, 0], [1, 1], [9, 9], [10, 10]]
+y = [0, 0, 1, 1]
+
+# n_estimators is the number of trees in the forest!
+forest = RandomForestClassifier(n_estimators=100)
+forest.fit(X, y)
+
+print("Prediction:", forest.predict([[5, 5]]))
+```

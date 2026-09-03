@@ -1,0 +1,29 @@
+---
+title: "📈 Linear Regression"
+---
+
+# 📈 Linear Regression
+
+The "Hello World" of Machine Learning. 
+
+## 📏 Drawing the Line
+Imagine a scatter plot of dots showing `House Size` vs `House Price`. Linear Regression is simply asking the computer to **draw the best possible straight line** right through the middle of those dots.
+
+## 🐍 Python Implementation
+
+```python
+from sklearn.linear_model import LinearRegression
+import numpy as np
+
+# Training Data
+X_train = np.array([[1], [2], [3], [4]]) # Sizes
+y_train = np.array([2, 4, 6, 8])         # Prices
+
+# Create and Train the model
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# Predict a brand new house (Size = 5)
+prediction = model.predict([[5]])
+print(f"Predicted price for size 5: {prediction[0]}")
+```

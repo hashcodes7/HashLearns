@@ -1,0 +1,28 @@
+---
+title: "📉 Variance & Standard Deviation"
+---
+
+# 📉 Variance & Standard Deviation
+
+Variance tells us how "spread out" our data is.
+
+## 🏹 The Archery Analogy
+* **Low Variance:** All your arrows hit in a tight cluster (they are all very close to the mean).
+* **High Variance:** Your arrows are scattered all over the target.
+
+## 🐍 Python Implementation
+
+Standard Deviation is just the square root of Variance, and it's easier to read because it's in the exact same units as the original data.
+
+```python
+import numpy as np
+
+tight_cluster = [10, 11, 10, 9, 10]
+scattered = [0, 20, 5, 25, -2]
+
+print("Tight Cluster Variance:", np.var(tight_cluster))
+print("Tight Cluster Std Dev:", np.std(tight_cluster))
+
+print("\nScattered Variance:", np.var(scattered))
+print("Scattered Std Dev:", np.std(scattered))
+```

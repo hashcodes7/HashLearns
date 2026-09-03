@@ -1,0 +1,25 @@
+---
+title: "🚨 Anomaly Detection"
+---
+
+# 🚨 Anomaly Detection
+
+Finding the needle in the haystack. 
+
+## 🐍 Python Implementation
+
+We use `IsolationForest` to isolate weird points (like credit card fraud).
+
+```python
+from sklearn.ensemble import IsolationForest
+
+# Mostly normal data near 0
+X = [[-1.1], [0.3], [0.5], [100]] # 100 is highly anomalous!
+
+# Create the alarm system
+iso = IsolationForest(random_state=42)
+predictions = iso.fit_predict(X)
+
+# 1 = Normal, -1 = Anomaly
+print("Anomaly predictions:", predictions)
+```

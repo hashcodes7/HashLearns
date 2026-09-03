@@ -1,0 +1,43 @@
+---
+title: "🏗️ Building Models"
+---
+
+# 🏗️ Building Models
+
+In PyTorch, every model you build must inherit from `nn.Module`. 
+
+## 🧱 The Blueprint
+You always need two things:
+1. `__init__()`: Where you declare all your layers (your ingredients).
+2. `forward()`: Where you explain how the data flows through those layers (the recipe).
+
+## 🐍 Python Implementation
+
+Let's combine everything we've learned (Linear Layers, ReLU, Dropout) into a clean class!
+
+```python
+import torch
+import torch.nn as nn
+
+class MyAwesomeModel(nn.Module):
+    def __init__(self):
+        # Always call super() first!
+        super().__init__()
+        
+        # Declare Ingredients
+        self.fc1 = nn.Linear(20, 64)
+        self.relu = nn.ReLU()
+        self.dropout = nn.Dropout(0.2)
+        self.fc2 = nn.Linear(64, 2)
+        
+    def forward(self, x):
+        # Follow the Recipe
+        x = self.fc1(x)
+        x = self.relu(x)
+        x = self.dropout(x)
+        x = self.fc2(x)
+        return x
+
+model = MyAwesomeModel()
+print(model) # PyTorch beautifully prints your architecture!
+```

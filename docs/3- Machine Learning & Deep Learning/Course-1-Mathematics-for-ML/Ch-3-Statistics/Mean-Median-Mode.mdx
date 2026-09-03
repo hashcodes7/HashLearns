@@ -1,0 +1,32 @@
+---
+title: "📏 Mean, Median, and Mode"
+---
+
+# 📏 Mean, Median, and Mode
+
+These are our basic tools for finding the "center" of our data.
+
+## 🧮 Mean vs Median
+* **Mean:** Add everything up, divide by the count. Highly sensitive to outliers.
+* **Median:** Line everyone up by height, pick the person exactly in the middle. Ignores extreme outliers.
+
+## 🐍 Python Implementation
+
+Let's see how an outlier (Bill Gates walking into a bar) affects the Mean but not the Median!
+
+```python
+import numpy as np
+from scipy import stats
+
+# Normal incomes in a bar
+incomes = [50000, 60000, 55000, 45000, 70000]
+
+print("Normal Mean:", np.mean(incomes))
+print("Normal Median:", np.median(incomes))
+
+# Bill Gates walks in!
+incomes.append(1_000_000_000)
+
+print("\nMean with Bill Gates:", np.mean(incomes))       # Huge jump!
+print("Median with Bill Gates:", np.median(incomes))     # Barely changes!
+```

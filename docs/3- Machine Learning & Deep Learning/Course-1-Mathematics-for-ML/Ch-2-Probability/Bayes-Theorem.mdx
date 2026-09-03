@@ -1,0 +1,35 @@
+---
+title: "⚖️ Bayes' Theorem"
+---
+
+# ⚖️ Bayes' Theorem
+
+Bayes' Theorem is the mathematical formula for updating our beliefs when we see new evidence.
+
+## 🩺 The Doctor's Dilemma
+Imagine a test for a rare disease (1 in 10,000 have it). The test is 99% accurate.
+You test positive. Are you doomed? No! Because the disease is so rare, a positive test is actually more likely to be a false positive than a true infection!
+
+## 🐍 Python Implementation
+
+Let's write a simple Bayesian updater function.
+
+```python
+def bayes_theorem(p_disease, p_positive_given_disease, p_positive_given_no_disease):
+    # P(Disease)
+    prior = p_disease
+    # P(Positive | Disease)
+    true_positive = p_positive_given_disease
+    # P(Positive | No Disease)
+    false_positive = p_positive_given_no_disease
+    
+    # P(Positive overall) = (P(D)*P(+|D)) + (P(No D)*P(+|No D))
+    p_positive = (prior * true_positive) + ((1 - prior) * false_positive)
+    
+    # P(Disease | Positive) = (P(+|D) * P(D)) / P(+)
+    posterior = (true_positive * prior) / p_positive
+    return posterior
+
+chance = bayes_theorem(p_disease=0.0001, p_positive_given_disease=0.99, p_positive_given_no_disease=0.01)
+print(f"Chance you actually have the disease: {chance * 100:.2f}%")
+```
