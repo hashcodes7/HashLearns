@@ -43,3 +43,34 @@ sample_data = torch.randn(1, 10) # 1 row, 10 features
 
 print("Network Guess [Dog Score, Cat Score]:", model.forward(sample_data))
 ```
+
+## 🗺️ Visualizing the MLP
+
+```mermaid
+graph LR
+    subgraph Input Layer
+    I1((Input 1))
+    I2((Input 2))
+    end
+    
+    subgraph Hidden Layer
+    H1((Neuron 1))
+    H2((Neuron 2))
+    H3((Neuron 3))
+    end
+    
+    subgraph Output Layer
+    O1((Output 1))
+    end
+    
+    I1 --> H1
+    I1 --> H2
+    I1 --> H3
+    I2 --> H1
+    I2 --> H2
+    I2 --> H3
+    
+    H1 --> O1
+    H2 --> O1
+    H3 --> O1
+```

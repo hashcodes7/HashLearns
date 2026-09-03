@@ -47,3 +47,18 @@ model = SimpleCNN()
 dummy_img = torch.randn(1, 3, 64, 64)
 print("Final Guess:", model(dummy_img).shape) # (1, 2)
 ```
+
+## 🗺️ Visualizing the CNN Pipeline
+
+```mermaid
+flowchart LR
+    A[Image] --> B[Conv2d]
+    B --> C[ReLU]
+    C --> D[MaxPool]
+    D --> E[Flatten]
+    E --> F[Linear]
+    F --> G([Prediction])
+    
+    style A fill:#f9c74f,stroke:#333,stroke-width:2px
+    style G fill:#43aa8b,stroke:#333,stroke-width:2px
+```

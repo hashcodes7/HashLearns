@@ -30,3 +30,21 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 print("Training Data size:", len(X_train))
 print("Testing Data size:", len(X_test))
 ```
+
+## 🗺️ Visualizing the Workflow
+
+```mermaid
+flowchart TD
+    A[Raw Data] --> B(Data Cleaning & Preprocessing)
+    B --> C{Train / Test Split}
+    C -->|80%| D[Training Data]
+    C -->|20%| E[Testing Data]
+    D --> F[Model Training]
+    F --> G[Trained Model]
+    E --> H(Evaluation & Metrics)
+    G --> H
+    H --> I[Deployment]
+    
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style I fill:#bbf,stroke:#333,stroke-width:2px
+```

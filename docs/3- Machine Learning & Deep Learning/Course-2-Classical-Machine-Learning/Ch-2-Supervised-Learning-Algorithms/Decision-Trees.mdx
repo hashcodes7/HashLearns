@@ -23,3 +23,22 @@ tree.fit(X, y)
 
 print("Prediction:", tree.predict([[2, 2]]))
 ```
+
+## 🗺️ Visualizing a Decision Tree
+
+```mermaid
+graph TD
+    A[Does it have fur?] -->|Yes| B[Does it bark?]
+    A -->|No| C[Does it slither?]
+    
+    B -->|Yes| D(((Dog)))
+    B -->|No| E(((Cat)))
+    
+    C -->|Yes| F(((Snake)))
+    C -->|No| G(((Fish)))
+    
+    style D fill:#85E89D,stroke:#333,stroke-width:2px
+    style E fill:#85E89D,stroke:#333,stroke-width:2px
+    style F fill:#85E89D,stroke:#333,stroke-width:2px
+    style G fill:#85E89D,stroke:#333,stroke-width:2px
+```

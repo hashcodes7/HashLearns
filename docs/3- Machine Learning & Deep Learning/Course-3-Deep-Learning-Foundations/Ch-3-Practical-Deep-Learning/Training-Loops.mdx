@@ -51,3 +51,20 @@ for epoch in range(3):
     
     print(f"Epoch {epoch} | Loss: {loss.item():.4f}")
 ```
+
+## 🗺️ Visualizing the 5-Step Loop
+
+```mermaid
+flowchart TD
+    A([Start Epoch]) --> B[1. Forward Pass]
+    B --> C[2. Calculate Loss]
+    C --> D[3. Zero Gradients]
+    D --> E[4. Backward Pass]
+    E --> F[5. Optimizer Step]
+    F --> A
+    
+    style B fill:#ffd166,stroke:#333,stroke-width:2px
+    style C fill:#ef476f,stroke:#333,stroke-width:2px
+    style E fill:#118ab2,stroke:#333,stroke-width:2px
+    style F fill:#06d6a0,stroke:#333,stroke-width:2px
+```
