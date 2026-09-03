@@ -235,6 +235,58 @@ export const learningTopics = [
         docPath: "/docs/category/devops--tools"
       }
     ]
+  },
+  {
+    id: "machine-learning",
+    title: "Machine Learning & Deep Learning",
+    color: "#0ea5e9",
+    tag: "AI / ML",
+    chaptersCount: "8 modules",
+    description: "Master neural networks, LLMs, computer vision, and classical machine learning algorithms.",
+    graphic: "llms",
+    docCategory: "/docs/category/machine-learning--deep-learning",
+    chapters: [
+      {
+        id: "intro-maths",
+        title: "Intro & Maths",
+        docPath: "/docs/category/machine-learning--deep-learning"
+      },
+      {
+        id: "classical-ml",
+        title: "Classical Machine Learning",
+        docPath: "/docs/category/machine-learning--deep-learning"
+      },
+      {
+        id: "dl-foundations",
+        title: "Deep Learning Foundations",
+        docPath: "/docs/category/machine-learning--deep-learning"
+      },
+      {
+        id: "cv",
+        title: "Computer Vision",
+        docPath: "/docs/category/machine-learning--deep-learning"
+      },
+      {
+        id: "nlp",
+        title: "NLP & Sequence Models",
+        docPath: "/docs/category/machine-learning--deep-learning"
+      },
+      {
+        id: "transformers",
+        title: "Transformers",
+        docPath: "/docs/category/machine-learning--deep-learning"
+      },
+      {
+        id: "llms",
+        title: "Large Language Models",
+        docPath: "/docs/category/machine-learning--deep-learning"
+      },
+      {
+        id: "gen-ai",
+        title: "Generative AI Engineering",
+        docPath: "/docs/category/machine-learning--deep-learning"
+      }
+    ]
   }
 ];
 
