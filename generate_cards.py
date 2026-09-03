@@ -31,7 +31,13 @@ def main():
                 
         changed = True
         
-        category_data['label'] = format_title(folder_name)
+        # Custom mapping for specific folder names
+        custom_labels = {
+            "ML-DL-LLM-SERIES": "Machine Learning & Deep Learning"
+        }
+        
+        raw_title = custom_labels.get(folder_name, folder_name)
+        category_data['label'] = format_title(raw_title)
         
         is_chapter = 'chapter' in folder_name.lower() or 'module' in folder_name.lower()
         
