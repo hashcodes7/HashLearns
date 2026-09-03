@@ -36,13 +36,20 @@ module.exports = function featureCardsPlugin(context, options) {
       let topLevelItems = [];
       try {
         topLevelItems = fs.readdirSync(docsDir, { withFileTypes: true });
+        // Sort numerically based on the leading number prefix
+        topLevelItems.sort((a, b) => {
+          const numA = parseInt((a.name.match(/^([0-9]+)/) || [0, '9999'])[1], 10);
+          const numB = parseInt((b.name.match(/^([0-9]+)/) || [0, '9999'])[1], 10);
+          if (numA !== numB) return numA - numB;
+          return a.name.localeCompare(b.name);
+        });
       } catch (err) {
         console.warn(`[feature-cards-plugin] Could not read docs directory:`, err.message);
         return [];
       }
 
       for (const item of topLevelItems) {
-        if (!item.isDirectory() || item.name.startsWith('.')) {
+        if (!item.isDirectory() || item.name.startsWith('.') || item.name.toLowerCase() === 'excalidraw') {
           continue;
         }
 
@@ -82,6 +89,13 @@ module.exports = function featureCardsPlugin(context, options) {
         let subItems = [];
         try {
           subItems = fs.readdirSync(folderPath, { withFileTypes: true });
+          // Sort numerically based on the leading number prefix
+          subItems.sort((a, b) => {
+            const numA = parseInt((a.name.match(/^([0-9]+)/) || [0, '9999'])[1], 10);
+            const numB = parseInt((b.name.match(/^([0-9]+)/) || [0, '9999'])[1], 10);
+            if (numA !== numB) return numA - numB;
+            return a.name.localeCompare(b.name);
+          });
         } catch (err) {
           console.warn(`[feature-cards-plugin] Could not read folder ${folderPath}:`, err.message);
           continue;

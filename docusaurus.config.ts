@@ -56,6 +56,7 @@ const config: Config = {
       {
         docs: {
           sidebarPath: './sidebars.ts',
+          exclude: ['**/Excalidraw/**'],
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
