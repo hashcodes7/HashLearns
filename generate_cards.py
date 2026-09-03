@@ -11,8 +11,8 @@ def main():
     docs_dir = os.path.join(os.getcwd(), 'docs')
     
     for root, dirs, files in os.walk(docs_dir):
-        # Skip hidden directories like .docusaurus
-        dirs[:] = [d for d in dirs if not d.startswith('.')]
+        # Skip hidden directories like .docusaurus and Excalidraw
+        dirs[:] = [d for d in dirs if not d.startswith('.') and d.lower() != 'excalidraw']
         
         # Don't create category.json for the root docs dir itself
         if root == docs_dir:

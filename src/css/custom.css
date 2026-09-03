@@ -1,7 +1,3 @@
-/**
- * Docusaurus custom styling with Dark & Light mode support and Engineering Grid for CodeWithSarvy
- */
-
 :root {
   --ifm-color-primary: #0284c7;
   --ifm-color-primary-dark: #0369a1;
@@ -10,7 +6,7 @@
   --ifm-color-primary-light: #38bdf8;
   --ifm-color-primary-lighter: #7dd3fc;
   --ifm-color-primary-lightest: #bae6fd;
-  
+
   --ifm-code-font-size: 90%;
   --ifm-font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --ifm-heading-font-family: 'Plus Jakarta Sans', var(--ifm-font-family-base);
@@ -111,9 +107,9 @@ html {
   zoom: 90%;
 }
 
-html, 
-body, 
-#__docusaurus, 
+html,
+body,
+#__docusaurus,
 .main-wrapper,
 .footer {
   background-color: var(--bg-page) !important;
@@ -123,7 +119,7 @@ body,
 
 /* Apply Grid only on Index Page by targeting the root html */
 html:has(.index-grid-bg) {
-  background-image: 
+  background-image:
     linear-gradient(to right, var(--bg-grid-color) 1px, transparent 1px),
     linear-gradient(to bottom, var(--bg-grid-color) 1px, transparent 1px) !important;
   background-size: 40px 40px !important;
@@ -133,7 +129,7 @@ html:has(.index-grid-bg) {
 
 html:has(.index-grid-bg) body,
 html:has(.index-grid-bg) #__docusaurus,
-html:has(.index-grid-bg) #__docusaurus > div,
+html:has(.index-grid-bg) #__docusaurus>div,
 html:has(.index-grid-bg) .main-wrapper,
 html:has(.index-grid-bg) .footer {
   background-color: transparent !important;
@@ -329,9 +325,17 @@ html:has(.index-grid-bg) .footer {
   display: inline-block;
 }
 
-.mini-dot-red { background-color: #ef4444; }
-.mini-dot-yellow { background-color: #f59e0b; }
-.mini-dot-green { background-color: #10b981; }
+.mini-dot-red {
+  background-color: #ef4444;
+}
+
+.mini-dot-yellow {
+  background-color: #f59e0b;
+}
+
+.mini-dot-green {
+  background-color: #10b981;
+}
 
 .mini-terminal-title {
   font-family: var(--ifm-font-family-monospace);
@@ -363,12 +367,32 @@ html:has(.index-grid-bg) .footer {
 }
 
 /* Minimal syntax tokens */
-.token-py-kw { color: #c084fc; font-style: italic; font-weight: 600; }
-.token-py-plain { color: #f1f5f9; }
-.token-py-op { color: #38bdf8; }
-.token-py-type { color: #38bdf8; font-weight: 600; }
-.token-py-func { color: #facc15; }
-.token-py-str { color: #4ade80; }
+.token-py-kw {
+  color: #c084fc;
+  font-style: italic;
+  font-weight: 600;
+}
+
+.token-py-plain {
+  color: #f1f5f9;
+}
+
+.token-py-op {
+  color: #38bdf8;
+}
+
+.token-py-type {
+  color: #38bdf8;
+  font-weight: 600;
+}
+
+.token-py-func {
+  color: #facc15;
+}
+
+.token-py-str {
+  color: #4ade80;
+}
 
 .mini-cursor {
   color: #38bdf8;
@@ -378,8 +402,15 @@ html:has(.index-grid-bg) .footer {
 }
 
 @keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
 }
 
 /* =========================================================================
@@ -667,13 +698,16 @@ html:has(.index-grid-bg) .footer {
 .back-chapters-list::-webkit-scrollbar {
   width: 5px;
 }
+
 .back-chapters-list::-webkit-scrollbar-track {
   background: transparent;
 }
+
 .back-chapters-list::-webkit-scrollbar-thumb {
   background: var(--border-color, rgba(255, 255, 255, 0.2));
   border-radius: 10px;
 }
+
 .back-chapters-list::-webkit-scrollbar-thumb:hover {
   background: var(--text-muted, rgba(255, 255, 255, 0.4));
 }
@@ -808,10 +842,12 @@ html:has(.index-grid-bg) .footer {
   .topics-grid-wide {
     grid-template-columns: repeat(2, 1fr);
   }
+
   .hero-simple-grid {
     grid-template-columns: 1fr;
     gap: 40px;
   }
+
   .hero-terminal-col {
     order: -1;
   }
@@ -821,19 +857,24 @@ html:has(.index-grid-bg) .footer {
   .content-wrap {
     padding: 0 20px;
   }
+
   .hero-brand-title {
     font-size: 2.5rem;
   }
+
   .topics-grid-wide {
     grid-template-columns: 1fr;
   }
+
   .search-bar-wrap {
     min-width: 100%;
   }
+
   .learning-controls {
     flex-direction: column;
     align-items: stretch;
   }
+
   .footer-container {
     flex-direction: column;
     align-items: flex-start;
@@ -871,6 +912,7 @@ footer {
   color: #ffffff;
   text-decoration: none;
 }
+
 .custom-footer__logo a:hover {
   text-decoration: none;
 }

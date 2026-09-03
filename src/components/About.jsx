@@ -19,8 +19,8 @@ export function About() {
           </p>
 
           <div className="hero-buttons-row">
-            <a 
-              href="#docs" 
+            <a
+              href="#docs"
               className="btn-hero-primary"
               onClick={(e) => {
                 e.preventDefault();
@@ -30,10 +30,10 @@ export function About() {
               Get Started
             </a>
 
-            <a 
-              href={profile.github || 'https://github.com/hashcodes7'} 
-              target="_blank" 
-              rel="noopener noreferrer" 
+            <a
+              href={profile.github || 'https://github.com/hashcodes7'}
+              target="_blank"
+              rel="noopener noreferrer"
               className="btn-hero-secondary"
             >
               See who I am
