@@ -11,6 +11,7 @@ import LinkedListVisualizer from '@site/src/components/dsa/LinkedListVisualizer'
 import TreeVisualizer from '@site/src/components/dsa/TreeVisualizer';
 import StackQueueVisualizer from '@site/src/components/dsa/StackQueueVisualizer';
 import PythonTutorVisualizer from '@site/src/components/dsa/PythonTutorVisualizer';
+import PyScriptRunner from '@site/src/components/PyScriptRunner';
 import ComicStrip from '@site/src/components/ComicStrip';
 
 export default {
@@ -26,7 +27,10 @@ export default {
   TreeVisualizer,
   StackQueueVisualizer,
   PythonTutorVisualizer,
+  PyScriptRunner,
+  PyRunner: PyScriptRunner,
   ComicStrip,
   ComicCarousel: ComicStrip,
 };
+
 

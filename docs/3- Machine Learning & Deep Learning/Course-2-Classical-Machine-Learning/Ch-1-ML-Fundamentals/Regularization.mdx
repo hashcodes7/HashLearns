@@ -13,10 +13,21 @@ It forces the model to find simple, smooth rules instead of jagged memorization 
 
 ## 🐍 Python Implementation
 
-```python
-from sklearn.linear_model import Ridge # L2 Regularization
+<PyScriptRunner
+  title="Regularization Penalty Playground (L1 vs L2)"
+  initialCode={`import numpy as np
 
-# Alpha is the "strength" of the police force
-model = Ridge(alpha=1.0)
-# model.fit(X, y)
-```
+# Model Feature Weights
+weights = np.array([2.5, -0.01, 0.0, 4.2, -0.005])
+alpha = 1.0 # Penalty strength factor
+
+# Calculate L1 (Lasso) and L2 (Ridge) regularization penalties
+l1_penalty = alpha * np.sum(np.abs(weights))
+l2_penalty = alpha * np.sum(weights ** 2)
+
+print("Model Feature Weights:", weights)
+print(f"L1 (Lasso) Penalty sum(|w|): {l1_penalty:.4f}")
+print(f"L2 (Ridge) Penalty sum(w^2): {l2_penalty:.4f}")
+`}
+/>
+

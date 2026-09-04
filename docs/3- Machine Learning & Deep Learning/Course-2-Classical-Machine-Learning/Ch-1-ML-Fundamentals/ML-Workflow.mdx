@@ -14,22 +14,35 @@ Imagine a student studying for a test. You give them practice questions (Trainin
 
 ## 🐍 Python Implementation
 
-We use `scikit-learn` for almost all classical ML workflows!
+We can split dataset features into Training and Testing sets seamlessly!
 
-```python
-from sklearn.model_selection import train_test_split
-import numpy as np
+<PyScriptRunner
+  title="Train / Test Split Playground"
+  initialCode={`import numpy as np
 
-# X = Features (e.g. house size), y = Labels (e.g. house price)
-X = np.array([[1000], [1500], [2000], [2500], [3000]])
-y = np.array([100k, 150k, 200k, 250k, 300k])
+# X = Features (e.g. house size), y = Labels (e.g. house price in $k)
+X = np.array([1000, 1500, 2000, 2500, 3000])
+y = np.array([100, 150, 200, 250, 300])
 
-# Split 80% for training, 20% for testing
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+# 80/20 Train-Test Split using NumPy random indexing
+indices = np.arange(len(X))
+np.random.seed(42)
+np.random.shuffle(indices)
 
-print("Training Data size:", len(X_train))
-print("Testing Data size:", len(X_test))
-```
+train_size = int(0.8 * len(X))
+train_idx, test_idx = indices[:train_size], indices[train_size:]
+
+X_train, X_test = X[train_idx], X[test_idx]
+y_train, y_test = y[train_idx], y[test_idx]
+
+print("X_train (Training features):", X_train)
+print("y_train (Training labels):  ", y_train)
+print("X_test  (Testing features): ", X_test)
+print("y_test  (Testing labels):   ", y_test)
+print(f"Train Dataset Size: {len(X_train)} | Test Dataset Size: {len(X_test)}")
+`}
+/>
+
 
 ## 🗺️ Visualizing the Workflow
 

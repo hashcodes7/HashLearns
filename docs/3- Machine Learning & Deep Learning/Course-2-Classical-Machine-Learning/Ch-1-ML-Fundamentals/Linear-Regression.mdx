@@ -12,18 +12,45 @@ Imagine a scatter plot of dots showing `House Size` vs `House Price`. Linear Reg
 ## 🐍 Python Implementation
 
 ```python
-from sklearn.linear_model import LinearRegression
 import numpy as np
+from scipy import stats
 
-# Training Data
-X_train = np.array([[1], [2], [3], [4]]) # Sizes
-y_train = np.array([2, 4, 6, 8])         # Prices
+# Training Data (House Sizes vs Prices)
+X_train = np.array([1, 2, 3, 4]) # Sizes
+y_train = np.array([2, 4, 6, 8]) # Prices
 
-# Create and Train the model
-model = LinearRegression()
-model.fit(X_train, y_train)
+# Fit Linear Regression line using SciPy
+res = stats.linregress(X_train, y_train)
 
 # Predict a brand new house (Size = 5)
-prediction = model.predict([[5]])
-print(f"Predicted price for size 5: {prediction[0]}")
+prediction = res.slope * 5 + res.intercept
+print(f"Predicted price for size 5: {prediction}")
+print(f"Model Slope (m): {res.slope}")
+print(f"Model Intercept (c): {res.intercept}")
 ```
+
+### 🚀 Interactive Live Execution (AWS Cloud Compute)
+
+Run this Python training model directly on AWS Cloud!
+
+<PyScriptRunner
+  title="Linear Regression Model Trainer (SciPy Engine)"
+  initialCode={`import numpy as np
+from scipy import stats
+
+# Training Data (House Sizes vs Prices)
+X_train = np.array([1, 2, 3, 4]) # Sizes
+y_train = np.array([2, 4, 6, 8]) # Prices
+
+# Fit Linear Regression model using SciPy
+res = stats.linregress(X_train, y_train)
+
+# Predict price for house size = 5
+prediction = res.slope * 5 + res.intercept
+print(f"Predicted price for size 5: {prediction}")
+print(f"Model Slope (m): {res.slope}")
+print(f"Model Intercept (c): {res.intercept}")
+print(f"R-squared: {res.rvalue**2:.4f}")
+`}
+/>
+
