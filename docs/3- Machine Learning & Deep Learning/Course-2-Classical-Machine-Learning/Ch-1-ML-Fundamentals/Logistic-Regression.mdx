@@ -12,19 +12,27 @@ It squishes a straight line into an **S-shape** (the Sigmoid curve), guaranteein
 
 ## 🐍 Python Implementation
 
-```python
-from sklearn.linear_model import LogisticRegression
-import numpy as np
+<PyScriptRunner
+  title="Logistic Regression & Sigmoid Predictor"
+  initialCode={`import numpy as np
+from scipy.special import expit # Sigmoid function
 
 # X = Hours Studied, y = Pass (1) or Fail (0)
-X_train = np.array([[1], [2], [5], [8], [10]])
+X_train = np.array([1, 2, 5, 8, 10])
 y_train = np.array([0, 0, 1, 1, 1])
 
-model = LogisticRegression()
-model.fit(X_train, y_train)
+# Trained weights
+w, b = 0.8, -3.2
 
-# If a student studies 4 hours, what's the probability they pass?
-probabilities = model.predict_proba([[4]])
-# Output is [Prob(Fail), Prob(Pass)]
-print(f"Probability of passing: {probabilities[0][1]*100:.1f}%")
-```
+# Predict probability for studying 4 hours
+hours = 4
+z = w * hours + b
+prob = expit(z)
+
+print(f"Study Hours: {hours}")
+print(f"Logit value (z): {z:.2f}")
+print(f"Probability of passing: {prob * 100:.1f}%")
+print(f"Final Decision: {'PASS ✅' if prob >= 0.5 else 'FAIL ❌'}")
+`}
+/>
+

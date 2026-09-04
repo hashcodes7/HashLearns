@@ -103,10 +103,6 @@
 /* =========================================================================
    DYNAMIC GRID BLUEPRINT BACKGROUND (Adapts to Dark & Light mode)
    ========================================================================= */
-html {
-  zoom: 90%;
-}
-
 html,
 body,
 #__docusaurus,
@@ -115,6 +111,25 @@ body,
   background-color: var(--bg-page) !important;
   color: var(--text-primary);
   transition: background-color var(--transition), color var(--transition);
+}
+
+/* Fix for Mermaid diagrams text clipping & SVG sizing */
+.docusaurus-mermaid-container {
+  display: flex;
+  justify-content: center;
+  margin: 1.5rem 0;
+  overflow-x: auto;
+}
+
+.docusaurus-mermaid-container svg {
+  max-width: 100%;
+  height: auto;
+  overflow: visible !important;
+}
+
+.docusaurus-mermaid-container .node text,
+.docusaurus-mermaid-container .node foreignObject {
+  overflow: visible !important;
 }
 
 /* Apply Grid only on Index Page by targeting the root html */

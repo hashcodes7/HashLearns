@@ -11,13 +11,21 @@ Used for predicting numbers. It takes the model's guess, subtracts the real answ
 
 ## 🐍 Python Implementation
 
-```python
-from sklearn.metrics import mean_squared_error
+<PyScriptRunner
+  title="Loss Functions Playground (MSE & MAE)"
+  initialCode={`import numpy as np
 
-true_prices =      [100, 150, 200]
-predicted_prices = [105, 140, 205] # Model made some mistakes!
+true_prices = np.array([100, 150, 200])
+predicted_prices = np.array([105, 140, 205]) # Model mistakes!
 
-# Calculate MSE
-mse = mean_squared_error(true_prices, predicted_prices)
-print("Mean Squared Error:", mse)
-```
+# Calculate Mean Squared Error (MSE) & Mean Absolute Error (MAE)
+errors = predicted_prices - true_prices
+mse = np.mean(errors ** 2)
+mae = np.mean(np.abs(errors))
+
+print("Raw Prediction Errors:", errors)
+print(f"Mean Squared Error (MSE):  {mse:.2f}")
+print(f"Mean Absolute Error (MAE): {mae:.2f}")
+`}
+/>
+
