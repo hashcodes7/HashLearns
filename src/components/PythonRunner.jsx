@@ -595,11 +595,12 @@ export default function PythonRunner({
 
       {hasOutputOrRunning && (
         <div className="clean-output-box">
-          {execTime && (
-            <div className="clean-output-time">
-              {execTime}
-            </div>
-          )}
+          <div className="clean-output-header">
+            <span className="clean-output-label">OUTPUT</span>
+            {execTime && (
+              <span className="clean-output-time">⚡ {execTime}</span>
+            )}
+          </div>
 
           {output && (
             <pre className={`clean-output-text ${status === 'error' ? 'is-error' : ''}`}>

@@ -1240,30 +1240,73 @@ footer {
    CLEAN MINIMAL CODE OUTPUT BOX (Matches Screenshot)
    ========================================================================= */
 
+.python-code-box {
+  background: var(--bg-card, #ffffff);
+  border-left: 1px solid var(--border, rgba(15, 23, 42, 0.08));
+  border-right: 1px solid var(--border, rgba(15, 23, 42, 0.08));
+  border-bottom: 1px solid var(--border, rgba(15, 23, 42, 0.08));
+  position: relative;
+  overflow: hidden;
+  transition: background-color var(--transition), border-color var(--transition);
+}
+
+[data-theme='dark'] .python-code-box {
+  background: #090e1a;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.python-code-box.rounded-bottom {
+  border-radius: 0 0 12px 12px;
+}
+
 .clean-output-box {
   position: relative;
-  background: var(--bg-card, #f8fafc);
+  background: var(--bg-subtle, #f8fafc);
   border: 1px solid var(--border, rgba(15, 23, 42, 0.08));
-  border-top: none;
+  border-top: 1px solid var(--border-subtle, rgba(15, 23, 42, 0.12));
   border-radius: 0 0 12px 12px;
-  padding: 1.2rem 1.25rem 1rem 1.25rem;
+  padding: 0.85rem 1.25rem 1rem 1.25rem;
   font-family: var(--ifm-font-family-monospace, monospace);
   font-size: 0.88rem;
   line-height: 1.6;
   transition: background-color var(--transition), border-color var(--transition);
+  margin-top: -1px;
 }
 
 [data-theme='dark'] .clean-output-box {
-  background: #0b1326;
+  background: #060b17;
   border-color: rgba(255, 255, 255, 0.08);
+  border-top-color: rgba(255, 255, 255, 0.1);
+}
+
+.clean-output-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.6rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px dashed var(--border-subtle, rgba(15, 23, 42, 0.08));
+}
+
+[data-theme='dark'] .clean-output-header {
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+.clean-output-label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--text-secondary, #64748b);
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+[data-theme='dark'] .clean-output-label {
+  color: #94a3b8;
 }
 
 .clean-output-time {
-  position: absolute;
-  top: 1rem;
-  right: 1.25rem;
   font-family: var(--ifm-font-family-monospace, monospace);
-  font-size: 0.85rem;
+  font-size: 0.78rem;
   font-weight: 700;
   color: var(--accent, #0284c7);
   letter-spacing: 0.2px;
