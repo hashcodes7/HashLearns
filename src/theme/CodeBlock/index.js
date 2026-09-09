@@ -40,10 +40,24 @@ export default function CodeBlock(props) {
   const lang = getLanguage(props);
   const rawCode = extractCodeText(props).trim();
 
+  const metastring = (props.metastring || '').toLowerCase();
+  const isReadOnlyMetastring = metastring.includes('readonly') || metastring.includes('editable=false');
+  const isEditableMetastring = metastring.includes('editable') || metastring.includes('editable=true');
+
+  let isEditable = true;
+  if (props.readonly || isReadOnlyMetastring) {
+    isEditable = false;
+  } else if (props.editable !== undefined) {
+    isEditable = Boolean(props.editable);
+  } else if (isEditableMetastring) {
+    isEditable = true;
+  }
+
   return (
     <PythonRunner
       type={lang}
       code={rawCode}
+      editable={isEditable}
       originalProps={props}
     />
   );

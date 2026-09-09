@@ -6,33 +6,58 @@ title: "⚖️ Logistic Regression"
 
 Despite the name, this is NOT a regression algorithm. It's for **Classification**!
 
-## 🐶 Cat vs. Dog
-Logistic Regression predicts probabilities (Is this a Cat or a Dog? Spam or Not Spam?).
+## 🍦 Temperature vs. Ice Cream High Sales
+Logistic Regression predicts probabilities (e.g. Will today have High Ice Cream Sales based on Temperature?).
 It squishes a straight line into an **S-shape** (the Sigmoid curve), guaranteeing the output is a clean percentage between 0% and 100%.
 
 ## 🐍 Python Implementation
 
 <PyScriptRunner
-  title="Logistic Regression & Sigmoid Predictor"
+  title="Logistic Regression & Sigmoid Predictor (Probabilistic Ice Cream Sales)"
   initialCode={`import numpy as np
 from scipy.special import expit # Sigmoid function
+import matplotlib.pyplot as plt
 
-# X = Hours Studied, y = Pass (1) or Fail (0)
-X_train = np.array([1, 2, 5, 8, 10])
-y_train = np.array([0, 0, 1, 1, 1])
+# 1. Reproducible seed & realistic daily temperature samples (10°C to 40°C)
+np.random.seed(42)
+temp_train = np.sort(np.random.uniform(10, 40, 25))
 
-# Trained weights
-w, b = 0.8, -3.2
+# 2. Logistic model parameters: Logit z = w * temp + b
+w, b = 0.35, -8.75
+true_probs = expit(w * temp_train + b)
 
-# Predict probability for studying 4 hours
-hours = 4
-z = w * hours + b
-prob = expit(z)
+# 3. Sample binary outcomes (0 = Low Sales, 1 = High Sales) via Bernoulli trials
+sales_train = np.random.binomial(1, true_probs)
 
-print(f"Study Hours: {hours}")
+# 4. Predict probability for today (28°C)
+temp_today = 28
+z = w * temp_today + b
+prob_today = expit(z)
+
+print(f"Sampled Days: {len(temp_train)}")
+print(f"Today's Temperature: {temp_today}°C")
 print(f"Logit value (z): {z:.2f}")
-print(f"Probability of passing: {prob * 100:.1f}%")
-print(f"Final Decision: {'PASS ✅' if prob >= 0.5 else 'FAIL ❌'}")
+print(f"High Sales Probability: {prob_today * 100:.1f}%")
+print(f"Final Decision: {'HIGH SALES 🍦' if prob_today >= 0.5 else 'LOW SALES ❄️'}")
+
+# --- Plotting Section (Intercepted for Chart.js) ---
+
+# 1. Observed sales data points (25 Bernoulli sample days)
+plt.scatter(temp_train, sales_train, label="Daily Sales Observations (25 days)")
+
+# 2. Smooth S-curve (Fitted Logistic Sigmoid curve)
+temp_curve = np.linspace(8, 42, 100)
+prob_curve = expit(w * temp_curve + b)
+plt.plot(temp_curve, prob_curve, label="Fitted Logistic Curve")
+
+# 3. Prediction point for today (28°C)
+plt.scatter([temp_today], [prob_today], label="Today's Prediction (28°C)")
+
+# Label axis directions & title
+plt.xlabel("Temperature (°C)")
+plt.ylabel("High Sales Probability P(Y=1)")
+plt.title("Logistic Regression: Ice Cream Sales vs Temperature")
 `}
 />
+
 
