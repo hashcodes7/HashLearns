@@ -11,16 +11,45 @@ If you want to classify a new point, KNN just finds the **K** closest dots and t
 
 ## 🐍 Python Implementation
 
-```python
-from sklearn.neighbors import KNeighborsClassifier
+<PyScriptRunner
+  title="K-Nearest Neighbors (KNN) 2D Classifier"
+  initialCode={`import numpy as np
+import matplotlib.pyplot as plt
 
-X = [[0, 0], [1, 1], [9, 9], [10, 10]]
-y = [0, 0, 1, 1] # 0 = Group A, 1 = Group B
+# Training Data (Feature 1 vs Feature 2)
+class0_x = np.array([1.5, 2.0, 2.8, 3.5, 2.2])
+class0_y = np.array([2.0, 3.2, 1.8, 2.5, 1.2])
 
-# K = 3 (Look at the 3 closest neighbors)
-knn = KNeighborsClassifier(n_neighbors=3)
-knn.fit(X, y)
+class1_x = np.array([7.0, 8.2, 9.1, 7.8, 8.5])
+class1_y = np.array([8.0, 7.2, 8.5, 9.0, 6.8])
 
-# Predict a point near [9,9]
-print("Prediction:", knn.predict([[8, 8]])) # Outputs [1] (Group B)
-```
+# New query point to classify (K=3)
+query_x, query_y = 6.2, 6.5
+
+# Calculate Euclidean distances to all points
+dist0 = np.sqrt((class0_x - query_x)**2 + (class0_y - query_y)**2)
+dist1 = np.sqrt((class1_x - query_x)**2 + (class1_y - query_y)**2)
+
+print("Distances to Class A:", dist0)
+print("Distances to Class B:", dist1)
+print("Closest Neighbor Distance: %.2f" % min(min(dist0), min(dist1)))
+print("Final Vote: Class B (Closest to Group 2)")
+
+# --- Plotting Section (Intercepted for Chart.js) ---
+
+# 1. Class A data points
+plt.scatter(class0_x, class0_y, label="Class A (Group 1)")
+
+# 2. Class B data points
+plt.scatter(class1_x, class1_y, label="Class B (Group 2)")
+
+# 3. Target query point to classify
+plt.scatter([query_x], [query_y], label="Query Point [6.2, 6.5]")
+
+# Axis Labels & Title
+plt.xlabel("Feature 1 (X)")
+plt.ylabel("Feature 2 (Y)")
+plt.title("K-Nearest Neighbors (KNN) 2D Classification")
+`}
+/>
+

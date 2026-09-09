@@ -75,6 +75,8 @@ sys.modules["matplotlib.pyplot"] = _fp
 
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import { useColorMode } from '@docusaurus/theme-common';
+import { Highlight, themes } from 'prism-react-renderer';
+
 
 function ChartJSPlot({ datasets, meta = {} }) {
   const chartRef = useRef(null);
@@ -317,6 +319,9 @@ export default function PythonRunner({
   lambdaUrl = DEFAULT_LAMBDA_URL,
   originalProps = null
 }) {
+  const { colorMode } = useColorMode();
+  const isDark = colorMode === 'dark';
+
   const rawInitialCode = (code || initialCode || (typeof children === 'string' ? children : '') || '').trim();
   const [codeText, setCodeText] = useState(rawInitialCode);
   const [output, setOutput] = useState('');
@@ -326,6 +331,21 @@ export default function PythonRunner({
   const [execTime, setExecTime] = useState(null);
   const [copied, setCopied] = useState(false);
   const textareaRef = useRef(null);
+  const preRef = useRef(null);
+
+  const handleScroll = (e) => {
+    if (preRef.current) {
+      preRef.current.scrollTop = e.target.scrollTop;
+      preRef.current.scrollLeft = e.target.scrollLeft;
+    }
+  };
+
+  useEffect(() => {
+    if (textareaRef.current && preRef.current) {
+      preRef.current.scrollTop = textareaRef.current.scrollTop;
+      preRef.current.scrollLeft = textareaRef.current.scrollLeft;
+    }
+  }, [codeText]);
 
   useEffect(() => {
     setCodeText(rawInitialCode);
@@ -502,17 +522,68 @@ export default function PythonRunner({
         </div>
       </div>
 
-      <div className={`python-code-box ${!hasOutputOrRunning ? 'rounded-bottom' : ''}`}>
+      <div className={`python-code-box ${!hasOutputOrRunning ? 'rounded-bottom' : ''}`} style={{ position: 'relative', overflow: 'hidden' }}>
         {isEditable ? (
-          <textarea
-            ref={textareaRef}
-            value={codeText}
-            onChange={(e) => setCodeText(e.target.value)}
-            onKeyDown={handleKeyDown}
-            spellCheck={false}
-            className="code-editor-textarea"
-            style={{ height: `${textareaHeight}px` }}
-          />
+          <div style={{ position: 'relative', width: '100%', minHeight: `${textareaHeight}px` }}>
+            {/* 1. Live Syntax-Highlighted Code Layer */}
+            <Highlight
+              theme={isDark ? themes.vsDark : themes.github}
+              code={codeText}
+              language={targetType}
+            >
+              {({ className, style, tokens, getLineProps, getTokenProps }) => (
+                <pre
+                  ref={preRef}
+                  className={className}
+                  aria-hidden="true"
+                  style={{
+                    ...style,
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    margin: 0,
+                    padding: '1rem',
+                    fontFamily: 'var(--ifm-font-family-monospace, monospace)',
+                    fontSize: '0.88rem',
+                    lineHeight: '1.5',
+                    whiteSpace: 'pre-wrap',
+                    wordBreak: 'break-word',
+                    overflow: 'hidden',
+                    pointerEvents: 'none',
+                    background: isDark ? '#090e1a' : 'var(--bg-card, #ffffff)',
+                    boxSizing: 'border-box'
+                  }}
+                >
+                  {tokens.map((line, i) => {
+                    const lineProps = getLineProps({ line });
+                    const isLineEmpty = line.length === 0 || (line.length === 1 && (line[0].empty || line[0].content === ''));
+                    return (
+                      <div key={i} {...lineProps}>
+                        {line.map((token, key) => (
+                          <span key={key} {...getTokenProps({ token })} />
+                        ))}
+                        {isLineEmpty ? '\n' : null}
+                      </div>
+                    );
+                  })}
+                </pre>
+              )}
+            </Highlight>
+
+            {/* 2. Transparent Editable Input Textarea Overlay */}
+            <textarea
+              ref={textareaRef}
+              value={codeText}
+              onChange={(e) => setCodeText(e.target.value)}
+              onKeyDown={handleKeyDown}
+              onScroll={handleScroll}
+              spellCheck={false}
+              className="code-editor-textarea"
+              style={{ height: `${textareaHeight}px` }}
+            />
+          </div>
         ) : originalProps ? (
           <CodeBlockOriginal {...originalProps} />
         ) : (

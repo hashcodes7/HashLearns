@@ -1296,27 +1296,35 @@ footer {
   color: #ef4444 !important;
 }
 
-/* Editable Code Textarea */
+/* Editable Code Textarea with Syntax Highlighting Overlay */
 .code-editor-textarea {
   width: 100%;
+  margin: 0;
   padding: 1rem;
-  background: var(--bg-card, #ffffff);
-  color: var(--text-primary, #1e293b);
+  background: transparent !important;
+  color: transparent !important;
+  caret-color: var(--text-primary, #0284c7) !important;
   font-family: var(--ifm-font-family-monospace, monospace);
   font-size: 0.88rem;
   line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
   border: none;
   outline: none;
   resize: vertical;
   box-sizing: border-box;
   min-height: 120px;
-  transition: background-color var(--transition), color var(--transition);
+  position: relative;
+  z-index: 1;
+  display: block;
 }
 
 [data-theme='dark'] .code-editor-textarea {
-  background: #090e1a;
-  color: #f1f5f9;
+  background: transparent !important;
+  color: transparent !important;
+  caret-color: #38bdf8 !important;
 }
+
 
 
 

@@ -34,11 +34,15 @@ temp_today = 28
 z = w * temp_today + b
 prob_today = expit(z)
 
-print(f"Sampled Days: {len(temp_train)}")
-print(f"Today's Temperature: {temp_today}°C")
-print(f"Logit value (z): {z:.2f}")
-print(f"High Sales Probability: {prob_today * 100:.1f}%")
-print(f"Final Decision: {'HIGH SALES 🍦' if prob_today >= 0.5 else 'LOW SALES ❄️'}")
+print("Sampled Days:", len(temp_train))
+print("Today's Temperature: %d°C" % temp_today)
+print("Logit value (z): %.2f" % z)
+print("High Sales Probability: %.1f%%" % (prob_today * 100))
+
+if prob_today >= 0.5:
+    print("Final Decision: HIGH SALES 🍦")
+else:
+    print("Final Decision: LOW SALES ❄️")
 
 # --- Plotting Section (Intercepted for Chart.js) ---
 

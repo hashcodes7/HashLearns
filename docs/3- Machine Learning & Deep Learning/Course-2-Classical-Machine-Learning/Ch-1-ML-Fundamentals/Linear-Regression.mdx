@@ -11,21 +11,45 @@ Imagine a scatter plot of dots showing `House Size` vs `House Price`. Linear Reg
 
 ## 🐍 Python Implementation
 
-```python
-import numpy as np
+<PyScriptRunner
+  title="Linear Regression Model Fit (House Size vs Price)"
+  initialCode={`import numpy as np
 from scipy import stats
+import matplotlib.pyplot as plt
 
-# Training Data (House Sizes vs Prices)
-X_train = np.array([1, 2, 3, 4]) # Sizes
-y_train = np.array([2, 4, 6, 8]) # Prices
+# Training Data (House Sizes in 1k sqft vs Prices in $100k)
+X_train = np.array([1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0])
+y_train = np.array([2.1, 2.9, 3.8, 5.1, 6.0, 7.2, 8.1])
 
-# Fit Linear Regression line using SciPy
+# Fit Linear Regression model using SciPy
 res = stats.linregress(X_train, y_train)
 
-# Predict a brand new house (Size = 5)
-prediction = res.slope * 5 + res.intercept
-print(f"Predicted price for size 5: {prediction}")
-print(f"Model Slope (m): {res.slope}")
-print(f"Model Intercept (c): {res.intercept}")
-```
+# Predict price for house size = 4.5
+pred_size = 4.5
+pred_price = res.slope * pred_size + res.intercept
+
+print("Model Slope (m): %.2f" % res.slope)
+print("Model Intercept (c): %.2f" % res.intercept)
+print("Predicted price for 4.5k sqft: $%.1fk" % (pred_price * 100))
+
+# --- Plotting Section (Intercepted for Chart.js) ---
+
+# 1. Observed house price data points
+plt.scatter(X_train, y_train, label="Observed Houses")
+
+# 2. Linear Regression trendline
+X_line = np.linspace(0.8, 5.0, 50)
+y_line = res.slope * X_line + res.intercept
+plt.plot(X_line, y_line, label="Linear Fit Line")
+
+# 3. New House Prediction point
+plt.scatter([pred_size], [pred_price], label="Prediction (4.5k sqft)")
+
+# Axis Labels & Title
+plt.xlabel("House Size (1,000 sqft)")
+plt.ylabel("House Price ($100k)")
+plt.title("Linear Regression: House Size vs Price")
+`}
+/>
+
 
