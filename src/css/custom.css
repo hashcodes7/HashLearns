@@ -970,3 +970,175 @@ footer {
   font-size: 0.85rem;
   color: rgba(255, 255, 255, 0.6);
 }
+
+/* =========================================================================
+   BEAUTIFUL CHAPTER INDEX CARDS (Redesigned)
+   ========================================================================= */
+
+.chapter-index-card {
+  background: var(--bg-card, #ffffff);
+  border: 1px solid var(--border, rgba(15, 23, 42, 0.08));
+  border-radius: 16px;
+  padding: 24px 26px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-shadow: var(--card-shadow, 0 4px 20px -2px rgba(15, 23, 42, 0.05));
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+[data-theme='dark'] .chapter-index-card {
+  background: var(--bg-card, #0e131f);
+  border-color: var(--border, rgba(255, 255, 255, 0.08));
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* Hover and Active states */
+.chapter-index-card:hover,
+.chapter-index-card.active-chapter {
+  border-color: var(--card-accent, #3b82f6);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px -4px var(--card-glow, rgba(59, 130, 246, 0.18));
+}
+
+.chapter-card-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  width: 100%;
+}
+
+.chapter-tag-pill {
+  font-family: var(--ifm-heading-font-family);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  background: var(--tag-bg, #eff6ff);
+  color: var(--tag-color, #2563eb);
+  border: 1px solid var(--tag-border, #dbeafe);
+  display: inline-flex;
+  align-items: center;
+  line-height: 1.2;
+}
+
+[data-theme='dark'] .chapter-tag-pill {
+  background: var(--tag-bg-dark, rgba(59, 130, 246, 0.15));
+  color: var(--tag-color-dark, #60a5fa);
+  border-color: var(--tag-border-dark, rgba(59, 130, 246, 0.3));
+}
+
+.chapter-index-num {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-muted, #64748b);
+  letter-spacing: 0.02em;
+}
+
+.chapter-emoji-icon {
+  font-size: 1.85rem;
+  line-height: 1;
+  margin: 10px 0 12px 0;
+  display: block;
+}
+
+.chapter-card-title {
+  font-family: var(--ifm-heading-font-family);
+  font-size: 1.25rem;
+  font-weight: 800;
+  line-height: 1.35;
+  color: var(--text-primary, #0f172a);
+  margin: 0 0 18px 0;
+  transition: color 0.2s ease;
+}
+
+.chapter-card-title a {
+  color: inherit !important;
+  text-decoration: none !important;
+}
+
+.chapter-index-card:hover .chapter-card-title,
+.chapter-index-card.active-chapter .chapter-card-title {
+  color: var(--card-accent, #3b82f6) !important;
+}
+
+.chapter-subtopics-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.chapter-subtopic-item {
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--text-secondary, #475569);
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.chapter-subtopic-num {
+  font-weight: 600;
+  color: var(--text-muted, #64748b);
+  min-width: 16px;
+}
+
+.chapter-subtopic-link {
+  color: var(--text-secondary, #475569) !important;
+  text-decoration: none !important;
+  font-weight: 500;
+  transition: color 0.15s ease;
+}
+
+.chapter-subtopic-link:hover,
+.chapter-subtopic-link.active-subtopic {
+  color: var(--card-accent, #3b82f6) !important;
+}
+
+/* Inline badge tag parsing (e.g. IS-A, HAS-A) */
+.chapter-inline-badge {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: var(--bg-subtle, #f1f5f9);
+  border: 1px solid var(--border, rgba(15, 23, 42, 0.1));
+  border-radius: 4px;
+  padding: 1px 6px;
+  margin: 0 4px;
+  color: var(--text-secondary, #334155);
+  display: inline-block;
+  line-height: 1.3;
+}
+
+[data-theme='dark'] .chapter-inline-badge {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: #cbd5e1;
+}
+
+/* Indented nested child item with vertical guide line */
+.chapter-subtopic-indented {
+  border-left: 2px solid var(--border, rgba(15, 23, 42, 0.12));
+  padding-left: 12px;
+  margin-left: 18px;
+  margin-top: 2px;
+  margin-bottom: 4px;
+  font-size: 0.88rem;
+  color: var(--text-muted, #64748b);
+}
+
+[data-theme='dark'] .chapter-subtopic-indented {
+  border-left-color: rgba(255, 255, 255, 0.12);
+}

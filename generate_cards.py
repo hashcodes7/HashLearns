@@ -21,6 +21,9 @@ def main():
         folder_name = os.path.basename(root)
         category_file = os.path.join(root, '_category_.json')
         
+        rel_path = os.path.relpath(root, docs_dir)
+        depth = len(rel_path.split(os.sep))
+        
         category_data = {}
         if os.path.exists(category_file):
             try:
@@ -29,7 +32,7 @@ def main():
             except json.JSONDecodeError:
                 pass
                 
-        changed = True
+        changed = False
         
         # Custom mapping for specific folder names
         custom_labels = {
@@ -37,9 +40,21 @@ def main():
         }
         
         raw_title = custom_labels.get(folder_name, folder_name)
-        category_data['label'] = format_title(raw_title)
+        new_label = format_title(raw_title)
+        if category_data.get('label') != new_label:
+            category_data['label'] = new_label
+            changed = True
         
-        is_chapter = 'chapter' in folder_name.lower() or 'module' in folder_name.lower()
+        lower_name = folder_name.lower()
+        is_chapter = (
+            depth >= 3 or
+            'chapter' in lower_name or
+            'module' in lower_name or
+            bool(re.search(r'\bch[-\s_\d]', lower_name)) or
+            lower_name.startswith('ch-') or
+            lower_name.startswith('ch_') or
+            lower_name.startswith('ch ')
+        )
         
         if is_chapter:
             if 'link' in category_data:
@@ -60,3 +75,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
