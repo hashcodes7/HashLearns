@@ -14,20 +14,34 @@ It forces the model to find simple, smooth rules instead of jagged memorization 
 ## 🐍 Python Implementation
 
 <PyScriptRunner
-  title="Regularization Penalty Playground (L1 vs L2)"
+  title="Regularization Penalty Curves (L1 Lasso vs L2 Ridge)"
   initialCode={`import numpy as np
+import matplotlib.pyplot as plt
 
-# Model Feature Weights
-weights = np.array([2.5, -0.01, 0.0, 4.2, -0.005])
-alpha = 1.0 # Penalty strength factor
+# Range of model weight parameters
+w = np.linspace(-3, 3, 100)
+alpha = 1.0 # Regularization strength
 
-# Calculate L1 (Lasso) and L2 (Ridge) regularization penalties
-l1_penalty = alpha * np.sum(np.abs(weights))
-l2_penalty = alpha * np.sum(weights ** 2)
+# L1 (Lasso = |w|) and L2 (Ridge = w^2) penalties
+l1_penalty = alpha * np.abs(w)
+l2_penalty = alpha * (w ** 2)
 
-print("Model Feature Weights:", weights)
-print(f"L1 (Lasso) Penalty sum(|w|): {l1_penalty:.4f}")
-print(f"L2 (Ridge) Penalty sum(w^2): {l2_penalty:.4f}")
+print("Sample Weights:", w[::20])
+print("L1 Penalties:", l1_penalty[::20])
+print("L2 Penalties:", l2_penalty[::20])
+
+# --- Plotting Section (Intercepted for Chart.js) ---
+
+# 1. L1 Lasso Penalty curve (V-shape, drives weights to 0)
+plt.plot(w, l1_penalty, label="L1 Penalty (Lasso: Sharp V-Shape - Feature Selection)")
+
+# 2. L2 Ridge Penalty curve (Parabola, shrinks weights softly)
+plt.plot(w, l2_penalty, label="L2 Penalty (Ridge: Smooth Curve - Prevents Large Weights)")
+
+# Axis Labels & Title
+plt.xlabel("Model Weight Value (w)")
+plt.ylabel("Regularization Penalty Cost")
+plt.title("L1 (Lasso) vs L2 (Ridge) Regularization Penalties")
 `}
 />
 

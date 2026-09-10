@@ -12,6 +12,8 @@ import TreeVisualizer from '@site/src/components/dsa/TreeVisualizer';
 import StackQueueVisualizer from '@site/src/components/dsa/StackQueueVisualizer';
 import PythonTutorVisualizer from '@site/src/components/dsa/PythonTutorVisualizer';
 import PyScriptRunner from '@site/src/components/PyScriptRunner';
+import PythonRunner from '@site/src/components/PythonRunner';
+import PythonCodeRunner from '@site/src/components/PythonCodeRunner';
 import ComicStrip from '@site/src/components/ComicStrip';
 
 export default {
@@ -29,8 +31,13 @@ export default {
   PythonTutorVisualizer,
   PyScriptRunner,
   PyRunner: PyScriptRunner,
+  PythonRunner,
+  PythonCodeRunner,
+  CodeRunner: PythonRunner,
   ComicStrip,
   ComicCarousel: ComicStrip,
 };
+
+
 
 

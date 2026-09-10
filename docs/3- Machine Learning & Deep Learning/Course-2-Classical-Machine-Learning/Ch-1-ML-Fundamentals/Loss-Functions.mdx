@@ -12,20 +12,33 @@ Used for predicting numbers. It takes the model's guess, subtracts the real answ
 ## 🐍 Python Implementation
 
 <PyScriptRunner
-  title="Loss Functions Playground (MSE & MAE)"
+  title="Loss Functions Playground (MSE vs MAE Curves)"
   initialCode={`import numpy as np
+import matplotlib.pyplot as plt
 
-true_prices = np.array([100, 150, 200])
-predicted_prices = np.array([105, 140, 205]) # Model mistakes!
+# Range of prediction errors (y_pred - y_true)
+errors = np.linspace(-4, 4, 100)
 
-# Calculate Mean Squared Error (MSE) & Mean Absolute Error (MAE)
-errors = predicted_prices - true_prices
-mse = np.mean(errors ** 2)
-mae = np.mean(np.abs(errors))
+# Calculate Mean Squared Error (MSE = error^2) and Mean Absolute Error (MAE = |error|)
+mse_loss = errors ** 2
+mae_loss = np.abs(errors)
 
-print("Raw Prediction Errors:", errors)
-print(f"Mean Squared Error (MSE):  {mse:.2f}")
-print(f"Mean Absolute Error (MAE): {mae:.2f}")
+print("Sample Errors:", errors[::20])
+print("MSE Loss sample:", mse_loss[::20])
+print("MAE Loss sample:", mae_loss[::20])
+
+# --- Plotting Section (Intercepted for Chart.js) ---
+
+# 1. MSE Loss Curve (quadratic parabola)
+plt.plot(errors, mse_loss, label="MSE Loss (L2: Parabola - Punishes Large Errors)")
+
+# 2. MAE Loss Curve (linear V-shape)
+plt.plot(errors, mae_loss, label="MAE Loss (L1: V-Shape - Robust to Outliers)")
+
+# Axis Labels & Title
+plt.xlabel("Prediction Error (y_pred - y_true)")
+plt.ylabel("Loss Penalty")
+plt.title("MSE vs MAE Loss Function Comparison")
 `}
 />
 
