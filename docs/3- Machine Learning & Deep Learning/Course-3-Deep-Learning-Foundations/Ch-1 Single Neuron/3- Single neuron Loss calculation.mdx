@@ -1,0 +1,58 @@
+---
+title: "📈 3- Error and Loss calculation"
+---
+
+# 📈 A Neural Network
+
+## Target and loss calculation
+<PyScriptRunner
+  title="Linear Regression Model Fit (House Size vs Price)"
+  initialCode={`
+#lets take 2 variable x and y, both have linear relationship so x increases, y increases also. so by line formula y=mx+b ->
+
+x = 3
+target = 10
+
+w = 2
+b = 1
+
+prediction = w * x + b
+
+print('prediction is',prediction)
+print('target is',target)
+print('Error is',abs(target-prediction))
+print("\\n")
+w = 3
+b = 2
+print("Now we will change the weight to 3 and bias to 2")
+prediction2 = w * x + b
+
+print('prediction - 2 is',prediction2)
+print('target is',target)
+print('Error is',(target-prediction2))
+
+`}
+/>
+
+## Loss Calculation
+For measuring the size of the mistake, we don't want the negative sign to cancel anything. Loss function is used to measure the error between predicted value and actual value, and it is always positive.
+<PyScriptRunner
+  title="Linear Regression Model Fit (House Size vs Price)"
+  initialCode={`
+x = 3.0
+w = 2.0
+b = 1.0
+
+target = 10.0
+
+prediction = w * x + b
+
+error = target - prediction
+loss = error ** 2
+
+print("Prediction:", prediction)
+print("Error:", error)
+print("Loss:", loss)
+`}
+/>
+

@@ -42,10 +42,10 @@ const SNIPPETS = [
         render: () => <span>&nbsp;</span>
       },
       {
-        text: 'Career sarvy = Future.achieve();',
+        text: 'Career Harsh = Future.achieve();',
         render: () => (
           <span>
-            <span className="token-py-type">Career</span> <span className="token-py-plain">sarvy = </span><span className="token-py-func">Future.achieve();</span>
+            <span className="token-py-type">Career</span> <span className="token-py-plain">Harshey = </span><span className="token-py-func">Future.achieve();</span>
           </span>
         )
       }

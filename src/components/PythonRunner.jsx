@@ -23,13 +23,27 @@ class _MockPlotCollector:
         except Exception:
             return []
 
-    def scatter(self, x, y, label=None, **k):
+    def scatter(self, *args, label=None, **k):
+        if len(args) == 1:
+            y = args[0]
+            x = list(range(len(y)))
+        elif len(args) >= 2:
+            x, y = args[0], args[1]
+        else:
+            return
         lbl = str(label) if label is not None else f"Scatter Data"
         pts = self._convert(x, y)
         if pts:
             self.datasets.append({"type": "scatter", "label": lbl, "data": pts})
 
-    def plot(self, x, y, label=None, **k):
+    def plot(self, *args, label=None, **k):
+        if len(args) == 1:
+            y = args[0]
+            x = list(range(len(y)))
+        elif len(args) >= 2:
+            x, y = args[0], args[1]
+        else:
+            return
         lbl = str(label) if label is not None else f"Fit Line"
         pts = self._convert(x, y)
         if pts:

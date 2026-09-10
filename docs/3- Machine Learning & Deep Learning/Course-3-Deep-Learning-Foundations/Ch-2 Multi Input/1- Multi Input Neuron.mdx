@@ -1,0 +1,94 @@
+# 2.1- Multiple Inputs
+
+## 2.1 Why Multiple Inputs?
+
+A real problem usually depends on multiple factors.
+
+Example:
+
+```text
+x₁ = house size
+x₂ = bedrooms
+```
+A neuron can use all of them.
+
+---
+
+## 3.2 Multiple-Input Neuron
+
+Single input:
+
+$$
+y = wx+b
+$$
+
+Multiple inputs:
+
+$$
+\boxed{y=w_1x_1+w_2x_2+b}
+$$
+
+---
+
+
+
+* **Weight** → controls how strongly an input affects the output.
+* **Positive weight** → increasing input increases prediction.
+* **Negative weight** → increasing input decreases prediction.
+* **Bias** → shifts the output.
+
+---
+
+## 3.4 General Formula
+
+For 3 inputs:
+
+$$
+y=w_1x_1+w_2x_2+w_3x_3+b
+$$
+
+---
+
+Gradient descent still works:
+
+$$
+parameter=parameter-\eta\times gradient
+$$
+
+Each weight gets its own gradient.
+
+For:
+
+$$
+y=w_1x_1+w_2x_2+b
+$$
+
+and:
+
+$$
+L=(target-prediction)^2
+$$
+
+we get:
+
+$$
+\boxed{\frac{dL}{dw_1}=-2x_1(error)}
+$$
+
+$$
+\boxed{\frac{dL}{dw_2}=-2x_2(error)}
+$$
+
+In general:
+
+$$
+\boxed{\frac{dL}{dw_i}=-2x_i(error)}
+$$
+
+Bias remains:
+
+$$
+\boxed{\frac{dL}{db}=-2(error)}
+$$
+
+---

@@ -1,0 +1,102 @@
+# 3.7 Dot Product With Python Lists
+
+We can calculate the dot product using a loop.
+
+```python
+x = [2, 3]
+w = [1, 1]
+
+dot_product = 0
+
+for i in range(len(x)):
+    dot_product += w[i] * x[i]
+
+print(dot_product)
+```
+
+Output:
+
+```text
+5
+```
+
+Because:
+
+$$
+w\cdot x=1(2)+1(3)=5
+$$
+
+---
+
+## 3.8 Multiple Inputs
+
+The same code works for any number of inputs.
+
+```python
+x = [2, 3, 4]
+w = [1, 2, 3]
+
+dot_product = 0
+
+for i in range(len(x)):
+    dot_product += w[i] * x[i]
+
+print(dot_product)
+```
+
+$$
+w\cdot x=1(2)+2(3)+3(4)
+$$
+
+$$
+\boxed{w\cdot x=20}
+$$
+
+---
+
+## 3.9 Complete Neuron
+
+Now add the bias:
+
+```python
+x = [2, 3, 4]
+w = [1, 2, 3]
+b = 5
+
+dot_product = 0
+
+for i in range(len(x)):
+    dot_product += w[i] * x[i]
+
+prediction = dot_product + b
+
+print(prediction)
+```
+
+$$
+prediction=w\cdot x+b
+$$
+
+$$
+prediction=20+5
+$$
+
+$$
+\boxed{prediction=25}
+$$
+
+---
+
+## Key Idea
+
+The dot product allows the same neuron to handle **any number of inputs**.
+
+$$
+\boxed{prediction=\sum_{i=1}^{n}w_ix_i+b}
+$$
+
+---
+
+## Next
+
+**3.10 — Training a neuron with Python lists**

@@ -1,0 +1,32 @@
+---
+title: "📈 2- single neuron network"
+---
+
+# 📈 A Neural Network
+
+The "Hello World" of Machine Learning. 
+
+## 📏 Drawing the Line
+Imagine a scatter plot of dots showing `House Size` vs `House Price`. Linear Regression is simply asking the computer to **draw the best possible straight line** right through the middle of those dots.
+
+## Target and loss calculation
+<PyScriptRunner
+  title="Linear Regression Model Fit (House Size vs Price)"
+  initialCode={`
+#lets take 2 variable x and y, both have linear relationship so x increases, y increases also. so by line formula y=mx+b ->
+
+x = 3
+target = 10
+
+w = 2
+b = 1
+
+prediction = w * x + b
+
+print('prediction is',prediction)
+print('target is',target)
+print('Error is',abs(target-prediction))
+
+`}
+/>
+

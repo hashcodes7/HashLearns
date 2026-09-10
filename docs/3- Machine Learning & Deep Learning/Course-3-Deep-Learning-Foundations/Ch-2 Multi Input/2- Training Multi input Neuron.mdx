@@ -1,0 +1,86 @@
+# 2.2 Training With Multiple Inputs
+
+With multiple inputs, each input has its own weight.
+
+$$
+prediction=w_1x_1+w_2x_2+b
+$$
+
+Error:
+
+$$
+error=target-prediction
+$$
+
+Loss:
+
+$$
+L=error^2
+$$
+
+---
+
+## 3.3 Gradients
+
+Each weight gets its own gradient.
+
+$$
+\boxed{\frac{dL}{dw_1}=-2x_1(error)}
+$$
+
+$$
+\boxed{\frac{dL}{dw_2}=-2x_2(error)}
+$$
+
+Bias:
+
+$$
+\boxed{\frac{dL}{db}=-2(error)}
+$$
+
+---
+
+## 3.4 Updating Weights
+
+Each parameter is updated independently.
+
+$$
+w_1=w_1-\eta\frac{dL}{dw_1}
+$$
+
+$$
+w_2=w_2-\eta\frac{dL}{dw_2}
+$$
+
+$$
+b=b-\eta\frac{dL}{db}
+$$
+
+---
+
+## 3.5 Training Loop
+
+```python
+x1 = 2 
+x2 = 3 
+target = 13 
+w1 = 1 
+w2 = 1 
+b = 0
+learning_rate = 0.01
+for step in range(100):
+
+    prediction = w1 * x1 + w2 * x2 + b
+
+    error = target - prediction
+    loss = error ** 2
+
+    gradient_w1 = -2 * x1 * error
+    gradient_w2 = -2 * x2 * error
+    gradient_b = -2 * error
+
+    w1 = w1 - learning_rate * gradient_w1
+    w2 = w2 - learning_rate * gradient_w2
+    b = b - learning_rate * gradient_b
+    print( "step:", step, "| prediction:", prediction, "| loss:", round(loss,3), "| w1:", round(w1, 3), "| w2:", round(w2, 3), "| b:", round(b, 3) )
+print('final formula becomes: ',round(w1, 2)," x1 + ",round(w2, 2),"x2 + ",round(b,2))

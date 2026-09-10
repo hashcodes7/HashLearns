@@ -1,0 +1,60 @@
+---
+title: "📈 4-Loss Reduction"
+---
+
+### 4- Single neuron Weight Updation & Loss Reduction
+
+## Target and loss calculation
+<PyScriptRunner
+  title="Linear Regression Model Fit (House Size vs Price)"
+  initialCode={`
+x = 3
+target = 16
+
+w = 3
+b = 1
+
+prediction = w * x + b
+loss1 = (target - prediction)**2
+print("1st try weight:",w, "Prediction:", prediction , "target:",target, "loss1:",loss1)
+
+w = w + 1
+print("increased the weight by one")
+
+prediction = w * x + b
+loss2 = (target - prediction)**2
+print("2nd try weight:",w,"Prediction:", prediction , "target:",target, "loss2:",loss2)
+
+if (loss1>loss2):
+    print('loss is reduced by',(loss1-loss2)*100/loss1,"%")
+
+`}
+/>
+
+## automatic updation of weights and bias
+Automatic Updation of weight is done by simply knowing if there is a loss, and if there is any, move the weight by a small value in direction which reduces the loss. This small value is called Learning Rate
+<PyScriptRunner
+  title="Linear Regression Model Fit (House Size vs Price)"
+  initialCode={`
+x = 3
+target = 10
+
+w = 2
+b = 1
+
+prediction = w * x + b
+loss1 = (target - prediction)**2
+print("1st try weight:",w, "| Prediction:", prediction , "| target:",target, "| loss1:",loss1)
+
+# change the weight by a small value (learning rate) in direction which reduces the loss. 
+w = w + loss1 * 0.1
+
+prediction = w * x + b
+loss2 = (target - prediction)**2
+print("2nd try weight:",w, "| Prediction:", prediction , "| target:",target, "| loss2:",loss2)
+
+if (loss1>loss2):
+    print('loss is reduced by',(loss1-loss2)*100/loss1,"%")
+`}
+/>
+

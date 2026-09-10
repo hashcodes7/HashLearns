@@ -1,0 +1,33 @@
+---
+title: "📉 6-Multiple Targets"
+---
+
+### 6- Understanding Multiple Target issue
+Previously we had one target which needed to be achieved. This could be done with multiple possible values of w (weight)
+and b(bias) however, as you may know once 2 points are there they form a line and only one equation solves it. 
+
+#### Physical Interpretation
+
+we have a ice cream seller who sold 12 icecreams on 1 degree temprature
+so we can have x=1 and y =12 and w & b can have infinite values
+however if we put the condition that he sold 14 ice creams on 2 degree temprature,
+suddenly the equation can be solved and we get a single unique solution of y = 2x + 10
+
+Now we are basically adjusting w and b through calculating gradient from loss of one target.
+but if there are multiple targets to achieve, we will get multiple gradients.
+
+#### Multiple gradient problem
+these are losses essentially for our current setup of w and b for each of targets
+eg. 
+`example 1 → gradient1 = -2`
+`example 2 → gradient2 = -8`
+`example 3 → gradient3 = -18`
+`example 4 → gradient4 = -32`
+Now how do we resolve this, simple, calculate average. 
+`average of gradients = (-2 - 8 - 18 - 32) / 4 = -15`
+And rest of steps are same. we minimize loss for this -15 value.
+None of the targets will get exactly 0 loss. but it will be the closest we can get.
+
+
+
+

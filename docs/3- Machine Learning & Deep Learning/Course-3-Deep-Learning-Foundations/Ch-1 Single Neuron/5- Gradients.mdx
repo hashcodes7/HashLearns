@@ -1,0 +1,75 @@
+---
+title: "📉 5-Gradients"
+---
+
+### 5- Understanding Gradients
+
+## What is a Gradient?
+Gradient is simply relationship of weight and loss.
+
+if Increasing w tends to increase loss -> negative gradient. -> we need to decrease weight
+
+if Increasing w tends to decrease loss -> positive gradient -> we need to increase weight
+## Calculating Gradients Manually
+Let's calculate the exact gradient of our loss function and use it to update the weight and bias.
+parameternew​=parameter−learning rate×gradient
+<PyScriptRunner
+  title="Gradient Descent (Weight and Bias Updation)"
+  initialCode={`
+x = 3
+target = 10
+
+w = 2
+b = 1
+
+# 1. Forward Pass
+prediction = w * x + b
+loss1 = (prediction - target)**2
+print("1st try weight:", w, "| bias:", b, "| prediction:", prediction, "| loss:", loss1)
+
+# 2. Calculate gradients (derivatives of loss w.r.t w and b)
+# Loss function: L = (prediction - target)^2 = (w*x + b - target)^2
+# Derivative w.r.t w (Chain rule): dL/dw = 2 * (prediction - target) * x
+# Derivative w.r.t b (Chain rule): dL/db = 2 * (prediction - target) * 1
+
+dw = 2 * (prediction - target) * x
+db = 2 * (prediction - target) * 1
+print("Calculated Gradients -> dw:", dw, "| db:", db)
+print('here both gredients are -ve so we need to decrease both weight and bias')
+
+# 3. Update weights and bias using Gradient Descent
+learning_rate = 0.01
+
+w = w - (learning_rate * dw)
+b = b - (learning_rate * db)
+
+# 4. Forward Pass with updated parameters
+prediction = w * x + b
+loss2 = (prediction - target)**2
+print("2nd try weight:", round(w, 4), "| bias:", round(b, 4), "| prediction:", round(prediction, 4), "| loss:", round(loss2, 4))
+
+if (loss1 > loss2):
+    print("Loss is successfully reduced by", round((loss1 - loss2) * 100 / loss1, 2), "%")
+`}
+/>
+
+## Why does this work?
+By calculating the derivatives (\`dw\` and \`db\`), we figure out exactly how a tiny change in \`w\` or \`b\` affects the overall loss. Multiplying these gradients by a small **learning rate** ensures we take careful, controlled steps towards the minimum possible error!
+
+## Optimization
+Lets see how convergence based optimization works, basically the farther you are from answer,
+the bigger steps you take to come near answer, while as you get close you take smaller steps
+why? because the step amount we decide based on steepness of the gradient.
+steeper it is, means our answer is very wrong. 
+so we simply take a bigger step.
+lets see how its done - 
+
+`dw = 2 * (prediction - target) * x`
+
+this is dw/dl the small change there should be in w based on small change in loss. if loss is big, this (prediction - target) value will be also big. 
+
+and then we simply do the actual weight change using learning rate, if loss big-> dw big-> w update big. if loss small -> dw small -> w update small.
+
+`w = w - (learning_rate * dw)`
+
+

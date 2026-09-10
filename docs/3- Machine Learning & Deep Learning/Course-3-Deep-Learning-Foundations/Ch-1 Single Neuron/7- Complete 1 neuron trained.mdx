@@ -1,0 +1,76 @@
+---
+title: "📉 7-Complete example"
+---
+
+### 7- Complete example
+
+## What is a Gradient?
+Gradient is simply relationship of weight and loss.
+
+if Increasing w tends to increase loss -> negative gradient. -> we need to decrease weight
+
+if Increasing w tends to decrease loss -> positive gradient -> we need to increase weight
+## Calculating Gradients Manually
+Let's calculate the exact gradient of our loss function and use it to update the weight and bias.
+parameternew​=parameter−learning rate×gradient
+<PyScriptRunner
+  title="Gradient Descent (Weight and Bias Updation)"
+  initialCode={`
+import matplotlib.pyplot as plt
+
+x = [1, 2, 3, 4]
+target = [4, 7, 10, 13]
+w = 2
+b = 1
+
+learning_rate = 0.01
+losses = []
+for step in range(100):
+
+    total_gradient_w = 0
+    total_gradient_b = 0
+    total_loss = 0
+
+    for i in range(len(x)):
+
+        prediction = w * x[i] + b
+
+        error = target[i] - prediction
+
+        loss = error ** 2
+        total_loss += loss
+
+        gradient_w = -2 * x[i] * error
+        gradient_b = -2 * error
+
+        total_gradient_w += gradient_w
+        total_gradient_b += gradient_b
+
+    gradient_w = total_gradient_w / len(x)
+    gradient_b = total_gradient_b / len(x)
+
+    loss = total_loss / len(x)
+    losses.append(loss)
+
+    w = w - learning_rate * gradient_w
+    b = b - learning_rate * gradient_b
+
+    print(
+        "step:", step,
+        "| loss:", round(loss, 3),
+        "| w:", round(w, 3),
+        "| b:", round(b, 3)
+    )
+
+# Plot loss curve
+plt.plot(losses)
+plt.xlabel("Step")
+plt.ylabel("Loss")
+plt.title("Training Loss")
+
+plt.show()
+`}
+/>
+
+## Why does this work?
+By calculating the derivatives (\`dw\` and \`db\`), we figure out exactly how a tiny change in \`w\` or \`b\` affects the overall loss. Multiplying these gradients by a small **learning rate** ensures we take careful, controlled steps towards the minimum possible error!
