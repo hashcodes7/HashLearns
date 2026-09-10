@@ -851,48 +851,41 @@ Response:
 
 ---
 
-## 25. Production Data Flow (Offline KNN Training Pipeline)
+## 25. Production Data Flow (PostgreSQL & pgvector Pipeline)
 
-A realistic system separates online serving from offline processing. Our implementation fully decouples the heavy KNN indexing from the FastAPI server.
+Our system leverages **PostgreSQL** and the **pgvector** extension to completely unify storage and similarity search. This eliminates the need to keep large `.pkl` indexes in memory and ensures our API remains extremely lightweight.
 
 ### Architecture Diagram
 
 ```mermaid
 flowchart TD
-    subgraph Online Serving [Enterprise-Recommendation-system-Recommender]
+    subgraph Online Serving [Recommendation API]
         APP[Customer Application] -->|GET /recommendations| API[api/routes.py]
-        API -->|Instantiates| REC[core/recommender.py: HybridRecommender]
-        REC -->|Loads| KNN[core/knn_model.pkl]
-        REC -->|Loads| UV[core/user_vectors.pkl]
-        API -->|POST /events| DB[(events.db)]
+        API -->|Calls| REC[core/recommender.py]
+        REC -->|Queries| DB_PG[(PostgreSQL pgvector)]
+        API -->|POST /events| DB_EV[(events.db SQLite / Postgres)]
     end
 
-    subgraph Offline Training [Enterprise-Recommendation-system-Trainer]
-        DB -->|Reads Events| UE[update_embeddings.py: update_user_embeddings]
-        UE -->|Recalculates & Saves| UV
-        PE[core/data.py: Product Vectors] -->|Reads| UKNN[update_knn_model.py: update_knn]
-        UKNN -->|Fits & Saves NearestNeighbors| KNN
-        
-        TRAIN[train.py: run_pipeline] -->|1. Calls| UE
-        TRAIN -->|2. Calls| UKNN
+    subgraph Offline Training [Background Pipeline]
+        DB_EV -->|Reads Events| TRAIN[core/trainer.py]
+        TRAIN -->|Calculates User Vector| TRAIN
+        TRAIN -->|Upserts User Vector| DB_PG
     end
 ```
 
 ### Components
 
 1. **FastAPI Event Logging (`api/routes.py`)**: 
-   Exposes a `POST /events` endpoint to capture user interactions (clicks, views) into an SQLite database (`events.db`).
+   Exposes a `POST /events` (or similar logging mechanisms) to capture user interactions (clicks, views) into an `events.db` database.
 
-2. **Embeddings Updater (`update_embeddings.py`)**: 
-   The `update_user_embeddings()` method fetches events from `events.db`, merges them with `core/data.py`'s `users_history`, recalculates the dynamic user vectors by averaging product embeddings, and saves them to `user_vectors.pkl`.
+2. **Embeddings Updater (`core/trainer.py`)**: 
+   The `update_user_embeddings()` method fetches events from the events database, recalculates dynamic user vectors by averaging product embeddings (fetched from PostgreSQL), and upserts them directly into the PostgreSQL `user_embeddings` table.
 
-3. **KNN Model Updater (`update_knn_model.py`)**: 
-   The `update_knn()` method strictly fits the `sklearn.neighbors.NearestNeighbors` algorithm on the product catalog and saves it as `knn_model.pkl`.
+3. **Database Layer (`core/database.py`)**: 
+   Handles PostgreSQL connections using `psycopg2`. It utilizes `pgvector`'s `<=>` (cosine distance) operator to perform the KNN search natively inside the database, totally eliminating the need for `scikit-learn` or `.pkl` files.
 
-4. **Pipeline Orchestrator (`train.py`)**: 
-   The `run_pipeline()` method acts as the master trigger that runs `update_embeddings` followed by `update_knn_model`.
-
-This architecture ensures the API memory footprint remains tiny and request latency is minimized, as it simply retrieves pre-built indexes rather than calculating embeddings on the fly.
+4. **Pipeline Orchestrator (`main.py`)**: 
+   The FastAPI app allows triggering the `core/trainer.py` pipeline as a background task to keep user vectors fresh based on real-time events.
 
 ---
 
