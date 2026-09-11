@@ -1,0 +1,67 @@
+# 4- Matrix Multiplication
+
+A neuron with multiple inputs can calculate its output using a dot product:
+
+$$
+y=w\cdot x+b
+$$
+
+When we have many inputs and many neurons, we need to calculate many dot products at once.
+
+Matrix multiplication lets us do this.
+
+---
+
+## 4.4 Vectors as Matrices
+
+A weight vector can be written as:
+
+$$
+w=
+\begin{bmatrix}
+w_1\\
+w_2\\
+w_3
+\end{bmatrix}
+$$
+
+and the input vector:
+
+$$
+x=
+\begin{bmatrix}
+x_1\\
+x_2\\
+x_3
+\end{bmatrix}
+$$
+
+To calculate the dot product, we use the transpose of \(w\):
+
+$$
+w^Tx
+=
+\begin{bmatrix}
+w_1&w_2&w_3
+\end{bmatrix}
+\begin{bmatrix}
+x_1\\
+x_2\\
+x_3
+\end{bmatrix}
+$$
+
+Expanding:
+
+$$
+\boxed{w^Tx=w_1x_1+w_2x_2+w_3x_3}
+$$
+
+Therefore:
+
+$$
+\boxed{y=w^Tx+b}
+$$
+
+---
+

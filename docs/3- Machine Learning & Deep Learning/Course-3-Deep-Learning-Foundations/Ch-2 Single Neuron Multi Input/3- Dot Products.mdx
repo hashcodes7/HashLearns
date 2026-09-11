@@ -1,0 +1,59 @@
+# 3.3 Dot Product
+
+With multiple inputs, the weighted sum can be written more compactly.
+
+### Shortening the Weight Vector
+
+So **\(w\) is not one weight**.
+It is a vector containing all the individual weights:
+Think of:
+
+$$
+\underbrace{w}_{\text{all weights}}
+=
+\underbrace{[w_1,w_2,w_3,\ldots,w_n]}_{\text{individual weights}}
+$$
+
+For 3 inputs:
+
+$$
+\boxed{w=[w_1,w_2,w_3]}
+$$
+
+and:
+
+$$
+\boxed{x=[x_1,x_2,x_3]}
+$$
+
+The dot product is:
+
+$$
+w\cdot x
+=
+[w_1,w_2,w_3]\cdot[x_1,x_2,x_3]
+$$
+
+Expanding, it becomes:
+
+$$
+\boxed{y=w_1x_1+w_2x_2+w_3x_3+b}
+$$
+So we can simply write the equation as ->
+
+$$
+\boxed{y=w\cdot x+b}
+$$
+---
+
+## 3.5 Dot Product in Python
+
+Instead of writing every multiplication separately:
+
+```python
+x = [2, 3]
+w = [1, 1]
+
+dot_product = w[0] * x[0] + w[1] * x[1]
+
+print(dot_product)
