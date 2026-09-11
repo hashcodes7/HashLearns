@@ -1,0 +1,76 @@
+# Phase 6 — Activation Functions
+
+## 6.6 Tanh
+
+The hyperbolic tangent function is:
+
+$$
+\boxed{tanh(x)=\frac{e^x-e^{-x}}{e^x+e^{-x}}}
+$$
+
+Its output is between -1 and 1.
+
+$$
+-1<tanh(x)<1
+$$
+
+Examples:
+
+$$
+tanh(0)=0
+$$
+
+$$
+tanh(10)\approx1
+$$
+
+$$
+tanh(-10)\approx-1
+$$
+
+---
+
+## 6.7 Python
+
+```python
+import math
+
+def tanh(x):
+    return math.tanh(x)
+
+print(tanh(0))
+print(tanh(2))
+print(tanh(-2))
+```
+
+Output is approximately:
+
+```text
+0.0
+0.964
+-0.964
+```
+
+For a neuron:
+
+$$
+z=Wx+b
+$$
+
+then:
+
+$$
+\boxed{y=tanh(z)}
+$$
+
+---
+
+## Key Idea
+
+Tanh compresses values into:
+
+$$
+\boxed{(-1,1)}
+$$
+
+Unlike sigmoid, tanh is centered around zero.

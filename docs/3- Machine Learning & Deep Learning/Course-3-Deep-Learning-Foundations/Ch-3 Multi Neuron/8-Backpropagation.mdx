@@ -1,0 +1,151 @@
+# Phase 8 — Backpropagation
+
+Backpropagation is the process used to calculate how much each parameter contributed to the final error.
+
+The gradients are then used by gradient descent to update the parameters.
+
+---
+
+## 8.1 Forward Pass
+
+The network first calculates the prediction.
+
+For one hidden layer:
+
+$$
+z^{(1)}=W^{(1)}x+b^{(1)}
+$$
+
+$$
+a^{(1)}=ReLU(z^{(1)})
+$$
+
+$$
+y=W^{(2)}a^{(1)}+b^{(2)}
+$$
+
+Then calculate the loss:
+
+$$
+L=(target-y)^2
+$$
+
+---
+
+## 8.2 Backward Pass
+
+Now we move backward through the network.
+
+The chain rule tells us:
+
+$$
+\boxed{
+\frac{dL}{dx}
+=
+\frac{dL}{dy}
+\frac{dy}{dx}
+}
+$$
+
+For multiple operations, the chain rule continues:
+
+$$
+\frac{dL}{dw}
+=
+\frac{dL}{dy}
+\frac{dy}{da}
+\frac{da}{dz}
+\frac{dz}{dw}
+$$
+
+Backpropagation applies this idea to every parameter.
+
+---
+
+## 8.3 Simple Example
+
+Suppose:
+
+$$
+y=wx+b
+$$
+
+and:
+
+$$
+L=(target-y)^2
+$$
+
+We already know:
+
+$$
+\frac{dL}{dy}=-2(target-y)
+$$
+
+and:
+
+$$
+\frac{dy}{dw}=x
+$$
+
+Using the chain rule:
+
+$$
+\boxed{
+\frac{dL}{dw}
+=
+\frac{dL}{dy}\frac{dy}{dw}
+}
+$$
+
+Therefore:
+
+$$
+\boxed{
+\frac{dL}{dw}
+=
+-2(target-y)x
+}
+$$
+
+This is the same gradient used earlier.
+
+---
+
+## 8.4 Python
+
+```python
+x = 3
+target = 10
+
+w = 2
+b = 1
+
+y = w * x + b
+loss = (target - y) ** 2
+
+dL_dy = -2 * (target - y)
+dy_dw = x
+
+dL_dw = dL_dy * dy_dw
+
+print("prediction:", y)
+print("loss:", loss)
+print("gradient:", dL_dw)
+```
+
+---
+
+## Key Idea
+
+**Backpropagation calculates gradients.**
+
+**Gradient descent uses those gradients to update parameters.**
+
+$$
+\boxed{Backpropagation\rightarrow gradients}
+$$
+
+$$
+\boxed{Gradient\ Descent\rightarrow updates}
+$$

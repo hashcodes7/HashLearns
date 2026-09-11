@@ -1,0 +1,102 @@
+# Phase 11 — Classification
+
+Regression predicts a numerical value.
+
+Classification predicts a category.
+
+Examples:
+
+```text
+spam / not spam
+cat / dog
+pass / fail
+```
+
+---
+
+## 11.1 Binary Classification
+
+Binary classification has two possible classes.
+
+We can represent them as:
+
+$$
+0\quad\text{or}\quad1
+$$
+
+A sigmoid output is useful:
+
+$$
+\boxed{\sigma(x)=\frac{1}{1+e^{-x}}}
+$$
+
+The output is between 0 and 1.
+
+For example:
+
+```text
+0.1 → likely class 0
+0.9 → likely class 1
+```
+
+A threshold can be used:
+
+$$
+prediction=
+\begin{cases}
+1 & y\geq0.5\\
+0 & y<0.5
+\end{cases}
+$$
+
+---
+
+## 11.2 Python
+
+```python
+import math
+
+def sigmoid(x):
+    return 1 / (1 + math.exp(-x))
+
+output = sigmoid(2)
+
+if output >= 0.5:
+    prediction = 1
+else:
+    prediction = 0
+
+print("probability:", output)
+print("class:", prediction)
+```
+
+---
+
+## 11.3 XOR
+
+XOR produces 1 when the two inputs are different.
+
+| x1 | x2 | XOR |
+|---:|---:|----:|
+| 0 | 0 | 0 |
+| 0 | 1 | 1 |
+| 1 | 0 | 1 |
+| 1 | 1 | 0 |
+
+A single linear neuron cannot correctly separate these four points.
+
+This is why hidden layers are important.
+
+---
+
+## Key Idea
+
+Classification predicts categories rather than continuous values.
+
+Binary classification:
+
+$$
+\boxed{y\in\{0,1\}}
+$$
+
+A sigmoid output can represent the probability of class 1.

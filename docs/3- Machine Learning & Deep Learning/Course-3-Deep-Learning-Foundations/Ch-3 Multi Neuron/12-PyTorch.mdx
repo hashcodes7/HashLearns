@@ -1,0 +1,153 @@
+# Phase 12 — PyTorch
+
+Now that the underlying calculations are understood, we can use PyTorch to implement neural networks more efficiently.
+
+---
+
+## 12.1 Tensor
+
+A PyTorch tensor stores numerical data.
+
+```python
+import torch
+
+x = torch.tensor([2.0, 3.0, 4.0])
+
+print(x)
+```
+
+---
+
+## 12.2 Matrix Multiplication
+
+The operation:
+
+$$
+y=Wx+b
+$$
+
+can be written directly with tensors.
+
+```python
+import torch
+
+x = torch.tensor([2.0, 3.0, 4.0])
+
+W = torch.tensor([
+    [1.0, 2.0, 3.0],
+    [2.0, 1.0, 1.0]
+])
+
+b = torch.tensor([5.0, 2.0])
+
+y = W @ x + b
+
+print(y)
+```
+
+---
+
+## 12.3 Automatic Differentiation
+
+Earlier, we calculated gradients manually.
+
+PyTorch can calculate them automatically.
+
+```python
+import torch
+
+x = torch.tensor(3.0)
+w = torch.tensor(2.0, requires_grad=True)
+b = torch.tensor(1.0, requires_grad=True)
+
+target = torch.tensor(10.0)
+
+y = w * x + b
+
+loss = (target - y) ** 2
+
+loss.backward()
+
+print("dw:", w.grad)
+print("db:", b.grad)
+```
+
+`loss.backward()` calculates the gradients.
+
+---
+
+## 12.4 Updating Parameters
+
+After calculating gradients:
+
+```python
+learning_rate = 0.01
+
+with torch.no_grad():
+    w -= learning_rate * w.grad
+    b -= learning_rate * b.grad
+```
+
+Then the gradients can be cleared:
+
+```python
+w.grad.zero_()
+b.grad.zero_()
+```
+
+---
+
+## 12.5 Neural Network Module
+
+PyTorch provides reusable layers.
+
+```python
+import torch
+import torch.nn as nn
+
+model = nn.Sequential(
+    nn.Linear(3, 4),
+    nn.ReLU(),
+    nn.Linear(4, 1)
+)
+
+x = torch.tensor([[2.0, 3.0, 4.0]])
+
+y = model(x)
+
+print(y)
+```
+
+The network is:
+
+```text
+3 inputs
+   ↓
+4 neurons
+   ↓
+ReLU
+   ↓
+1 neuron
+   ↓
+output
+```
+
+---
+
+## Key Idea
+
+We first learned the mathematics manually.
+
+PyTorch provides tools for:
+
+- tensors
+- matrix operations
+- automatic differentiation
+- neural-network layers
+- optimization
+
+The underlying operation is still:
+
+$$
+\boxed{y=Wx+b}
+$$

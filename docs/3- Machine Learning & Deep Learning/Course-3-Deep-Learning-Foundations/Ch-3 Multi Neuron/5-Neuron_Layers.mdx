@@ -1,0 +1,175 @@
+# Phase 5 — Multiple Neurons
+
+A single neuron produces one output.
+
+To solve more complex problems, we can use multiple neurons.
+
+---
+
+## 5.1 Multiple Neurons
+
+Suppose we have 3 inputs:
+
+$$
+x=
+\begin{bmatrix}
+x_1\\
+x_2\\
+x_3
+\end{bmatrix}
+$$
+
+A single neuron has:
+
+$$
+y=w^Tx+b
+$$
+
+Multiple neurons have different weights and biases.
+
+For 2 neurons:
+
+$$
+y_1=w_{11}x_1+w_{12}x_2+w_{13}x_3+b_1
+$$
+
+$$
+y_2=w_{21}x_1+w_{22}x_2+w_{23}x_3+b_2
+$$
+
+Each neuron sees the same inputs but has its own weights and bias.
+
+---
+
+## 5.2 Neuron Layer
+
+A group of neurons working together is called a **layer**.
+
+For 2 neurons:
+
+$$
+W=
+\begin{bmatrix}
+w_{11}&w_{12}&w_{13}\\
+w_{21}&w_{22}&w_{23}
+\end{bmatrix}
+$$
+
+and:
+
+$$
+b=
+\begin{bmatrix}
+b_1\\
+b_2
+\end{bmatrix}
+$$
+
+The layer calculates:
+
+$$
+\boxed{y=Wx+b}
+$$
+
+Expanded:
+
+$$
+y=
+\begin{bmatrix}
+w_{11}x_1+w_{12}x_2+w_{13}x_3+b_1\\
+w_{21}x_1+w_{22}x_2+w_{23}x_3+b_2
+\end{bmatrix}
+$$
+
+---
+
+## 5.3 Multiple Outputs
+
+One neuron:
+
+$$
+x\rightarrow y
+$$
+
+Multiple neurons:
+
+$$
+x\rightarrow
+\begin{bmatrix}
+y_1\\
+y_2\\
+y_3
+\end{bmatrix}
+$$
+
+So a layer can produce multiple outputs.
+
+For 3 neurons:
+
+$$
+\boxed{y=Wx+b}
+$$
+
+where \(y\) contains 3 outputs.
+
+---
+
+## 5.4 Python Implementation
+
+We can calculate a layer using NumPy:
+
+```python
+import numpy as np
+
+x = np.array([2, 3, 4])
+
+W = np.array([
+    [1, 2, 3],
+    [2, 1, 1]
+])
+
+b = np.array([5, 2])
+
+y = W @ x + b
+
+print(y)
+```
+
+Output:
+
+```text
+[25 13]
+```
+
+The first output comes from the first neuron:
+
+$$
+y_1=1(2)+2(3)+3(4)+5=25
+$$
+
+The second output comes from the second neuron:
+
+$$
+y_2=2(2)+1(3)+1(4)+2=13
+$$
+
+---
+
+## Key Idea
+
+A layer is simply multiple neurons calculating their outputs together.
+
+$$
+\boxed{y=Wx+b}
+$$
+
+- \(x\) → inputs
+- \(W\) → weights of all neurons
+- \(b\) → bias of each neuron
+- \(y\) → multiple outputs
+
+---
+
+## Next
+
+**5.5 — Training Multiple Neurons**

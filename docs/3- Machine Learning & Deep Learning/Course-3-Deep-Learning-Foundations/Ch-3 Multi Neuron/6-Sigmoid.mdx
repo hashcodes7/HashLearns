@@ -1,0 +1,70 @@
+# Phase 6 — Activation Functions
+
+## 6.4 Sigmoid
+
+The sigmoid function converts a value into a number between 0 and 1.
+
+$$
+\boxed{\sigma(x)=\frac{1}{1+e^{-x}}}
+$$
+
+Examples:
+
+$$
+\sigma(0)=0.5
+$$
+
+$$
+\sigma(10)\approx1
+$$
+
+$$
+\sigma(-10)\approx0
+$$
+
+---
+
+## 6.5 Python
+
+```python
+import math
+
+def sigmoid(x):
+    return 1 / (1 + math.exp(-x))
+
+print(sigmoid(0))
+print(sigmoid(5))
+print(sigmoid(-5))
+```
+
+Output is approximately:
+
+```text
+0.5
+0.9933
+0.0067
+```
+
+For a neuron:
+
+$$
+z=Wx+b
+$$
+
+then:
+
+$$
+\boxed{y=\sigma(z)}
+$$
+
+---
+
+## Key Idea
+
+Sigmoid compresses any real number into:
+
+$$
+0<\sigma(x)<1
+$$
+
+This makes it useful when the output represents a probability.

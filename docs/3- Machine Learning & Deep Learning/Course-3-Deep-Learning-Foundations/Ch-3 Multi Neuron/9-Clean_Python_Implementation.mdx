@@ -1,0 +1,108 @@
+# Phase 9 — Clean Python Implementation
+
+Now we can organize the neural network into reusable code.
+
+Instead of writing every calculation separately, we can create classes.
+
+---
+
+## 9.1 Neuron Layer Class
+
+```python
+import numpy as np
+
+class Layer:
+    def __init__(self, input_size, output_size):
+        self.W = np.random.randn(output_size, input_size)
+        self.b = np.zeros(output_size)
+
+    def forward(self, x):
+        return self.W @ x + self.b
+```
+
+Create a layer:
+
+```python
+layer = Layer(3, 2)
+
+x = np.array([2, 3, 4])
+
+y = layer.forward(x)
+
+print(y)
+```
+
+The layer has:
+
+- 3 inputs
+- 2 neurons
+- 2 outputs
+
+---
+
+## 9.2 Adding ReLU
+
+```python
+class ReLU:
+    def forward(self, x):
+        return np.maximum(0, x)
+```
+
+Now:
+
+```python
+layer = Layer(3, 2)
+activation = ReLU()
+
+x = np.array([2, 3, 4])
+
+z = layer.forward(x)
+y = activation.forward(z)
+
+print(y)
+```
+
+---
+
+## 9.3 A Simple Network
+
+```python
+layer1 = Layer(3, 4)
+activation = ReLU()
+layer2 = Layer(4, 1)
+
+x = np.array([2, 3, 4])
+
+z1 = layer1.forward(x)
+a1 = activation.forward(z1)
+
+y = layer2.forward(a1)
+
+print(y)
+```
+
+The structure is:
+
+```text
+3 inputs
+   ↓
+4 neurons
+   ↓
+ReLU
+   ↓
+1 neuron
+   ↓
+output
+```
+
+---
+
+## Key Idea
+
+Classes allow us to build reusable components:
+
+$$
+\boxed{Layer\rightarrow Activation\rightarrow Layer}
+$$
+
+This is the beginning of a reusable neural-network implementation.
