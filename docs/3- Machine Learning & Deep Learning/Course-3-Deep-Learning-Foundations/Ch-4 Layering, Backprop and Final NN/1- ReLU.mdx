@@ -1,0 +1,17 @@
+# 4.2 Why Activation Function?
+
+Without an activation function, stacking layers isnt multiple functions, it can be simplified into a single linear function, we dont want that so we are sticking relu in the middle. ReLU introduces non-linearity.
+
+A neuron can therefore calculate:
+
+$$
+z=Wx+b
+$$
+
+
+| ReLU stands for **Rectified Linear Unit**. | Sigmoid                                       | Tanh                                              |
+| ------------------------------------------ | --------------------------------------------- | ------------------------------------------------- |
+| $$\boxed{ReLU(x)=\max(0,x)}$$              | $$\boxed{\sigma(x)=\frac{1}{1+e^{-x}}}$$      | $$\boxed{tanh(x)=\frac{e^x-e^{-x}}{e^x+e^{-x}}}$$ |
+| $$ReLU(5)=5$$<br />$$ReLU(-3)=0$$          | $$\sigma(0)=0.5$$<br />$$\sigma(10)\approx1$$ | $$tanh(-10)\approx-1$$<br />$$tanh(10)\approx1$$  |
+| `return max(0, x)`                         | `return 1 / (1 + math.exp(-x))`               | `return math.tanh(x)`                             |
+

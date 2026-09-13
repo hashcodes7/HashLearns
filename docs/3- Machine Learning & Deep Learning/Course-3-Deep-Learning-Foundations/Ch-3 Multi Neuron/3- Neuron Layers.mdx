@@ -1,0 +1,56 @@
+# 3.3 Neuron Layer
+
+A layer is simply multiple neurons calculating their outputs together.
+```
+x₁ ──┐
+x₂ ──┼─→ Neuron 1 (Financial Strength) ──→ y₁ ─┐
+x₃ ──┘                                         │
+					       ├──→ Neuron 3 (loan decision) ──→output
+x₁ ──┐                                         │
+x₂ ──┼──→ Neuron 2 (Risk) ──────────────→ y₂ ──┘
+x₃ ──┘
+```
+---
+Lets take real world scenerio for this  
+x₁ = 2000 sq ft  
+x₂ = 3 bedrooms  
+x₃ = 2 bathrooms
+
+and although neurons are auto trained and we can never know what they mean but lets say after train they behave like this     
+Neuron 1 -"size/value" neuron
+Neuron 2 -"comfort" neuron
+
+Then the final neuron receives those two learned signals:
+Neuron 3 - Loan decision.
+
+### Here is how such a neural network be made
+
+``` python
+import numpy as np
+
+# Inputs
+x = np.array([2, 3, 4])
+print('inputs are :1000 sqft, bedrooms, bathrooms : ',x)
+# First layer: 2 neurons
+W1 = np.array([
+    [1, 2, 3],
+    [2, 1, 1]
+])
+
+b1 = np.array([5, 2])
+
+# Outputs of first layer
+y1 = W1 @ x + b1
+
+print("First layer:", y1)
+
+
+# Second layer: 1 neuron
+W2 = np.array([2, 3])
+b2 = 1
+
+# Final output
+y2 = W2 @ y1 + b2
+
+print("Final output:", y2)
+```

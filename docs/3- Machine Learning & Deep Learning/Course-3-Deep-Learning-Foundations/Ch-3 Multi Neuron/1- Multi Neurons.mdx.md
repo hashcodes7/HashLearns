@@ -1,4 +1,4 @@
-# Multiple Neurons — Vector and Matrix Form
+# 3.1- Multiple Neurons — Vector and Matrix Form
 
 Suppose we have **2 neurons** and **3 inputs**.
 Each neuron receives the same inputs, but has its own weights and bias.

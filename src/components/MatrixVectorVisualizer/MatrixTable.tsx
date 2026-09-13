@@ -7,6 +7,8 @@ interface MatrixTableProps {
   selectedRow: number | null;
   setSelectedRow: (row: number | null) => void;
   updateValue: (row: number, col: number, value: string) => void;
+  readOnly?: boolean;
+  matrixName?: string;
 }
 
 export default function MatrixTable({
@@ -15,11 +17,16 @@ export default function MatrixTable({
   colors,
   selectedRow,
   setSelectedRow,
-  updateValue
+  updateValue,
+  readOnly = false,
+  matrixName = "X"
 }: MatrixTableProps) {
+  const rows = matrix.length;
+  const cols = matrix.length > 0 ? matrix[0].length : 0;
+  
   return (
     <div style={{ flex: '0 1 320px', display: 'flex', flexDirection: 'column' }}>
-      <h4 style={{ marginBottom: '20px', borderBottom: '1px solid var(--ifm-color-emphasis-200)', paddingBottom: '10px' }}>Matrix View (X ∈ R⁴ˣ³)</h4>
+      <h4 style={{ marginBottom: '20px', borderBottom: '1px solid var(--ifm-color-emphasis-200)', paddingBottom: '10px' }}>Matrix View ({matrixName} ∈ R^{rows}ˣ^{cols})</h4>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
         {matrix.map((row, rowIndex) => (
           <div 
@@ -75,16 +82,18 @@ export default function MatrixTable({
                     step="0.1"
                     value={val}
                     onChange={(e) => updateValue(rowIndex, colIndex, e.target.value)}
+                    readOnly={readOnly}
                     style={{
                       flex: 1,
                       minWidth: '0',
                       border: 'none',
                       background: 'transparent',
                       textAlign: 'center',
-                      color: 'var(--ifm-font-color-base)',
+                      color: readOnly ? 'var(--ifm-color-emphasis-600)' : 'var(--ifm-font-color-base)',
                       fontSize: '0.95rem',
                       fontWeight: '500',
-                      outline: 'none'
+                      outline: 'none',
+                      cursor: readOnly ? 'default' : 'text'
                     }}
                   />
                   {colIndex < row.length - 1 && (

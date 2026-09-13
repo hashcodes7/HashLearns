@@ -1,0 +1,106 @@
+Pytorch saves time because it keeps the parent function in memory so we dont have to manually use derivatives and chain rule
+```python
+import torch
+
+
+# -------------------------
+# Data
+# -------------------------
+
+x = torch.tensor([2.0, 3.0])
+target = torch.tensor(20.0)
+
+
+# -------------------------
+# Parameters
+# -------------------------
+
+W = torch.tensor([
+    [1.0, 2.0],
+    [2.0, 1.0],
+    [1.0, 1.0]
+], requires_grad=True)
+
+b_hidden = torch.tensor(
+    [1.0, 2.0, 1.0],
+    requires_grad=True
+)
+
+w_output = torch.tensor(
+    [1.0, 2.0, 1.0],
+    requires_grad=True
+)
+
+b_output = torch.tensor(
+    1.0,
+    requires_grad=True
+)
+
+
+learning_rate = 0.001
+
+
+# -------------------------
+# Forward pass
+# -------------------------
+
+z = W @ x + b_hidden
+
+a = torch.relu(z)
+
+y = w_output @ a + b_output
+
+loss = (target - y) ** 2
+
+
+# -------------------------
+# Backpropagation
+# -------------------------
+
+loss.backward()
+
+
+# -------------------------
+# Parameter updates
+# -------------------------
+
+with torch.no_grad():
+
+    W -= learning_rate * W.grad
+    b_hidden -= learning_rate * b_hidden.grad
+
+    w_output -= learning_rate * w_output.grad
+    b_output -= learning_rate * b_output.grad
+
+
+# -------------------------
+# Results
+# -------------------------
+
+print("prediction:", y.item())
+print("loss:", loss.item())
+
+print("dL/dW:")
+print(W.grad)
+
+print("dL/db_hidden:")
+print(b_hidden.grad)
+
+print("dL/dw_output:")
+print(w_output.grad)
+
+print("dL/db_output:")
+print(b_output.grad)
+
+print("updated W:")
+print(W)
+
+print("updated hidden bias:")
+print(b_hidden)
+
+print("updated output weights:")
+print(w_output)
+
+print("updated output bias:")
+print(b_output)
+```
