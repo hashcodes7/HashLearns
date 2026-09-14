@@ -8,17 +8,17 @@ Reinforcement Learning (RL) is the science of decision making. Instead of traini
 
 ## Core Concepts (MDP)
 Almost all RL problems are framed as a **Markov Decision Process (MDP)**:
-- **State ($)**: Where the agent currently is.
-- **Action ($)**: What the agent can do.
-- **Reward ($)**: The feedback from the environment.
+- **State ($S$)**: Where the agent currently is.
+- **Action ($A$)**: What the agent can do.
+- **Reward ($R$)**: The feedback from the environment.
 - **Policy ($\pi$)**: The strategy the agent uses to decide the next action.
-- **Value ($)**: The expected long-term return of being in a state.
+- **Value ($V$)**: The expected long-term return of being in a state.
 
 ## Q-Learning
-Q-Learning is a foundational RL algorithm. The agent builds a "Q-Table"—a cheat sheet where rows are States and columns are Actions. The value in each cell (the Q-Value) represents the maximum expected future reward for taking that action in that state.
+Q-Learning is a foundational RL algorithm. The agent builds a "Q-Table" - a cheat sheet where rows are States and columns are Actions. The value in each cell (the Q-Value) represents the maximum expected future reward for taking that action in that state.
 
 The core math behind updating this table is the **Bellman Equation**:
-^{new}(s, a) = Q(s, a) + \alpha [R + \gamma \max Q(s', a') - Q(s, a)]$
+$Q^{new}(s, a) = Q(s, a) + \alpha [R + \gamma \max Q(s', a') - Q(s, a)]$
 Where:
 - $\alpha$ is the learning rate.
 - $\gamma$ is the discount factor (how much we care about future rewards vs immediate ones).
