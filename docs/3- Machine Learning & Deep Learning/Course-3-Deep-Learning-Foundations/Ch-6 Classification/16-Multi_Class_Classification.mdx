@@ -1,0 +1,35 @@
+# 16. Multi-Class Classification
+
+For more than two classes, the output layer can contain one logit per class.
+
+For three classes:
+
+```text
+class 0
+class 1
+class 2
+```
+
+The model produces:
+
+```text
+[z1, z2, z3]
+```
+
+Softmax converts logits into probabilities:
+
+$$
+P_i=\frac{e^{z_i}}{\sum_j e^{z_j}}
+$$
+
+For PyTorch classification, `CrossEntropyLoss` is commonly used:
+
+```python
+loss_function = torch.nn.CrossEntropyLoss()
+```
+
+The predicted class is:
+
+```python
+prediction = logits.argmax(dim=1)
+```

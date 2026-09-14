@@ -1,0 +1,29 @@
+# 59. Agentic RAG
+
+Agentic RAG allows an agent to control retrieval.
+
+Instead of:
+
+```text
+query → retrieve → answer
+```
+
+the system can perform:
+
+```text
+query
+ ↓
+plan
+ ↓
+retrieve
+ ↓
+evaluate
+ ↓
+rewrite query
+ ↓
+retrieve again
+ ↓
+answer
+```
+
+This can improve retrieval for difficult questions.

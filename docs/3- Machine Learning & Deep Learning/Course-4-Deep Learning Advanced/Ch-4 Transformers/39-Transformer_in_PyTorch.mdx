@@ -1,0 +1,27 @@
+# 39. Transformer in PyTorch
+
+A Transformer can be assembled from PyTorch modules.
+
+Conceptually:
+
+```python
+class TransformerBlock(nn.Module):
+
+    def __init__(self):
+        super().__init__()
+
+        # attention
+        # feed-forward
+        # normalization
+
+    def forward(self, x):
+
+        # attention
+        # residual
+        # feed-forward
+        # residual
+
+        return x
+```
+
+Stacking several blocks produces a Transformer model.

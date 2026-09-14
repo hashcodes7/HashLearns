@@ -1,0 +1,29 @@
+# 45. Training a GPT
+
+GPT training uses next-token prediction.
+
+The training loop is still:
+
+```text
+batch
+ ↓
+forward
+ ↓
+logits
+ ↓
+cross-entropy loss
+ ↓
+backward
+ ↓
+optimizer step
+```
+
+Training requires:
+
+- tokenized data
+- input/target sequences
+- batches
+- optimizer
+- learning rate
+- checkpoints
+- validation

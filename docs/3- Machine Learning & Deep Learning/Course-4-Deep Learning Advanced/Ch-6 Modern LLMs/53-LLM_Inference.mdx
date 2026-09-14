@@ -1,0 +1,21 @@
+# 53. LLM Inference
+
+Autoregressive generation can be divided into:
+
+### Prefill
+
+The model processes the existing context.
+
+### Decode
+
+The model generates new tokens one at a time.
+
+A KV cache stores previously computed key/value representations so they do not need to be recomputed for every generated token.
+
+Important inference considerations include:
+
+- context length
+- memory
+- latency
+- throughput
+- tokens per second

@@ -1,0 +1,36 @@
+# 22. Images as Tensors
+
+Images can be represented as tensors.
+
+For a color image:
+
+```text
+channels × height × width
+```
+
+A batch adds another dimension:
+
+```text
+batch × channels × height × width
+```
+
+PyTorch commonly uses:
+
+```text
+[B, C, H, W]
+```
+
+For example:
+
+```text
+[32, 3, 224, 224]
+```
+
+means:
+
+```text
+32 images
+3 channels
+224 height
+224 width
+```

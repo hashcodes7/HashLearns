@@ -1,0 +1,28 @@
+# 57. Tool Calling
+
+A language model can be connected to external tools.
+
+Conceptually:
+
+```text
+User request
+ ↓
+LLM
+ ↓
+Tool selection
+ ↓
+Tool execution
+ ↓
+Tool result
+ ↓
+LLM
+ ↓
+Final response
+```
+
+A tool normally has:
+
+- name
+- description
+- input schema
+- execution function

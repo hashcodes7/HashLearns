@@ -1,0 +1,19 @@
+# 50. LoRA
+
+Low-Rank Adaptation reduces the number of trainable parameters during fine-tuning.
+
+Instead of updating a large weight matrix directly, LoRA introduces a low-rank update:
+
+$$
+W'=W+BA
+$$
+
+where $A$ and $B$ are much smaller matrices.
+
+The base model can remain frozen while the LoRA parameters are trained.
+
+Benefits include:
+
+- lower memory usage
+- fewer trainable parameters
+- smaller adapter weights

@@ -1,0 +1,21 @@
+# 63. Distributed Training
+
+Large models can require multiple GPUs.
+
+Important parallelism strategies include:
+
+- data parallelism
+- tensor parallelism
+- pipeline parallelism
+
+Conceptually:
+
+```text
+Large model
+     ↓
+multiple devices
+     ↓
+parallel computation
+```
+
+Distributed training allows models and datasets larger than a single device to be processed efficiently.

@@ -1,0 +1,21 @@
+# 35. Multi-Head Attention
+
+Instead of performing one attention operation, Transformers perform several attention operations in parallel.
+
+Each head can learn different relationships.
+
+```text
+Input
+ ↓
+Head 1
+Head 2
+Head 3
+...
+Head N
+ ↓
+Concatenate
+ ↓
+Output projection
+```
+
+This is called multi-head attention.

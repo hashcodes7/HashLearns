@@ -1,0 +1,24 @@
+# 56. RAG From Scratch
+
+A basic RAG pipeline consists of:
+
+1. load documents
+2. split documents into chunks
+3. create embeddings
+4. store vectors
+5. embed the user query
+6. retrieve similar chunks
+7. construct a prompt
+8. generate an answer
+
+The central loop is:
+
+```text
+Query
+ ↓
+Retrieve
+ ↓
+Context
+ ↓
+Generate
+```

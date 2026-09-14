@@ -1,0 +1,31 @@
+# 23. Convolution
+
+A convolution applies a learnable filter across an image.
+
+```text
+Image
+ ↓
+Kernel / Filter
+ ↓
+Feature Map
+```
+
+Important concepts:
+
+- kernel size
+- stride
+- padding
+- channels
+- feature maps
+
+A PyTorch convolution:
+
+```python
+nn.Conv2d(
+    in_channels=3,
+    out_channels=16,
+    kernel_size=3
+)
+```
+
+learns 16 filters that operate on three-channel input images.

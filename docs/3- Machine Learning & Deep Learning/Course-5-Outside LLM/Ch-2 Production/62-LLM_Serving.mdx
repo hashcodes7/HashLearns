@@ -1,0 +1,25 @@
+# 62. LLM Serving
+
+A trained model needs an inference system to serve users.
+
+A typical architecture is:
+
+```text
+Client
+ ↓
+API
+ ↓
+Inference Server
+ ↓
+LLM
+ ↓
+Response
+```
+
+Serving systems optimize for:
+
+- latency
+- throughput
+- concurrency
+- GPU utilization
+- memory usage

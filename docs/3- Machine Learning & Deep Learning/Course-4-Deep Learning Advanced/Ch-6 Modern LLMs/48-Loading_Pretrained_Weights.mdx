@@ -1,0 +1,27 @@
+# 48. Loading Pretrained Weights
+
+A pretrained model consists of learned parameter tensors.
+
+PyTorch commonly stores these in a `state_dict`.
+
+```python
+state = model.state_dict()
+```
+
+Loading compatible weights:
+
+```python
+model.load_state_dict(state)
+```
+
+The architecture must match the expected parameter shapes and names.
+
+The important principle is:
+
+```text
+architecture
+     ↓
+matching parameter structure
+     ↓
+pretrained weights
+```

@@ -1,0 +1,25 @@
+# 28. Recurrent Neural Networks
+
+An RNN maintains a hidden state.
+
+Conceptually:
+
+$$
+h_t=f(x_t,h_{t-1})
+$$
+
+Each new input is combined with the previous hidden state.
+
+```text
+x1 → RNN → h1
+           ↓
+x2 → RNN → h2
+           ↓
+x3 → RNN → h3
+```
+
+PyTorch provides:
+
+```python
+nn.RNN
+```

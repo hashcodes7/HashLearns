@@ -1,0 +1,74 @@
+---
+id: pytorch-training-10
+---
+# 10. PyTorch Training
+
+PyTorch can calculate gradients automatically.
+
+```python
+import torch
+
+x = torch.tensor([2.0, 3.0])
+target = torch.tensor(20.0)
+
+W = torch.tensor([
+    [1.0, 2.0],
+    [2.0, 1.0],
+    [1.0, 1.0]
+], requires_grad=True)
+
+b_hidden = torch.tensor([1.0, 2.0, 1.0], requires_grad=True)
+
+w_output = torch.tensor([1.0, 2.0, 1.0], requires_grad=True)
+
+b_output = torch.tensor(1.0, requires_grad=True)
+
+learning_rate = 0.001
+
+for step in range(1000):
+    z = W @ x + b_hidden
+    a = torch.relu(z)
+    y = w_output @ a + b_output
+
+    loss = (target - y) ** 2
+
+    loss.backward()
+
+    with torch.no_grad():
+        W -= learning_rate * W.grad
+        b_hidden -= learning_rate * b_hidden.grad
+        w_output -= learning_rate * w_output.grad
+        b_output -= learning_rate * b_output.grad
+
+    W.grad.zero_()
+    b_hidden.grad.zero_()
+    w_output.grad.zero_()
+    b_output.grad.zero_()
+```
+
+The standard optimizer version is:
+
+```python
+optimizer = torch.optim.SGD(
+    [W, b_hidden, w_output, b_output],
+    lr=0.001
+)
+
+for step in range(1000):
+    optimizer.zero_grad()
+
+    z = W @ x + b_hidden
+    a = torch.relu(z)
+    y = w_output @ a + b_output
+
+    loss = (target - y) ** 2
+
+    loss.backward()
+    optimizer.step()
+```
+
+The core training sequence is:
+
+$$
+zero\_grad\rightarrow forward\rightarrow loss\rightarrow backward\rightarrow step
+$$

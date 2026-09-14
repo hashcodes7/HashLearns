@@ -1,0 +1,23 @@
+# 38. Transformer Block From Scratch
+
+A Transformer block can be implemented from its components:
+
+```text
+x
+ ↓
+LayerNorm
+ ↓
+Multi-Head Self-Attention
+ ↓
+Residual Addition
+ ↓
+LayerNorm
+ ↓
+Feed-Forward Network
+ ↓
+Residual Addition
+```
+
+Each component can be implemented as an `nn.Module`.
+
+The block is then repeated to build a Transformer.

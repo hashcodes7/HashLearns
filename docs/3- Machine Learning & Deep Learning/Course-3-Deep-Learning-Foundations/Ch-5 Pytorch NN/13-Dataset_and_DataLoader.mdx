@@ -1,0 +1,44 @@
+# 13. Dataset and DataLoader
+
+PyTorch provides `Dataset` and `DataLoader` for working with training data.
+
+```python
+from torch.utils.data import TensorDataset, DataLoader
+
+dataset = TensorDataset(x, target)
+
+loader = DataLoader(
+    dataset,
+    batch_size=2,
+    shuffle=True
+)
+```
+
+Training becomes:
+
+```python
+for epoch in range(10):
+
+    for batch_x, batch_target in loader:
+
+        optimizer.zero_grad()
+
+        prediction = model(batch_x)
+
+        loss = loss_function(
+            prediction.squeeze(),
+            batch_target
+        )
+
+        loss.backward()
+
+        optimizer.step()
+```
+
+Important concepts:
+
+- dataset = complete training data
+- batch = subset of examples
+- batch size = number of examples processed together
+- epoch = one complete pass through the dataset
+- shuffle = randomize training-example order

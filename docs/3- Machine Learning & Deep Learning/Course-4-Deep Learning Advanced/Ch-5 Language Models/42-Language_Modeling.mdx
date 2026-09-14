@@ -1,0 +1,22 @@
+# 42. Language Modeling
+
+A language model learns to predict the next token.
+
+Example:
+
+```text
+The cat is
+       ↓
+     next token
+```
+
+Training creates input-target pairs:
+
+```text
+input:  The cat is
+target: cat is sleeping
+```
+
+The model produces logits for possible next tokens.
+
+Cross-entropy loss compares those logits with the correct next token.

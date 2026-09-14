@@ -1,0 +1,40 @@
+# 15. Binary Classification
+
+Regression predicts continuous values.
+
+Classification predicts classes.
+
+For binary classification:
+
+```text
+0 or 1
+```
+
+A model can produce a logit:
+
+$$
+z
+$$
+
+Convert it into a probability with sigmoid:
+
+$$
+\sigma(z)=\frac{1}{1+e^{-z}}
+$$
+
+A common decision rule is:
+
+```text
+probability >= 0.5 → class 1
+probability < 0.5  → class 0
+```
+
+For training, binary cross-entropy is commonly used.
+
+In PyTorch:
+
+```python
+loss_function = torch.nn.BCEWithLogitsLoss()
+```
+
+This combines sigmoid and binary cross-entropy in a numerically stable operation.

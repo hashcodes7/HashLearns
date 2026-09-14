@@ -1,0 +1,38 @@
+# 3. Training a Neuron
+
+Training repeatedly performs:
+
+```text
+prediction
+   ↓
+loss
+   ↓
+gradients
+   ↓
+parameter update
+   ↓
+repeat
+```
+
+```python
+x = 3
+target = 10
+
+w = 2
+b = 1
+
+learning_rate = 0.01
+
+for step in range(100):
+    prediction = w * x + b
+    error = target - prediction
+    loss = error ** 2
+
+    dw = -2 * x * error
+    db = -2 * error
+
+    w -= learning_rate * dw
+    b -= learning_rate * db
+```
+
+The parameters gradually move toward values that reduce the loss.

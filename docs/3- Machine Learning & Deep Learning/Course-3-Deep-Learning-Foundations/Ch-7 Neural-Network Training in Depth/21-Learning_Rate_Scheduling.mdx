@@ -1,0 +1,26 @@
+# 21. Learning-Rate Scheduling
+
+The learning rate does not always need to remain constant.
+
+A scheduler can change it during training.
+
+Conceptually:
+
+```text
+large learning rate
+       ↓
+fast movement
+       ↓
+smaller learning rate
+       ↓
+fine adjustment
+```
+
+Common schedules include:
+
+- step decay
+- cosine decay
+- warmup
+- linear decay
+
+Learning-rate scheduling is especially important for large models.

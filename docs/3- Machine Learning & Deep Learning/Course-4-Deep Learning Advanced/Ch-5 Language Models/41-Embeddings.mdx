@@ -1,0 +1,24 @@
+# 41. Embeddings
+
+Token IDs are converted into vectors.
+
+An embedding matrix can be represented as:
+
+$$
+E\in\mathbb{R}^{V\times d}
+$$
+
+where:
+
+- $V$ = vocabulary size
+- $d$ = embedding dimension
+
+A token ID selects one row from the embedding matrix.
+
+```text
+Token ID
+   ↓
+Embedding table
+   ↓
+Vector
+```

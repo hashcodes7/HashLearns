@@ -1,0 +1,50 @@
+# 14. Training Improvements
+
+Important training hyperparameters include:
+
+- learning rate
+- batch size
+- number of epochs
+- optimizer
+
+## SGD
+
+```python
+optimizer = torch.optim.SGD(
+    model.parameters(),
+    lr=0.001
+)
+```
+
+## Adam
+
+```python
+optimizer = torch.optim.Adam(
+    model.parameters(),
+    lr=0.001
+)
+```
+
+The learning rate controls the size of parameter updates.
+
+Too large:
+
+```text
+unstable training
+```
+
+Too small:
+
+```text
+very slow training
+```
+
+A useful training process separates:
+
+```text
+training data
+validation data
+test data
+```
+
+so that model performance can be evaluated on unseen examples.

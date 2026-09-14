@@ -1,0 +1,35 @@
+# 24. CNN Architecture
+
+A basic CNN can be constructed from:
+
+```text
+Input
+ ↓
+Convolution
+ ↓
+ReLU
+ ↓
+Pooling
+ ↓
+Convolution
+ ↓
+ReLU
+ ↓
+Flatten
+ ↓
+Linear
+ ↓
+Output
+```
+
+PyTorch components include:
+
+```python
+nn.Conv2d
+nn.ReLU
+nn.MaxPool2d
+nn.Flatten
+nn.Linear
+```
+
+CNNs learn hierarchical visual representations.

@@ -1,0 +1,36 @@
+# 8. Backpropagation
+
+Backpropagation calculates how the loss changes with respect to each trainable parameter.
+
+For a chain:
+
+$$
+w\rightarrow z\rightarrow a\rightarrow y\rightarrow L
+$$
+
+the chain rule gives:
+
+$$
+\boxed{
+\frac{\partial L}{\partial w}
+=
+\frac{\partial L}{\partial y}
+\frac{\partial y}{\partial a}
+\frac{\partial a}{\partial z}
+\frac{\partial z}{\partial w}
+}
+$$
+
+Backpropagation calculates gradients.
+
+Gradient descent uses those gradients to update parameters:
+
+$$
+parameter_{new}
+=
+parameter_{old}
+-
+\eta\frac{\partial L}{\partial parameter}
+$$
+
+Backpropagation and gradient descent are therefore separate operations.

@@ -1,0 +1,27 @@
+# 18. Regularization
+
+Regularization reduces overfitting.
+
+Common techniques include:
+
+- weight decay
+- L2 regularization
+- dropout
+
+Example:
+
+```python
+optimizer = torch.optim.Adam(
+    model.parameters(),
+    lr=0.001,
+    weight_decay=1e-4
+)
+```
+
+Dropout randomly removes activations during training:
+
+```python
+dropout = nn.Dropout(0.2)
+```
+
+Regularization encourages the network to learn patterns that generalize rather than simply memorizing training examples.

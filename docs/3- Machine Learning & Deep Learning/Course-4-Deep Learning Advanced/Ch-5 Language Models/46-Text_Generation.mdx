@@ -1,0 +1,22 @@
+# 46. Text Generation
+
+After training, a language model generates text autoregressively.
+
+```text
+context
+ ↓
+predict next token
+ ↓
+append token
+ ↓
+predict next token
+ ↓
+repeat
+```
+
+Common decoding strategies include:
+
+- greedy decoding
+- temperature sampling
+- top-k sampling
+- top-p sampling

@@ -1,0 +1,34 @@
+# 5. Neuron Layers
+
+A layer contains multiple neurons.
+
+For three inputs and two neurons:
+
+```python
+import numpy as np
+
+x = np.array([2, 3, 4])
+
+W = np.array([
+    [1, 2, 3],
+    [2, 1, 1]
+])
+
+b = np.array([5, 2])
+
+y = W @ x + b
+```
+
+Output:
+
+```text
+[25 13]
+```
+
+The matrix form is:
+
+$$
+z=Wx+b
+$$
+
+Each output corresponds to one neuron.

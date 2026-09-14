@@ -1,11 +1,31 @@
+# 4.1 PyTorch_Intro
 Pytorch saves time because it keeps the parent function in memory so we dont have to manually use derivatives and chain rule
+So instead of manually writing:
+
+`dL_dy = -2 * (target - y)`  
+`dL_dw_output = dL_dy * a`  
+`dL_db_output = dL_dy`  
+`dL_da = dL_dy * w_output`  
+
+you simply do:
+
+`loss.backward()`
+
+Then PyTorch stores the gradients here:
+
+`W.grad`  
+`b_hidden.grad`  
+`w_output.grad`  
+`b_output.grad`  
+
+You then update them:  
+`with torch.no_grad():`  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`W -= learning_rate * W.grad`  
+
+## Pytorch Implementation of a single training step
+
 ```python
 import torch
-
-
-# -------------------------
-# Data
-# -------------------------
 
 x = torch.tensor([2.0, 3.0])
 target = torch.tensor(20.0)
@@ -77,30 +97,5 @@ with torch.no_grad():
 # Results
 # -------------------------
 
-print("prediction:", y.item())
-print("loss:", loss.item())
-
-print("dL/dW:")
-print(W.grad)
-
-print("dL/db_hidden:")
-print(b_hidden.grad)
-
-print("dL/dw_output:")
-print(w_output.grad)
-
-print("dL/db_output:")
-print(b_output.grad)
-
-print("updated W:")
-print(W)
-
-print("updated hidden bias:")
-print(b_hidden)
-
-print("updated output weights:")
-print(w_output)
-
-print("updated output bias:")
-print(b_output)
+print("prediction:", y.item(), "| loss:", loss.item(), "| dL/dW:", W.grad, "| dL/db_hidden:", b_hidden.grad, "| dL/dw_output:", w_output.grad, "| dL/db_output:", b_output.grad, "| updated W:", W, "| updated hidden bias:", b_hidden, "| updated output weights:", w_output, "| updated output bias:", b_output)
 ```

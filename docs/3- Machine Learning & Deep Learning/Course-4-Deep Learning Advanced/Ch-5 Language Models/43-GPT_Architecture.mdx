@@ -1,0 +1,21 @@
+# 43. GPT Architecture
+
+GPT is a decoder-only Transformer.
+
+A simplified structure is:
+
+```text
+Tokens
+ ↓
+Token Embeddings
+ ↓
+Positional Information
+ ↓
+Transformer Blocks
+ ↓
+Language-Model Head
+ ↓
+Logits
+```
+
+The Transformer blocks use causal self-attention so that each position can only use previous context.

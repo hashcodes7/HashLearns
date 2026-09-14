@@ -1,0 +1,19 @@
+# 51. QLoRA
+
+QLoRA combines quantization with LoRA.
+
+Conceptually:
+
+```text
+Pretrained model
+ ↓
+Quantized base weights
+ ↓
+LoRA adapters
+ ↓
+Train adapters
+```
+
+Quantization reduces the memory required by the base model.
+
+LoRA keeps the number of trainable parameters small.
