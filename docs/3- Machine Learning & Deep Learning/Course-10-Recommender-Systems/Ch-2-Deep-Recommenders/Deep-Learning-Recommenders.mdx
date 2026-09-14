@@ -1,7 +1,23 @@
 ---
-title: Deep Learning Recommenders
+title: "Deep Learning Recommenders"
 ---
 
-# Deep Recommenders
+# Deep Learning Recommenders
 
-Two-Tower Models, DLRM, and Embedding-based Retrieval.
+While Matrix Factorization is powerful, it struggles to incorporate context (like the time of day, the user's age, or the image on the thumbnail). Deep Learning revolutionized Recommender Systems by allowing us to feed arbitrary categorical and continuous features into neural networks.
+
+## The Two-Tower Architecture
+The industry standard for large-scale recommendation retrieval (used by Google, YouTube, and Twitter) is the **Two-Tower Model**:
+
+1. **User Tower**: A neural network that takes in all user features (watch history, age, location) and outputs a dense vector (User Embedding).
+2. **Item Tower**: A neural network that takes in all item features (video title, thumbnail, duration) and outputs a dense vector (Item Embedding).
+
+During training, the model tries to maximize the cosine similarity between the User Embedding and the Item Embedding if the user actually clicked the item.
+
+## DLRM (Deep Learning Recommendation Model)
+Developed by Meta, DLRM handles categorical data (like "User_ID" or "Ad_Category") using huge Embedding Tables, processes dense data (like "Time_Spent") via MLPs, and then computes interactions between them.
+
+## The Two-Stage Funnel
+In production, recommender systems don't just use one model. They use a funnel:
+1. **Retrieval**: (The Two-Tower Model) Scans 1 billion items and quickly retrieves the top 1,000 most relevant items using extremely fast Vector Search.
+2. **Ranking**: (A heavy Deep Neural Network) Takes those 1,000 items, looks at hundreds of complex features, and scores them to produce the final Top 10 to display to the user.

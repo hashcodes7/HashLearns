@@ -1,7 +1,37 @@
 ---
-title: Explainable AI (XAI)
+title: "Explainable AI (XAI)"
 ---
 
-# Explainable AI
+# Explainable AI (XAI)
 
-Content for SHAP values, LIME, and mechanistic interpretability.
+As deep neural networks become larger, they become "black boxes." If an AI denies a loan or misdiagnoses a patient, users (and regulators) demand to know *why* the decision was made.
+
+## 1. Feature Attribution Methods
+These methods tell you which input features contributed the most to the final output.
+
+* **LIME (Local Interpretable Model-agnostic Explanations)**: LIME tweaks the input data slightly (adds noise) and sees how the model's prediction changes. It uses these local changes to build a simple, readable linear model that approximates the complex neural network around that specific data point.
+* **SHAP (SHapley Additive exPlanations)**: Based on game theory. It systematically removes features from the input and calculates how much the prediction drops, perfectly distributing the "credit" for the prediction among the input features.
+
+## 2. Mechanistic Interpretability
+A rapidly growing field (spearheaded by researchers like Chris Olah at Anthropic). Instead of looking at inputs and outputs, mechanistic interpretability looks at individual neurons and attention heads inside a Transformer to figure out exactly what concepts they are representing. 
+(e.g., Finding the specific "Golden Gate Bridge" neuron inside Claude 3).
+
+## Python Implementation: SHAP
+
+`python
+import shap
+import xgboost
+import matplotlib.pyplot as plt
+
+# Train a model
+X, y = shap.datasets.adult()
+model = xgboost.XGBClassifier().fit(X, y)
+
+# Compute SHAP values
+explainer = shap.Explainer(model, X)
+shap_values = explainer(X)
+
+# Visualize the explanation of the very first prediction!
+# This plot will show exactly how features like Age and Education pushed the prediction up or down.
+# shap.plots.waterfall(shap_values[0])
+`

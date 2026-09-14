@@ -1,7 +1,32 @@
 ---
-title: Audio & Speech Processing
+title: "Audio & Speech Processing"
 ---
 
-# Audio & Speech
+# Audio & Speech Processing
 
-Content for Speech-to-Text (Whisper), Text-to-Speech (TTS), and audio spectrogram processing.
+Handling audio data requires unique preprocessing because raw audio waveforms (a list of amplitude values over time) are incredibly long and noisy.
+
+## Spectrograms
+The most common way deep learning models process audio is by completely ignoring the raw waveform and instead converting it into an image! 
+
+A **Mel-Spectrogram** maps time on the X-axis, frequency on the Y-axis, and volume as color intensity. By turning sound into a 2D image, researchers can simply use standard Vision models (like CNNs or Vision Transformers) to process audio!
+
+## Speech-to-Text (ASR)
+Automatic Speech Recognition (ASR) converts audio into text. **Whisper** (by OpenAI) is the state-of-the-art open-source model. It uses a Transformer architecture that takes an audio spectrogram as input and autoregressively generates text tokens, exactly like an LLM.
+
+## Text-to-Speech (TTS)
+TTS models take text tokens and generate raw audio waveforms. Modern systems (like ElevenLabs or VITS) are incredibly realistic because they learn the specific cadence, breathing, and pitch of human voices, rather than just stitching together robotic phonemes.
+
+## Python Implementation: Transcribing Audio with Whisper
+
+`python
+from transformers import pipeline
+
+# 1. Load the Whisper pipeline
+transcriber = pipeline("automatic-speech-recognition", model="openai/whisper-tiny.en")
+
+# 2. Transcribe an audio file!
+# (Assuming you have an audio file named 'sample.wav')
+# result = transcriber("sample.wav")
+# print(result["text"])
+`

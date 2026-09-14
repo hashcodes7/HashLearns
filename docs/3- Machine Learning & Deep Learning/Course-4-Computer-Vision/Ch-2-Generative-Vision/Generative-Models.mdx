@@ -1,7 +1,42 @@
 ---
-title: Generative Vision Models
+title: "Generative Vision Models"
 ---
 
-# Generative Vision
+# Generative Vision Models
 
-Content for GANs, VAEs, and Diffusion Models (Stable Diffusion).
+While standard CNNs are "Discriminative" (they look at an image and classify it as a cat or dog), Generative Vision models do the exact opposite: they learn the distribution of the data to *create entirely new images from scratch*.
+
+## 1. GANs (Generative Adversarial Networks)
+Invented by Ian Goodfellow in 2014, GANs pit two neural networks against each other:
+- **The Generator**: Tries to create fake images that look real.
+- **The Discriminator**: Looks at both real images and the Generator's fake images and tries to tell them apart.
+As they compete, the Generator becomes so good that the Discriminator can no longer distinguish real from fake.
+
+## 2. VAEs (Variational Autoencoders)
+VAEs compress an image down into a tiny, continuous mathematical "latent space" (the Encoder), and then try to reconstruct the original image from that compressed space (the Decoder). You can then sample random points in that latent space to generate new images.
+
+## 3. Diffusion Models (The Modern King)
+Diffusion models (the architecture behind **Midjourney**, **DALL-E 3**, and **Stable Diffusion**) work in two steps:
+1. **Forward Process**: Slowly add random Gaussian noise to a real image until it becomes pure static.
+2. **Reverse Process**: Train a Neural Network (usually a U-Net) to slowly remove the noise, step-by-step, until a crisp image emerges from pure static.
+
+## Python Implementation: Stable Diffusion via [Hugging Face](../../Course-1-Mathematics and Frameworks/Ch-10 NLP-and-LLM-Ecosystems/HuggingFace.mdx)
+
+`python
+from diffusers import StableDiffusionPipeline
+import torch
+
+# Load the pre-trained diffusion model
+model_id = "runwayml/stable-diffusion-v1-5"
+pipe = StableDiffusionPipeline.from_pretrained(model_id, torch_dtype=torch.float16)
+
+# Move to GPU if available
+pipe = pipe.to("cuda")
+
+# Generate an image from a text prompt!
+prompt = "A highly detailed portrait of a futuristic cyberpunk cat, neon lights"
+image = pipe(prompt).images[0]
+
+# Save the image
+image.save("cyberpunk_cat.png")
+`

@@ -1,7 +1,46 @@
 ---
-title: Multimodal AI
+title: "Multimodal Models"
 ---
 
 # Multimodal AI
 
-Content for CLIP, Vision-Language Models (LLaVA), and bridging text, vision, and audio.
+For years, AI models lived in silos: CNNs only looked at images, and Transformers only read text. **Multimodal AI** bridges these gaps, creating models that can natively understand text, images, video, and audio simultaneously—much like a human brain.
+
+## 1. CLIP (Contrastive Language-Image Pretraining)
+Developed by OpenAI, CLIP is arguably the most important multimodal model. It was trained on hundreds of millions of image-text pairs from the internet. 
+
+CLIP uses a Text Encoder and an Image Encoder. It is trained using a "Contrastive Loss"—it learns to make the embedding vector for an image (like a picture of a dog) perfectly match the embedding vector for its corresponding text ("a picture of a dog"). 
+
+**Why it matters:** CLIP allows you to search through images using text prompts, and acts as the "vision" component for many other models (including Stable Diffusion and DALL-E).
+
+## 2. Vision-Language Models (VLMs)
+Models like **GPT-4o** and **LLaVA** are capable of taking an image as input alongside your text prompt.
+Under the hood, these models typically use a CLIP Vision Encoder to chop the image up into embedding tokens, and then simply feed those image tokens directly into a standard LLM alongside the text tokens!
+
+## Python Implementation: Zero-Shot Image Classification with CLIP
+
+`python
+from PIL import Image
+import requests
+from transformers import CLIPProcessor, CLIPModel
+
+# 1. Load the Model and Processor
+model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
+processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
+
+# 2. Get an image
+url = "http://images.cocodataset.org/val2017/000000039769.jpg" # Two cats sleeping
+image = Image.open(requests.get(url, stream=True).raw)
+
+# 3. Define classes you want to search for
+choices = ["a photo of a cat", "a photo of a dog", "a photo of a bird"]
+
+# 4. Process and Predict
+inputs = processor(text=choices, images=image, return_tensors="pt", padding=True)
+outputs = model(**inputs)
+logits_per_image = outputs.logits_per_image  # image-text similarity score
+probs = logits_per_image.softmax(dim=1)  # convert to probabilities
+
+for choice, prob in zip(choices, probs[0]):
+    print(f"{choice}: {prob.item()*100:.2f}%")
+`

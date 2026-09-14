@@ -1,7 +1,57 @@
 ---
-title: MDP & Q-Learning
+title: "MDP & Q-Learning"
 ---
 
-# RL Fundamentals
+# Reinforcement Learning Fundamentals
 
-Markov Decision Processes and Q-Learning.
+Reinforcement Learning (RL) is the science of decision making. Instead of training on massive static datasets, an **Agent** learns to interact with an **Environment** through trial and error, receiving **Rewards** or **Penalties** based on its actions.
+
+## Core Concepts (MDP)
+Almost all RL problems are framed as a **Markov Decision Process (MDP)**:
+- **State ($)**: Where the agent currently is.
+- **Action ($)**: What the agent can do.
+- **Reward ($)**: The feedback from the environment.
+- **Policy ($\pi$)**: The strategy the agent uses to decide the next action.
+- **Value ($)**: The expected long-term return of being in a state.
+
+## Q-Learning
+Q-Learning is a foundational RL algorithm. The agent builds a "Q-Table"—a cheat sheet where rows are States and columns are Actions. The value in each cell (the Q-Value) represents the maximum expected future reward for taking that action in that state.
+
+The core math behind updating this table is the **Bellman Equation**:
+^{new}(s, a) = Q(s, a) + \alpha [R + \gamma \max Q(s', a') - Q(s, a)]$
+Where:
+- $\alpha$ is the learning rate.
+- $\gamma$ is the discount factor (how much we care about future rewards vs immediate ones).
+
+## Python Implementation: Basic Q-Learning loop
+
+`python
+import numpy as np
+
+# Setup
+states = 5
+actions = 2
+q_table = np.zeros((states, actions)) # Initialize Q-Table with zeros
+learning_rate = 0.1
+discount_factor = 0.9
+
+# Simulated training loop
+for episode in range(1000):
+    state = 0 # Start state
+    done = False
+    
+    while not done:
+        # 1. Choose action (Exploration vs Exploitation)
+        action = np.argmax(q_table[state]) # Simplify to pure exploitation for this example
+        
+        # 2. Take action, observe new state and reward (Simulation)
+        next_state = min(state + 1, states - 1)
+        reward = 10 if next_state == states - 1 else 0
+        done = (next_state == states - 1)
+        
+        # 3. Update Q-Table (Bellman Equation)
+        best_future_q = np.max(q_table[next_state])
+        q_table[state, action] = q_table[state, action] + learning_rate * (reward + discount_factor * best_future_q - q_table[state, action])
+        
+        state = next_state
+`

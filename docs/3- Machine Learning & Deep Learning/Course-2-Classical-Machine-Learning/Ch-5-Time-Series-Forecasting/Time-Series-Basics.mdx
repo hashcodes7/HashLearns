@@ -1,7 +1,45 @@
 ---
-title: Time Series Basics
+title: "Time Series Basics"
 ---
 
 # Time Series Forecasting
 
-Content for ARIMA, Prophet, and traditional time series methods.
+Time series data is a sequence of data points indexed in time order. Unlike standard tabular data, the order of the data absolutely matters (e.g., stock prices, weather forecasting, server loads).
+
+## Core Concepts
+- **Trend**: The long-term progression of the series (increasing or decreasing).
+- **Seasonality**: Repeating, predictable patterns at fixed intervals (e.g., higher ice cream sales in summer).
+- **Stationarity**: A stationary time series has constant mean and variance over time. Most statistical models require stationarity.
+
+## Classical Methods
+1. **ARIMA (AutoRegressive Integrated Moving Average)**: The gold standard of classical time series.
+2. **Exponential Smoothing**: Giving more weight to recent observations.
+3. **Prophet (by Meta)**: An incredibly powerful library designed to handle time series with strong seasonal effects and missing data with minimal tuning.
+
+## Python Implementation: Prophet
+
+`python
+import pandas as pd
+from prophet import Prophet
+import matplotlib.pyplot as plt
+
+# 1. Create a dummy DataFrame (Prophet requires columns 'ds' and 'y')
+df = pd.DataFrame({
+    'ds': pd.date_range(start='2023-01-01', periods=100, freq='D'),
+    'y': [x + (x%7)*2 for x in range(100)] # Simulated trend + weekly seasonality
+})
+
+# 2. Initialize and Fit the Model
+m = Prophet()
+m.fit(df)
+
+# 3. Create future dataframe and Predict
+future = m.make_future_dataframe(periods=30)
+forecast = m.predict(future)
+
+# 4. View results
+print(forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].tail())
+`
+
+## Why it is essential for AI
+While Deep Learning (LSTMs) are popular, traditional methods like ARIMA and Prophet are often much faster to train, require significantly less data, and are far easier to interpret in business settings (like supply chain forecasting).
