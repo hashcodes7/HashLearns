@@ -1,0 +1,38 @@
+---
+title: Hugging Face
+---
+
+# Hugging Face (Transformers)
+
+Hugging Face provides the 	ransformers library, which has become the de facto standard for natural language processing (NLP) and working with pre-trained Large Language Models (LLMs).
+
+## Core Libraries
+
+- **Transformers**: State-of-the-art pre-trained models (BERT, GPT, Llama) with a unified API.
+- **Datasets**: One-line access to thousands of public datasets.
+- **Tokenizers**: Fast and efficient text tokenization.
+- **PEFT**: Parameter-Efficient Fine-Tuning (e.g., LoRA).
+
+## Basic Usage
+
+`python
+from transformers import pipeline
+from transformers import AutoTokenizer, AutoModelForCausalLM
+
+# 1. Quick Inference using Pipelines
+classifier = pipeline("sentiment-analysis")
+result = classifier("I love building AI applications!")
+print(result) # [{"label": "POSITIVE", "score": 0.99}]
+
+# 2. Manual Model and Tokenizer loading
+model_id = "gpt2"
+tokenizer = AutoTokenizer.from_pretrained(model_id)
+model = AutoModelForCausalLM.from_pretrained(model_id)
+
+inputs = tokenizer("The future of AI is", return_tensors="pt")
+outputs = model.generate(**inputs, max_length=20)
+print(tokenizer.decode(outputs[0]))
+`
+
+## Why it is essential for AI
+Instead of training models from scratch (which costs millions), Hugging Face allows you to download world-class open-weight models and fine-tune or run inference on them immediately.

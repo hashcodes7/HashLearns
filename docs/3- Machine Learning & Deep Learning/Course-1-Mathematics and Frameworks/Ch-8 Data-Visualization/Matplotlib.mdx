@@ -1,0 +1,49 @@
+---
+title: Matplotlib
+---
+
+# Matplotlib & Seaborn
+
+Matplotlib is a comprehensive library for creating static, animated, and interactive visualizations in Python. Seaborn is a high-level interface built on top of Matplotlib that makes creating beautiful statistical graphics much easier.
+
+## Basic Usage (Matplotlib)
+
+`python
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Data
+x = np.linspace(0, 10, 100)
+y = np.sin(x)
+
+# Create a plot
+plt.figure(figsize=(8, 4))
+plt.plot(x, y, label="sin(x)", color="blue")
+plt.title("Sine Wave")
+plt.xlabel("X-axis")
+plt.ylabel("Y-axis")
+plt.legend()
+# plt.show()
+`
+
+## Basic Usage (Seaborn)
+
+`python
+import seaborn as sns
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Dummy data
+df = pd.DataFrame({
+    "Category": ["A", "A", "B", "B", "C", "C"],
+    "Values": [10, 12, 15, 14, 8, 9]
+})
+
+# Create a beautiful boxplot
+sns.boxplot(x="Category", y="Values", data=df)
+plt.title("Distribution by Category")
+# plt.show()
+`
+
+## Why it is essential for AI
+Visualizing data distributions, spotting outliers, and plotting loss curves during training are critical steps in the AI workflow.

@@ -1,0 +1,41 @@
+---
+title: LangChain
+---
+
+# LangChain
+
+LangChain is a framework for developing applications powered by language models. It provides the abstractions needed to chain together LLMs with other components, such as external data sources, memory, and tools.
+
+## Key Concepts
+
+- **Prompts**: Templating and managing inputs to LLMs.
+- **Chains**: Sequences of calls (e.g., Prompt -> LLM -> Output Parser).
+- **Agents**: Systems where the LLM dynamically decides which tools to call to achieve a goal.
+- **Retrievers**: Interfaces for fetching relevant documents from Vector Databases (for RAG).
+
+## Basic Usage
+
+`python
+from langchain_openai import ChatOpenAI
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.output_parsers import StrOutputParser
+
+# 1. Initialize Model
+llm = ChatOpenAI(model="gpt-3.5-turbo")
+
+# 2. Create Prompt Template
+prompt = ChatPromptTemplate.from_template("Tell me a short joke about {topic}")
+
+# 3. Create Output Parser
+parser = StrOutputParser()
+
+# 4. Build Chain using LCEL (LangChain Expression Language)
+chain = prompt | llm | parser
+
+# 5. Invoke
+result = chain.invoke({"topic": "artificial intelligence"})
+print(result)
+`
+
+## Why it is essential for AI
+LLMs are powerful, but they lack memory and cannot act on the outside world. LangChain provides the scaffolding to turn a raw text-generator into a robust, autonomous, data-aware application.

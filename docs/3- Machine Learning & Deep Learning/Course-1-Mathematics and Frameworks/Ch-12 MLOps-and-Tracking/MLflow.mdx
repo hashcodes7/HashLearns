@@ -1,0 +1,43 @@
+---
+title: MLflow
+---
+
+# MLflow
+
+MLflow is an open-source platform for managing the end-to-end machine learning lifecycle. It tackles four primary functions: tracking experiments, packaging code into reproducible runs, sharing and deploying models, and providing a centralized model registry.
+
+## Core Components
+
+- **Tracking**: Record and query experiments (code, data, config, results).
+- **Projects**: Package data science code in a reusable, reproducible form.
+- **Models**: Deploy machine learning models in diverse serving environments.
+- **Registry**: Centralized repository to collaboratively manage the full lifecycle of an MLflow Model.
+
+## Basic Usage
+
+`python
+import mlflow
+import mlflow.sklearn
+from sklearn.ensemble import RandomForestRegressor
+
+# Start an MLflow run
+with mlflow.start_run():
+    
+    # Log parameters
+    n_estimators = 100
+    mlflow.log_param("n_estimators", n_estimators)
+    
+    # Train model
+    model = RandomForestRegressor(n_estimators=n_estimators)
+    # model.fit(X_train, y_train) 
+    
+    # Log metrics
+    # mse = mean_squared_error(y_test, predictions)
+    # mlflow.log_metric("mse", mse)
+    
+    # Log the model artifact
+    # mlflow.sklearn.log_model(model, "random_forest_model")
+`
+
+## Why it is essential for AI
+When you run 50 different experiments with different learning rates, datasets, and architectures, you will forget what produced the best result. MLflow keeps a rigorous, searchable database of every experiment you run.

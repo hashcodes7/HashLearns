@@ -1,9 +1,9 @@
 ---
-id: pytorch-training-2
+id: [pytorch](../../Course-1-Mathematics and Frameworks/Ch-9 Deep-Learning-Frameworks/PyTorch.mdx)-training-2
 ---
 # 4.2 PyTorch_Training
 
-## 1. From Manual Neural Networks to PyTorch
+## 1. From Manual Neural Networks to [PyTorch](../../Course-1-Mathematics and Frameworks/Ch-9 Deep-Learning-Frameworks/PyTorch.mdx)
 
 We previously trained the same network manually:
 
@@ -17,7 +17,7 @@ $$
 L=(target-y)^2
 $$
 
-PyTorch keeps the same mathematics but automates gradient calculation.
+[PyTorch](../../Course-1-Mathematics and Frameworks/Ch-9 Deep-Learning-Frameworks/PyTorch.mdx) keeps the same mathematics but automates gradient calculation.
 
 $$
 \boxed{
@@ -99,7 +99,7 @@ b_output = torch.tensor(
 )
 ```
 
-`requires_grad=True` tells PyTorch to track operations involving these parameters so their gradients can be calculated.
+`requires_grad=True` tells [PyTorch](../../Course-1-Mathematics and Frameworks/Ch-9 Deep-Learning-Frameworks/PyTorch.mdx) to track operations involving these parameters so their gradients can be calculated.
 
 ---
 
@@ -139,7 +139,7 @@ $$
 
 Previously we manually calculated all derivatives using the chain rule.
 
-PyTorch performs this automatically:
+[PyTorch](../../Course-1-Mathematics and Frameworks/Ch-9 Deep-Learning-Frameworks/PyTorch.mdx) performs this automatically:
 
 ```python
 loss.backward()
@@ -208,7 +208,7 @@ with torch.no_grad():
 
 ## 7. Clearing Gradients
 
-PyTorch gradients accumulate.
+[PyTorch](../../Course-1-Mathematics and Frameworks/Ch-9 Deep-Learning-Frameworks/PyTorch.mdx) gradients accumulate.
 
 When training repeatedly, gradients must be cleared before the next backward pass.
 
@@ -313,11 +313,11 @@ Repeat
 
 ---
 
-## 9. Standard PyTorch Optimizer
+## 9. Standard [PyTorch](../../Course-1-Mathematics and Frameworks/Ch-9 Deep-Learning-Frameworks/PyTorch.mdx) Optimizer
 
 The manual update above is useful for understanding the mechanics.
 
-In normal PyTorch training, an optimizer handles parameter updates.
+In normal [PyTorch](../../Course-1-Mathematics and Frameworks/Ch-9 Deep-Learning-Frameworks/PyTorch.mdx) training, an optimizer handles parameter updates.
 
 ```python
 optimizer = torch.optim.SGD(
@@ -348,7 +348,7 @@ for step in range(1000):
     optimizer.step()
 ```
 
-The standard PyTorch pattern is:
+The standard [PyTorch](../../Course-1-Mathematics and Frameworks/Ch-9 Deep-Learning-Frameworks/PyTorch.mdx) pattern is:
 
 $$
 \boxed{
@@ -366,7 +366,7 @@ $$
 
 ---
 
-## 10. Manual Neural Network vs PyTorch
+## 10. Manual Neural Network vs [PyTorch](../../Course-1-Mathematics and Frameworks/Ch-9 Deep-Learning-Frameworks/PyTorch.mdx)
 
 ### Manual
 
@@ -382,7 +382,7 @@ Calculate gradients
 Update parameters
 ```
 
-### PyTorch
+### [PyTorch](../../Course-1-Mathematics and Frameworks/Ch-9 Deep-Learning-Frameworks/PyTorch.mdx)
 
 ```text
 Forward
@@ -400,7 +400,7 @@ The mathematics has not changed.
 
 $$
 \boxed{
-\text{PyTorch Autograd}
+\text{[PyTorch](../../Course-1-Mathematics and Frameworks/Ch-9 Deep-Learning-Frameworks/PyTorch.mdx) Autograd}
 =
 \text{automatic chain-rule differentiation}
 }
@@ -408,9 +408,9 @@ $$
 
 ---
 
-## 11. Important PyTorch Concepts
+## 11. Important [PyTorch](../../Course-1-Mathematics and Frameworks/Ch-9 Deep-Learning-Frameworks/PyTorch.mdx) Concepts
 
-| Concept | PyTorch |
+| Concept | [PyTorch](../../Course-1-Mathematics and Frameworks/Ch-9 Deep-Learning-Frameworks/PyTorch.mdx) |
 |---|---|
 | Tensor | `torch.tensor()` |
 | Gradient tracking | `requires_grad=True` |
@@ -422,6 +422,6 @@ $$
 | Clear gradients | `optimizer.zero_grad()` |
 | Parameter update | `optimizer.step()` |
 
-This is the first complete PyTorch training implementation of our master neural network.
+This is the first complete [PyTorch](../../Course-1-Mathematics and Frameworks/Ch-9 Deep-Learning-Frameworks/PyTorch.mdx) training implementation of our master neural network.
 
-Next, we can replace the manually managed parameters with PyTorch's neural-network abstractions such as `nn.Module` and `nn.Linear`.
+Next, we can replace the manually managed parameters with [PyTorch](../../Course-1-Mathematics and Frameworks/Ch-9 Deep-Learning-Frameworks/PyTorch.mdx)'s neural-network abstractions such as `nn.Module` and `nn.Linear`.

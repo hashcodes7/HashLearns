@@ -1,0 +1,45 @@
+---
+title: PyTorch
+---
+
+# PyTorch
+
+PyTorch is a highly popular open-source machine learning framework, primarily developed by Meta AI Research lab. It is the dominant framework in AI research and is rapidly growing in industry due to its dynamic computation graph and Pythonic feel.
+
+## Key Concepts
+
+- **Tensors**: Similar to [NumPy](../Ch-5 Numerical-Computing/NumPy.mdx) arrays, but can be moved to GPUs for hardware acceleration.
+- **Autograd**: Automatic differentiation engine that computes gradients for backpropagation.
+- **nn.Module**: The base class for all neural network modules.
+
+## Basic Usage
+
+`python
+import torch
+import torch.nn as nn
+
+# 1. Create Tensors
+x = torch.randn(32, 10) # Batch of 32, 10 features
+y = torch.randint(0, 2, (32,)) # Binary targets
+
+# 2. Define a Model
+class SimpleNN(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.fc1 = nn.Linear(10, 16)
+        self.relu = nn.ReLU()
+        self.fc2 = nn.Linear(16, 2)
+        
+    def forward(self, x):
+        x = self.relu(self.fc1(x))
+        return self.fc2(x)
+
+model = SimpleNN()
+
+# 3. Forward Pass
+logits = model(x)
+print(logits.shape) # Output: torch.Size([32, 2])
+`
+
+## Why it is essential for AI
+If you are building LLMs, Vision models, or doing any modern Deep Learning, you will almost certainly be using PyTorch.

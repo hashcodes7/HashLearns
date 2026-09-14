@@ -1,0 +1,45 @@
+---
+title: Scikit-Learn
+---
+
+# Scikit-Learn
+
+Scikit-Learn (sklearn) is the premier general-purpose machine learning library in Python. It features various classification, regression and clustering algorithms, and is designed to interoperate with [NumPy](../Ch-5 Numerical-Computing/NumPy.mdx) and SciPy.
+
+## Key Features
+
+- **Supervised Learning**: Linear Regression, SVMs, Random Forests, Gradient Boosting.
+- **Unsupervised Learning**: K-Means, PCA, t-SNE.
+- **Model Selection & Evaluation**: Cross-validation, Grid Search, Metrics (Accuracy, F1, MSE).
+- **Preprocessing**: Scaling, Encoding, Imputation.
+
+## Basic Usage
+
+`python
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+import numpy as np
+
+# Dummy data
+X = np.random.rand(100, 5) # 100 samples, 5 features
+y = np.random.randint(0, 2, 100) # Binary target
+
+# 1. Split data
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+
+# 2. Initialize model
+model = RandomForestClassifier(n_estimators=100)
+
+# 3. Train model
+model.fit(X_train, y_train)
+
+# 4. Predict
+predictions = model.predict(X_test)
+
+# 5. Evaluate
+print(f"Accuracy: {accuracy_score(y_test, predictions)}")
+`
+
+## Why it is essential for AI
+While Deep Learning is popular, classical ML algorithms are often faster, more interpretable, and require less data. Sklearn provides a unified, beautiful API that makes building ML pipelines incredibly straightforward.

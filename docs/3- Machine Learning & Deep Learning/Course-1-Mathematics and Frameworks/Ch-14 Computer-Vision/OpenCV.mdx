@@ -1,0 +1,43 @@
+---
+title: OpenCV
+---
+
+# OpenCV
+
+OpenCV (Open Source Computer Vision Library) is an open-source computer vision and machine learning software library. It was built to provide a common infrastructure for computer vision applications and to accelerate the use of machine perception in commercial products.
+
+## Key Features
+
+- Image and Video I/O
+- Image filtering, transformations, and color space conversions
+- Feature detection and extraction (SIFT, SURF, ORB)
+- Object detection (Haar cascades, HOG)
+
+## Basic Usage
+
+`python
+import cv2
+import matplotlib.pyplot as plt
+
+# 1. Read an image
+# image = cv2.imread("image.jpg")
+
+# 2. Convert BGR (OpenCV default) to RGB (Matplotlib default)
+# image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
+# 3. Convert to Grayscale
+# gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+# 4. Apply Gaussian Blur
+# blurred = cv2.GaussianBlur(gray_image, (5, 5), 0)
+
+# 5. Edge Detection (Canny)
+# edges = cv2.Canny(blurred, 100, 200)
+
+# Display using Matplotlib
+# plt.imshow(edges, cmap="gray")
+# plt.show()
+`
+
+## Why it is essential for AI
+If you are building computer vision pipelines (self-driving cars, facial recognition, medical imaging), you need to load, resize, crop, and normalize images incredibly fast before feeding them into [PyTorch](../Ch-9 Deep-Learning-Frameworks/PyTorch.mdx) neural networks. OpenCV is the industry standard for this preprocessing.
