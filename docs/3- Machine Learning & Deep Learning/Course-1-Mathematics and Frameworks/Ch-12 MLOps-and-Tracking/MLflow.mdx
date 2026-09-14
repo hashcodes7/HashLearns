@@ -15,7 +15,7 @@ MLflow is an open-source platform for managing the end-to-end machine learning l
 
 ## Basic Usage
 
-`python
+```python
 import mlflow
 import mlflow.sklearn
 from sklearn.ensemble import RandomForestRegressor
@@ -37,7 +37,7 @@ with mlflow.start_run():
     
     # Log the model artifact
     # mlflow.sklearn.log_model(model, "random_forest_model")
-`
+```
 
 ## Why it is essential for AI
 When you run 50 different experiments with different learning rates, datasets, and architectures, you will forget what produced the best result. MLflow keeps a rigorous, searchable database of every experiment you run.

@@ -25,7 +25,7 @@ Writing RL algorithms from scratch is notoriously difficult to debug. Standard p
 - **Stable-Baselines3**: The industry standard for Deep RL algorithms built on PyTorch.
 - **Ray RLlib**: For distributed, enterprise-scale reinforcement learning.
 
-`python
+```python
 # Example: Training a PPO agent to play a gym environment using Stable-Baselines3
 # !pip install stable-baselines3 gym
 
@@ -43,4 +43,4 @@ model.learn(total_timesteps=10000)
 
 # 4. Save the model
 model.save("ppo_cartpole")
-`
+```

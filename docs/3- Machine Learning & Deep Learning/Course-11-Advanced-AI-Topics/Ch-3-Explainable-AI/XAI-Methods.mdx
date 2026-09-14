@@ -18,7 +18,7 @@ A rapidly growing field (spearheaded by researchers like Chris Olah at Anthropic
 
 ## Python Implementation: SHAP
 
-`python
+```python
 import shap
 import xgboost
 import matplotlib.pyplot as plt
@@ -34,4 +34,4 @@ shap_values = explainer(X)
 # Visualize the explanation of the very first prediction!
 # This plot will show exactly how features like Age and Education pushed the prediction up or down.
 # shap.plots.waterfall(shap_values[0])
-`
+```

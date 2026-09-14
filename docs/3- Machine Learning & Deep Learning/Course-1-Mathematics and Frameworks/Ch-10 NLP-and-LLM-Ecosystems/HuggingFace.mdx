@@ -15,7 +15,7 @@ Hugging Face provides the 	ransformers library, which has become the de facto st
 
 ## Basic Usage
 
-`python
+```python
 from transformers import pipeline
 from transformers import AutoTokenizer, AutoModelForCausalLM
 
@@ -32,7 +32,7 @@ model = AutoModelForCausalLM.from_pretrained(model_id)
 inputs = tokenizer("The future of AI is", return_tensors="pt")
 outputs = model.generate(**inputs, max_length=20)
 print(tokenizer.decode(outputs[0]))
-`
+```
 
 ## Why it is essential for AI
 Instead of training models from scratch (which costs millions), Hugging Face allows you to download world-class open-weight models and fine-tune or run inference on them immediately.

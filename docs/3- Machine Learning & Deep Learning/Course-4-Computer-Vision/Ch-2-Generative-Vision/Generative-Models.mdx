@@ -22,7 +22,7 @@ Diffusion models (the architecture behind **Midjourney**, **DALL-E 3**, and **St
 
 ## Python Implementation: Stable Diffusion via [Hugging Face](../../Course-1-Mathematics and Frameworks/Ch-10 NLP-and-LLM-Ecosystems/HuggingFace.mdx)
 
-`python
+```python
 from diffusers import StableDiffusionPipeline
 import torch
 
@@ -39,4 +39,4 @@ image = pipe(prompt).images[0]
 
 # Save the image
 image.save("cyberpunk_cat.png")
-`
+```

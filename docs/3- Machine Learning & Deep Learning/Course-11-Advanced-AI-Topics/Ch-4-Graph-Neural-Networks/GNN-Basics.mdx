@@ -24,7 +24,7 @@ If you have a 3-layer GNN, each node gathers information from its neighbors, its
 
 ## Python Implementation: PyTorch Geometric
 
-`python
+```python
 # PyTorch Geometric (PyG) is the standard library for GNNs
 import torch
 import torch.nn.functional as F
@@ -51,4 +51,4 @@ class GCN(torch.nn.Module):
         x = self.conv2(x, edge_index)
 
         return F.log_softmax(x, dim=1)
-`
+```

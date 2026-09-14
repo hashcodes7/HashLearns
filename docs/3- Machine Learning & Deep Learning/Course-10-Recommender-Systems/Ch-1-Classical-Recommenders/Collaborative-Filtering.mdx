@@ -23,7 +23,7 @@ When you take the dot product of a User Embedding and an Item Embedding, you get
 
 ## Python Implementation: Matrix Factorization
 
-`python
+```python
 import numpy as np
 from sklearn.decomposition import TruncatedSVD
 
@@ -48,4 +48,4 @@ predicted_ratings = np.dot(user_embeddings, item_embeddings)
 
 print("Original Matrix:\n", ratings_matrix)
 print("\nPredicted Ratings Matrix:\n", np.round(predicted_ratings, 1))
-`
+```

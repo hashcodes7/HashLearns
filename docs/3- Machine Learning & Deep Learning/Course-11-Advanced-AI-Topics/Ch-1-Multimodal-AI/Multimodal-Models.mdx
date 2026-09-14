@@ -19,7 +19,7 @@ Under the hood, these models typically use a CLIP Vision Encoder to chop the ima
 
 ## Python Implementation: Zero-Shot Image Classification with CLIP
 
-`python
+```python
 from PIL import Image
 import requests
 from transformers import CLIPProcessor, CLIPModel
@@ -43,4 +43,4 @@ probs = logits_per_image.softmax(dim=1)  # convert to probabilities
 
 for choice, prob in zip(choices, probs[0]):
     print(f"{choice}: {prob.item()*100:.2f}%")
-`
+```

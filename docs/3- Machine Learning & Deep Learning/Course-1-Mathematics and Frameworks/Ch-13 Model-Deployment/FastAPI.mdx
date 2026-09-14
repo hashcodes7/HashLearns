@@ -14,7 +14,7 @@ FastAPI is a modern, fast (high-performance), web framework for building APIs wi
 
 ## Basic Usage
 
-`python
+```python
 from fastapi import FastAPI
 from pydantic import BaseModel
 
@@ -38,7 +38,7 @@ def predict(request: InferenceRequest):
     }
 
 # Run with: uvicorn main:app --reload
-`
+```
 
 ## Why it is essential for AI
 Training a model is only half the battle. To actually use the model in a real product, you need to expose it over an HTTP API so web apps, mobile apps, and other services can send data to it and receive predictions.

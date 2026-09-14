@@ -19,7 +19,7 @@ TTS models take text tokens and generate raw audio waveforms. Modern systems (li
 
 ## Python Implementation: Transcribing Audio with Whisper
 
-`python
+```python
 from transformers import pipeline
 
 # 1. Load the Whisper pipeline
@@ -29,4 +29,4 @@ transcriber = pipeline("automatic-speech-recognition", model="openai/whisper-tin
 # (Assuming you have an audio file named 'sample.wav')
 # result = transcriber("sample.wav")
 # print(result["text"])
-`
+```

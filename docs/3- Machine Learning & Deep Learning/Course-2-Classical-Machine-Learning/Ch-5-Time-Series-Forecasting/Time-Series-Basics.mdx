@@ -18,7 +18,7 @@ Time series data is a sequence of data points indexed in time order. Unlike stan
 
 ## Python Implementation: Prophet
 
-`python
+```python
 import pandas as pd
 from prophet import Prophet
 import matplotlib.pyplot as plt
@@ -39,7 +39,7 @@ forecast = m.predict(future)
 
 # 4. View results
 print(forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].tail())
-`
+```
 
 ## Why it is essential for AI
 While Deep Learning (LSTMs) are popular, traditional methods like ARIMA and Prophet are often much faster to train, require significantly less data, and are far easier to interpret in business settings (like supply chain forecasting).

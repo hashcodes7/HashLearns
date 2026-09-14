@@ -15,7 +15,7 @@ LangChain is a framework for developing applications powered by language models.
 
 ## Basic Usage
 
-`python
+```python
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
@@ -35,7 +35,7 @@ chain = prompt | llm | parser
 # 5. Invoke
 result = chain.invoke({"topic": "artificial intelligence"})
 print(result)
-`
+```
 
 ## Why it is essential for AI
 LLMs are powerful, but they lack memory and cannot act on the outside world. LangChain provides the scaffolding to turn a raw text-generator into a robust, autonomous, data-aware application.
