@@ -7,96 +7,43 @@ const DEFAULT_LAMBDA_URL = 'https://ufyrkfcenpikwczycbv3esozv40lxxik.lambda-url.
 
 const COLOR_PALETTE = ['#38bdf8', '#f97316', '#22c55e', '#a855f7', '#ec4899', '#eab308'];
 
-const MATPLOTLIB_SHIM = `import sys, types, json
+const PLOT_EXTRACTOR_SCRIPT = `
+import sys
+try:
+    if "matplotlib.pyplot" in sys.modules:
+        _plt = sys.modules["matplotlib.pyplot"]
+        import json
+        _ds = []
+        _xl = _yl = _tt = ""
+        if _plt.get_fignums():
+            _fig = _plt.gcf()
+            _ax = _plt.gca()
+            _xl = _ax.get_xlabel()
+            _yl = _ax.get_ylabel()
+            _tt = _ax.get_title()
+            for idx, line in enumerate(_ax.lines):
+                x = line.get_xdata().tolist() if hasattr(line.get_xdata(), "tolist") else list(line.get_xdata())
+                y = line.get_ydata().tolist() if hasattr(line.get_ydata(), "tolist") else list(line.get_ydata())
+                _ds.append({"type": "line", "label": line.get_label() or f"Line {idx}", "data": [{"x": float(px), "y": float(py)} for px, py in zip(x, y)]})
+            for idx, coll in enumerate(_ax.collections):
+                offsets = coll.get_offsets()
+                _ds.append({"type": "scatter", "label": coll.get_label() or f"Scatter {idx}", "data": [{"x": float(p[0]), "y": float(p[1])} for p in offsets]})
+            _payload = {"datasets": _ds, "xlabel": _xl, "ylabel": _yl, "title": _tt}
+            print("__PLOT_DATA__:" + json.dumps(_payload) + "__END_PLOT_DATA__")
+except Exception as e:
+    pass
+`;
 
-class _MockPlotCollector:
-    def __init__(self):
-        self.datasets = []
-        self.xlabel_val = ""
-        self.ylabel_val = ""
-        self.title_val = ""
-
-    def _convert(self, x, y):
-        try:
-            x_lst = x.tolist() if hasattr(x, "tolist") else list(x)
-            y_lst = y.tolist() if hasattr(y, "tolist") else list(y)
-            return [{"x": float(px), "y": float(py)} for px, py in zip(x_lst, y_lst)]
-        except Exception:
-            return []
-
-    def scatter(self, *args, label=None, **k):
-        if len(args) == 1:
-            y = args[0]
-            x = list(range(len(y)))
-        elif len(args) >= 2:
-            x, y = args[0], args[1]
-        else:
-            return
-        lbl = str(label) if label is not None else f"Scatter Data"
-        pts = self._convert(x, y)
-        if pts:
-            self.datasets.append({"type": "scatter", "label": lbl, "data": pts})
-
-    def plot(self, *args, label=None, **k):
-        if len(args) == 1:
-            y = args[0]
-            x = list(range(len(y)))
-        elif len(args) >= 2:
-            x, y = args[0], args[1]
-        else:
-            return
-        lbl = str(label) if label is not None else f"Fit Line"
-        pts = self._convert(x, y)
-        if pts:
-            self.datasets.append({"type": "line", "label": lbl, "data": pts})
-
-    def xlabel(self, s, **k):
-        self.xlabel_val = str(s)
-
-    def ylabel(self, s, **k):
-        self.ylabel_val = str(s)
-
-    def title(self, s, **k):
-        self.title_val = str(s)
-
-    def show(self):
+const MATPLOTLIB_SETUP_SCRIPT = `
+try:
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as _plt
+    def _safe_show(*args, **kwargs):
         pass
-
-_mp = _MockPlotCollector()
-_fm = types.ModuleType("matplotlib")
-_fp = types.ModuleType("matplotlib.pyplot")
-
-_fp.scatter = _mp.scatter
-_fp.plot = _mp.plot
-_fp.xlabel = _mp.xlabel
-_fp.ylabel = _mp.ylabel
-_fp.title = _mp.title
-_fp.show = _mp.show
-_fp.datasets = _mp.datasets
-_fp._mp_obj = _mp
-
-def _fp_getattr(name):
-    if hasattr(_mp, name):
-        return getattr(_mp, name)
-    if name.startswith("__") and name.endswith("__"):
-        raise AttributeError(name)
-    return lambda *a, **k: None
-
-_fp.__getattr__ = _fp_getattr
-def _fm_getattr(name):
-    if name == "pyplot":
-        return _fp
-    if name.startswith("__") and name.endswith("__"):
-        raise AttributeError(name)
-    return lambda *a, **k: None
-_fm.__getattr__ = _fm_getattr
-
-_fm.__file__ = "/tmp/mock_matplotlib.py"
-_fp.__file__ = "/tmp/mock_matplotlib_pyplot.py"
-
-_fm.pyplot = _fp
-sys.modules["matplotlib"] = _fm
-sys.modules["matplotlib.pyplot"] = _fp
+    _plt.show = _safe_show
+except Exception:
+    pass
 `;
 
 import BrowserOnly from '@docusaurus/BrowserOnly';
@@ -394,8 +341,7 @@ export default function PythonRunner({
 
     let codeToSend = codeText;
     if (codeText.includes('matplotlib') || codeText.includes('plt.') || codeText.includes('scatter') || codeText.includes('plot(')) {
-      const dumpCode = `\ntry:\n    if "matplotlib.pyplot" in sys.modules:\n        _plt_mod = sys.modules["matplotlib.pyplot"]\n        _mp_obj = getattr(_plt_mod, "_mp_obj", None)\n        _ds = getattr(_plt_mod, "datasets", [])\n        _xl = getattr(_mp_obj, "xlabel_val", "") if _mp_obj else ""\n        _yl = getattr(_mp_obj, "ylabel_val", "") if _mp_obj else ""\n        _tt = getattr(_mp_obj, "title_val", "") if _mp_obj else ""\n        if _ds:\n            _payload = {"datasets": _ds, "xlabel": _xl, "ylabel": _yl, "title": _tt}\n            print("__PLOT_DATA__:" + json.dumps(_payload) + "__END_PLOT_DATA__")\nexcept Exception:\n    pass\n`;
-      codeToSend = `${MATPLOTLIB_SHIM}\n${codeText}${dumpCode}`;
+      codeToSend = `${MATPLOTLIB_SETUP_SCRIPT}\n${codeText}\n${PLOT_EXTRACTOR_SCRIPT}`;
     }
 
     try {
