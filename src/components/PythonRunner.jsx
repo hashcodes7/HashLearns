@@ -78,10 +78,21 @@ _fp._mp_obj = _mp
 def _fp_getattr(name):
     if hasattr(_mp, name):
         return getattr(_mp, name)
+    if name.startswith("__") and name.endswith("__"):
+        raise AttributeError(name)
     return lambda *a, **k: None
 
 _fp.__getattr__ = _fp_getattr
-_fm.__getattr__ = lambda name: _fp if name == "pyplot" else (lambda *a, **k: None)
+def _fm_getattr(name):
+    if name == "pyplot":
+        return _fp
+    if name.startswith("__") and name.endswith("__"):
+        raise AttributeError(name)
+    return lambda *a, **k: None
+_fm.__getattr__ = _fm_getattr
+
+_fm.__file__ = "/tmp/mock_matplotlib.py"
+_fp.__file__ = "/tmp/mock_matplotlib_pyplot.py"
 
 _fm.pyplot = _fp
 sys.modules["matplotlib"] = _fm
