@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import CodeBlockOriginal from '@theme-original/CodeBlock';
 import { PlayIcon, CopyIcon, CheckIcon, CloseIcon } from './Icons';
+import { Client } from "@gradio/client";
 
 const DEFAULT_LAMBDA_URL = 'https://ufyrkfcenpikwczycbv3esozv40lxxik.lambda-url.ap-south-1.on.aws/';
 
@@ -387,32 +388,17 @@ export default function PythonRunner({
     }
 
     try {
-      const res = await fetch(lambdaUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ code: codeToSend })
+      const app = await Client.connect("harshv4444/pytorchtrying", {
+        hf_token: "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"
       });
+      const result = await app.predict("/run_code", [codeToSend]);
 
-      if (!res.ok) {
-        throw new Error(`AWS Lambda returned HTTP status ${res.status}`);
-      }
-
-      const resData = await res.json();
       const duration = ((performance.now() - startTime) / 1000).toFixed(2);
       setExecTime(`${duration}s`);
 
-      let payload = resData;
-      if (resData && typeof resData.body === 'string') {
-        try {
-          payload = JSON.parse(resData.body);
-        } catch (e) {
-          payload = resData;
-        }
-      }
-
-      let stdout = payload.stdout !== undefined ? payload.stdout : payload.output || '';
-      const errorMsg = payload.error || null;
-      let datasets = Array.isArray(payload.datasets) ? payload.datasets : [];
+      let stdout = result.data ? String(result.data[0]) : '';
+      const errorMsg = null;
+      let datasets = [];
       let meta = {};
 
       const plotMatch = stdout.match(/__PLOT_DATA__:(.*?)__END_PLOT_DATA__/s);
@@ -445,8 +431,8 @@ export default function PythonRunner({
         setStatus('success');
       }
     } catch (err) {
-      console.error('AWS Lambda Execution Error:', err);
-      setOutput(`Cloud Compute Error: ${err.message || String(err)}`);
+      console.error('ZeroGPU Execution Error:', err);
+      setOutput(`Execution Error: ${err.message || String(err)}`);
       setStatus('error');
     }
   };
@@ -515,7 +501,7 @@ export default function PythonRunner({
               !isPython
                 ? 'Code execution available for Python only'
                 : status === 'running'
-                ? 'Running code on AWS Lambda...'
+                ? 'Running code on ZeroGPU...'
                 : 'Run code'
             }
           >
