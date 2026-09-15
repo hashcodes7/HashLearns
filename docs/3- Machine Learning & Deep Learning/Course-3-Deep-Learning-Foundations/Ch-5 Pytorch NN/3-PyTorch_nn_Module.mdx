@@ -350,6 +350,8 @@ optimizer = torch.optim.SGD(
 ```python
 import torch
 import torch.nn as nn
+import matplotlib.pyplot as plt
+
 
 class NeuralNetwork(nn.Module):
 
@@ -377,6 +379,8 @@ optimizer = torch.optim.SGD(
     lr=0.001
 )
 
+losses = []
+
 for step in range(1000):
 
     optimizer.zero_grad()
@@ -388,6 +392,37 @@ for step in range(1000):
     loss.backward()
 
     optimizer.step()
+
+    losses.append(loss.item())
+
+    if step % 100 == 0:
+        print(
+            f"Step: {step:4d} | "
+            f"Prediction: {prediction.item():8.4f} | "
+            f"Loss: {loss.item():10.6f}"
+        )
+
+
+print("\nFinal Results")
+print("-" * 40)
+print(f"Prediction: {prediction.item():.6f}")
+print(f"Target:     {target.item():.6f}")
+print(f"Final Loss: {loss.item():.6f}")
+
+
+plt.figure(figsize=(8, 5))
+
+plt.plot(losses)
+
+plt.xlabel("Step")
+plt.ylabel("Loss")
+plt.title("Training Loss")
+
+plt.grid(True)
+plt.tight_layout()
+
+plt.savefig("/tmp/loss.png")
+plt.show()
 ```
 
 The standard training sequence is:
