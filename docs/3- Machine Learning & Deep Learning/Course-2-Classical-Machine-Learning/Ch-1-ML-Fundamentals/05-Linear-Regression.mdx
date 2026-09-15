@@ -1,0 +1,62 @@
+---
+title: "📈 Linear Regression"
+---
+
+# 📈 Linear Regression
+
+The "Hello World" of Machine Learning. 
+
+## 📏 Drawing the Line
+Imagine a scatter plot of dots showing `Temperature` vs `Bigkart Ice Cream Sales`. Linear Regression is simply asking the computer to **draw the best possible straight line** right through the middle of those dots.
+<ComicStrip 
+  filter="comiclr"
+/>
+## 🐍 Python Implementation
+
+<PyScriptRunner
+  title="Linear Regression Model Fit (Temperature vs Sales)"
+  initialCode={`import numpy as np
+from sklearn.linear_model import LinearRegression
+import matplotlib.pyplot as plt
+
+# Training Data (Temperature in 10s of °F vs Sales in $100s)
+X_train = np.array([6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0])
+y_train = np.array([2.1, 2.9, 3.8, 5.1, 6.0, 7.2, 8.1])
+
+# Fit Linear Regression model using scikit-learn
+# scikit-learn expects a 2D array for features, so X_train is reshaped
+model = LinearRegression()
+model.fit(X_train.reshape(-1, 1), y_train)
+
+# Predict sales for temperature = 9.5 (95°F)
+pred_temp = 9.5
+pred_sales = model.predict(np.array([[pred_temp]]))[0]
+
+slope = model.coef_[0]
+intercept = model.intercept_
+
+print("Model Slope (m): %.2f" % slope)
+print("Model Intercept (c): %.2f" % intercept)
+print("Predicted sales for 95°F: $%.1f" % (pred_sales * 100))
+
+# --- Plotting Section (Intercepted for Chart.js) ---
+
+# 1. Observed sales data points
+plt.scatter(X_train, y_train, label="Observed Sales")
+
+# 2. Linear Regression trendline
+X_line = np.linspace(5.8, 10.0, 50)
+y_line = slope * X_line + intercept
+plt.plot(X_line, y_line, label="Linear Fit Line")
+
+# 3. New Sales Prediction point
+plt.scatter([pred_temp], [pred_sales], label="Prediction (95°F)")
+
+# Axis Labels & Title
+plt.xlabel("Temperature (10s of °F)")
+plt.ylabel("Ice Cream Sales ($100s)")
+plt.title("Linear Regression: Temperature vs Sales")
+`}
+/>
+
+

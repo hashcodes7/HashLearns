@@ -1,4 +1,8 @@
 {
   "label": "Course-11-Advanced-AI-Topics",
-  "position": 11
+  "position": 11,
+  "link": {
+    "type": "generated-index",
+    "description": "Explore courses and concepts related to Course-11-Advanced-AI-Topics."
+  }
 }

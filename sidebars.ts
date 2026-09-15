@@ -19,9 +19,10 @@ const sidebars: SidebarsConfig = {
 let fields: string[] = [];
 try {
   if (fs.existsSync(docsDir)) {
-    fields = fs.readdirSync(docsDir, { withFileTypes: true })
-      .filter(dirent => dirent.isDirectory() && !dirent.name.startsWith('.'))
-      .map(dirent => dirent.name);
+      fields = fs.readdirSync(docsDir, { withFileTypes: true })
+        .filter(dirent => dirent.isDirectory() && !dirent.name.startsWith('.'))
+        .map(dirent => dirent.name)
+        .sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }));
   }
 } catch (err: any) {
   console.warn('[sidebars.ts] Could not read docs directory:', err.message);
@@ -34,7 +35,8 @@ try {
     try {
       courses = fs.readdirSync(fieldDir, { withFileTypes: true })
         .filter(dirent => dirent.isDirectory() && !dirent.name.startsWith('.'))
-        .map(dirent => dirent.name);
+        .map(dirent => dirent.name)
+        .sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }));
     } catch (err: any) {
       console.warn(`[sidebars.ts] Could not read field directory ${fieldDir}:`, err.message);
     }

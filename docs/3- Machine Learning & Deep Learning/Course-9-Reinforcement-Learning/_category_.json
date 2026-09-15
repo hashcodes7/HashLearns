@@ -1,4 +1,8 @@
 {
   "label": "Course-9-Reinforcement-Learning",
-  "position": 9
+  "position": 9,
+  "link": {
+    "type": "generated-index",
+    "description": "Explore courses and concepts related to Course-9-Reinforcement-Learning."
+  }
 }

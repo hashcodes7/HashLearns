@@ -1,0 +1,38 @@
+---
+title: "📊 Data and Features"
+---
+
+# 📊 Data and Features
+
+Machine Learning runs entirely on data. Before a model can "learn," it must understand the language of data. 
+
+## The Anatomy of a Dataset
+
+In Classical Machine Learning, we usually deal with structured, tabular data (like an Excel spreadsheet). Let's take a look at what makes up a dataset:
+
+| Temperature (X1) | Weekend (X2) | Discount % (X3) | Ice Cream Sales (y) |
+| :---: | :---: | :---: | :---: |
+| 85 | 1 | 10 | $450 |
+| 60 | 0 | 0 | $150 |
+| 95 | 1 | 20 | $800 |
+
+### 1. Features ($X$)
+Features (also known as independent variables, inputs, or predictors) are the characteristics used to make predictions.
+In our example above, `Temperature`, `Weekend`, and `Discount %` are our features. They are denoted by a capital **$X$** because a dataset usually consists of a *matrix* of features.
+
+### 2. Labels ($y$)
+The label (also known as the dependent variable, output, or target) is what you are trying to predict.
+In our example, `Ice Cream Sales` is the label. It is denoted by a lowercase **$y$** because it's usually a single vector.
+
+## The Model's Job
+
+A Machine Learning model takes in the Features ($X$) and tries to approximate a mathematical function $f$ that successfully predicts the Label ($y$). 
+
+$$ y = f(X) $$
+
+Once the model has successfully "learned" this function $f$ using historical data, you can pass in *brand new* features (tomorrow's weather forecast for Bigkart), and it will spit out predicted sales!
+
+## Feature Engineering
+
+Sometimes raw data isn't good enough. **Feature Engineering** is the process of using domain knowledge to extract new, more useful features from raw data.
+For instance, instead of just using "Time of Sale" and "Sunset Time", a better feature might be "Hours after Sunset".

@@ -10,7 +10,7 @@ Building a Machine Learning model isn't just writing code—it's a whole lifecyc
 **"Garbage In, Garbage Out."** Cleaning the data usually takes up 80% of an ML Engineer's time!
 
 ## 2. ✂️ Train/Test Split
-Imagine a student studying for a test. You give them practice questions (Training), and test them on questions they have *never seen before* (Testing). 
+Imagine Bigkart testing a new ice cream flavor on a small group (Training), and then evaluating it on a completely different city that has *never seen it before* (Testing). 
 
 ## 🐍 Python Implementation
 
@@ -21,10 +21,10 @@ We can split dataset features into Training and Testing sets seamlessly!
   initialCode={`import numpy as np
 import matplotlib.pyplot as plt
 
-# Generate 20 synthetic house data points
+# Generate 20 synthetic Bigkart sales data points
 np.random.seed(42)
-X = np.sort(np.random.uniform(1000, 4000, 20))
-y = 0.08 * X + np.random.normal(0, 15, 20)
+X = np.sort(np.random.uniform(60, 100, 20))
+y = 3.5 * X + np.random.normal(0, 15, 20)
 
 # 80/20 Train-Test Split using random indexing
 indices = np.arange(len(X))
@@ -48,8 +48,8 @@ plt.scatter(X_train, y_train, label="Training Set (80% - Model Learns From This)
 plt.scatter(X_test, y_test, label="Test Set (20% - Unseen Evaluation)")
 
 # Axis Labels & Title
-plt.xlabel("House Size (sqft)")
-plt.ylabel("House Price ($1k)")
+plt.xlabel("Temperature (°F)")
+plt.ylabel("Ice Cream Sales ($)")
 plt.title("80 / 20 Train vs Test Data Split")
 `}
 />

@@ -1,0 +1,40 @@
+---
+title: "🤖 What is Machine Learning?"
+---
+
+# 🤖 What is Machine Learning?
+
+Machine Learning (ML) is a subset of Artificial Intelligence (AI) that focuses on building systems that learn—or improve performance—based on the data they consume.
+
+## Traditional Programming vs. Machine Learning
+
+To understand ML, it's helpful to compare it to traditional programming.
+
+### 🖥️ Traditional Programming
+In traditional programming, you provide the **Rules** (code) and the **Data**, and the computer gives you the **Answers**.
+
+```mermaid
+flowchart LR
+    A[Rules / Logic] --> C(Computer)
+    B[Data] --> C
+    C --> D[Answers]
+```
+
+### 🧠 Machine Learning
+In Machine Learning, you provide the **Data** and the **Answers**, and the computer discovers the **Rules**.
+
+```mermaid
+flowchart LR
+    A[Answers / Labels] --> C(Computer)
+    B[Data] --> C
+    C --> D[Rules / Model]
+```
+
+Once the rules (the model) are learned, you can apply them to *new* data to get predictions!
+
+## Why do we need Machine Learning?
+Some problems are simply too complex to write explicit rules for. For example, how would you write a rule to predict if a Bigkart customer will buy strawberry ice cream or chocolate ice cream? 
+- "If they are younger than 12..." (Adults like strawberry too).
+- "If they bought fruit yesterday..." (They might want chocolate today).
+
+Instead of writing thousands of complex `if/else` statements, we simply feed the machine thousands of Bigkart purchase histories, and let it figure out the patterns and rules itself!

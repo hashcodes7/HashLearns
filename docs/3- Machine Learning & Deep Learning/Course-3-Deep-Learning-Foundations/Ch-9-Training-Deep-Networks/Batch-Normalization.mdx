@@ -7,7 +7,7 @@ title: "🧼 Batch Normalization"
 Deep networks are notoriously unstable. Batch Normalization keeps them in check.
 
 ## 🎢 The Rollercoaster
-Imagine Layer 1 suddenly outputs massive numbers (like `1,000,000`). Layer 2 receives this, panics, and its math blows up. 
+Imagine Bigkart gets 1,000,000 orders during a summer heatwave, but only 100 during winter. The inventory prediction system (Layer 2) receives this, panics, and its math blows up. 
 Batch Normalization is a checkpoint between layers. It grabs the numbers flying out of Layer 1, scrubs them down, and forcefully rescales them so they have a mean of 0 and standard deviation of 1.
 
 It ensures every layer gets clean, stable numbers.
