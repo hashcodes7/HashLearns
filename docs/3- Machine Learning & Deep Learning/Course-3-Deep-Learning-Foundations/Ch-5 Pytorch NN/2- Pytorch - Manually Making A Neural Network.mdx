@@ -1,0 +1,49 @@
+---
+id: pytorch-training-2
+sidebar_position: 2
+---
+# 2. Pytorch - Manually Making A Neural Network
+
+## 1. The Size Rule
+#### 1. No. of weights in first neuron layer
+If I am giving input, it must have as many features as the number of weights in the first layer neurons.
+eg.
+``` python
+x = [2, 3, 4] # 3 features 
+weights = 
+[0.5, 1, 2
+2, 0.4, 1] # 2 neurons, 3 weights each
+output = weights @ x
+```
+
+#### 2. Number of Neurons in a Layer determine the output size.
+We will use the outputs to put in next layer, possibly a activation function.
+``` python
+output = [2, -3]
+ReLU(x) # [2, 0]
+```
+
+#### 3. No. of weights in next layer neurons
+This was locked in as soon as our previous layer produced the outputs. Remember our last layer produced outputs = No. of neurons it had, in our case =2 
+so this time weights in our neurons will be =2 while again we can have as neurons as per the next layer no. of weights 
+lets say we want to produce 4 outputs so
+``` python
+weights = 
+[ [0.5, 1], # neuron 1 → 2 weights 
+[2, 0.4], # neuron 2 → 2 weights 
+[1, 0.7] # neuron 3 → 2 weights 
+[0.4,0.2]
+]
+```
+Now these are 4 neurons each having 2 weights. so 4 outputs will be produced and we can continue the cycle.
+
+### General Formula
+
+| Concept                                                            | Formula                                                             |
+| ------------------------------------------------------------------ | ------------------------------------------------------------------- |
+| **No. of neurons in current layer (rows/height of weight matrix)** | Independent                                                         |
+| **No. of weights per neuron (length/columns of weight matrix)**    | No. of outputs from previous layer/no. of inputs if its first layer |
+| **No. of biases in current layer**                                 | No. of neurons in current layer                                     |
+| **No. of outputs produced by current layer**                       | No. of neurons in current layer                                     |
+
+---

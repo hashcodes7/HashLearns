@@ -1,0 +1,230 @@
+---
+id: pytorch-nn-module-3
+sidebar_position: 3
+---
+# 3. Pytorch - Steps Performed during Training a Neural Network
+## 1. Forward Pass
+Forward pass simply means giving output of one neuron layer to next one. Here in below example we are computing the layer y and passing its outputs to layer z.
+
+```python
+y = weights_of_y @ x + bias_of_y
+#some activation function
+z = weights_of_z @ z + bias_of_z
+```
+
+Mathematically:
+
+$$
+z=Wx+b_h
+$$
+
+$$
+a=ReLU(z)
+$$
+
+$$
+y=w^Ta+b_o
+$$
+
+$$
+L=(target-y)^2
+$$
+
+---
+## 2. Tensors and Gradient Tracking
+
+`requires_grad=True` tells Pytorch that this is a weight matrix for which gradients need to be calculated
+we declare it like this 
+``` python
+W = torch.tensor([
+    [1.0, 2.0],
+    [2.0, 1.0],
+    [1.0, 1.0]
+], requires_grad=True)
+```
+## 3. Backpropagation with Autograd
+
+Previously we manually calculated all derivatives using the chain rule.
+
+Pytorch performs this automatically using `loss.backward()`
+After this:
+
+```python
+W.grad
+```
+contains
+$$
+\frac{dL}{dW}
+$$
+and now every single weighted matrix which could be updated, as it contains the gradient inside its grad.
+
+---
+## 4. Parameter Update
+
+Finally we want to use the stored gradient to update each of the weighted matrix . we multiply this gradient and take a small step towards improvement of the result. thus, for every single weight in every weight matrix, we do
+
+$$
+\boxed{
+\text{weight}_{\text{new}}
+=
+\text{weight}_{\text{old}}
+-
+\eta
+\frac{dL}{d{W}}
+}
+$$
+
+For a manual update:
+
+```python
+learning_rate = 0.001
+
+with torch.no_grad():
+    W -= learning_rate * W.grad
+    b_hidden -= learning_rate * b_hidden.grad
+    w_output -= learning_rate * w_output.grad
+    b_output -= learning_rate * b_output.grad
+```
+
+`torch.no_grad()` prevents the update operation itself from being added to the computation graph.
+
+---
+
+## 5. Clearing Gradients
+
+Pytorch gradients accumulate.
+
+When training repeatedly, gradients must be cleared before the next backward pass.
+
+With manual updates:
+
+```python
+W.grad.zero_()
+b_hidden.grad.zero_()
+w_output.grad.zero_()
+b_output.grad.zero_()
+```
+
+With an optimizer, this is normally handled by:
+
+```python
+optimizer.zero_grad()
+```
+
+---
+
+## Pytorch Implementation of a single training step
+
+```python
+import torch
+
+x = torch.tensor([2.0, 3.0])
+target = torch.tensor(20.0)
+# -------------------------
+# Parameters
+# -------------------------
+W = torch.tensor([
+    [1.0, 2.0],
+    [2.0, 1.0],
+    [1.0, 1.0]
+], requires_grad=True)
+
+b_hidden = torch.tensor(
+    [1.0, 2.0, 1.0],
+    requires_grad=True
+)
+
+w_output = torch.tensor(
+    [1.0, 2.0, 1.0],
+    requires_grad=True
+)
+
+b_output = torch.tensor(
+    1.0,
+    requires_grad=True
+)
+
+learning_rate = 0.001
+# -------------------------
+# Forward pass
+# -------------------------
+z = W @ x + b_hidden
+a = torch.relu(z)
+y = w_output @ a + b_output
+loss = (target - y) ** 2
+# -------------------------
+# Backpropagation
+# -------------------------
+loss.backward()
+# -------------------------
+# Parameter updates
+# -------------------------
+with torch.no_grad():
+    W -= learning_rate * W.grad
+    b_hidden -= learning_rate * b_hidden.grad
+    w_output -= learning_rate * w_output.grad
+    b_output -= learning_rate * b_output.grad
+# -------------------------
+# Results
+# -------------------------
+print("prediction:", y.item(), "| loss:", loss.item(), "| dL/dW:", W.grad, "| dL/db_hidden:", b_hidden.grad, "| dL/dw_output:", w_output.grad, "| dL/db_output:", b_output.grad, "| updated W:", W, "| updated hidden bias:", b_hidden, "| updated output weights:", w_output, "| updated output bias:", b_output)
+```
+---
+
+
+## The complete network can now be trained repeatedly:
+
+```python
+import torch
+
+x = torch.tensor([2.0, 3.0])
+target = torch.tensor(20.0)
+
+W = torch.tensor([
+    [1.0, 2.0],
+    [2.0, 1.0],
+    [1.0, 1.0]
+], requires_grad=True)
+
+b_hidden = torch.tensor(
+    [1.0, 2.0, 1.0],
+    requires_grad=True
+)
+
+w_output = torch.tensor(
+    [1.0, 2.0, 1.0],
+    requires_grad=True
+)
+
+b_output = torch.tensor(
+    1.0,
+    requires_grad=True
+)
+
+learning_rate = 0.001
+
+for step in range(1000):
+    # Forward pass
+    z = W @ x + b_hidden
+    a = torch.relu(z)
+    y = w_output @ a + b_output
+
+    # Loss
+    loss = (target - y) ** 2
+
+    # Backpropagation
+    loss.backward()
+
+    # Parameter update
+    with torch.no_grad():
+        W -= learning_rate * W.grad
+        b_hidden -= learning_rate * b_hidden.grad
+        w_output -= learning_rate * w_output.grad
+        b_output -= learning_rate * b_output.grad
+
+    # Clear gradients
+    W.grad.zero_()
+    b_hidden.grad.zero_()
+    w_output.grad.zero_()
+    b_output.grad.zero_()
+```

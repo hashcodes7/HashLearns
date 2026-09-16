@@ -57,25 +57,7 @@ const config: Config = {
         docs: {
           sidebarPath: './sidebars.ts',
           exclude: ['**/Excalidraw/**'],
-          sidebarItemsGenerator: async function ({
-            defaultSidebarItemsGenerator,
-            ...args
-          }) {
-            const sidebarItems = await defaultSidebarItemsGenerator(args);
-            function sortItems(items: any[]) {
-              return items.sort((a, b) => {
-                const labelA = a.label || a.id || a.dirName || '';
-                const labelB = b.label || b.id || b.dirName || '';
-                return labelA.localeCompare(labelB, undefined, { numeric: true, sensitivity: 'base' });
-              }).map(item => {
-                if (item.type === 'category' && item.items) {
-                  return { ...item, items: sortItems(item.items) };
-                }
-                return item;
-              });
-            }
-            return sortItems(sidebarItems);
-          },
+
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:

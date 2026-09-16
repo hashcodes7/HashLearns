@@ -1,10 +1,10 @@
 ---
 id: pytorch-nn-module-3
-sidebar_position: 3
+sidebar_position: 4
 ---
 # 3. Building a Neural Network with `nn.Module`
 
-In the previous chapter, we trained our neural network using [PyTorch](../../Course-1-Mathematics and Frameworks/Ch-9 Deep-Learning-Frameworks/PyTorch.mdx) tensors, autograd, and an optimizer.
+In the previous chapter, we trained our neural network using pytorchtensors, autograd, and an optimizer.
 
 The network worked, but we manually created and managed every parameter:
 
@@ -15,7 +15,7 @@ w_output
 b_output
 ```
 
-[PyTorch](../../Course-1-Mathematics and Frameworks/Ch-9 Deep-Learning-Frameworks/PyTorch.mdx) provides a cleaner and standard way to define neural networks using:
+pytorchprovides a cleaner and standard way to define neural networks using:
 
 - `nn.Module`
 - `nn.Linear`
@@ -218,7 +218,7 @@ trainable parameters.
 model = NeuralNetwork()
 ```
 
-[PyTorch](../../Course-1-Mathematics and Frameworks/Ch-9 Deep-Learning-Frameworks/PyTorch.mdx) now knows about all trainable parameters inside the model.
+pytorchnow knows about all trainable parameters inside the model.
 
 We can access them with:
 
@@ -258,7 +258,7 @@ We pass it through the model:
 prediction = model(x)
 ```
 
-[PyTorch](../../Course-1-Mathematics and Frameworks/Ch-9 Deep-Learning-Frameworks/PyTorch.mdx) calls the model's `forward()` method.
+pytorchcalls the model's `forward()` method.
 
 The calculation is:
 
@@ -306,7 +306,7 @@ We calculate all gradients using:
 loss.backward()
 ```
 
-[PyTorch](../../Course-1-Mathematics and Frameworks/Ch-9 Deep-Learning-Frameworks/PyTorch.mdx) automatically computes gradients for all trainable parameters.
+pytorchautomatically computes gradients for all trainable parameters.
 
 Conceptually:
 
@@ -480,15 +480,15 @@ optimizer = torch.optim.SGD(
 )
 ```
 
-[PyTorch](../../Course-1-Mathematics and Frameworks/Ch-9 Deep-Learning-Frameworks/PyTorch.mdx) tracks the parameters and the optimizer updates them.
+pytorchtracks the parameters and the optimizer updates them.
 
 ---
 
 ## 13. Why `nn.Module` Matters
 
-`nn.Module` gives [PyTorch](../../Course-1-Mathematics and Frameworks/Ch-9 Deep-Learning-Frameworks/PyTorch.mdx) a standard structure for neural networks.
+`nn.Module` gives pytorcha standard structure for neural networks.
 
-It allows [PyTorch](../../Course-1-Mathematics and Frameworks/Ch-9 Deep-Learning-Frameworks/PyTorch.mdx) to track:
+It allows pytorchto track:
 
 - trainable parameters
 - layers
@@ -536,9 +536,9 @@ $$
 
 and calculated gradients.
 
-### Level 2 — [PyTorch](../../Course-1-Mathematics and Frameworks/Ch-9 Deep-Learning-Frameworks/PyTorch.mdx) tensors
+### Level 2 — pytorchtensors
 
-[PyTorch](../../Course-1-Mathematics and Frameworks/Ch-9 Deep-Learning-Frameworks/PyTorch.mdx) calculated gradients with:
+pytorchcalculated gradients with:
 
 ```python
 loss.backward()
@@ -546,9 +546,9 @@ loss.backward()
 
 but we still manually managed parameters.
 
-### Level 3 — [PyTorch](../../Course-1-Mathematics and Frameworks/Ch-9 Deep-Learning-Frameworks/PyTorch.mdx) models
+### Level 3 — pytorchmodels
 
-[PyTorch](../../Course-1-Mathematics and Frameworks/Ch-9 Deep-Learning-Frameworks/PyTorch.mdx) now manages the network structure through:
+pytorchnow manages the network structure through:
 
 ```python
 nn.Module
@@ -574,7 +574,7 @@ PyTorch neural-network modules
 
 | Concept | Meaning |
 |---|---|
-| `nn.Module` | Base class for [PyTorch](../../Course-1-Mathematics and Frameworks/Ch-9 Deep-Learning-Frameworks/PyTorch.mdx) neural networks |
+| `nn.Module` | Base class for pytorchneural networks |
 | `__init__()` | Defines layers and components |
 | `forward()` | Defines data flow |
 | `nn.Linear` | Implements a linear layer `Wx+b` |
@@ -583,6 +583,6 @@ PyTorch neural-network modules
 | `optimizer.step()` | Updates parameters |
 | `optimizer.zero_grad()` | Clears previous gradients |
 
-We have now converted our manually constructed neural network into a standard [PyTorch](../../Course-1-Mathematics and Frameworks/Ch-9 Deep-Learning-Frameworks/PyTorch.mdx) model.
+We have now converted our manually constructed neural network into a standard pytorchmodel.
 
 The next step is to move from **one training example** to **multiple training examples**, using tensors, datasets, and eventually `Dataset` and `DataLoader`.
