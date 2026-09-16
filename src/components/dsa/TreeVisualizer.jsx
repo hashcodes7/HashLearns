@@ -95,7 +95,7 @@ function* bstSearchGenerator(arr, targetVal = 25) {
         activeNode: curr.val,
         visited: [...visited],
         foundNode: curr.val,
-        explanation: `🎯 Target ${target} FOUND at node (${curr.val})!`
+        explanation: ` Target ${target} FOUND at node (${curr.val})!`
       };
       return;
     } else if (target < curr.val) {
@@ -122,7 +122,7 @@ function* bstSearchGenerator(arr, targetVal = 25) {
     activeNode: null,
     visited: [...visited],
     foundNode: null,
-    explanation: `❌ Target ${target} is NOT present in the BST.`
+    explanation: ` Target ${target} is NOT present in the BST.`
   };
 }
 

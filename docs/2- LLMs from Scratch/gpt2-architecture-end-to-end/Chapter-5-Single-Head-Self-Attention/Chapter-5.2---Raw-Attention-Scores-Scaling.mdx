@@ -11,12 +11,12 @@ Hey there! Have you ever shouted so loud that nobody could understand you? That'
 
 ---
 
-## 🎯 Why we do it
+##  Why we do it
 :::info[Rationale]
 When we calculate how much two words care about each other (the attention score), the numbers can get super huge if we are working with giant vectors. If the numbers are too big, the AI only pays attention to one single word and ignores everything else. That's not fair! We want it to listen to all the words.
 :::
 
-## 🛠️ How we do it
+##  How we do it
 :::info[Methodology]
 It's super simple! We just take our big attention scores and divide them by a magic number. This magic number is the square root of the size of our vectors (called `d_k`). 
 For example, if our vector size is 4, the square root is 2. So we just divide our scores by 2 to shrink them down!

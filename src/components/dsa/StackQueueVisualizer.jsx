@@ -73,7 +73,7 @@ export default function StackQueueVisualizer({
         {/* Title & Description */}
         <div style={{ marginBottom: '1rem' }}>
           <h4 style={{ margin: 0, color: '#00f0ff', fontSize: '1.15rem', fontWeight: '700' }}>
-            ⚡ {title || defaultTitle}
+             {title || defaultTitle}
           </h4>
           <p style={{ margin: '4px 0 0 0', fontSize: '0.85rem', color: '#9ca3af' }}>
             {description || defaultDesc}

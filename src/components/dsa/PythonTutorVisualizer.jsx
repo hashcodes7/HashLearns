@@ -22,7 +22,7 @@ export default function PythonTutorVisualizer({
     }}>
       <div style={{ marginBottom: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h4 style={{ margin: 0, color: '#00f0ff', fontSize: '1.1rem', fontWeight: '700' }}>
-          🐍 {title} (Python {pyVersion})
+           {title} (Python {pyVersion})
         </h4>
         <span style={{ fontSize: '0.75rem', color: '#94a3b8', background: 'rgba(255,255,255,0.06)', padding: '4px 10px', borderRadius: '12px' }}>
           Powered by PythonTutor

@@ -1,18 +1,18 @@
 ---
-title: "🗑️ Dropout"
+title: " Dropout"
 ---
 
-# 🗑️ Dropout
+#  Dropout
 
 The most counter-intuitive trick in Deep Learning: Randomly deleting parts of your brain!
 
-## 🏋️ The Gym Analogy
+##  The Gym Analogy
 Imagine a team of 5 Bigkart delivery drivers. If Bob is the fastest driver, the other 4 might get lazy and let Bob take all the orders. If Bob's van breaks down, the delivery system fails.
 Dropout randomly tells 20% of the neurons (or drivers) to "go to sleep" during every training step. This forces *every* neuron to learn useful things, because they can't rely on their neighbors!
 
 It is the ultimate defense against Overfitting.
 
-## 🐍 Python Implementation
+##  Python Implementation
 
 In [PyTorch](../../Course-1-Mathematics and Frameworks/Ch-9 Deep-Learning-Frameworks/PyTorch.mdx), we add an `nn.Dropout` layer. Notice it only works during training!
 

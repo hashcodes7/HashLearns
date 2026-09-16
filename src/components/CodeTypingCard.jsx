@@ -63,10 +63,10 @@ const SNIPPETS = [
         )
       },
       {
-        text: '  return "Free Forever 🚀";',
+        text: '  return "Free Forever ";',
         render: () => (
           <span>
-            <span className="token-py-kw">&nbsp;&nbsp;return</span> <span className="token-py-str">"Free Forever 🚀";</span>
+            <span className="token-py-kw">&nbsp;&nbsp;return</span> <span className="token-py-str">"Free Forever ";</span>
           </span>
         )
       },

@@ -1,18 +1,18 @@
 ---
-title: "🌐 Multi-Layer Perceptron (MLP)"
+title: " Multi-Layer Perceptron (MLP)"
 ---
 
-# 🌐 Multi-Layer Perceptron (MLP)
+#  Multi-Layer Perceptron (MLP)
 
 If a neuron is an ant, the MLP is the whole ant colony.
 
-## 🍰 The Layer Cake
+##  The Layer Cake
 An MLP organizes neurons into layers:
 1. **Input Layer:** The raw data (e.g. pixels of an image).
 2. **Hidden Layers:** Where the magic happens. Layer 1 might look for edges. Layer 2 combines edges into shapes. Layer 3 combines shapes into a face.
 3. **Output Layer:** The final guess (e.g. "It's a Dog!").
 
-## 🐍 Python Implementation
+##  Python Implementation
 
 Notice how we use the exact same concepts (`weights`, `bias`, `forward`) from our single neuron, but now we use [PyTorch](../../Course-1-Mathematics and Frameworks/Ch-9 Deep-Learning-Frameworks/PyTorch.mdx)'s `nn.Linear` which is just a massive block of neurons working together!
 
@@ -44,7 +44,7 @@ sample_data = torch.randn(1, 10) # 1 row, 10 features
 print("Network Guess [Dog Score, Cat Score]:", model.forward(sample_data))
 ```
 
-## 🗺️ Visualizing the MLP
+##  Visualizing the MLP
 
 ```mermaid
 graph LR

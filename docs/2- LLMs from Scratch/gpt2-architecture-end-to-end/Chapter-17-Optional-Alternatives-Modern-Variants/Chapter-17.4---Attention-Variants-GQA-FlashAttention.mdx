@@ -11,12 +11,12 @@ Multi-Head Attention is awesome, but it takes up way too much computer memory. S
 
 ---
 
-## 🎯 Why we do it
+##  Why we do it
 :::info[Rationale]
 In standard attention, every "Query" head gets its very own "Key" and "Value" head. This uses huge amounts of RAM. GQA says, "Hey, why don't 4 Query heads just share 1 Key and 1 Value head?" It's like carpooling! It saves a ton of space.
 :::
 
-## 🛠️ How we do it
+##  How we do it
 :::info[Methodology]
 FlashAttention is even cooler. It's a hardware trick. Instead of saving the attention scores to the GPU's slow memory, it does all the math instantly in the GPU's super-fast brain cache!
 :::

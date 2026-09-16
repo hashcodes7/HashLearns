@@ -1,19 +1,19 @@
 ---
-title: "⬅️ Backpropagation"
+title: " Backpropagation"
 ---
 
-# ⬅️ Backpropagation
+#  Backpropagation
 
 This is the term for **"Learning from Mistakes."**
 
-## 🕵️ The Detective Analogy
+##  The Detective Analogy
 The model made a guess (Forward Propagation) and it was wrong.
 Now, the "Detective" (Backpropagation) works backward from the output layer to the input layer.
 It asks every single neuron: *"How much of this mistake was YOUR fault?"*
 
 It calculates exactly how much to adjust each weight so that the mistake won't happen next time. This relies on the **Chain Rule** from Calculus!
 
-## 🐍 Python Implementation
+##  Python Implementation
 
 In [PyTorch](../../Course-1-Mathematics and Frameworks/Ch-9 Deep-Learning-Frameworks/PyTorch.mdx), backpropagation takes exactly one line of code: `loss.backward()`.
 

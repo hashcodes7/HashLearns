@@ -5,18 +5,18 @@ sidebar_position: 2
 
 # Adding Comics: A Step-by-Step Guide
 
-The **`ComicStrip`** component (`hashcomics✨`) is **globally registered** across the entire HashLearns site. You can use `<ComicStrip />` anywhere in any `.md` or `.mdx` file **without writing any `import` statements at all**!
+The **`ComicStrip`** component (`hashcomics`) is **globally registered** across the entire HashLearns site. You can use `<ComicStrip />` anywhere in any `.md` or `.mdx` file **without writing any `import` statements at all**!
 
 ---
 
-## 🛠 Why `folder={require.context('./assets')}` is Required:
+##  Why `folder={require.context('./assets')}` is Required:
 
 Before looking at the examples, remember this golden rule: 
 **Always include `folder={require.context('./assets')}`** in your `<ComicStrip />` tags. Webpack needs this line to find and bundle the local `.png` files from your `./assets/` folder into the final website build.
 
 ---
 
-## 📖 The 4 Ways to Add Comics
+##  The 4 Ways to Add Comics
 
 Here are the four complete examples showing how you can construct your comic carousels depending on your needs.
 ### 1. Selecting Specific Images (No Descriptions)
@@ -76,10 +76,10 @@ The fastest and easiest method! Just give it the initial prefix of the image nam
 
 ---
 
-## 💡 Features Included Automatically:
+##  Features Included Automatically:
 - **`Prev <` & `Next >` Controls**: Easy navigation through panels.
 - **Center Description**: Clean white text centered between buttons.
 - **Lightbox Zoom**: Click any image panel to open a full-screen zoom overlay.
 - **`1 / 3` Pill Counter**: Real-time panel counter.
-- **`hashcomics✨` Signature**: Minimalist brand tag in top-left corner.
+- **`hashcomics` Signature**: Minimalist brand tag in top-left corner.
 - **Keyboard Support**: Navigate using `←` and `→` arrow keys on your keyboard.

@@ -11,12 +11,12 @@ After adding things together with our residual connection, our numbers might hav
 
 ---
 
-## 🎯 Why we do it
+##  Why we do it
 :::info[Rationale]
 If numbers get too big, they can crash our model or make it learn really slowly. Layer Normalization forces the numbers to have an average of 0 and a variance of 1. It keeps everything neat and tidy!
 :::
 
-## 🛠️ How we do it
+##  How we do it
 :::info[Methodology]
 We find the average of our numbers and subtract it. Then we divide by the spread (standard deviation). The AI also learns two tiny helper variables called "gamma" and "beta" to give the numbers a little stretch and shift if it wants to.
 :::

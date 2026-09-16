@@ -214,7 +214,7 @@ export default function ComicStrip({
       <div className={styles.imageFrame}>
         {/* Top-Left Brand Watermark */}
         <div className={styles.brandBadge}>
-          hashcomics😋
+          hashcomics
         </div>
 
         {/* Top-Right Counter Badge Pill (1 / 3) */}

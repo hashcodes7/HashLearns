@@ -36,7 +36,7 @@ export default function SoftmaxVisualizer({
     }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "15px", flexWrap: "wrap", gap: "10px" }}>
         <h4 style={{ margin: 0, color: "var(--accent-color)", fontSize: "1.1rem", fontWeight: "600" }}>
-          📊 Interactive Softmax & Temperature Visualizer
+           Interactive Softmax & Temperature Visualizer
         </h4>
         
         {/* Temperature Controls */}

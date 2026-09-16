@@ -49,7 +49,7 @@ export default function DSAControlBar({
       <div style={{ marginBottom: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px' }}>
         <div>
           <h4 style={{ margin: 0, color: 'var(--ifm-color-primary, #00f0ff)', fontSize: '1.15rem', fontWeight: '700', letterSpacing: '0.02em' }}>
-            ⚡ {title}
+             {title}
           </h4>
           {description && (
             <p style={{ margin: '4px 0 0 0', fontSize: '0.85rem', color: '#9ca3af' }}>

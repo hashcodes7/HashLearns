@@ -11,12 +11,12 @@ After the GELU function, our data is all puffed up like a balloon because the fi
 
 ---
 
-## 🎯 Why we do it
+##  Why we do it
 :::info[Rationale]
 The AI temporarily expanded the data so it could find hidden patterns (using GELU). But the rest of the model expects the data to be a very specific size. The second linear layer acts like a funnel, compressing the expanded data back into its original shape.
 :::
 
-## 🛠️ How we do it
+##  How we do it
 :::info[Methodology]
 It's just another matrix multiplication! If our puffed-up data has a size of 400, and our normal size is 100, we multiply it by a matrix that transforms it from 400 back to 100.
 :::
@@ -39,7 +39,7 @@ print("Back to normal size:", normal_data.shape)
 
 ---
 
-## 💻 Code Implementation
+##  Code Implementation
 
 Here is the exact PyTorch implementation for the concepts discussed above:
 

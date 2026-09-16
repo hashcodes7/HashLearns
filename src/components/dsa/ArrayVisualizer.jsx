@@ -163,7 +163,7 @@ function* binarySearchGenerator(initialArr, targetValue = 42) {
         highlights: [mid],
         sorted: [mid],
         pointers: { found: mid },
-        explanation: `🎯 Target ${target} FOUND at index ${mid}!`
+        explanation: ` Target ${target} FOUND at index ${mid}!`
       };
       return;
     } else if (arr[mid].val < target) {
@@ -189,7 +189,7 @@ function* binarySearchGenerator(initialArr, targetValue = 42) {
     data: [...arr],
     highlights: [],
     pointers: {},
-    explanation: `❌ Target ${target} not found in the array.`
+    explanation: ` Target ${target} not found in the array.`
   };
 }
 
@@ -393,7 +393,7 @@ function* linearSearchGenerator(initialArr, targetValue = 42) {
         highlights: [i],
         sorted: [i],
         pointers: { found: i },
-        explanation: `🎯 Target ${target} FOUND at index ${i}!`
+        explanation: ` Target ${target} FOUND at index ${i}!`
       };
       return;
     }
@@ -403,7 +403,7 @@ function* linearSearchGenerator(initialArr, targetValue = 42) {
     data: [...arr],
     highlights: [],
     pointers: {},
-    explanation: `❌ Target ${target} not found in the array.`
+    explanation: ` Target ${target} not found in the array.`
   };
 }
 

@@ -65,8 +65,8 @@ Therefore, if a topic has **3 partitions**, a consumer group can effectively use
 P0 → C1
 P1 → C2
 P2 → C3
-P3 → ❌
-P4 → ❌
+P3 → 
+P4 → 
 
 C4 and C5 remain idle for this topic.
 ```

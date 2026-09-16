@@ -11,12 +11,12 @@ Looking at a painting with just one eye is okay, but looking with both eyes give
 
 ---
 
-## 🎯 Why we do it
+##  Why we do it
 :::info[Rationale]
 Sometimes a word can mean different things. In "The bank of the river," *bank* means land. In "The bank was robbed," *bank* means money. If the AI only has one "Attention Head", it might get confused. By having multiple heads, one head can look for places, another can look for money, and another can look for action!
 :::
 
-## 🛠️ How we do it
+##  How we do it
 :::info[Methodology]
 Instead of doing the attention math once, we split our vectors into smaller pieces and give each piece to a different "Head". They all do their own little homework assignments independently. Once they are all done, we glue their answers back together!
 :::
@@ -36,7 +36,7 @@ glued_together = head_1 + head_2
 
 ---
 
-## 💻 Code Implementation
+##  Code Implementation
 
 Here is the exact PyTorch implementation for the concepts discussed above:
 

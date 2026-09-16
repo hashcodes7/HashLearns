@@ -79,7 +79,7 @@ Finally, you need to expose your new course to the users on the homepage tiles.
   },
 ```
 
-### That's it! 🎉
+### That's it! 
 Save your files. Docusaurus will automatically:
 1. Add the course to the main sidebar tree.
 2. Generate an isolated, clean sidebar specifically for "React Basics" when a user clicks on it.

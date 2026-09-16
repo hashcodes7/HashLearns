@@ -186,8 +186,8 @@ For example:
 
 | Context | Predicted | Correct Target | Probability of Target | Loss |
 |----------|-----------|----------------|----------------------:|-----:|
-| hi my name is | harshu ✅ | harshu | 0.29 | 1.238 |
-| my name is harshu | who ✅ | who | 0.31 | 1.171 |
+| hi my name is | harshu  | harshu | 0.29 | 1.238 |
+| my name is harshu | who  | who | 0.31 | 1.171 |
 
 Although the predictions are correct, the loss is **not zero** because the model is only **29%** and **31%** confident.
 
@@ -195,7 +195,7 @@ Likewise,
 
 | Context | Predicted | Correct Target | Probability of Target | Loss |
 |----------|-----------|----------------|----------------------:|-----:|
-| hi my | really ❌ | name | 0.10 | 2.303 |
+| hi my | really  | name | 0.10 | 2.303 |
 
 The model predicted the wrong token and assigned only **10%** probability to the correct target, resulting in a much higher loss.
 

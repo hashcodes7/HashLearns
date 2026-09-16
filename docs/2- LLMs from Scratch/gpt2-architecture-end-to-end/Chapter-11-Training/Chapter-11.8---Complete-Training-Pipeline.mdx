@@ -15,7 +15,7 @@ Here we will talk about training a LLM based on its Loss function
 
 ---
 
-## 🛠️What we need
+## What we need
 
 $$
 \begin{array}{ccc}
@@ -42,7 +42,7 @@ Gisburn & rather & a & Cheap
 \end{array}
 $$
 
-## 🛠️What we have currently
+## What we have currently
 
 $$
 \begin{array}{cc}
@@ -88,7 +88,7 @@ a       \rightarrow [v_1,v_2,\ldots,v_{50257}]
 
 \end{array}
 $$
-## ⚙️ Understanding the size
+##  Understanding the size
 - **1 Input Batch**
     - contains **2 samples/sequences**
     - each sequence contains **4 tokens**
@@ -97,7 +97,7 @@ Similarly:
     - contains **2 output samples**/sequences
     - each output sequence contains **4 logit vectors**
     - each logit vector has **50,257 values**
-## ⚙️ Flattening the Logits Output
+##  Flattening the Logits Output
 $$
 \begin{array}{ccc}
 
@@ -158,7 +158,7 @@ a       \rightarrow [v_1,v_2,v_3,\ldots,v_{50257}]
 
 \end{array}
 $$
-## ⚙️ Softmaxing the logits tensor
+##  Softmaxing the logits tensor
 $$
 \begin{array}{ccc}
 
@@ -267,7 +267,7 @@ so the training sets overlap, this is called <span style={{color:"#4FC3F7"}}><b>
 
 ---
 
-## 💻 Code Implementation
+##  Code Implementation
 
 Here is the exact PyTorch implementation for the concepts discussed above:
 

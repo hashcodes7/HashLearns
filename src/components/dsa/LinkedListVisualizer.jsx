@@ -55,7 +55,7 @@ function* reverseLinkedListGenerator(initialList) {
     nodes: [...nodes],
     pointers: { head: n - 1 },
     reversedIndices: Array.from({ length: n }, (_, k) => k),
-    explanation: `🎉 Linked List Reversed successfully! New Head is node (${nodes[n - 1].value}).`
+    explanation: ` Linked List Reversed successfully! New Head is node (${nodes[n - 1].value}).`
   };
 }
 
@@ -82,7 +82,7 @@ function* searchLinkedListGenerator(initialList, targetValue = 30) {
         nodes: [...nodes],
         pointers: { found: i },
         foundNode: i,
-        explanation: `🎯 Target ${target} FOUND at node index [${i}]!`
+        explanation: ` Target ${target} FOUND at node index [${i}]!`
       };
       return;
     }
@@ -91,7 +91,7 @@ function* searchLinkedListGenerator(initialList, targetValue = 30) {
   yield {
     nodes: [...nodes],
     pointers: {},
-    explanation: `❌ Target ${target} was not found in the Linked List.`
+    explanation: ` Target ${target} was not found in the Linked List.`
   };
 }
 

@@ -1,20 +1,20 @@
 ---
-title: 🧮 Matrix-Dot Product X @ W
+title:  Matrix-Dot Product X @ W
 ---
 
-# 🧮 Matrix-Dot Product
+#  Matrix-Dot Product
 
 If you've ever seen an AI paper, you've probably seen $W \times X$. Matrix multiplication is the absolute workhorse of deep learning.
 
-## 🚂 The Transformation Engine
+##  The Transformation Engine
 When we multiply our data matrix $X$ by a weight matrix $W$, we are **transforming** our data (like applying an Instagram filter to a photo).
 
-## 🤝 The "Handshake" Rule
+##  The "Handshake" Rule
 You can't just mash any two matrices together. They have to fit perfectly like Lego pieces.
 If Matrix A is `(Rows x Columns)` and Matrix B is `(Rows x Columns)`, they can only multiply if **A's Columns == B's Rows**.
 
 ![](assets/Pasted%20image%2020260914021324.png)
-## 🐍 Python Implementation
+##  Python Implementation
 
 Using `numpy`, matrix multiplication is done using the `@` operator or `np.dot()`.
 

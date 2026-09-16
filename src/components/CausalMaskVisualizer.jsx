@@ -17,7 +17,7 @@ export default function CausalMaskVisualizer({
       boxShadow: "0 10px 30px rgba(0,0,0,0.25)"
     }}>
       <h4 style={{ margin: "0 0 10px 0", color: "var(--accent-color)", fontSize: "1.1rem", fontWeight: "600" }}>
-        🎭 Interactive Causal Attention Mask Visualizer
+         Interactive Causal Attention Mask Visualizer
       </h4>
 
       <p style={{ fontSize: "0.85rem", color: "#aaa", marginTop: 0, marginBottom: "20px", lineHeight: "1.5" }}>

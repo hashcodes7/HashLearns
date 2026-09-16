@@ -31,7 +31,7 @@ export function Footer() {
         </div>
 
         <p className="footer-text">
-          © {currentYear} {userProfile.name} • Built with React
+           {currentYear} {userProfile.name} • Built with React
         </p>
       </div>
     </footer>

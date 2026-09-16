@@ -5,11 +5,11 @@ description: "The content will be uploaded soon"
 
 # Chapter 12.2 - Downloading GPT-2 Weights
 
-# 🧠 Chapter 9.2 Loading OpenAI's Weights (Pretrained)
+#  Chapter 9.2 Loading OpenAI's Weights (Pretrained)
 
 Why train from scratch for thousands of hours when you can stand on the shoulders of giants? OpenAI released the weights for GPT-2, which means we can download their trained intelligence and plug it directly into our custom architecture!
 
-## 📥 1. Downloading the Checkpoint
+##  1. Downloading the Checkpoint
 
 In our implementation, `n_gpt_download.py` handles downloading the original TensorFlow checkpoints from OpenAI.
 
@@ -22,19 +22,19 @@ OpenAI provides GPT-2 in a few sizes:
 We use `download_and_load_gpt2()` to pull the weights, the vocabulary (`vocab.bpe`), and the model hyperparameters (`hparams.json`). 
 Once downloaded, the TensorFlow checkpoint (`.ckpt`) contains all the numeric weights organized by layer.
 
-## 🔄 2. The Great Migration: TensorFlow to PyTorch
+##  2. The Great Migration: TensorFlow to PyTorch
 
 Our model is built in PyTorch, but OpenAI's original weights are stored in TensorFlow format. Thus, we have a translation problem.
 
 In `o_tensorflow_model_loader.py`, we map the TensorFlow weights block-by-block into our custom PyTorch `GPTModel`.
 
-### 🧩 Mapping the Layers
+###  Mapping the Layers
 
 The function `load_weights_into_gpt(gpt, params)` carefully walks through our model and assigns the downloaded weights:
 
 1. **Embeddings:**
-   - Token Embeddings: `wte` ➡️ `gpt.tok_emb.weight`
-   - Positional Embeddings: `wpe` ➡️ `gpt.pos_emb.weight`
+   - Token Embeddings: `wte`  `gpt.tok_emb.weight`
+   - Positional Embeddings: `wpe`  `gpt.pos_emb.weight`
 
 2. **Transformer Blocks (The Loop):**
    For each block `b`, we do the following:

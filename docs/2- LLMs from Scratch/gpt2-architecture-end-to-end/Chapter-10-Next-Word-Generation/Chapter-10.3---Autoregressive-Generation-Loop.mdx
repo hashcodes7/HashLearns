@@ -7,7 +7,7 @@ description: "The content will be uploaded soon"
 
 ---
 
-# 📝 Chapter 10: Text Generation
+#  Chapter 10: Text Generation
 
 Now that we have a trained (or pretrained) model, how does it actually "speak"? 
 
@@ -17,7 +17,7 @@ This process is handled by `f_token_generator.py` and `g_text_generator.py`.
 
 ---
 
-## 🎲 1. The Core Loop: Generating Tokens
+##  1. The Core Loop: Generating Tokens
 In `f_token_generator.py`, the `generate_next_tokens()` function is the heart of inference.
 
 ```python
@@ -47,7 +47,7 @@ After applying temperature, we convert logits to probabilities using `Softmax`, 
 
 ---
 
-## 🗣️ 2. The User Interface: Text Generator
+##  2. The User Interface: Text Generator
 In `g_text_generator.py`, we wrap the token generation logic into a user-friendly pipeline. 
 
 The `generate_text()` function does three things:
@@ -62,7 +62,7 @@ Before generating text, we must set `model.eval()`. This turns off training-spec
 
 ---
 
-## 💻 Code Implementation
+##  Code Implementation
 
 Here is the exact PyTorch implementation for the concepts discussed above:
 

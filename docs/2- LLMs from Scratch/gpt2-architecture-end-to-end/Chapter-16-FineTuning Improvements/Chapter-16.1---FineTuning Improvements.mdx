@@ -7,7 +7,7 @@ Training large language models requires vast amounts of memory and computational
 
 ---
 
-## 📉 1. Gradient Accumulation
+##  1. Gradient Accumulation
 
 If you are fine-tuning a model on a consumer GPU (like an RTX 3090 with 24GB of VRAM), you might find that you can only fit a `batch_size` of 1 or 2 before running out of memory. Small batch sizes lead to unstable gradients and terrible training results.
 
@@ -22,7 +22,7 @@ You have just successfully simulated a `batch_size` of 20, without needing 10x t
 
 ---
 
-## 🧠 2. LoRA (Low-Rank Adaptation)
+##  2. LoRA (Low-Rank Adaptation)
 
 Updating all 1.5 Billion parameters of a GPT model is incredibly expensive.
 

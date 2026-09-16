@@ -43,9 +43,9 @@ now we can continue with our setup
 | Installation | Only Docker needed | Kafka installed on EC2 |
 | Networking | Simple: `kafka:9092` | More configuration required |
 | Deployment | `docker compose up` | Kafka managed separately |
-| Reproducibility | 🟢 High | 🟡 Medium |
-| EC2 cleanliness | 🟢 Clean | 🟡 Kafka files/processes on EC2 |
-| BigKart fit | 🟢 **Recommended** | 🟡 Good |
+| Reproducibility |  High |  Medium |
+| EC2 cleanliness |  Clean |  Kafka files/processes on EC2 |
+| BigKart fit |  **Recommended** |  Good |
 | Production AWS | Usually managed Kafka (MSK) | Usually managed Kafka (MSK) |
 
 ### Our choice

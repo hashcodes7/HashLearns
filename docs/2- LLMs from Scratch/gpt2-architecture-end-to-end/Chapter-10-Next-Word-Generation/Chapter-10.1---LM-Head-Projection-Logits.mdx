@@ -11,12 +11,12 @@ At the very end of our model, the AI spits out raw scores for every single word 
 
 ---
 
-## 🎯 Why we do it
+##  Why we do it
 :::info[Rationale]
 It's really hard to understand a score of 42.5. But if we turn it into "95% chance", it makes total sense! We need percentages so the AI can easily pick the most likely next word.
 :::
 
-## 🛠️ How we do it
+##  How we do it
 :::info[Methodology]
 We bring back our good old friend, **Softmax**! Softmax takes all those crazy Logit numbers and squishes them so that they are all between 0% and 100%, and they all add up to exactly 100%.
 :::

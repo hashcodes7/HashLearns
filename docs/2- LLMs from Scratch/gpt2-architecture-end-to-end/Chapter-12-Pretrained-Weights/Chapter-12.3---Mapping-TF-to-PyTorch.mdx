@@ -11,12 +11,12 @@ Sometimes, an incredibly smart AI was trained by Google in a language called Ten
 
 ---
 
-## 🎯 Why we do it
+##  Why we do it
 :::info[Rationale]
 OpenAI spent millions of dollars training GPT-2 in TensorFlow. We don't want to spend millions of dollars training our own from scratch! So, we just download their smart brain and carefully map their TensorFlow names to our PyTorch names.
 :::
 
-## 🛠️ How we do it
+##  How we do it
 :::info[Methodology]
 We create a dictionary (like a translation book). We say, "Hey, whenever you see a weight named `h0/attn/c_attn/w` in TensorFlow, put it inside our PyTorch layer named `transformer.h.0.attn.c_attn.weight`."
 :::

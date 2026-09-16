@@ -148,7 +148,8 @@ export default function ComicStrip({
           .filter((k) => {
              // Remove the leading './' to check the actual filename's initial
              const filename = k.replace(/^.\//, '').toLowerCase();
-             return filename.startsWith(filter.toLowerCase());
+             const isImage = /\.(png|jpe?g|svg|webp|gif)$/.test(filename);
+             return filename.startsWith(filter.toLowerCase()) && isImage;
           })
           .sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }));
 
@@ -159,7 +160,8 @@ export default function ComicStrip({
       }
       // Case 3: All images in assets folder
       else {
-        const sortedKeys = keys.sort((a, b) => 
+        const filteredKeys = keys.filter(k => /\.(png|jpe?g|svg|webp|gif)$/i.test(k));
+        const sortedKeys = filteredKeys.sort((a, b) => 
           a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' })
         );
         rawImages = sortedKeys.map((key) => {
@@ -217,7 +219,7 @@ export default function ComicStrip({
       <div className={styles.imageFrame}>
         {/* Top-Left Brand Watermark */}
         <div className={styles.brandBadge}>
-          hashcomics😋
+          hashcomics
         </div>
 
         {/* Top-Right Counter Badge Pill (1 / 3) */}

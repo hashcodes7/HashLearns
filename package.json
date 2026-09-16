@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
-    "prestart": "python generate_cards.py",
+    "prestart": "python extract_comics.py && python generate_cards.py",
     "start": "docusaurus start",
-    "prebuild": "python generate_cards.py",
+    "prebuild": "python extract_comics.py && python generate_cards.py",
     "build": "docusaurus build",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",

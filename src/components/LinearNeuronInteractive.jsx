@@ -197,7 +197,7 @@ export default function LinearNeuronInteractive() {
         <div style={{ display: 'inline-block', padding: '0.3rem 1rem', background: isSuccess ? '#eebb00' : '#25c2a0', color: '#fff', borderRadius: '20px', fontWeight: 'bold', fontSize: '0.95rem', boxShadow: isSuccess ? '0 2px 8px rgba(238,187,0,0.3)' : '0 2px 8px rgba(37,194,160,0.3)', transition: 'background 0.3s' }}>
           y = {weight.toFixed(1)}x {bias >= 0 ? '+' : '-'} {Math.abs(bias).toFixed(1)}
         </div>
-        {isSuccess && <span style={{ fontSize: '0.95rem', fontWeight: 'bold', color: '#eebb00' }}>🎉 Hit! You trained the neuron</span>}
+        {isSuccess && <span style={{ fontSize: '0.95rem', fontWeight: 'bold', color: '#eebb00' }}> Hit! You trained the neuron</span>}
       </div>
 
       <div style={{ height: '200px', width: '100%', position: 'relative', backgroundColor: 'var(--ifm-background-color)', borderRadius: '8px', padding: '0.5rem', border: '1px solid var(--ifm-color-emphasis-200)' }}>

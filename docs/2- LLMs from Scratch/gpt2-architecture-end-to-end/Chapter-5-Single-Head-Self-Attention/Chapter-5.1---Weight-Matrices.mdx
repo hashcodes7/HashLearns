@@ -14,12 +14,12 @@ Bro, scene yeh hai ki hum ek LLM model bana rahe hain. Model ko context samajhna
 
 ---
 
-## 🎯 Why we do it
+##  Why we do it
 :::info[Rationale]
 Kyun kar rahe hain hum ye? Kyunki ek word akela kuch nahi hota. Jab words ek doosre se "connect" hote hain, tabhi sentence ka meaning banta hai. Hum chahte hain ki humara AI har word ko dekhe, aur samajh sake ki uska baki sentence ke kis word ke saath sabse deep connection hai!
 :::
 
-## 🛠️ How we do it
+##  How we do it
 :::info[Methodology]
 Isko aise samjho: 
 1. Humare paas input sentence ke saare words vectors mein hain.
@@ -29,7 +29,7 @@ Isko aise samjho:
 5. End mein sabko mila kar ek super-charged vector banta hai (jisey **Context Vector** bolte hain).
 :::
 
-## 📥 Input
+##  Input
 :::info[Input Format]
 - **Description:** Humara basic input wohi puraane embedded vectors hain jo humne pehle banaye the. Har word ek vector ban chuka hai.
 :::
@@ -39,12 +39,12 @@ Isko aise samjho:
 > inputs = tensor([0.43, 0.15, 0.89]) # "Your" ka vector
 > ```
 
-## 📤 Output
+##  Output
 :::info[Resulting State]
 - **Description:** Result ek naya vector hota hai, jisko **Context Vector** kehte hain. Is vector mein sirf us word ki akele ki meaning nahi hoti, balki baaki doston (words) ki bhi thodi-thodi khasiyat judi hoti hai!
 :::
 
-## ⚙️ Working
+##  Working
 :::info[Under the Hood]
 Chal bhai, ab is poori kahani ko code mein dekhte hain!
 :::

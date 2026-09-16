@@ -1,16 +1,16 @@
 ---
-title: "🧮 Matrix Outer Product (np.outer(error, x))"
+title: " Matrix Outer Product (np.outer(error, x))"
 ---
 
 import MatrixVectorVisualizer from '@site/src/components/MatrixVectorVisualizer';
 
-# 🧮 Matrix Outer Product
+#  Matrix Outer Product
 
 The matrix outer product takes two vectors and produces a matrix. If you have a column vector $u$ of size $m$ and a row vector $v$ of size $n$, their outer product $u \otimes v$ (or simply $u v^T$) is an $m \times n$ matrix.
 
 This operation is particularly important in machine learning for tasks like updating weights in gradient descent, where we often compute the outer product of an error vector and an input vector to get the gradient matrix for the weights.
 ![](assets/Pasted%20image%2020260914021431.png)
-## ⚙️ How it Works
+##  How it Works
 
 Unlike the inner product (dot product) which results in a single scalar value, the outer product pairs every element of the first vector with every element of the second vector.
 
@@ -29,7 +29,7 @@ Here is an example visualization of a $2 \times 2$ matrix resulting from an oute
   showVector={false} 
 />
 
-## 🐍 Python Implementation
+##  Python Implementation
 
 Using `numpy`, the outer product is efficiently computed using `np.outer()`.
 

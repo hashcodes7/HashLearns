@@ -7,7 +7,7 @@ The Collate Function (`r_collate.py` in our architecture) acts as the final prep
 
 ---
 
-## 🧱 Job 1: Padding
+##  Job 1: Padding
 
 Neural networks require batches of data to be perfectly rectangular tensors (e.g., a matrix of `Batch Size` × `Sequence Length`). However, conversations naturally have different lengths! 
 
@@ -20,7 +20,7 @@ Batch 2: [Can] [you] [explain] [this] [?]
 
 ---
 
-## 🎭 Job 2: Loss Masking
+##  Job 2: Loss Masking
 
 This is the most crucial concept in Chat Finetuning. 
 
@@ -49,7 +49,7 @@ By masking the user tokens, the Loss gradient is only calculated on the assistan
 
 ---
 
-## 💻 Code Implementation
+##  Code Implementation
 
 Here is the exact PyTorch implementation for the concepts discussed above:
 

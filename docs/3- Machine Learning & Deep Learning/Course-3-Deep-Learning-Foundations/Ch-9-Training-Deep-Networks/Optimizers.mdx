@@ -1,17 +1,17 @@
 ---
-title: "🔧 Optimizers"
+title: " Optimizers"
 ---
 
-# 🔧 Optimizers
+#  Optimizers
 
 Backpropagation calculates the "blame" (gradients). But the **Optimizer** is the worker who actually grabs a wrench and updates the weights!
 
-## 🧗 The Hiker's Shoes
+##  The Hiker's Shoes
 If Gradient Descent is a hiker walking down a mountain:
 * **SGD (Standard):** Wearing plain boots. Takes slow, steady steps downhill.
 * **Adam:** Wearing jet-boots with a compass. It remembers its momentum from previous steps and adjusts its step size for every single dimension dynamically. Adam is the default choice for 99% of Deep Learning today.
 
-## 🐍 Python Implementation
+##  Python Implementation
 
 We will use the exact same `model` structure from Chapter 1, but now we give it an Optimizer to update its weights!
 

@@ -1,16 +1,18 @@
 ---
-title: "⚖️ Logistic Regression"
+title: " Logistic Regression"
 ---
 
-# ⚖️ Logistic Regression
+#  Logistic Regression
 
 Despite the name, this is NOT a regression algorithm. It's for **Classification**!
 
-## 🍦 Temperature vs. Ice Cream High Sales
+##  Temperature vs. Ice Cream High Sales
 Logistic Regression predicts probabilities (e.g. Will today have High Ice Cream Sales based on Temperature?).
 It squishes a straight line into an **S-shape** (the Sigmoid curve), guaranteeing the output is a clean percentage between 0% and 100%.
-
-## 🐍 Python Implementation
+<ComicCarousel 
+  filter="logisticreg"
+/>
+##  Python Implementation
 
 <PyScriptRunner
   title="Logistic Regression & Sigmoid Predictor (Probabilistic Ice Cream Sales)"
@@ -40,9 +42,9 @@ print("Logit value (z): %.2f" % z)
 print("High Sales Probability: %.1f%%" % (prob_today * 100))
 
 if prob_today >= 0.5:
-    print("Final Decision: HIGH SALES 🍦")
+    print("Final Decision: HIGH SALES ")
 else:
-    print("Final Decision: LOW SALES ❄️")
+    print("Final Decision: LOW SALES ")
 
 # --- Plotting Section (Intercepted for Chart.js) ---
 
@@ -63,5 +65,4 @@ plt.ylabel("High Sales Probability P(Y=1)")
 plt.title("Logistic Regression: Ice Cream Sales vs Temperature")
 `}
 />
-
 

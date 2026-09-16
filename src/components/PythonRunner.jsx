@@ -237,7 +237,7 @@ function ChartJSPlot({ datasets, meta = {} }) {
     }
   };
 
-  const displayTitle = meta.title || "📊 Interactive 2D Graph (Zoom & Pan Enabled)";
+  const displayTitle = meta.title || " Interactive 2D Graph (Zoom & Pan Enabled)";
 
   return (
     <div className="python-plot-wrapper" style={{ marginTop: '1.2rem', paddingTop: '1rem', borderTop: `1px solid ${borderColor}` }}>
@@ -260,7 +260,7 @@ function ChartJSPlot({ datasets, meta = {} }) {
           }}
           title="Reset zoom and pan position"
         >
-          🔍 Reset Zoom
+           Reset Zoom
         </button>
       </div>
       <div style={{ height: '300px', width: '100%', background: bgColor, borderRadius: '8px', border: `1px solid ${borderColor}`, padding: '12px', boxSizing: 'border-box' }}>
@@ -463,7 +463,7 @@ export default function PythonRunner({
             }
           >
             {status === 'running' ? (
-              <span style={{ fontSize: '0.85rem' }}>⏳</span>
+              <span style={{ fontSize: '0.85rem' }}></span>
             ) : (
               <PlayIcon size={16} />
             )}
@@ -555,7 +555,7 @@ export default function PythonRunner({
           <div className="clean-output-header">
             <span className="clean-output-label">OUTPUT</span>
             {execTime && (
-              <span className="clean-output-time">⚡ {execTime}</span>
+              <span className="clean-output-time"> {execTime}</span>
             )}
           </div>
 

@@ -11,12 +11,12 @@ When the AI goes to school (training), it needs to bring its textbooks in perfec
 
 ---
 
-## 🎯 Why we do it
+##  Why we do it
 :::info[Rationale]
 GPUs (the chips that train AI) love nice, neat boxes (matrices). If one sentence is 5 words long and another is 10 words long, the GPU gets confused. We use "Padding" to fill the short sentences with blank spaces so everything is exactly the same length!
 :::
 
-## 🛠️ How we do it
+##  How we do it
 :::info[Methodology]
 We find the longest sentence in our batch. Then, we add `<PAD>` tokens (which are just 0s) to the end of all the shorter sentences until they match the longest one.
 :::
@@ -37,7 +37,7 @@ print(sentence_2)
 
 ---
 
-## 💻 Code Implementation
+##  Code Implementation
 
 Here is the exact PyTorch implementation for the concepts discussed above:
 

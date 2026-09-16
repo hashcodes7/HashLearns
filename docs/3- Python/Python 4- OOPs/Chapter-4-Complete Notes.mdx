@@ -1102,13 +1102,13 @@ first parameter automatically receives the object
 
 # 23. Mistakes to Watch For
 
-### ❌ Forgetting `self`
+###  Forgetting `self`
 
 ```python
 if age < 13:
 ```
 
-### ✅
+### 
 
 ```python
 if self.age < 13:
@@ -1116,7 +1116,7 @@ if self.age < 13:
 
 ---
 
-### ❌ Wrong attribute name
+###  Wrong attribute name
 
 ```python
 self.user
@@ -1130,13 +1130,13 @@ self.name
 
 ---
 
-### ❌ Wrong capitalization
+###  Wrong capitalization
 
 ```python
 Super()
 ```
 
-### ✅
+### 
 
 ```python
 super()
@@ -1146,13 +1146,13 @@ Python is case-sensitive.
 
 ---
 
-### ❌ Passing `self` to `super()`
+###  Passing `self` to `super()`
 
 ```python
 super().__init__(self, user_id, name)
 ```
 
-### ✅
+### 
 
 ```python
 super().__init__(user_id, name)
@@ -1160,15 +1160,15 @@ super().__init__(user_id, name)
 
 ---
 
-### ❌ Thinking `self` is a keyword
+###  Thinking `self` is a keyword
 
 It isn't.
 
-### ❌ Thinking `cls` is a keyword
+###  Thinking `cls` is a keyword
 
 It isn't.
 
-### ✅
+### 
 
 Both are conventional parameter names.
 
@@ -1179,13 +1179,13 @@ cls  → class
 
 ---
 
-### ❌ Using Java inheritance syntax
+###  Using Java inheritance syntax
 
 ```python
 class Dog extends Animal:
 ```
 
-### ✅
+### 
 
 ```python
 class Dog(Animal):
@@ -1193,7 +1193,7 @@ class Dog(Animal):
 
 ---
 
-### ❌ Reimplementing the parent constructor unnecessarily
+###  Reimplementing the parent constructor unnecessarily
 
 Instead of:
 

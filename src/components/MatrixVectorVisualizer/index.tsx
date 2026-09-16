@@ -84,7 +84,7 @@ export default function MatrixVectorVisualizer({
       background: 'var(--ifm-background-surface-color)'
     }}>
       <div style={{ textAlign: 'center' }}>
-        <h3>{isOuterProduct ? "Outer Product Visualization" : "Matrix ↔ Vector Space"}</h3>
+        <h3>{isOuterProduct ? "Outer Product Visualization" : "Matrix  Vector Space"}</h3>
         {!isOuterProduct && <p>Interact with the matrix values, and <strong>click and drag the 3D space</strong> to rotate it.</p>}
         {isOuterProduct && <p>Interact with the vectors <strong>{uName}</strong> and <strong>{vName}</strong> to see how they form the outer product matrix.</p>}
       </div>

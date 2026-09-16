@@ -11,17 +11,17 @@ Tokenization is the very first step. Tokenization serves as the foundational mec
 ---
 
 
-## 🎯 Why we do it
+##  Why we do it
 :::info[Rationale]
 Modern neural architectures and language models inherently cannot process raw letters. They only understand math and numbers. We tokenize text to chop it up into smaller pieces, and then we use a dictionary (called a [vocabulary](#vocab)) to assign a unique number to every single piece.
 :::
 
-## 🛠️ How we do it
+##  How we do it
 :::info[Methodology]
 The standard industry approach relies on a specialized utility known as a [tokenizer](#tokenizer) (specifically, [Byte Pair Encoding or BPE](#bpe)). It acts like a smart dictionary that breaks down rare words into smaller chunks and keeps common words whole.
 :::
 
-## 📥 Input
+##  Input
 :::info[Input Format]
 - **Description:** A regular text string, exactly as a human would write or read it. This will be our master example sentence.
 :::
@@ -31,7 +31,7 @@ The standard industry approach relies on a specialized utility known as a [token
 > text = "The quick, brown fox jumps over the lazy dog!"
 > ```
 
-## 📤 Output
+##  Output
 :::info[Resulting State]
 - **Description:** A simple list of numbers (a 1-dimensional [tensor](#tensor)). Each number directly corresponds to a specific text piece from our vocabulary dictionary.
 :::
@@ -51,7 +51,7 @@ The standard industry approach relies on a specialized utility known as a [token
 > | `7586` | " brown" |
 > | `21831`| " fox" |
 
-## ⚙️ Working
+##  Working
 :::info[Under the Hood]
 1. The tokenizer looks at the raw sentence.
 2. It chops the sentence up based on spaces, punctuation, and common word fragments.
@@ -66,7 +66,7 @@ graph TD
 
 ---
 
-## 📖 Terminologies
+##  Terminologies
 
 - **Vocabulary:** A dictionary that assigns a unique number to every single piece of text. <a id="vocab"></a>
 - **Tokenizer:** A tool that breaks down text into smaller pieces called tokens. <a id="tokenizer"></a>

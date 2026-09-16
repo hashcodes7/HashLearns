@@ -11,12 +11,12 @@ Remember how Layer Normalization is like a shower for our data? Well, scientists
 
 ---
 
-## 🎯 Why we do it
+##  Why we do it
 :::info[Rationale]
 LayerNorm calculates the "average" of the numbers and subtracts it. But subtraction takes time on a GPU! RMSNorm skips the subtraction completely and only divides the numbers by their size. It saves 10% of the training time for massive models like LLaMA!
 :::
 
-## 🛠️ How we do it
+##  How we do it
 :::info[Methodology]
 RMSNorm just squares all the numbers, finds the average of those squares, takes the square root, and divides the original numbers by that result. Simple and lightning fast!
 :::

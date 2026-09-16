@@ -9,7 +9,7 @@ When dealing with a multi-turn chatting dataset like **UltraChat**, we have to p
 Think of the LLM as an actor reading a script. The script clearly dictates who is speaking ("User" or "Assistant"). If we just jumbled all the text together, the model wouldn't know when it's supposed to listen and when it's supposed to talk!
 :::
 
-## 📝 The Raw Data
+##  The Raw Data
 
 Our raw dataset provides a conversation as a JSON array of messages:
 
@@ -23,7 +23,7 @@ Our raw dataset provides a conversation as a JSON array of messages:
 }
 ```
 
-## 🔄 The Transformation
+##  The Transformation
 
 We cannot pass JSON directly into a Neural Network. We must flatten this JSON into a single, continuous string, while inserting special "Control Tokens" to help the model distinguish between speakers.
 
@@ -38,7 +38,7 @@ Assistant:
 
 Notice the trailing `Assistant: ` at the end. We intentionally leave the last assistant response blank when prompting the model, effectively forcing the model to "fill in the blank" by generating the assistant's reply!
 
-## 🔢 Tokenization
+##  Tokenization
 
 Once the text is flattened, we pass it through our tokenizer (using Byte Pair Encoding). 
 
@@ -54,7 +54,7 @@ This 1-dimensional tensor of tokens is exactly what we feed into our GPT-2 model
 
 ---
 
-## 💻 Code Implementation
+##  Code Implementation
 
 Here is the exact PyTorch implementation for the concepts discussed above:
 

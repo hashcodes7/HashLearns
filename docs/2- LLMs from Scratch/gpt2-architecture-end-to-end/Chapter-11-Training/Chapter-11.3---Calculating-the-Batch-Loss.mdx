@@ -11,12 +11,12 @@ When you take a test in school, your teacher gives you a grade based on how many
 
 ---
 
-## 🎯 Why we do it
+##  Why we do it
 :::info[Rationale]
 The AI starts off completely clueless. It just guesses random words. To make it smarter, we have to measure exactly *how wrong* it is. If the AI was supposed to say "Apple" but said "Car", we give it a big penalty (high loss). If it said "Orange", we give it a smaller penalty.
 :::
 
-## 🛠️ How we do it
+##  How we do it
 :::info[Methodology]
 We use a math formula called **Cross-Entropy Loss**. It compares the percentages the AI guessed with the actual 100% correct answer. It calculates the difference for the whole "batch" (group) of words it just tried to guess.
 :::
@@ -39,7 +39,7 @@ print("The AI's penalty score is:", loss.item())
 
 ---
 
-## 💻 Code Implementation
+##  Code Implementation
 
 Here is the exact PyTorch implementation for the concepts discussed above:
 

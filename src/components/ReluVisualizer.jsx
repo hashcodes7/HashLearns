@@ -59,7 +59,7 @@ export default function ReluVisualizer() {
       {/* Title & Unified Controls + Output Header */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.85rem", flexWrap: "wrap", gap: "10px" }}>
         <h4 style={{ margin: 0, color: "#f59e0b", fontSize: "1.05rem", fontWeight: "600", display: "flex", alignItems: "center", gap: "0.4rem" }}>
-          ⚡ Interactive ReLU Activation Curve
+           Interactive ReLU Activation Curve
         </h4>
 
         {/* Combined Control & Output Bar */}

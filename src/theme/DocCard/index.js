@@ -95,17 +95,17 @@ function getEmojiAndCleanTitle(label) {
 
 function deriveEmoji(title, index) {
   const lower = title.toLowerCase();
-  if (lower.includes('hierarchy') || lower.includes('inheritance') || lower.includes('tree') || lower.includes('class')) return '🌲';
-  if (lower.includes('dispatch') || lower.includes('polymorphism') || lower.includes('dynamic') || lower.includes('runtime')) return '⚡';
-  if (lower.includes('token') || lower.includes('embed') || lower.includes('text')) return '🔤';
-  if (lower.includes('attention') || lower.includes('transformer') || lower.includes('llm') || lower.includes('gpt')) return '🧠';
-  if (lower.includes('architecture') || lower.includes('design') || lower.includes('system')) return '📐';
-  if (lower.includes('ingestion') || lower.includes('chunk') || lower.includes('rag') || lower.includes('search')) return '🔍';
-  if (lower.includes('guardrail') || lower.includes('security') || lower.includes('auth')) return '🛡️';
-  if (lower.includes('activation') || lower.includes('norm') || lower.includes('layer') || lower.includes('function')) return '⚙️';
-  if (lower.includes('train') || lower.includes('fine') || lower.includes('weight')) return '🚀';
+  if (lower.includes('hierarchy') || lower.includes('inheritance') || lower.includes('tree') || lower.includes('class')) return '';
+  if (lower.includes('dispatch') || lower.includes('polymorphism') || lower.includes('dynamic') || lower.includes('runtime')) return '';
+  if (lower.includes('token') || lower.includes('embed') || lower.includes('text')) return '';
+  if (lower.includes('attention') || lower.includes('transformer') || lower.includes('llm') || lower.includes('gpt')) return '';
+  if (lower.includes('architecture') || lower.includes('design') || lower.includes('system')) return '';
+  if (lower.includes('ingestion') || lower.includes('chunk') || lower.includes('rag') || lower.includes('search')) return '';
+  if (lower.includes('guardrail') || lower.includes('security') || lower.includes('auth')) return '';
+  if (lower.includes('activation') || lower.includes('norm') || lower.includes('layer') || lower.includes('function')) return '';
+  if (lower.includes('train') || lower.includes('fine') || lower.includes('weight')) return '';
   
-  const fallbackEmojis = ['🌲', '⚡', '🧠', '📐', '🔍', '⚙️', '🚀', '📦', '🔑', '🛡️'];
+  const fallbackEmojis = ['', '', '', '', '', '', '', '', '', ''];
   return fallbackEmojis[index % fallbackEmojis.length];
 }
 
@@ -203,7 +203,7 @@ function DefaultCard({ title, description, href, icon, index = 0 }) {
         <span className="chapter-index-num">1.{index + 1}</span>
       </div>
 
-      <span className="chapter-emoji-icon">{icon || '📄'}</span>
+      <span className="chapter-emoji-icon">{icon || ''}</span>
 
       <h3 className="chapter-card-title">{title}</h3>
       

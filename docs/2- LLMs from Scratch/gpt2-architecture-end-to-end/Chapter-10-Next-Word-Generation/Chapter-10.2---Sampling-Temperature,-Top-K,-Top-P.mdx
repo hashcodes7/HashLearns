@@ -11,14 +11,14 @@ If the AI always picks the word with the highest percentage, it gets really bori
 
 ---
 
-## 🎯 Why we do it
+##  Why we do it
 :::info[Rationale]
 Sometimes the second or third best word is actually more interesting! 
 - **Temperature** makes the percentages closer together (higher temperature = more random, lower temperature = more strict). 
 - **Top-K** means we only look at the top few words and completely ignore the crazy weird ones at the bottom.
 :::
 
-## 🛠️ How we do it
+##  How we do it
 :::info[Methodology]
 We divide our Logits by a Temperature number before doing Softmax. Then, we use a tool to only grab the top `K` choices (like the top 50 words) and pick randomly from those!
 :::

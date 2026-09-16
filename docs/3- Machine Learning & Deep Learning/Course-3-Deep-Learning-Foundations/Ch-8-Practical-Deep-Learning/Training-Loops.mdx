@@ -1,19 +1,19 @@
 ---
-title: "🔁 The Training Loop"
+title: " The Training Loop"
 ---
 
-# 🔁 The Training Loop
+#  The Training Loop
 
 This is the heartbeat of Deep Learning. Every training loop in [PyTorch](../../Course-1-Mathematics and Frameworks/Ch-9 Deep-Learning-Frameworks/PyTorch.mdx) follows the exact same 5-step pattern. If you memorize this, you can train any AI in the world.
 
-## 🖐️ The 5 Steps
+##  The 5 Steps
 1. Make a guess (Forward Pass)
 2. Calculate the mistake (Loss)
 3. Clear old gradients (Zero Grad)
 4. Calculate new gradients (Backward Pass)
 5. Update weights (Optimizer Step)
 
-## 🐍 Python Implementation
+##  Python Implementation
 
 Here is the holy grail of [PyTorch](../../Course-1-Mathematics and Frameworks/Ch-9 Deep-Learning-Frameworks/PyTorch.mdx) code.
 
@@ -52,7 +52,7 @@ for epoch in range(3):
     print(f"Epoch {epoch} | Loss: {loss.item():.4f}")
 ```
 
-## 🗺️ Visualizing the 5-Step Loop
+##  Visualizing the 5-Step Loop
 
 ```mermaid
 flowchart TD

@@ -11,12 +11,12 @@ We just gave our AI multiple "heads" to think about a sentence. But right now, t
 
 ---
 
-## 🎯 Why we do it
+##  Why we do it
 :::info[Rationale]
 If you ask 4 friends for advice, you get 4 different answers. You need to combine their advice to make your final decision. The Output Projection layer takes all the glued-together answers from the different heads and scrambles them up nicely so the AI can use the best parts of each!
 :::
 
-## 🛠️ How we do it
+##  How we do it
 :::info[Methodology]
 We use a simple Linear Layer (just a matrix multiplication) to mix everything up. We multiply our glued-together vector by a special matrix called `W_O` (Weight Output).
 :::

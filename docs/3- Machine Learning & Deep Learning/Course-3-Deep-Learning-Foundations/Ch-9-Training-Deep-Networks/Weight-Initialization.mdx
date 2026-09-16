@@ -1,17 +1,17 @@
 ---
-title: "🎲 Weight Initialization"
+title: " Weight Initialization"
 ---
 
-# 🎲 Weight Initialization
+#  Weight Initialization
 
 How do we pick the starting weights before the model even begins training?
 
-## ⚖️ The Goldilocks Problem
+##  The Goldilocks Problem
 * **Start with all zeros?** The network is perfectly symmetrical. The neurons can never learn different things (they all get the exact same updates). The network fails.
 * **Start with numbers too big?** The outputs explode to infinity. The network crashes.
 * **Kaiming/Xavier Initialization:** The sweet spot. It pulls random numbers from a very specific distribution based on the size of the layer, keeping the math perfectly stable.
 
-## 🐍 Python Implementation
+##  Python Implementation
 
 [PyTorch](../../Course-1-Mathematics and Frameworks/Ch-9 Deep-Learning-Frameworks/PyTorch.mdx) automatically initializes weights using good defaults, but here is how you do it manually if you need to!
 

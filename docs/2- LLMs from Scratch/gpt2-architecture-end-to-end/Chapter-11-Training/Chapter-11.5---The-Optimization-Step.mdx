@@ -11,12 +11,12 @@ Now that we know the AI made a mistake (the Loss), it's time to actually fix its
 
 ---
 
-## 🎯 Why we do it
+##  Why we do it
 :::info[Rationale]
 Just telling the AI it's wrong doesn't help unless we show it *how* to improve. We use a tool called an **Optimizer** (like AdamW) to go inside the AI's brain and turn millions of tiny dials and knobs so it doesn't make the same mistake twice.
 :::
 
-## 🛠️ How we do it
+##  How we do it
 :::info[Methodology]
 After calculating the loss, we calculate the "gradients" (which direction to turn the knobs). Then, the optimizer says `optimizer.step()`, which actually turns the knobs! Finally, we reset the gradients to zero for the next round.
 :::

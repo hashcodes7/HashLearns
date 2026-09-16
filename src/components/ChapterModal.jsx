@@ -104,7 +104,7 @@ export function ChapterModal({ chapter, topic, isOpen, onClose, isCompleted, onT
           {chapter.interviewTip && (
             <div className="interview-tip-card">
               <div className="tip-header">
-                <span className="tip-icon">💡</span>
+                <span className="tip-icon"></span>
                 <span className="tip-title">Interview Favorite & Production Tip</span>
               </div>
               <p className="tip-content">{chapter.interviewTip}</p>
