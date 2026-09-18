@@ -1,0 +1,81 @@
+# 20. Normalization
+
+Normalization keeps the values flowing through the network in a stable range.
+
+It can make training faster and more stable.
+
+Common normalization techniques include:
+
+- Batch Normalization
+- Layer Normalization
+
+## Batch Normalization
+
+Normalizes activations using statistics from the current batch.
+
+```python
+self.batchnorm = nn.BatchNorm1d(10)
+```
+
+Useful in many feed-forward and CNN networks.
+
+## Layer Normalization
+
+Normalizes across the features of each individual sample.
+
+```python
+self.layernorm = nn.LayerNorm(10)
+```
+
+Commonly used in Transformers.
+
+## Main Difference
+
+| Batch Normalization | Layer Normalization |
+| --- | --- |
+| Normalizes across the batch | Normalizes across features |
+| Depends on batch statistics | Works independently for each sample |
+| Common in CNNs | Common in Transformers |
+
+## Actual Implementation
+
+```python
+import torch
+import torch.nn as nn
+
+class NeuralNetwork(nn.Module):
+    def __init__(self):
+        super().__init__()
+
+        self.linear1 = nn.Linear(2, 10)
+        self.batchnorm = nn.BatchNorm1d(10)
+        self.linear2 = nn.Linear(10, 1)
+
+    def forwardpass(self, x):
+        x = self.linear1(x)
+        x = self.batchnorm(x)
+        x = torch.relu(x)
+        x = self.linear2(x)
+
+        return x
+
+neuralnetwork = NeuralNetwork()
+
+inputs = torch.tensor([
+    [18.0, 28.0],
+    [19.0, 29.0],
+    [20.0, 30.0],
+    [21.0, 31.0]
+])
+
+output = neuralnetwork.forwardpass(inputs)
+
+print(output)
+```
+
+## Quick Difference
+
+```text
+BatchNorm → normalize across the batch
+LayerNorm → normalize across features of each sample
+```

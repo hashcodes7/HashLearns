@@ -1,0 +1,102 @@
+# 1. Overfitting and Underfitting
+
+## Underfitting
+The model is too simple to learn the underlying pattern.
+
+## Overfitting
+The model learns the training examples too specifically.
+
+# Solutions - These are called Regularization Techniques
+| weight decay      | "Don't let weights become too large."               |
+| ----------------- | --------------------------------------------------- |
+| L2 regularization | "Add a penalty for large weights to the loss."      |
+| dropout           | "Randomly switch off some neurons during training." |
+
+#### Weight Decay Implementation
+```python
+optimizer = optim.Adam(model.parameters(), lr=0.001, weight_decay=0.01)
+```
+
+#### L2 Regularization
+```python
+l2 = sum(torch.sum(p ** 2) for p in model.parameters())
+loss = loss + 0.01 * l2
+```
+
+#### Dropout
+```python
+self.dropout = nn.Dropout(0.2)
+```
+
+## Actual Implementation of all 3 Regularizations for Overfitting
+```python r
+import matplotlib.pyplot as plt
+import torch
+import torch.nn as nn
+from torch.utils.data import TensorDataset, DataLoader
+
+losses = []
+
+class NeuralNetwork(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.linear1 = nn.Linear(2, 10)
+        # Dropout: randomly turns off 20% of neurons during training
+        self.dropout = nn.Dropout(0.2)
+        self.lastlayer1 = nn.Linear(10, 1)
+    def forwardpass(self, x):
+        output1 = self.linear1(x)
+        activated_output1 = torch.relu(output1)
+        
+        # Dropout
+        dropped_output = self.dropout(activated_output1)
+        finaloutput = self.lastlayer1(dropped_output)
+        return finaloutput
+
+neuralnetwork = NeuralNetwork()
+
+# Weight Decay
+optimizer = torch.optim.SGD(
+    neuralnetwork.parameters(),
+    lr=0.0001,
+    weight_decay=0.01
+)
+
+inputs = torch.tensor([[18.0, 28.0],[19.0, 29.0]])
+targets = torch.tensor([[18.0],[19.0]])
+dataset = TensorDataset(inputs, targets)
+loader = DataLoader(
+    dataset,
+    batch_size=1,
+    shuffle=True
+)
+
+loss_function = nn.MSELoss()
+
+for step in range(100):
+    for input, target in loader:
+        optimizer.zero_grad()
+        score = neuralnetwork.forwardpass(input)
+        
+        # Normal MSE loss
+        loss = loss_function(score, target)
+        
+        # L2 Regularization
+        l2 = sum(
+            torch.sum(parameter ** 2)
+            for parameter in neuralnetwork.parameters()
+        )
+        loss = loss + 0.01 * l2
+        loss.backward()
+        optimizer.step()
+        losses.append(loss.item())
+    if step % 10 == 0:
+        print(loss.item())
+
+plt.plot(losses)
+plt.xlabel("Step")
+plt.ylabel("Loss")
+plt.title("Training Loss")
+plt.show()
+```
+

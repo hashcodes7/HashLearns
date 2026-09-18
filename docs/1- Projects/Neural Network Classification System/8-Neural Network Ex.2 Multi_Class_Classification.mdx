@@ -54,56 +54,68 @@ Let's build and train a multi-class network! We'll create a dummy dataset with 3
 ```python r
 import torch
 import torch.nn as nn
-import torch.optim as optim
+from torch.utils.data import TensorDataset, DataLoader
 import matplotlib.pyplot as plt
 
 # 1. Create dummy data (3 classes, 30 points each)
 X_c0 = torch.randn(30, 2) + torch.tensor([-2.0, -2.0])
 X_c1 = torch.randn(30, 2) + torch.tensor([2.0, -2.0])
 X_c2 = torch.randn(30, 2) + torch.tensor([0.0, 2.0])
-X = torch.cat([X_c0, X_c1, X_c2], dim=0)
+inputs = torch.cat([X_c0, X_c1, X_c2], dim=0)
 
 # Labels: 0, 1, and 2. Note: CrossEntropyLoss expects long/integer labels!
-y = torch.cat([torch.zeros(30), torch.ones(30), torch.full((30,), 2)], dim=0).long()
+targets = torch.cat([torch.zeros(30), torch.ones(30), torch.full((30,), 2)], dim=0).long()
 
-# 2. Define the Multi-Class Classifier
+# 2. Setup Dataset and DataLoader
+dataset = TensorDataset(inputs, targets)
+loader = DataLoader(
+    dataset,
+    batch_size=15,
+    shuffle=True
+)
+
+# 3. Define the Multi-Class Classifier using previous architecture
 class MultiClassNet(nn.Module):
     def __init__(self):
         super().__init__()
         # 2 inputs, 3 output logits (one for each class)
         self.layer = nn.Linear(2, 3) 
         
-    def forward(self, x):
+    def forwardpass(self, x):
         return self.layer(x)
 
-model = MultiClassNet()
-criterion = nn.CrossEntropyLoss() # Expects raw logits!
-optimizer = optim.SGD(model.parameters(), lr=0.1)
+neuralnetwork = MultiClassNet()
+loss_function = nn.CrossEntropyLoss() # Expects raw logits!
+optimizer = torch.optim.SGD(
+    neuralnetwork.parameters(), 
+    lr=0.1
+)
 
-# 3. Training Loop
+# 4. Training Loop
 losses = []
-for epoch in range(100):
-    optimizer.zero_grad()
-    
-    logits = model(X)
-    loss = criterion(logits, y)
-    
-    loss.backward()
-    optimizer.step()
-    
-    losses.append(loss.item())
+for step in range(100):
+    for input, target in loader:
+        optimizer.zero_grad()
+        
+        score = neuralnetwork.forwardpass(input)
+        loss = loss_function(score, target)
+        
+        loss.backward()
+        optimizer.step()
+        
+        losses.append(loss.item())
 
 # Plot the training loss
 plt.plot(losses, color='orange', label='Cross Entropy Loss')
-plt.xlabel("Epoch")
+plt.xlabel("Step")
 plt.ylabel("Loss")
-plt.title("Multi-Class Training")
+plt.title("Multi-Class Training Loss")
 plt.legend()
 plt.show()
 
-# 4. Make a prediction on a new point
+# 5. Make a prediction on a new point
 test_point = torch.tensor([[0.0, 2.5]]) # Close to class 2's center
-logits_out = model(test_point)
+logits_out = neuralnetwork.forwardpass(test_point)
 probabilities = torch.softmax(logits_out, dim=1)
 prediction = logits_out.argmax(dim=1)
 

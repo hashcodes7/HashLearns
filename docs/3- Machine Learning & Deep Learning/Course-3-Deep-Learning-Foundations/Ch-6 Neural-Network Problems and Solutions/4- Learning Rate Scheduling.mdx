@@ -1,0 +1,134 @@
+# 21. Learning-Rate Scheduling
+
+Learning rate controls how much the model changes its weights after each update.
+
+A fixed learning rate can become inefficient as training progresses.
+
+Learning-rate scheduling changes the learning rate during training.
+
+## Common Scheduling Techniques
+
+| StepLR | Decreases learning rate by a fixed factor after a fixed number of steps |
+| --- | --- |
+| ExponentialLR | Decreases learning rate exponentially |
+| ReduceLROnPlateau | Decreases learning rate when the loss stops improving |
+| CosineAnnealingLR | Gradually decreases learning rate following a cosine curve |
+
+## StepLR
+
+Decreases the learning rate after a fixed number of epochs.
+
+```python
+scheduler = torch.optim.lr_scheduler.StepLR(
+    optimizer,
+    step_size=10,
+    gamma=0.1
+)
+```
+
+`gamma=0.1` means the learning rate becomes 10% of its previous value.
+
+## ReduceLROnPlateau
+
+Reduces the learning rate when the loss stops improving.
+
+```python
+scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
+    optimizer,
+    mode="min",
+    patience=5,
+    factor=0.1
+)
+```
+
+## Actual Implementation
+
+```python
+import torch
+import torch.nn as nn
+import matplotlib.pyplot as plt
+
+class NeuralNetwork(nn.Module):
+    def __init__(self):
+        super().__init__()
+
+        self.linear1 = nn.Linear(2, 10)
+        self.linear2 = nn.Linear(10, 1)
+
+    def forwardpass(self, x):
+        x = torch.relu(self.linear1(x))
+        x = self.linear2(x)
+
+        return x
+
+
+neuralnetwork = NeuralNetwork()
+
+inputs = torch.tensor([
+    [18.0, 28.0],
+    [19.0, 29.0],
+    [20.0, 30.0],
+    [21.0, 31.0]
+])
+
+targets = torch.tensor([
+    [18.0],
+    [19.0],
+    [20.0],
+    [21.0]
+])
+
+loss_function = nn.MSELoss()
+
+optimizer = torch.optim.SGD(
+    neuralnetwork.parameters(),
+    lr=0.1
+)
+
+scheduler = torch.optim.lr_scheduler.StepLR(
+    optimizer,
+    step_size=10,
+    gamma=0.1
+)
+
+losses = []
+
+for epoch in range(30):
+
+    optimizer.zero_grad()
+
+    score = neuralnetwork.forwardpass(inputs)
+
+    loss = loss_function(score, targets)
+
+    loss.backward()
+
+    optimizer.step()
+
+    # Update learning rate
+    scheduler.step()
+
+    losses.append(loss.item())
+
+    if epoch % 5 == 0:
+        print(
+            "Epoch:", epoch,
+            "Loss:", loss.item(),
+            "LR:", optimizer.param_groups[0]["lr"]
+        )
+
+plt.plot(losses)
+plt.xlabel("Epoch")
+plt.ylabel("Loss")
+plt.title("Training Loss")
+plt.show()
+```
+
+## Quick Difference
+
+```text
+Fixed LR        → learning rate never changes
+StepLR          → decrease after fixed epochs
+ReduceLROnPlateau → decrease when loss stops improving
+CosineAnnealing → gradually decrease using cosine schedule
+```
