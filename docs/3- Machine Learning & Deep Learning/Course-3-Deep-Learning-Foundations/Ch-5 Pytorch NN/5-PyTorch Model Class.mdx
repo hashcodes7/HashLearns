@@ -72,26 +72,25 @@ neuralnetwork.forwardpass(torch.tensor([10.0, 20.0]))
 ```
 
 ## Complete Code (runnable)
-<PyScriptRunner
-  title="Training your Neural Network Class"
-  initialCode={`
+```python r
 import matplotlib.pyplot as plt
 import torch
 import torch.nn as nn
 losses=[]
+
 def relu(x):
-		return(torch.relu(x))
+	return(torch.relu(x))
 
 class NeuralNetwork(nn.Module):
-	  def __init__(self):
-	    super().__init__()
-	    self.linear1=nn.Linear(2,10)
-	    self.lastlayer1=nn.Linear(10,1)
-	  def forwardpass(self,x):
-	    output1=self.linear1(x)
-	    activated_output1=relu(output1)
-	    finaloutput = self.lastlayer1(activated_output1)
-	    return(finaloutput)
+  def __init__(self):
+	super().__init__()
+	self.linear1=nn.Linear(2,10)
+	self.lastlayer1=nn.Linear(10,1)
+  def forwardpass(self,x):
+	output1=self.linear1(x)
+	activated_output1=relu(output1)
+	finaloutput = self.lastlayer1(activated_output1)
+	return(finaloutput)
 
 neuralnetwork=NeuralNetwork()
 
@@ -104,14 +103,14 @@ target = torch.tensor([10.0])
 loss_function = nn.MSELoss()
 
 for step in range(100):
-	  optimizer.zero_grad()
-	  score=neuralnetwork.forwardpass(torch.tensor([10.0, 20.0]))
-	  loss = loss_function(score, target)
-	  if step % 10 == 0:
-	    print(loss)
-	  losses.append(loss.item())
-	  loss.backward()
-	  optimizer.step()
+  optimizer.zero_grad()
+  score=neuralnetwork.forwardpass(torch.tensor([10.0, 20.0]))
+  loss = loss_function(score, target)
+  if step % 10 == 0:
+	  print(loss)
+  losses.append(loss.item())
+  loss.backward()
+  optimizer.step()
 	  
 neuralnetwork.forwardpass(torch.tensor([10.0, 20.0]))
 
@@ -120,8 +119,7 @@ plt.xlabel("Step")
 plt.ylabel("Loss") 
 plt.title("Training Loss") 
 plt.show()
-`}
-/>
+```
 
 ## Key Takeaways
 
