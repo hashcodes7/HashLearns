@@ -1,0 +1,140 @@
+---
+id: PyTorch Model Class-5
+sidebar_position: 5
+---
+# 5. PyTorch Model Class
+
+This time we will package our model into a nice class and take it from a shitty network to a network which your girlfriend wants.
+
+---
+### Initialize a class with nn module
+```python
+class NeuralNetwork(nn.Module):
+```
+
+
+### Write class init
+Now that our class is made, we want a object of entire network so that we can start a neural network anytime as a object
+``` python
+class NeuralNetwork(nn.Module):
+
+    def __init__(self):
+        super().__init__()
+```
+### Define the layers and neurons in your network
+``` python
+class NeuralNetwork(nn.Module):
+
+    def __init__(self):
+        super().__init__()
+
+        self.hidden = nn.Linear(2, 3)
+        self.output = nn.Linear(3, 1)
+```
+## Complete Implementation
+#### Neural Network Class
+```python
+import torch
+import torch.nn as nn
+
+def relu(x):
+  return(torch.relu(x))
+  
+class NeuralNetwork(nn.Module):
+  def __init__(self):
+    super().__init__()
+    self.linear1=nn.Linear(2,10)
+    self.lastlayer1=nn.Linear(10,1)
+  
+  def forwardpass(self,x):
+    output1=self.linear1(x)
+    activated_output1=relu(output1)
+    finaloutput = self.lastlayer1(activated_output1)
+    return(finaloutput)
+```
+#### Training Cycle
+``` python
+target = torch.tensor([10.0])
+loss_function = nn.MSELoss()
+
+for step in range(100):
+  optimizer.zero_grad()
+  score=neuralnetwork.forwardpass(torch.tensor([10.0, 20.0]))
+  loss = loss_function(score, target)
+  if step % 10 == 0:
+    print(loss)
+  loss.backward()
+  optimizer.step()
+```
+#### Inference call
+``` python
+neuralnetwork.forwardpass(torch.tensor([10.0, 20.0]))
+```
+
+## Complete Code (runnable)
+<PyScriptRunner
+  title="Training your Neural Network Class"
+  initialCode={`
+import matplotlib.pyplot as plt
+import torch
+import torch.nn as nn
+losses=[]
+def relu(x):
+		return(torch.relu(x))
+
+class NeuralNetwork(nn.Module):
+	  def __init__(self):
+	    super().__init__()
+	    self.linear1=nn.Linear(2,10)
+	    self.lastlayer1=nn.Linear(10,1)
+	  def forwardpass(self,x):
+	    output1=self.linear1(x)
+	    activated_output1=relu(output1)
+	    finaloutput = self.lastlayer1(activated_output1)
+	    return(finaloutput)
+
+neuralnetwork=NeuralNetwork()
+
+optimizer = torch.optim.SGD(
+    neuralnetwork.parameters(),
+    lr=0.0001
+)
+
+target = torch.tensor([10.0])
+loss_function = nn.MSELoss()
+
+for step in range(100):
+	  optimizer.zero_grad()
+	  score=neuralnetwork.forwardpass(torch.tensor([10.0, 20.0]))
+	  loss = loss_function(score, target)
+	  if step % 10 == 0:
+	    print(loss)
+	  losses.append(loss.item())
+	  loss.backward()
+	  optimizer.step()
+	  
+neuralnetwork.forwardpass(torch.tensor([10.0, 20.0]))
+
+plt.plot(losses) 
+plt.xlabel("Step") 
+plt.ylabel("Loss") 
+plt.title("Training Loss") 
+plt.show()
+`}
+/>
+
+## Key Takeaways
+
+| Concept                 | Meaning                               |
+| ----------------------- | ------------------------------------- |
+| `nn.Module`             | Base class for pytorchneural networks |
+| `__init__()`            | Defines layers and components         |
+| `forward()`             | Defines data flow                     |
+| `nn.Linear`             | Implements a linear layer `Wx+b`      |
+| `model.parameters()`    | Returns trainable parameters          |
+| `loss.backward()`       | Computes gradients                    |
+| `optimizer.step()`      | Updates parameters                    |
+| `optimizer.zero_grad()` | Clears previous gradients             |
+
+```pyscript
+```

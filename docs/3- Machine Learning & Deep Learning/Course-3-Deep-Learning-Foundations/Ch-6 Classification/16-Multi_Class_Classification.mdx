@@ -1,35 +1,113 @@
 # 16. Multi-Class Classification
 
-For more than two classes, the output layer can contain one logit per class.
+When a problem requires us to distinguish between **more than two** categories, we use multi-class classification. 
+Real-world examples include:
+- **Image Recognition**: Classifying an image as a Cat (0), Dog (1), or Bird (2).
+- **Digit Recognition**: The MNIST dataset, predicting digits 0 through 9.
 
-For three classes:
-
+If we have 3 possible classes, our target labels will be integers representing the classes:
 ```text
-class 0
-class 1
-class 2
+Class 0
+Class 1
+Class 2
 ```
 
-The model produces:
-
+### The Output Layer
+In multi-class classification, the neural network's final layer must output **one logit per class**. 
+For a 3-class problem, the model produces a vector of 3 logits:
 ```text
 [z1, z2, z3]
 ```
 
-Softmax converts logits into probabilities:
+### The Softmax Function
+Just like we used Sigmoid for binary classification, we use the **Softmax** function for multi-class problems. 
+Softmax converts the vector of raw logits into a **Probability Distribution**, meaning every value is between 0 and 1, and the total sum of all values is exactly 1.0.
 
 $$
 P_i=\frac{e^{z_i}}{\sum_j e^{z_j}}
 $$
 
-For pytorchclassification, `CrossEntropyLoss` is commonly used:
+Try playing with the **Softmax Visualizer** below! You can change the raw logits and see how Softmax normalizes them into probabilities. The **Temperature** slider controls how "confident" the distribution is (a feature heavily used in Large Language Models).
+
+<SoftmaxVisualizer />
+
+### Cross-Entropy Loss
+To train a multi-class model, we use **Cross-Entropy Loss**. It looks at the probability assigned to the *correct* class and penalizes the model if that probability is low.
+
+In PyTorch, the standard loss function is `CrossEntropyLoss`. **Crucially, it expects raw logits as input**, not probabilities! Under the hood, PyTorch efficiently combines `LogSoftmax` and Negative Log-Likelihood Loss (`NLLLoss`).
 
 ```python
 loss_function = torch.nn.CrossEntropyLoss()
 ```
 
-The predicted class is:
+### Making Predictions
+To get the final class prediction from the network's output, we don't necessarily need to compute the exact probabilities. Because the exponential function $e^x$ is monotonic, the class with the highest raw logit will also have the highest probability.
 
+We just find the index of the maximum logit using `argmax`:
 ```python
 prediction = logits.argmax(dim=1)
+```
+
+### Complete Runnable Example
+Let's build and train a multi-class network! We'll create a dummy dataset with 3 distinct clusters.
+
+```python r
+import torch
+import torch.nn as nn
+import torch.optim as optim
+import matplotlib.pyplot as plt
+
+# 1. Create dummy data (3 classes, 30 points each)
+X_c0 = torch.randn(30, 2) + torch.tensor([-2.0, -2.0])
+X_c1 = torch.randn(30, 2) + torch.tensor([2.0, -2.0])
+X_c2 = torch.randn(30, 2) + torch.tensor([0.0, 2.0])
+X = torch.cat([X_c0, X_c1, X_c2], dim=0)
+
+# Labels: 0, 1, and 2. Note: CrossEntropyLoss expects long/integer labels!
+y = torch.cat([torch.zeros(30), torch.ones(30), torch.full((30,), 2)], dim=0).long()
+
+# 2. Define the Multi-Class Classifier
+class MultiClassNet(nn.Module):
+    def __init__(self):
+        super().__init__()
+        # 2 inputs, 3 output logits (one for each class)
+        self.layer = nn.Linear(2, 3) 
+        
+    def forward(self, x):
+        return self.layer(x)
+
+model = MultiClassNet()
+criterion = nn.CrossEntropyLoss() # Expects raw logits!
+optimizer = optim.SGD(model.parameters(), lr=0.1)
+
+# 3. Training Loop
+losses = []
+for epoch in range(100):
+    optimizer.zero_grad()
+    
+    logits = model(X)
+    loss = criterion(logits, y)
+    
+    loss.backward()
+    optimizer.step()
+    
+    losses.append(loss.item())
+
+# Plot the training loss
+plt.plot(losses, color='orange', label='Cross Entropy Loss')
+plt.xlabel("Epoch")
+plt.ylabel("Loss")
+plt.title("Multi-Class Training")
+plt.legend()
+plt.show()
+
+# 4. Make a prediction on a new point
+test_point = torch.tensor([[0.0, 2.5]]) # Close to class 2's center
+logits_out = model(test_point)
+probabilities = torch.softmax(logits_out, dim=1)
+prediction = logits_out.argmax(dim=1)
+
+print(f"Raw Logits: {logits_out.detach().numpy()}")
+print(f"Probabilities: {probabilities.detach().numpy()}")
+print(f"Predicted Class: {prediction.item()}")
 ```

@@ -105,17 +105,11 @@ w_output.grad.zero_()
 b_output.grad.zero_()
 ```
 
-With an optimizer, this is normally handled by:
-
-```python
-optimizer.zero_grad()
-```
-
 ---
 
 ## Pytorch Implementation of a single training step
 
-```python
+```python r
 import torch
 
 x = torch.tensor([2.0, 3.0])

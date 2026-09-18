@@ -1,47 +1,55 @@
 ---
 sidebar_position: 6
 ---
-# 5. Dataset and DataLoader
+# 6. Dataset and DataLoader
 
-pytorchprovides `Dataset` and `DataLoader` for working with training data.
+We perfected our Neural Network. Now a complex Neural network will need 1000s of training data so we streamline the feeding pipeline here by making a standard plate (dataset) and a standard spoon to eat (loader)
 
+## Dataset  
+
+A Dataset is a kind of representation of the training data in LLM for easy access. 
+It has 2 parts. input and target.   
+eg, `dataset[0] → (1, 10)`  # here input is 1 and target is 10
+
+#### How do We put any data in dataset format
+We simply make tensor list of both inputs and targets (saperate) and we initialize dataset object with these both lists
 ```python
-from torch.utils.data import TensorDataset, DataLoader
+import torch
+from torch.utils.data import TensorDataset
 
-dataset = TensorDataset(x, target)
+inputs = torch.tensor([1, 2, 3, 4, 5])
+targets = torch.tensor([10, 20, 30, 40, 50])
 
-loader = DataLoader(
-    dataset,
-    batch_size=2,
-    shuffle=True
-)
+dataset = TensorDataset(inputs, targets)
 ```
 
-Training becomes:
+---
+## Data Loader  
+
+when we serve our training data to our neural network we are currently serving it all at once. This means while training the entire Dataset has to be loaded into the GPU Memory. 
+We add batching for it so that only a portion of the entire dataset is loaded into GPU Memory while training. 
+conversely if your GPU VRAM is getting overburdened just make more number of batches while making each batch smaller.
+
+We Also shuffle so that model doesnt learns any order from the order in which data is stored in the dataset.
+
+#### How is loader serving our data
+Loader recieves 2 sets of data from dataset, one is the inputs set, other is target set.  
+Lets say we made batches =2 now our inputs are of 2 parts , lets say input 1 and input 2   
+and similarly targets will be broken in same parts. 
+These are stored like this   
+  
+`loader = [[input_batch1,target_batch1] , [input_batch2,target_batch2]]`  
+  
+Notice each element of the loader is `1 batch = [input,target]`  
+now if we iterate through each batch we can do something like this
 
 ```python
-for epoch in range(10):
-
-    for batch_x, batch_target in loader:
-
-        optimizer.zero_grad()
-
-        prediction = model(batch_x)
-
-        loss = loss_function(
-            prediction.squeeze(),
-            batch_target
-        )
-
-        loss.backward()
-
-        optimizer.step()
+for a_batch in loader: #a_batch will be = [input,target] 
+	input = a_batch[0]
+	target = a_batch[1]
 ```
 
-Important concepts:
-
-- dataset = complete training data
-- batch = subset of examples
-- batch size = number of examples processed together
-- epoch = one complete pass through the dataset
-- shuffle = randomize training-example order
+or more common representation
+``` python
+for input, target in loader:
+```

@@ -18,6 +18,20 @@ import ComicStrip from '@site/src/components/ComicStrip';
 
 export default {
   ...MDXComponents,
+  pre: (props) => {
+    const codeProps = props.children?.props || {};
+    const className = codeProps.className || '';
+    const metastring = codeProps.metastring || '';
+    const metaWords = metastring.split(' ');
+    
+    if (
+      className === 'language-pyscript' || 
+      (className === 'language-python' && (metaWords.includes('pyscript') || metaWords.includes('r')))
+    ) {
+      return <PyScriptRunner initialCode={String(codeProps.children || '').trim()} />;
+    }
+    return <MDXComponents.pre {...props} />;
+  },
   Callout,
   CausalMaskVisualizer,
   GeluVisualizer,
@@ -37,7 +51,3 @@ export default {
   ComicStrip,
   ComicCarousel: ComicStrip,
 };
-
-
-
-

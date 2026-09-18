@@ -1,0 +1,175 @@
+---
+id: pytorch-nn-module-4
+sidebar_position: 4
+---
+# 4. PyTorch_BoilerPlate Reduction
+### Building a Neural Network with `nn.Module`
+Currently what we do is that we declare a layer like this
+``` python
+W = torch.tensor([
+    [1.0, 2.0],
+    [2.0, 1.0],
+    [1.0, 1.0]
+], requires_grad=True)
+```
+
+But it is shitty approach. We can declare a Neural network layer in better way using pytorch's own implementation
+``` python
+W = nn.Parameter(torch.tensor([
+    [0.5, 1.0],
+    [2.0, 0.3],
+    [1.5, 2.0]
+]))
+```
+
+| Feature | `torch.tensor(..., requires_grad=True)` | `nn.Parameter(...)` |
+|---|---|---|
+| Stores gradients | ✅ | ✅ |
+| `requires_grad=True` | ✅ | ✅ Automatically |
+| Trainable model parameter | ❌ | ✅ |
+| Appears in `model.parameters()` | ❌ | ✅ |
+| Optimizer automatically updates it | ❌ | ✅ |
+Now 
+
+In case we want to simply initialize a random layer with a particular number of neurons thats even easier
+``` python
+This_is_a_NN_layer = torch.nn.Linear(2, 3)
+```
+![](assets/Pasted%20image%2020260917041336.png)
+
+
+### Building Same neural network but with NN.Linear
+``` python
+import torch
+import torch.nn as nn
+
+x = torch.tensor([2.0, 3.0])
+target = torch.tensor(20.0)
+
+# 2 inputs → 3 hidden neurons
+hidden = nn.Linear(2, 3)
+
+# 3 hidden outputs → 1 output neuron
+output = nn.Linear(3, 1)
+
+learning_rate = 0.001
+
+for step in range(1000):
+    # Forward pass
+    z = hidden(x)
+    a = torch.relu(z)
+    y = output(a)
+
+    # Loss
+    loss = (target - y) ** 2
+
+    # Backpropagation
+    loss.backward()
+
+    # Parameter update
+    with torch.no_grad():
+        for parameter in list(hidden.parameters()) + list(output.parameters()):
+            parameter -= learning_rate * parameter.grad
+
+    # Clear gradients
+    hidden.zero_grad()
+    output.zero_grad()
+```
+---
+## Pytorch Loss Function
+#### Earlier Loss Approach
+**1-** We used to Calculate loss like this , By directly calculating loss inside the training cycle
+``` python
+loss= (target - y) ** 2
+```
+
+**2-** And within training cycle we would send loss back to gradients like this
+``` python
+loss.backward()
+```
+#### New Loss Approach
+
+**1-** But now we have a selection of loss calculating algorithms by just using pytorch loss object and selecting desired loss function, also this is outside training cycle means its more plug and play from outside.
+``` python
+loss_function = nn.MSELoss()
+```
+
+**2-** Then we calculate loss within training cycle just by calling this object
+``` python
+loss = loss_function(score, target)
+```
+
+**3-** Finally we Send the loss as gradients to each of the parameters
+``` python
+loss.backward()
+```
+---
+## Pytorch Optimizer Selection
+#### Earlier Optimizer Approach
+**1-** We used to optimize like this , Manually setting all the values
+``` python
+with torch.no_grad():  
+W -= learning_rate * W.grad  
+b_hidden -= learning_rate * b_hidden.grad  
+w_output -= learning_rate * w_output.grad  
+b_output -= learning_rate * b_output.grad
+```
+#### New Optimizer Approach
+With Pytorch we simply make a optimizer object  along with the learning rate
+``` python
+optimizer = torch.optim.SGD(
+    neuralnetwork.parameters(),
+    lr=0.001
+)
+```
+
+Then we set that optimizer does not change the gradients itself within the training loop
+``` python
+optimizer.zero_grad()
+```
+
+Then we calculate gradients using loss function and all but when time comes for changing values we simply do
+``` python
+optimizer.step()
+```
+
+## Final New Neural Network with Pytorch Architecture 
+``` python r
+import torch
+import torch.nn as nn
+
+x = torch.tensor([2.0, 3.0])
+target = torch.tensor(20.0)
+
+# 2 inputs → 3 hidden neurons
+hidden = nn.Linear(2, 3)
+
+# 3 hidden outputs → 1 output neuron
+output = nn.Linear(3, 1)
+
+# PyTorch loss function
+loss_function = nn.MSELoss()
+
+# PyTorch optimizer
+optimizer = torch.optim.SGD(
+    list(hidden.parameters()) + list(output.parameters()),
+    lr=0.001
+)
+
+for step in range(1000):
+
+    # Forward pass
+    z = hidden(x)
+    a = torch.relu(z)
+    y = output(a)
+
+    # Loss
+    loss = loss_function(y, target)
+
+    # Backpropagation
+    optimizer.zero_grad()
+    loss.backward()
+
+    # Parameter update
+    optimizer.step()
+```
