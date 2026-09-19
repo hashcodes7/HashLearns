@@ -1,0 +1,17 @@
+**Requirement** - a Linked list or similar structure which can form cycles
+**Core Problem** - Find if there are cycles in our LinkedList / Graph
+**Core Logic** : Fast pointer moves 2 steps at a time thus is able loop the cycle if there is any, and stab the slow pointer on the back
+
+
+![534](assets/Pasted%20image%2020260919183105.png)
+
+#### Steps:
+1. 1. Initialize two pointers, one moving one step at a time (**slow**) and the other moving two steps at a time (**fast**).
+2. If there is a cycle, the fast pointer will eventually meet the slow pointer.
+3. If the fast pointer reaches the end of the list, there is no cycle.
+#### Sample Problem:
+Detect if a linked list has a cycle.
+#### LeetCode Problems:
+1. [Linked List Cycle (LeetCode #141)](https://leetcode.com/problems/linked-list-cycle/description/)
+2. [Happy Number (LeetCode #202)](https://leetcode.com/problems/happy-number/description/)
+3. [Find the Duplicate Number (LeetCode #287)](https://leetcode.com/problems/find-the-duplicate-number/description/)
