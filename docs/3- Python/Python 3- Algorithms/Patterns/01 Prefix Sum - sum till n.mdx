@@ -5,7 +5,9 @@
 - if sum of a subarray is used frequently, store sum - till each element.   
 - Sum from position i till j is equal to = `P[j] - P[i-1]`  
 
-![](assets/Pasted%20image%2020260919164417.png)
+<ComicStrip 
+  filter="prefixsum"
+/>
 #### Steps:
 1. Preprocess the array `A` to create a prefix sum array: `P = [1, 3, 6, 10, 15, 21]`.
 2. To find the sum between indices `i` and `j`, use the formula: `P[j] - P[i-1]`.
