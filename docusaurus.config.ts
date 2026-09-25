@@ -57,6 +57,66 @@ const config: Config = {
         docs: {
           sidebarPath: './sidebars.ts',
           exclude: ['**/Excalidraw/**'],
+          async sidebarItemsGenerator({ defaultSidebarItemsGenerator, numberPrefixParser, item, version, options, docs }) {
+            const defaultItems = await defaultSidebarItemsGenerator({
+              defaultSidebarItemsGenerator,
+              numberPrefixParser,
+              item,
+              version,
+              options,
+              docs,
+            });
+
+            const parseNum = (str: string): number | null => {
+              const kwMatch = str.match(/(?:ch(?:apter)?|course|module|unit|part|step)[\s\-_]*(\d+(?:\.\d+)?)/i);
+              if (kwMatch) return parseFloat(kwMatch[1]);
+              const leadingMatch = str.match(/^\s*(\d+(?:\.\d+)?)/);
+              if (leadingMatch) return parseFloat(leadingMatch[1]);
+              const anyMatch = str.match(/(\d+(?:\.\d+)?)/);
+              if (anyMatch) return parseFloat(anyMatch[1]);
+              return null;
+            };
+
+            const compareItems = (a: any, b: any): number => {
+              const posA = a.customProps?.sidebar_position ?? a.position;
+              const posB = b.customProps?.sidebar_position ?? b.position;
+
+              if (typeof posA === 'number' && typeof posB === 'number' && posA !== posB) {
+                return posA - posB;
+              }
+
+              const titleA = a.label || a.title || a.id || '';
+              const titleB = b.label || b.title || b.id || '';
+
+              const numA = parseNum(titleA);
+              const numB = parseNum(titleB);
+
+              if (numA !== null && numB !== null && numA !== numB) {
+                return numA - numB;
+              } else if (numA !== null && numB === null) {
+                return -1;
+              } else if (numA === null && numB !== null) {
+                return 1;
+              }
+
+              return titleA.localeCompare(titleB, undefined, { numeric: true, sensitivity: 'base' });
+            };
+
+            const sortItemsRecursively = (items: any[]): any[] => {
+              const sorted = [...items].sort(compareItems);
+              return sorted.map((it) => {
+                if (it.type === 'category' && Array.isArray(it.items)) {
+                  return {
+                    ...it,
+                    items: sortItemsRecursively(it.items),
+                  };
+                }
+                return it;
+              });
+            };
+
+            return sortItemsRecursively(defaultItems);
+          },
 
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.

@@ -7,6 +7,24 @@ def format_title(name):
     clean_name = re.sub(r'^\d+[\s-]*\.*[\s-]*', '', name)
     return clean_name.strip()
 
+def extract_position(name):
+    match = re.search(r'(?:ch(?:apter)?|course|module|unit|part|step)[\s\-_]*(\d+(?:\.\d+)?)', name, re.IGNORECASE)
+    if match:
+        val = match.group(1)
+        return float(val) if '.' in val else int(val)
+    
+    match = re.search(r'^\s*(\d+(?:\.\d+)?)', name)
+    if match:
+        val = match.group(1)
+        return float(val) if '.' in val else int(val)
+        
+    match = re.search(r'(\d+(?:\.\d+)?)', name)
+    if match:
+        val = match.group(1)
+        return float(val) if '.' in val else int(val)
+        
+    return None
+
 def main():
     docs_dir = os.path.join(os.getcwd(), 'docs')
     
@@ -33,6 +51,12 @@ def main():
                 pass
                 
         changed = False
+        
+        position = extract_position(folder_name)
+        if position is not None:
+            if category_data.get('position') != position:
+                category_data['position'] = position
+                changed = True
         
         # Custom mapping for specific folder names
         custom_labels = {
