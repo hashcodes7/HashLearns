@@ -1,0 +1,42 @@
+# 2. Linked List Isolation
+
+If we can successfully do a operation on a  linked list but in your subject linked list that is just a segment within the full Linked List, You can easily isolate the part of that linked list safely.
+Here we are treating positions to be starting from 1
+
+
+<ComicStrip 
+  filter="llcutting"
+/>
+
+```python
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+
+def process_sublist(start):
+    return new_start, new_end
+
+
+def solve(head):
+    dummy = ListNode(0, head)
+    # Find affected sublist
+    before = ...
+    end = ...
+    # Save boundaries
+    start = before.next
+    after = end.next
+    # Isolate
+    end.next = None
+
+    # Process isolated sublist
+    new_start, new_end = process_sublist(start)
+
+    # Reconnect
+    before.next = new_start
+    new_end.next = after
+
+    return dummy.next
+
+```

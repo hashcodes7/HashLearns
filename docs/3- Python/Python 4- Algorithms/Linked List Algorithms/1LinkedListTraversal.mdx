@@ -1,0 +1,35 @@
+# 1. Linked List Traversal
+
+Think of self as a baby. it will have right to call anyone his mom, he calls another node his mom. this is done by setting its self.next 
+
+```python r
+class Person:
+    def __init__(self, name='', parents=None):
+        self.name = name
+        self.parents = parents 
+```
+
+self ka matlab hai jo is class ka object future me banega, vo 
+
+```python r
+class ListNode:
+    def __init__(self, val=0, nextval=None):
+        self.val = val
+        self.next = nextval
+```
+
+`self.next = nextval` it should be read as class ke object ka next = nexrval hai
+ye nextval ek parameter hai means jab class ka object banega vo apna nextval chun sakta hai just like previous class me person apna parent chun sakta tha.
+
+
+
+
+```python r
+class Solution:
+    def reverseList(self, head: ListNode | None) -> ListNode | None:
+        self.current = head
+
+        while self.current:
+            print(self.current.val)
+            self.current = self.current.next
+```
