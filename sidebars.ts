@@ -7,6 +7,29 @@ function toSlug(name: string): string {
   return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 }
 
+function parseNum(str: string): number | null {
+  const kwMatch = str.match(/(?:ch(?:apter)?|course|module|unit|part|step)[\s\-_]*(\d+(?:\.\d+)?)/i);
+  if (kwMatch) return parseFloat(kwMatch[1]);
+  const leadingMatch = str.match(/^\s*(\d+(?:\.\d+)?)/);
+  if (leadingMatch) return parseFloat(leadingMatch[1]);
+  const anyMatch = str.match(/(\d+(?:\.\d+)?)/);
+  if (anyMatch) return parseFloat(anyMatch[1]);
+  return null;
+}
+
+function naturalSort(a: string, b: string): number {
+  const numA = parseNum(a);
+  const numB = parseNum(b);
+  if (numA !== null && numB !== null && numA !== numB) {
+    return numA - numB;
+  } else if (numA !== null && numB === null) {
+    return -1;
+  } else if (numA === null && numB !== null) {
+    return 1;
+  }
+  return a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' });
+}
+
 const docsDir = path.resolve(__dirname, 'docs');
 
 const sidebars: SidebarsConfig = {
@@ -22,7 +45,7 @@ try {
       fields = fs.readdirSync(docsDir, { withFileTypes: true })
         .filter(dirent => dirent.isDirectory() && !dirent.name.startsWith('.'))
         .map(dirent => dirent.name)
-        .sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }));
+        .sort(naturalSort);
   }
 } catch (err: any) {
   console.warn('[sidebars.ts] Could not read docs directory:', err.message);
@@ -36,7 +59,7 @@ try {
       courses = fs.readdirSync(fieldDir, { withFileTypes: true })
         .filter(dirent => dirent.isDirectory() && !dirent.name.startsWith('.'))
         .map(dirent => dirent.name)
-        .sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }));
+        .sort(naturalSort);
     } catch (err: any) {
       console.warn(`[sidebars.ts] Could not read field directory ${fieldDir}:`, err.message);
     }

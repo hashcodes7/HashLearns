@@ -3,5 +3,6 @@
   "link": {
     "type": "generated-index",
     "description": "Explore courses and concepts related to LLMs from Scratch."
-  }
+  },
+  "position": 2
 }
