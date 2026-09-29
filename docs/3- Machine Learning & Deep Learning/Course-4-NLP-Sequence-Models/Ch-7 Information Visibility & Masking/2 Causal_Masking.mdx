@@ -1,0 +1,54 @@
+---
+title: "Causal Masking: The Blindfold"
+sidebar_position: 2
+---
+
+# Causal Masking: The Blindfold
+
+In the last section, we let our AI read the entire paragraph at once. This is great for *understanding* text, but it completely breaks if you want the AI to *generate* text.
+
+Think about how ChatGPT works. It doesn't write a whole essay in one millisecond. It generates it word... by word... by word. 
+When it writes word #4, word #5 doesn't even exist yet!
+
+If we train our AI using the "Open Book" method, we are letting it cheat on the test. 
+
+---
+
+## The Cheating Student Analogy
+
+Imagine you are trying to teach an AI how to finish the sentence: `"The cat sat on the ___"`
+
+During training, you feed it millions of complete sentences from Wikipedia. If you use standard Self-Attention, the AI looks at the word `"the"` and shines its flashlight into the future, instantly seeing that the next word is `"mat"`. 
+
+The AI says, "Oh, the answer is 'mat'!" 
+But it didn't actually learn grammar or logic. It just cheated by looking at the answer key! 
+When you put this AI in the real world where the future word doesn't exist yet, it will completely panic and crash.
+
+## The Fix: The Blindfold
+
+To fix this, researchers invented **Causal Masking**. (Causal just means "cause and effect"—the past causes the future, not the other way around).
+
+Before the AI is allowed to do its Attention math, we put a giant, mathematical blindfold over the right side of the sentence. 
+
+<div style={{backgroundColor: '#ffe6e6', padding: '10px', borderRadius: '5px'}}>
+<strong>How it works:</strong>
+<ul>
+<li>Word 1 can only look at Word 1.</li>
+<li>Word 2 can look at Word 1 and Word 2.</li>
+<li>Word 3 can look at Words 1, 2, and 3.</li>
+</ul>
+No word is EVER allowed to shine its flashlight to the right!
+</div>
+
+In PyTorch, this is literally done by taking the Attention Scores and forcing all the future words to equal **Negative Infinity**. When you push Negative Infinity through a Softmax percentage filter, it becomes exactly **0%**. 
+
+The flashlight is completely blocked!
+
+### The GPT Revolution
+
+Models that use this Blindfold (Masked Self-Attention) are called **Decoder-Only** models. 
+The most famous Decoder-Only model in the world? **GPT** (Generative Pre-trained Transformer). 
+
+By forcing the AI to guess the next word without cheating, GPT learned the deep underlying logic of human language!
+
+**Next Up:** We have Open Book (BERT) and Blindfolded (GPT). Are there any other weird ways to mask our AI? Yes! Welcome to **Prefix and Span Masking**.

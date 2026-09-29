@@ -1,0 +1,49 @@
+---
+title: "The Vanilla RNN Cell: The Blender"
+sidebar_position: 1
+---
+
+# The Vanilla RNN Cell: The Blender
+
+Welcome to **Chapter 3**! In the last chapter, we briefly talked about the "conveyor belt" idea for reading sentences, where an AI reads one word at a time and keeps a running memory. 
+
+This idea is officially called a **Recurrent Neural Network (RNN)**. 
+
+The most basic version of this is called a **Vanilla RNN** (vanilla just means "plain" or "standard," like the ice cream flavor). Let's crack open this AI and see how its brain actually works!
+
+---
+
+## The Blender Analogy
+
+Imagine you are trying to make a perfectly mixed smoothie (which represents the final meaning of a sentence). 
+
+You have a blender (the RNN Cell), and you are dropping ingredients (words) into it one by one.
+
+1. First, you drop in a strawberry (`Word 1: "The"`). You turn on the blender. Now you have a strawberry puree.
+2. Next, you drop in a banana (`Word 2: "dog"`). You turn on the blender again. The blades mix the fresh banana with the existing strawberry puree. 
+3. Next, you drop in some spinach (`Word 3: "bit"`). The blender mixes the spinach with the banana-strawberry mixture.
+
+At every step, the blender is doing two things:
+- Taking in **new information** (the new word).
+- Mixing it with the **hidden state** (the puree of all the previous words).
+
+<div style={{backgroundColor: '#f4f4f4', padding: '10px', borderRadius: '5px'}}>
+<strong>The Hidden State:</strong> In AI terms, that puree is called the <em>Hidden State</em>. It is the RNN's internal memory—a vector of numbers that constantly updates and summarizes everything it has seen so far.
+</div>
+
+## The Math Behind the Blender
+
+How does the AI actually "blend" these vectors together? It uses simple neural network math!
+
+1. It takes the **Current Word Vector** and multiplies it by a set of weights.
+2. It takes the **Previous Hidden State Vector** (the memory) and multiplies it by a *different* set of weights.
+3. It adds them together!
+4. Finally, it squishes the result using an activation function (usually `tanh`, which forces all the numbers to stay between -1 and 1 so the math doesn't explode).
+
+This new squished vector becomes the *new* Hidden State, ready for the next word!
+
+## The Output
+
+At any point, if we want the AI to make a guess (like translating the word into French, or guessing if the sentence is positive or negative), we just take the current Hidden State puree, pass it through one final math layer, and spit out an answer!
+
+**Next Up:** It's easy to visualize a blender mixing one step at a time. But how do we train an AI when time is involved? To figure that out, we have to learn how to freeze time with **Unrolling**!

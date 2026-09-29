@@ -1,0 +1,35 @@
+---
+title: "LayerNorm: The Volume Knob"
+sidebar_position: 2
+---
+
+# LayerNorm: The Volume Knob
+
+In the last section, we built the "Express Elevator" (Residual Stream) to safely carry our words up 96 layers of a Transformer. At every floor, the Attention layer *adds* its new findings to the elevator.
+
+But wait. If we are constantly *adding* numbers to our vector 96 times in a row... won't the numbers get insanely huge? 
+
+Yes! If we let this happen, the numbers will explode, the computer will crash, and the AI will fail. We need a way to keep the numbers calm and balanced. This is the job of **Layer Normalization (LayerNorm)**.
+
+---
+
+## The Spotify Volume Normalizer Analogy
+
+Have you ever listened to a playlist where one song is a quiet acoustic guitar track, and the very next song is a screaming heavy metal track? It hurts your ears! You constantly have to adjust the volume knob on your phone.
+
+To fix this, Spotify has a feature called "Audio Normalization." It automatically boosts the quiet songs and lowers the loud songs so everything plays at the exact same comfortable volume.
+
+**LayerNorm does the exact same thing for math.**
+
+<div style={{backgroundColor: '#fffbe6', padding: '10px', borderRadius: '5px'}}>
+<strong>How it works:</strong> Before a word vector is allowed to enter an Attention room, LayerNorm looks at all the numbers inside the vector. <br/><br/>
+If the numbers have gotten dangerously high (like 800 or 9,000), it squishes them down. If they have gotten too small (like 0.0001), it stretches them out. It forces the average of the numbers to be exactly <strong>0</strong>, with a standard spread of <strong>1</strong>.
+</div>
+
+### Why is this so important?
+
+Neural networks are like delicate engines. They run best when the math is hovering around the numbers -1, 0, and 1. 
+
+By putting a LayerNorm "volume knob" at every single floor of the skyscraper, we guarantee that the math never explodes, no matter how deep the neural network gets. The Attention flashlights can do their jobs smoothly and predictably!
+
+**Next Up:** The Attention room isn't the only room on the floor of our skyscraper. Every floor also has a private processing room called the **Feed-Forward Network (FFN)**. Let's see what happens inside!

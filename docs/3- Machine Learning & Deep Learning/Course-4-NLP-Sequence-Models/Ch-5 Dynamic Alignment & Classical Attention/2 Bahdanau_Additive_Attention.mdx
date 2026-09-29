@@ -1,0 +1,44 @@
+---
+title: "Bahdanau Attention: The Flashlight"
+sidebar_position: 2
+---
+
+# Bahdanau Attention: The Flashlight
+
+In 2014, a researcher named Dzmitry Bahdanau looked at the Seq2Seq Bottleneck and realized the entire concept of a "Context Vector" summary was flawed. 
+
+When a human translates a book, they don't read the entire book, close it, and try to write the translation from memory! 
+Instead, they keep the original book open on their desk. As they write the translation, they actively glance back and forth at specific sentences in the original book. 
+
+Bahdanau decided to teach the AI how to do exactly this. He invented the world's first **Attention Mechanism**.
+
+---
+
+## The Flashlight Analogy
+
+Instead of forcing the Encoder (You) to crush the entire sentence into one tiny piece of paper, Bahdanau's rule is simple: **Keep all the notes.**
+
+For a 10-word sentence, the Encoder produces 10 different memory states (one for each word). It hands all 10 of these states to the Decoder.
+
+But the Decoder (Your Friend) can't look at all 10 words perfectly at the same time—that would be overwhelming. Instead, the Decoder is given a **Flashlight** (the Attention Mechanism). 
+
+<div style={{backgroundColor: '#fffbe6', padding: '10px', borderRadius: '5px'}}>
+<strong>How the Flashlight Works:</strong> Before the Decoder writes a Spanish word, it points its flashlight at the 10 English words. It shines a very bright beam on the 1 or 2 words that are most relevant right now, and leaves the rest in the dark.
+</div>
+
+For example, if the Decoder is about to translate the word "apple" into Spanish ("manzana"), the Attention Flashlight will shine 99% of its light on the English word "apple," and 0% on the word "The".
+
+## The Mini Brain (Additive Math)
+
+How does the AI know where to point the flashlight? 
+
+Bahdanau used a clever trick called **Additive Attention**. He literally built a *tiny* neural network whose only job is to control the flashlight!
+
+1. The tiny network looks at what the Decoder is currently thinking about.
+2. It looks at an English word from the Encoder.
+3. It adds the math together, passes it through a function, and spits out a **score** (like 85%).
+4. It repeats this for every English word, converting the scores into percentages that add up to 100%. (e.g., Word 1 gets 5%, Word 2 gets 90%, Word 3 gets 5%).
+
+These percentages control the brightness of the flashlight! The Decoder then blends the English words together based on these percentages and uses that perfectly customized blend to guess the next Spanish word.
+
+**Next Up:** Bahdanau's Flashlight was a massive breakthrough, but having a "mini neural network" inside your main neural network is incredibly slow. Can we point the flashlight faster? Enter **Luong Attention**!

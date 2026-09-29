@@ -1,0 +1,56 @@
+---
+title: "Absolute Positional Encodings: The Page Numbers"
+sidebar_position: 3
+---
+
+# Absolute Positional Encodings: The Page Numbers
+
+In the last section, we saw that reading words one-by-one on a conveyor belt (RNNs) is way too slow and gives the AI a goldfish memory. 
+
+Researchers realized they needed to abandon the conveyor belt. What if, instead of feeding the words one by one, we just dumped the *entire sentence* into the AI all at once? 
+
+This is incredibly fast because modern graphics cards (GPUs) are designed to do thousands of math operations simultaneously. But remember our problem from Chapter 1? If we dump all the words in at once, it becomes a **Bag of Words**. The AI can't tell the difference between "The dog bit the man" and "The man bit the dog."
+
+We need a way to dump all the words in at once, but still tell the AI what order they belong in. 
+
+---
+
+## The Flashcard Analogy
+
+Imagine a teacher gives you a sentence, but every word is written on a separate flashcard. The teacher then drops all the flashcards on the floor in a messy pile. 
+
+To help you reconstruct the sentence, the teacher does one simple trick: they write a **number** in the corner of each flashcard. 
+
+- `[1] The`
+- `[2] dog`
+- `[3] bit`
+- `[4] the`
+- `[5] man`
+
+Even though the cards are in a messy pile, you can instantly look at the numbers and put them in the exact right order!
+
+This is the brilliant idea behind **Absolute Positional Encodings** (used in modern models like the original Transformer). 
+
+## How it works in Math
+
+Remember that every word in our AI is a vector (a list of numbers representing its meaning). 
+
+To give the word a "page number", we create a *second* vector that represents the position (e.g., position #1, position #2). We then literally **add the two vectors together**.
+
+<div style={{backgroundColor: '#f4f4f4', padding: '10px', borderRadius: '5px'}}>
+<code>Final Vector = (Word Meaning Vector) + (Position Vector)</code>
+</div>
+
+Now, the math inside the AI contains both the meaning of the word ("dog") AND its location in the sentence (position #2). 
+
+If the AI sees "dog" at position #5, the math will look different than if it sees "dog" at position #2. The AI can now process the entire sentence instantly without losing track of order!
+
+## The Sine Wave Trick
+
+You might be wondering, "Do we just add the number 1, 2, 3 to the vectors?" 
+
+Not quite. If a sentence has 1,000 words, adding the number 1,000 to a vector might blow up the math and ruin the delicate word meanings. Instead, the creators of the Transformer used clever wavy math functions (**sines and cosines**) to create the position vectors. 
+
+Think of it like a clock. The minute hand goes in a circle from 1 to 60. Even though 60 is a big number, it stays on the clock face and doesn't explode. The wavy math acts like a bunch of spinning clock hands that uniquely identify every position in the sentence without breaking the neural network.
+
+**Next Up:** Absolute positions are great, but what if the AI only cares about how far apart two words are, rather than their exact page numbers? Let's explore the cutting edge: **Relative and Rotary Encodings**.

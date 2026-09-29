@@ -1,0 +1,62 @@
+---
+title: "Relative & Rotary Encodings (RoPE)"
+sidebar_position: 4
+---
+import MatrixVectorVisualizer from '@site/src/components/MatrixVectorVisualizer';
+
+# Relative & Rotary Encodings: The Compass 
+
+In the last chapter, we solved the order problem by stamping "page numbers" onto every word. This is called **Absolute Positional Encoding**, and it works beautifully. 
+
+But as AI models got bigger and smarter, researchers noticed a flaw. 
+
+Think about the English language. Does it *really* matter if the word "apple" is exactly word #42 in a sentence? Not usually. 
+What usually matters more is the **distance** between words. If you have the words "red" and "apple", the AI cares that "red" is *exactly one spot away* from "apple", regardless of whether they are at the beginning of the book or the end of the book.
+
+Absolute encodings struggle with this. If "red" is at position #5 and "apple" is at #6, they get completely different position stamps than if they are at position #900 and #901. The AI has to do extra math just to realize they are still right next to each other!
+
+Enter the upgrade: **Relative Encodings**.
+
+---
+
+## The Compass Analogy
+
+Imagine you and a friend are standing in a massive field. 
+
+- **Absolute Encoding** is like giving you both GPS coordinates. You are at `(Latitude 40, Longitude -73)`. Your friend is at `(Latitude 40.001, Longitude -73)`. To figure out how to talk to your friend, you have to do math on the GPS coordinates.
+- **Relative Encoding** is like throwing away the GPS and just using a compass. You just say, "My friend is 5 steps North of me." 
+
+It doesn't matter if you are in New York or Tokyo; as long as your friend is 5 steps North, your relationship to them is exactly the same!
+
+Instead of stamping absolute numbers, Relative Encodings inject math that tells the AI: *"Hey, this word is -2 spots away from the word you are looking at right now."*
+
+## The Cutting Edge: Rotary Positional Embeddings (RoPE)
+
+This sounds great, but how do we actually do it in math? The most popular modern solution—used by powerhouse models like **Llama 3** and **Mistral**—is called **RoPE** (Rotary Positional Embedding).
+
+Instead of *adding* a number to the word vector, RoPE **rotates** the vector in mathematical space!
+
+Imagine the word "dog" is an arrow pointing on a compass. 
+- If "dog" is at position 1, we rotate the arrow by 10 degrees.
+- If "dog" is at position 2, we rotate the arrow by 20 degrees.
+- If "dog" is at position 3, we rotate it by 30 degrees.
+
+<MatrixVectorVisualizer 
+  showMatrix={false} 
+  showVector={true} 
+  initialMatrix={[
+    [100, 200, 300],
+  ]}
+  tokens={["Dog (Rotated)"]}
+  colors={["#e67e22"]}
+/>
+
+*Using our visualizer, imagine this vector spinning slightly depending on where it sits in the sentence!*
+
+### Why is rotating so brilliant? 
+
+Because of the magic of trigonometry (sines and cosines), if you want to find the distance between word #5 and word #2, the math naturally cancels out the absolute positions and perfectly calculates the relative angle between them (which is 3 steps)! 
+
+It gives the AI the best of both worlds: it knows exactly where the words are, but it focuses on how far apart they are from each other.
+
+**Next Up:** We've talked a lot about the flaws of the old-school "conveyor belt" (RNNs). But before we can appreciate modern AI, we need to actually build an RNN to understand its history! Welcome to Chapter 3: **Sequential Recurrence & BPTT**.

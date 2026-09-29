@@ -1,0 +1,56 @@
+---
+title: "BPTT: Time Traveling Mistakes"
+sidebar_position: 3
+---
+
+# BPTT: Time Traveling Mistakes
+
+Now that we have unrolled our RNN into a "comic strip" that lays time out flat, we can finally train our AI using a technique called **BPTT** (Backpropagation Through Time). 
+
+Despite the cool sci-fi name, BPTT is just regular backpropagation, but with a time-travel twist.
+
+---
+
+## The Assembly Line Analogy
+
+Imagine a car factory assembly line with 5 stations:
+1. Station 1 builds the frame.
+2. Station 2 adds the engine.
+3. Station 3 adds the wheels.
+4. Station 4 adds the doors.
+5. Station 5 paints the car.
+
+At the very end of the line, the boss inspects the car and realizes the engine is completely crooked! The car is ruined. 
+
+How does the boss fix this? He doesn't just yell at the painter at Station 5. The painter didn't touch the engine! 
+Instead, the boss walks **backwards** down the assembly line. 
+- He walks past Station 5...
+- He walks past Station 4...
+- He walks past Station 3...
+- He gets to Station 2, finds the guy who installed the engine, and tells him to adjust his tools!
+
+<div style={{backgroundColor: '#fffbe6', padding: '10px', borderRadius: '5px'}}>
+<strong>BPTT in AI:</strong> When the RNN makes a bad prediction at the very end of a sentence, the AI calculates the error (the yelling boss). It then takes that error and passes it <em>backwards through time</em> (backwards through the unrolled comic strip), adjusting the weights at every single step!
+</div>
+
+## The Shared Brain Rule
+
+Here is where BPTT gets a little weird compared to the factory. 
+
+In the factory, there are 5 different workers. 
+But remember our Golden Rule from the last section? In an unrolled RNN, **it's the exact same network at every step.** It's like one super-fast worker running down the assembly line, doing every job himself!
+
+Because of this, when the error signal travels backward from Step 5 to Step 1, it is collecting adjustments for the *exact same set of weights* over and over again. 
+
+The AI adds up all these adjustments together:
+`Total Adjustment = (Mistake at Step 5) + (Mistake at Step 4) + (Mistake at Step 3)...`
+
+Once the error reaches the very beginning of time (Step 1), the AI takes that massive, combined adjustment and finally updates the actual brain of the network!
+
+## The Problem with Time Travel
+
+Sending error signals backwards through time works perfectly for short sentences (short assembly lines). But what if the assembly line is 1,000 steps long? 
+
+Walking an error backwards through 1,000 steps causes the math to break down in spectacular fashion. 
+
+**Next Up:** Let's look at why BPTT fails on long sequences by exploring the most infamous bugs in Deep Learning: **Vanishing and Exploding Gradients**.

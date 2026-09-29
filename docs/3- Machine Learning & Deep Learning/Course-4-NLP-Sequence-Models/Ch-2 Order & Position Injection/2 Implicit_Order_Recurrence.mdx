@@ -1,0 +1,46 @@
+---
+title: "Implicit Order: The Memory Loop"
+sidebar_position: 2
+---
+
+# Implicit Order: The Memory Loop
+
+How do you, a human, understand a sentence? 
+
+You don't look at all the words simultaneously like a painting. You read them from left to right. 
+When you read the second word, you still remember the first word. When you read the third word, you remember the first two. Your brain maintains a running summary—a **memory**—of everything you've read so far.
+
+This is the exact idea behind **Recurrence**, which is the foundation of **Recurrent Neural Networks (RNNs)**.
+
+---
+
+## The Conveyor Belt Analogy
+
+Imagine a factory conveyor belt where boxes (words) are coming down the line one by one. 
+
+At the end of the belt is a worker (our AI). 
+1. The worker opens the first box ("The"), takes notes on his clipboard, and throws the box away.
+2. The next box arrives ("dog"). The worker looks at the new box *AND* his clipboard from the previous box, updates his notes, and throws the box away.
+3. The next box arrives ("bit"). He looks at the new box *AND* his updated clipboard, updates his notes again, etc.
+
+<div style={{backgroundColor: '#e6f7ff', padding: '10px', borderRadius: '5px'}}>
+<strong>Implicit Order:</strong> We never explicitly tell the AI "this is word #1" or "this is word #2". The AI simply learns the order <em>implicitly</em> because it is forced to process the words sequentially in time. 
+</div>
+
+Because the AI updates its "clipboard" (its internal memory state) step-by-step, the final state of the clipboard contains a squished-up summary of the entire sentence!
+
+## The Problem with the Clipboard
+
+This sounds like a perfect solution, right? For a long time, this was the absolute gold standard in AI for language translation. 
+
+But it has two massive flaws:
+
+### 1. It's Painfully Slow
+Because the AI has to wait for word 1 to finish before it can look at word 2, it is incredibly slow. You can't use 100 computers to read 100 words at the same time. You are stuck waiting in a single-file line.
+
+### 2. It Forgets Things (The Goldfish Problem)
+Imagine reading a 1,000-page book, and your only memory is a tiny clipboard that you constantly have to erase and write over. By the time you get to page 1,000, you will have almost entirely forgotten what happened on page 1! 
+
+This is called the **Long-Term Dependency** problem. RNNs act like goldfish; they are great at remembering the last 5 words, but terrible at remembering a word from a paragraph ago.
+
+**Next Up:** How do we fix the goldfish memory and the slow speed? We throw away the conveyor belt entirely and invent a wild new trick: **Absolute Positional Encodings**.

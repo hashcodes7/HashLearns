@@ -1,0 +1,50 @@
+---
+title: "Q, K, V: The Library Search"
+sidebar_position: 2
+---
+
+# Q, K, V: The Library Search
+
+We know that in Self-Attention, every word looks at every other word to figure out how they relate. But if you have 1,000 words all yelling at each other at a cocktail party, how does the AI actually organize the math?
+
+It uses a brilliant system borrowed from database search engines: **Queries (Q), Keys (K), and Values (V)**.
+
+---
+
+## The Library Analogy
+
+Imagine you are in a massive library, trying to find a specific piece of information.
+
+1. **The Query (Q):** This is what you type into the search bar. It's what you are *looking for*. (e.g., "Books about space").
+2. **The Key (K):** This is the title and tags on the spine of every book on the shelf. It's what the book *is*. (e.g., "Title: Apollo 11, Tag: Space").
+3. **The Value (V):** This is the actual pages inside the book. It's the *content* you want to read.
+
+### How Words Use Q, K, V
+
+In a Transformer, every single word splits its personality into three different vectors: a Query, a Key, and a Value. 
+
+Let's look at the sentence: `"The fluffy cat purred."`
+
+Take the word `"purred"`. As a verb, it needs to find out *who* did the purring.
+- **Query (Q) of "purred":** "I am an action looking for a furry animal."
+- **Key (K) of "cat":** "I am a furry animal."
+- **Value (V) of "cat":** [The actual math meaning of the word cat].
+
+<div style={{backgroundColor: '#e6f7ff', padding: '10px', borderRadius: '5px'}}>
+<strong>The Matchmaker Math:</strong> The AI takes the <strong>Query</strong> of "purred" and multiplies it (using a dot product) against the <strong>Keys</strong> of every other word in the sentence. <br/><br/>
+When the Query "looking for animal" hits the Key "I am an animal", the math explodes into a huge match score (like 95%)! 
+</div>
+
+Once "purred" finds its match ("cat"), it grabs the **Value** of "cat" and mixes it into its own meaning. Now, the AI knows that the purring was specifically done by the fluffy cat!
+
+## The "Scaled" Part of the Math
+
+If you read the original paper, the math is called **Scaled Dot-Product Attention**. What does "Scaled" mean?
+
+Remember the "Exploding Gradient" problem from Chapter 3? 
+If you multiply giant vectors together, the numbers can get so big that they break the AI's brain. 
+
+To fix this, after the AI multiplies the Query and the Key, it **divides the answer by a scaling factor** (usually the square root of the vector size). 
+Think of it like turning down the volume on a speaker before it blows out your eardrums. It keeps the math stable and healthy!
+
+**Next Up:** A single library search is great. But what if we want to search for grammar, emotion, and logic all at the exact same time? We need a team of detectives: **Multi-Head Attention**!

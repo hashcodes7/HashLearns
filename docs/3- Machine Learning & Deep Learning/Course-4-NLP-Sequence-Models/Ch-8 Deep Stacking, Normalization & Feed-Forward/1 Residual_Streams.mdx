@@ -1,0 +1,42 @@
+---
+title: "Residual Streams: The Express Elevator"
+sidebar_position: 1
+---
+
+# Residual Streams: The Express Elevator
+
+Welcome to **Chapter 8**! We know how a single layer of Self-Attention works. But one layer of Attention isn't very smart. 
+To build a powerhouse like GPT-4, you have to stack 96 layers of Attention on top of each other!
+
+But stacking neural networks creates a massive problem. 
+
+---
+
+## The Staircase Problem
+
+Imagine you are trying to deliver a delicate package (a word vector) to the 96th floor of a skyscraper. 
+If you take the stairs, you have to pass the package through 96 different security checkpoints (Attention layers). 
+
+At every checkpoint, the guards open the package, move things around, do math on it, and hand it to the next floor. 
+By the time the package reaches floor 96, it has been manipulated so many times that the original meaning is completely destroyed! The AI forgets what word it was even looking at. 
+
+To fix this, the Transformer architecture uses a brilliant trick called **Residual Streams** (also known as Skip Connections).
+
+## The Express Elevator
+
+Instead of forcing the word vector to go through every single security checkpoint, we build an **Express Elevator** that shoots straight up the center of the skyscraper, from floor 1 to floor 96.
+
+<div style={{backgroundColor: '#e6f7ff', padding: '10px', borderRadius: '5px'}}>
+<strong>How it works:</strong> At Floor 1, a copy of the word vector is sent into the Attention room to learn new context (like "Oh, I'm a bank near a river!"). <br/><br/>
+When the Attention room finishes its math, it doesn't replace the original word. Instead, it takes its new findings and simply <em>adds</em> them to the original vector riding in the Express Elevator!
+</div>
+
+### Why addition is magic
+
+In math, addition is incredibly safe. 
+
+If Floor 5 does terrible math and completely messes up its Attention calculations, it's not a big deal! The Express Elevator still contains the safe, original meaning of the word from Floor 4. The AI can simply ignore Floor 5's bad advice.
+
+This allows the AI to become incredibly deep and smart without ever losing track of the original sentence. 
+
+**Next Up:** We've protected our vectors from being destroyed by bad math. But what happens if the numbers in the elevator get too big? Let's look at **Layer Normalization**!

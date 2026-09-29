@@ -1,0 +1,39 @@
+---
+title: "Bidirectional Context: The Open Book Test"
+sidebar_position: 1
+---
+
+# Bidirectional Context: The Open Book Test
+
+Welcome to **Chapter 7**! We've learned that Self-Attention is like a cocktail party where every word talks to every other word at the exact same time. 
+
+But *should* every word be allowed to talk to every other word? 
+
+The answer depends entirely on what kind of AI you are trying to build. Let's look at the first style of Transformer: the **Encoder-Only** model (made famous by Google's **BERT**).
+
+---
+
+## The Open Book Test Analogy
+
+Imagine your English teacher gives you a reading comprehension test. 
+They hand you an entire paragraph and ask you a question: *"What does the word 'bank' mean in the 3rd sentence?"*
+
+Because you have the entire piece of paper in your hands, this is an **Open Book Test**. You can read the sentences before the word "bank", and you can read the sentences *after* the word "bank". You have perfect, 100% visibility of the entire text.
+
+This is exactly how **Bidirectional Context** works in a Transformer. 
+
+<div style={{backgroundColor: '#e6f7ff', padding: '10px', borderRadius: '5px'}}>
+<strong>Bidirectional:</strong> In this setup, there are no blindfolds. The Attention Flashlight is allowed to shine in every direction. The first word can look at the last word, and the last word can look at the first word. 
+</div>
+
+### What is this good for?
+
+Models like BERT use Bidirectional Context because they aren't designed to write *new* text. They are designed to *understand* existing text. 
+
+- **Spam Filtering:** The AI reads a whole email, looks at all the words together, and decides if it's spam.
+- **Search Engines:** The AI reads your Google search and reads a Wikipedia page to see if they perfectly match.
+- **Sentiment Analysis:** The AI reads a movie review and figures out if the reviewer was happy or angry.
+
+Because the AI has access to the future words, its understanding of the context is absolute perfection. 
+
+**Next Up:** But what if we actually want our AI to *write* an essay, like ChatGPT? If we let it see the future, it will completely break! Let's explore why in **Causal Masking**.

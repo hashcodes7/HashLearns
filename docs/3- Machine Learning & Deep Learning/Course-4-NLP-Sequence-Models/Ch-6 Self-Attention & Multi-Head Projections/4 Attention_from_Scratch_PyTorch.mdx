@@ -1,0 +1,61 @@
+---
+title: "Building Attention in PyTorch"
+sidebar_position: 4
+---
+
+# Building Attention in PyTorch
+
+We've talked about Cocktail Parties, Library Searches (Q, K, V), and Detective Teams (Multi-Head). 
+
+Now, let's take off the training wheels and look at how this magic actually looks in Python. The math behind the Transformer is so beautifully simple that we can write the core Attention engine in just a few lines of PyTorch code!
+
+---
+
+## The Recipe for Attention
+
+Let's write a function that takes our Queries, Keys, and Values, and calculates the Scaled Dot-Product Attention.
+
+Here is the exact math formula from the famous 2017 paper:
+`Attention(Q, K, V) = softmax( (Q * K^T) / sqrt(d_k) ) * V`
+
+Don't let the symbols scare you! Let's translate it into code:
+
+```python
+import torch
+import torch.nn.functional as F
+import math
+
+def calculate_attention(query, key, value):
+    # 1. Figure out the scaling factor (sqrt of the vector size)
+    d_k = query.size(-1) 
+    
+    # 2. THE MATCHMAKER: Multiply Queries by Keys!
+    # (We use matrix multiplication: torch.matmul)
+    # The .transpose() just flips the Key grid sideways so the math works out.
+    scores = torch.matmul(query, key.transpose(-2, -1))
+    
+    # 3. THE SCALER: Turn down the volume so math doesn't explode
+    scaled_scores = scores / math.sqrt(d_k)
+    
+    # 4. THE PERCENTAGES: Convert the raw scores into percentages (0 to 100%)
+    # Softmax forces all the scores to add up to exactly 1.0
+    attention_weights = F.softmax(scaled_scores, dim=-1)
+    
+    # 5. THE FINAL BLEND: Multiply our percentages by the actual Values!
+    final_output = torch.matmul(attention_weights, value)
+    
+    return final_output, attention_weights
+```
+
+### Breaking it Down:
+- **Step 2 (The Matchmaker):** This is where the word "purred" asks "Are you a furry animal?" and the word "cat" yells "YES!".
+- **Step 4 (The Percentages):** This turns the yelling into a strict percentage (e.g., 95% focus on "cat", 5% focus on "the").
+- **Step 5 (The Final Blend):** The AI officially grabs 95% of the meaning of "cat" and mixes it into its own brain!
+
+<div style={{backgroundColor: '#e6f7ff', padding: '10px', borderRadius: '5px'}}>
+<strong>Why is this revolutionary?</strong> Notice that there are NO loops in this code! No <code>for word in sentence:</code>. <br/><br/>
+Because we use Matrix Multiplication (<code>torch.matmul</code>), the GPU calculates the relationships for <em>every single word simultaneously</em> in a fraction of a millisecond! 
+</div>
+
+**Next Up:** We've built the engine of a Transformer. But there is a massive glitch! If every word can see every other word, what stops the AI from cheating on a spelling test by looking into the future? 
+Welcome to Chapter 7: **Information Visibility & Masking**.

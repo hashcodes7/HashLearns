@@ -1,0 +1,46 @@
+---
+title: "Why Order Matters"
+sidebar_position: 1
+---
+
+# Why Order Matters: Beyond the Bag of Words
+
+Welcome to **Chapter 2**! In the last chapter, we figured out how to turn individual words into rich, math-friendly vectors (Embeddings). 
+
+But language isn't just a random pile of words. Let's look at a classic example:
+
+1. `"The dog bit the man."`
+2. `"The man bit the dog."`
+
+If we use a basic AI that just throws all the words into a blender and looks at the overall mixture (this is called the **Bag of Words** approach), it will think these two sentences are *exactly the same*. They have the exact same words, which means they have the exact same vectors. 
+
+But obviously, the meaning is completely different (and one is a much crazier news story). 
+
+**The order of the words changes everything.**
+
+---
+
+## The Concept of a Sequence
+
+This brings us to the core idea of this entire course: **Sequence Models**. 
+
+A sequence is just data where the order is critical. Language is a sequence of words. Music is a sequence of notes. Stock market prices are a sequence of numbers over time. 
+
+If you scramble a sentence, a song, or a stock chart, it becomes total garbage. 
+
+## The Challenge for AI
+
+Standard neural networks (like the ones we built in Course 3 to classify images) are terrible at handling order. 
+If you show a normal neural network a picture of a cat, it doesn't care if you showed it a picture of a dog yesterday. It just looks at what's in front of it *right now*. 
+
+But to understand a sentence, an AI needs to know what word came *before* the current word, and what word came *before that*. It needs **memory**, and it needs a way to track the passage of **time**.
+
+<div style={{backgroundColor: '#fffbe6', padding: '10px', borderRadius: '5px'}}>
+<strong>The Big Question:</strong> How do we force a bunch of math equations to understand time and order?
+</div>
+
+Over the years, AI researchers have come up with two radically different ways to solve this problem:
+1. **The Old School Way:** Read the words one by one, like a human reading a book. (Recurrence)
+2. **The New School Way:** Read all the words at once, but stamp a "page number" on each one. (Positional Encodings)
+
+**Next Up:** Let's look at the old-school way first! We'll explore how early AI models tried to solve this by building a "memory loop" using Recurrence.

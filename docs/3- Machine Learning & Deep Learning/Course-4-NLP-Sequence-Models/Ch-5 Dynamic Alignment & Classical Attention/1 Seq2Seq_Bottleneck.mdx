@@ -1,0 +1,41 @@
+---
+title: "The Seq2Seq Bottleneck"
+sidebar_position: 1
+---
+
+# The Seq2Seq Bottleneck: The One-Page Summary
+
+Welcome to **Chapter 5**! We've spent the last few chapters building LSTMs and GRUs, making our AI really good at reading sentences one word at a time.
+
+But what happens when we want to use our AI to do something useful, like translate an entire paragraph from English to French? 
+
+To do this, AI researchers created the **Seq2Seq (Sequence-to-Sequence)** architecture. It uses *two* LSTMs working together: an **Encoder** and a **Decoder**.
+
+---
+
+## The Translating Team
+
+Imagine you and a friend are taking a Spanish test. You only speak English, and your friend only speaks Spanish. You are the **Encoder**, and your friend is the **Decoder**.
+
+Here is how Seq2Seq works:
+1. **The Encoder (You):** You read the English sentence one word at a time using your LSTM brain. When you reach the period at the end of the sentence, your brain has a final hidden state (a vector of numbers) that summarizes the entire sentence.
+2. **The Hand-off:** You write this final summary down on a single piece of paper and hand it to your friend. In AI, this piece of paper is called the **Context Vector**.
+3. **The Decoder (Your Friend):** Your friend takes the Context Vector and uses their own LSTM brain to unfold that summary, writing out the Spanish translation one word at a time.
+
+This architecture was revolutionary. It powered Google Translate for years!
+
+## The Tragic Flaw: The Bottleneck
+
+The Seq2Seq model sounds perfect, but it has a massive, fatal flaw known as the **Information Bottleneck**.
+
+Imagine if, instead of translating a single sentence, you had to translate an entire 1,000-page Harry Potter book. 
+
+Under the rules of Seq2Seq, you (the Encoder) have to read the entire 1,000-page book, and you are only allowed to pass your friend **one single piece of paper** (the Context Vector) to summarize the entire plot, every character, and every detail. 
+
+<div style={{backgroundColor: '#ffe6e6', padding: '10px', borderRadius: '5px'}}>
+<strong>The Bottleneck:</strong> Forcing an entire book into a single fixed-size math vector is impossible. The AI starts forgetting the beginning of the paragraph by the time it reaches the end. It's like trying to shove a watermelon through a garden hose!
+</div>
+
+Because of this bottleneck, standard Seq2Seq models are terrible at translating long sentences. They get confused, drop words, and hallucinate.
+
+**Next Up:** How do we fix the bottleneck? What if we didn't force the Encoder to write a summary at all? What if we just let the Decoder look at the original book? Welcome to the magic of **Attention**!

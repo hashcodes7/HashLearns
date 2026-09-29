@@ -1,0 +1,46 @@
+---
+title: "Prefix & Span Masking"
+sidebar_position: 3
+---
+
+# Prefix & Span Masking: The Mad Libs
+
+We now have two major ways to train a Transformer:
+1. **BERT (No Mask):** Sees everything. Great for reading.
+2. **GPT (Causal Mask):** Blindfolded to the future. Great for writing.
+
+But what if we want an AI that is amazing at *both*? What if we want an AI that can read a massive article (understanding) and then write a flawless summary of it (generating)?
+
+To do this, researchers invented hybrid masking strategies, most famously used in models like Google's **T5** and Facebook's **BART**.
+
+---
+
+## 1. Prefix Masking (The Guided Prompt)
+
+Imagine a teacher gives you an essay prompt. 
+- **The Prompt:** "Write a story about a brave knight."
+- **Your Job:** You write the rest of the story. 
+
+When you read the prompt, you are allowed to read the whole thing at once. You don't have to guess what word comes after "brave". The prompt is fixed! But when you start *writing* the story, you can't see the future words you haven't written yet.
+
+This is exactly how **Prefix Masking** works. 
+
+<div style={{backgroundColor: '#f4f4f4', padding: '10px', borderRadius: '5px'}}>
+<strong>The Setup:</strong> The AI is allowed to use <em>Bidirectional (No Mask)</em> attention on the initial prompt (the prefix). But as soon as it starts generating the answer, the <em>Causal Blindfold</em> drops down! 
+</div>
+
+This is perfect for tasks like Translation or Summarization, where the AI needs perfect context of the original text before it starts generating new text!
+
+## 2. Span Masking (Mad Libs)
+
+How do we train these hybrid models to be so smart? We use a game that is basically just **Mad Libs**.
+
+Instead of blinding the AI to the future (like GPT), or just covering up one random word (like BERT), **Span Masking** covers up entire *chunks* of a sentence.
+
+`"The quick brown fox [MASKED SPAN] over the lazy dog."`
+
+The AI has to read the beginning and the end of the sentence, and then use its Decoder to generate the missing middle part (`"jumps high"`). 
+
+This forces the AI to understand deep context (like BERT) while simultaneously practicing how to generate multi-word phrases (like GPT). Google's T5 model was trained entirely using this Mad Libs strategy!
+
+**Next Up:** We've mastered Attention and Masking. But a single Attention layer isn't enough to build ChatGPT. We need to stack them! Welcome to Chapter 8: **Deep Stacking, Normalization & Feed-Forward**.

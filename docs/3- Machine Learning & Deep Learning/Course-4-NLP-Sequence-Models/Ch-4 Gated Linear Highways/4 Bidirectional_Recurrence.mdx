@@ -1,0 +1,55 @@
+---
+title: "Bidirectional RNNs: Reading the Future"
+sidebar_position: 4
+---
+
+# Bidirectional RNNs: Reading the Future
+
+Up until now, our AI (whether it's a Vanilla RNN, an LSTM, or a GRU) has been reading sentences exactly like a human reads a book: from left to right. 
+
+But sometimes, reading strictly left-to-right is actually a terrible way to understand language.
+
+---
+
+## The "Bank" Problem
+
+Take a look at this sentence, but pretend you are reading it one word at a time:
+
+`"I went to the bank..."`
+
+If the AI stops reading here, what does the word "bank" mean? 
+Is it a place where you deposit money? Or is it the muddy edge of a river? It's impossible to know.
+
+Now, look at the rest of the sentence:
+
+`"...to deposit my paycheck."`
+
+Ah! The words at the *end* of the sentence completely change the meaning of a word at the *beginning* of the sentence. 
+If our AI reads strictly from left to right, by the time it reaches "paycheck," it has already guessed the wrong meaning for "bank" and its memory is permanently corrupted!
+
+We need a way for the AI to see into the future before it makes a decision about the past.
+
+## Enter the Bi-LSTM (Bidirectional LSTM)
+
+The solution is wonderfully simple. We just use **two** LSTMs at the exact same time!
+
+1. **The Forward LSTM:** Reads the sentence normally, from left to right (`"I -> went -> to -> the -> bank"`).
+2. **The Backward LSTM:** Reads the exact same sentence, but starts at the end and reads right to left! (`"paycheck -> my -> deposit -> to -> bank"`).
+
+<div style={{backgroundColor: '#f4f4f4', padding: '10px', borderRadius: '5px'}}>
+<strong>The Final Mix:</strong> For every single word in the sentence, we take the memory from the Forward LSTM and the memory from the Backward LSTM, and we just glue them together! 
+</div>
+
+Now, when the AI looks at the word "bank", its brain contains the memory of everything that happened *before* it ("I went to the") AND everything that happened *after* it ("to deposit my paycheck"). 
+
+It has absolute, perfect context for every single word!
+
+## The Catch
+
+If Bidirectional LSTMs are so good, why don't we use them for everything? 
+
+Because they require the **entire sentence** to be finished before they can work. 
+- If you are translating a PDF document, Bi-LSTMs are perfect because the whole document is already written.
+- If you are building a speech-recognition AI for a smart speaker (like Alexa or Siri), you can't use a Bi-LSTM! The AI can't read the end of your sentence because you haven't spoken it yet! It would have to wait in awkward silence for you to finish talking before it could start processing.
+
+**Next Up:** Theory is great, but code is better. Let's see how incredibly easy it is to summon an LSTM or a GRU using PyTorch!

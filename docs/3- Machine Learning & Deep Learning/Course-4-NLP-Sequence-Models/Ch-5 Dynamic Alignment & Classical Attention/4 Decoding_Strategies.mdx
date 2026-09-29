@@ -1,0 +1,59 @@
+---
+title: "Decoding Strategies: The Maze"
+sidebar_position: 4
+---
+
+# Decoding Strategies: The Maze
+
+At the very end of our Seq2Seq model, after all the LSTMs and Attention Flashlights have done their math, the AI has to actually output a human word. 
+
+It does this by outputting a massive list of probabilities. For example, it might say:
+- "The" (80%)
+- "A" (15%)
+- "Apple" (5%)
+
+How does the AI pick the word? It seems obvious, right? Just pick the one with the highest percentage! 
+But as we'll see, that obvious choice can completely ruin a sentence. 
+
+---
+
+## 1. Greedy Search (The Impatient Explorer)
+
+Picking the highest percentage word at every step is called **Greedy Search**. 
+
+Imagine you are trying to navigate a maze to find a treasure. At every intersection, Greedy Search tells you to take the path that *looks* the best right now. 
+If the left path has a gold coin on the floor, you take the left path!
+
+<div style={{backgroundColor: '#ffe6e6', padding: '10px', borderRadius: '5px'}}>
+<strong>The Problem:</strong> What if that left path with the gold coin immediately leads to a dead end? You are trapped!
+</div>
+
+In language, Greedy Search causes the AI to get trapped in bad sentences. 
+For example, the AI might translate a sentence as `"The dog..."` because it looked like the best choice at step 1. But by step 4, the AI realizes the sentence actually meant `"The hound..."` but it's too late. It can't go back! It ends up spitting out garbled grammar just to finish the sentence.
+
+## 2. Beam Search (The Clones)
+
+To fix this, we use a much smarter strategy called **Beam Search**. 
+
+Instead of just taking the absolute best path, Beam Search sends out **clones** to explore multiple paths at the same time!
+
+If our "Beam Width" is 3, the AI will keep track of the top 3 best sentence guesses at all times.
+1. `Clone 1 tries: "The dog..."`
+2. `Clone 2 tries: "The hound..."`
+3. `Clone 3 tries: "A puppy..."`
+
+At the next word, all 3 clones make their guesses. The AI looks at all the new paths, scores them, and immediately kills off the weak ones, keeping only the new top 3 best paths. 
+
+<div style={{backgroundColor: '#e6f7ff', padding: '10px', borderRadius: '5px'}}>
+<strong>The Result:</strong> By looking a few steps ahead and keeping options open, Beam Search prevents the AI from getting trapped in grammatical dead ends. It produces incredibly smooth, human-sounding text!
+</div>
+
+## 3. Temperature (The Crazy Dial)
+
+What if you aren't translating a document, but you want your AI to write a creative poem? Beam Search is too perfect and boring. 
+
+To make the AI more creative, we add **Temperature**. 
+- **Low Temperature (0.1):** The AI is strictly logical. It only picks top words. (Boring but accurate).
+- **High Temperature (0.9):** The AI acts a little crazy! It flattens the percentages, giving weird, rare words (like "Apple" at 5%) a much higher chance of being picked. This creates incredibly creative, unpredictable text!
+
+**Next Up:** We've reached the end of an era. RNNs, LSTMs, and Seq2Seq were amazing, but they were about to be destroyed by a single research paper in 2017. Welcome to Chapter 6: **Self-Attention and the Transformer**!

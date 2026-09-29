@@ -1,0 +1,43 @@
+---
+title: "The Feed-Forward Network"
+sidebar_position: 3
+---
+
+# The Position-Wise FFN: The Private Room
+
+We are almost done building our Transformer skyscraper! 
+So far, on every floor (layer), the word gets off the elevator, goes through the Volume Knob (LayerNorm), and enters the **Attention Room**. 
+
+In the Attention Room, it's a massive cocktail party. Every word is talking to every other word, swapping context, and figuring out relationships (e.g., "I am the bank OF the river"). 
+
+But after a wild party, you need some alone time to process everything you just learned.
+
+---
+
+## The Private Processing Room
+
+After leaving the Attention Room, the word vector is sent into a second room on the exact same floor. This is the **Position-Wise Feed-Forward Network (FFN)**.
+
+Unlike the Attention Room, the FFN is a **private room**. 
+
+<div style={{backgroundColor: '#f4f4f4', padding: '10px', borderRadius: '5px'}}>
+<strong>Strict Rule:</strong> In the FFN room, words are absolutely NOT allowed to talk to each other. <br/><br/>
+The word "bank" enters its own private FFN. The word "river" enters a completely separate, identical FFN. 
+</div>
+
+### What happens inside?
+
+The FFN is just a standard, classic neural network (like the ones from Course 3). It usually has two layers:
+1. **The Expansion:** It takes the word vector and blows it up to be massive (usually 4 times larger). 
+2. **The Squeeze:** It uses an activation function (like ReLU or GELU) to filter out the bad math, and then squeezes the vector back down to its original size.
+
+### Why do we need this?
+
+If Attention is where the AI learns *context* ("I am near a river"), the FFN is where the AI actually applies its *logic and facts*. 
+
+Researchers believe that the FFN acts like the AI's long-term memory bank. 
+When the word "Paris" goes into the FFN, the FFN network lights up with facts: "Capital of France," "Eiffel Tower," "Croissants." It bakes these facts directly into the word vector!
+
+Once the FFN is done thinking, it adds its final thoughts back onto the Express Elevator, and the word rides up to the next floor to go to the next cocktail party!
+
+**Next Up:** We've built the complete architecture! But before we launch our AI to millions of users, we have a speed problem to fix. Welcome to the final lesson: **KV Caching**.

@@ -1,0 +1,42 @@
+---
+title: "Luong Attention: The Puzzle Pieces"
+sidebar_position: 3
+---
+
+# Luong Attention: The Puzzle Pieces
+
+Bahdanau's "Flashlight" (Additive Attention) proved that letting the Decoder look back at the original sentence completely fixed the Seq2Seq bottleneck. The AI could finally translate long paragraphs flawlessly!
+
+But there was a catch. Bahdanau used a mini neural network to calculate the flashlight scores. If you are translating a 100-word paragraph, the AI has to run that mini neural network 100 times *for every single translated word*. It was painfully slow.
+
+A year later, a researcher named Minh-Thang Luong found a math cheat code that made Attention lightning fast. This is known as **Multiplicative Attention** (or Dot-Product Attention).
+
+---
+
+## The Puzzle Piece Analogy
+
+Instead of building a separate mini-brain to judge the words, Luong realized that neural network vectors (the lists of numbers representing words) naturally act like puzzle pieces. 
+
+In linear algebra, if you have two vectors and you want to know how similar they are, you don't need a neural network. You just **multiply them together** (using a Dot Product).
+
+- If the vectors are pointing in the exact same direction (they mean the same thing), multiplying them gives a **huge positive number**. They fit together perfectly!
+- If they are completely unrelated, multiplying them gives a number near **zero**.
+
+<div style={{backgroundColor: '#e6f7ff', padding: '10px', borderRadius: '5px'}}>
+<strong>The Shortcut:</strong> To figure out where to point the flashlight, the Decoder just takes its current thought vector and multiplies it directly against every English word vector! 
+</div>
+
+### Why is this better?
+
+Because computers (specifically GPUs) are insanely good at multiplication. 
+
+While Bahdanau's method required feeding data through a complex neural network one by one, Luong's method allows the GPU to multiply all 100 words in a single, massive math operation that takes a fraction of a millisecond. 
+
+## The Core Difference
+
+- **Bahdanau (Additive):** "Let's build a tiny robot to look at the words and tell us which one is important." (Flexible, but slow).
+- **Luong (Multiplicative):** "Let's just smash the vectors together with multiplication and see which ones naturally stick!" (Slightly less flexible, but blindingly fast).
+
+Because it was so fast, Luong's Dot-Product math became the absolute foundation for the future of AI. In fact, this exact multiplication trick is what powers the modern Transformers inside ChatGPT today!
+
+**Next Up:** We've taught the Decoder how to pay attention. But how does it actually *choose* the final word to write down? It's harder than it looks! Let's explore **Decoding Strategies**.

@@ -1,0 +1,79 @@
+---
+title: "Word2Vec: Turning Words into Math"
+sidebar_position: 2
+---
+
+# Word2Vec: Turning Words into Math
+
+Welcome back! In the last section, we learned how to chop up sentences into "LEGO bricks" using **Tokenization**. But there's a catch: AI models are basically giant math engines. They can't do math with letters or words like "apple" or "playing." They only understand **numbers**.
+
+So, how do we translate our tokens into numbers? We could just assign an ID to every word (like `apple = 1`, `banana = 2`). But that tells the AI *nothing* about what the word means. To an AI, 1 and 2 are just numbers. It wouldn't know that an apple and a banana are both fruits.
+
+We need a smarter way. We need a way to turn words into numbers that capture their *meaning*. Enter **Word2Vec**.
+
+---
+
+## What is Word2Vec?
+
+Imagine mapping out every word in the English language on a giant 3D graph (like the ones in video games). 
+Words that mean similar things (like "king" and "queen", or "apple" and "orange") are placed super close to each other. Words that are totally unrelated (like "banana" and "spaceship") are placed far apart.
+
+**Word2Vec** (literally "Word to Vector") is a brilliant technique that does exactly this. It converts a word into a list of numbers (a vector) that acts like GPS coordinates representing the word's meaning!
+
+But how does Word2Vec figure out these "meaning coordinates"? It uses a simple but powerful rule: **You shall know a word by the company it keeps.**
+
+If two words always show up in similar sentences (e.g., "I ate an *apple*" and "I ate an *orange*"), they must mean something similar! To train the AI to learn this, Word2Vec plays two fun guessing games: **CBOW** and **Skip-Gram**.
+
+---
+
+## Game 1: CBOW (Continuous Bag of Words)
+
+### *The "Fill in the Blank" Game*
+
+Imagine your teacher gives you a sentence with a word blanked out, and you have to guess the missing word based on the words around it (the context).
+
+**Example:** `"The cat sat on the _____."`
+
+If you read that, you'd instantly guess "mat" or "floor." You definitely wouldn't guess "spaceship." 
+
+<div style={{backgroundColor: '#f4f4f4', padding: '10px', borderRadius: '5px'}}>
+<strong>CBOW's Job:</strong> Look at the surrounding words (context) and predict the target word in the middle.
+</div>
+
+By playing this game millions of times on Wikipedia or books, the AI slowly adjusts its internal "GPS coordinates" for words until it becomes a master at filling in the blanks. 
+
+---
+
+## Game 2: Skip-Gram
+
+### *The "Word Association" Game*
+
+Skip-Gram is the exact opposite of CBOW. Instead of giving the AI the surrounding words to guess the middle word, we give it the **middle word** and ask it to guess the **surrounding words**.
+
+**Example Target Word:** `"pizza"`
+
+If I say "pizza", what words pop into your head? Probably words like "slice," "cheese," "eat," or "delicious."
+
+<div style={{backgroundColor: '#e6f7ff', padding: '10px', borderRadius: '5px'}}>
+<strong>Skip-Gram's Job:</strong> Look at a single target word and predict the context words that usually appear near it.
+</div>
+
+**Which is better?**
+- **CBOW** is faster and works well for frequent words (like "the", "and").
+- **Skip-Gram** is a bit slower but is much better at understanding rare words (like specialized science terms).
+
+---
+
+## Why is this so magical?
+
+Once the AI finishes playing these games, something incredible happens. The "GPS coordinates" (vectors) it learned actually capture human logic!
+
+If you take the coordinates for **"King"**, subtract the coordinates for **"Man"**, and add the coordinates for **"Woman"**, the AI will literally point you to the coordinates for... **"Queen"**!
+
+<div style={{backgroundColor: '#fffbe6', padding: '10px', borderRadius: '5px'}}>
+<code>King - Man + Woman = Queen</code>
+</div>
+
+The AI learned gender, royalty, and relationships entirely on its own, just by playing "fill in the blank" games with text!
+
+**Next Up:** How exactly does the AI evaluate if it's winning or losing these games? Let's dive into the math behind the scenes with **Negative Sampling**.

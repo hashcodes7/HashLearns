@@ -1,0 +1,45 @@
+---
+title: "Unrolling Over Time: The Comic Strip"
+sidebar_position: 2
+---
+
+# Unrolling Over Time: The Comic Strip
+
+In the last section, we built our Vanilla RNN "blender." It takes a word, mixes it with its memory, and repeats. 
+
+This loop is great for *processing* data, but it causes a massive headache when we try to *train* the AI.
+
+Remember from Course 3 that we train neural networks using Backpropagation—finding the mistake at the end and tracing it backwards to adjust the weights. But how do you trace a mistake backward when the network is stuck in a looping time cycle? 
+
+To solve this, AI researchers use a mental trick called **Unrolling Over Time**.
+
+---
+
+## The Flipbook vs The Comic Strip
+
+Imagine you draw a stick figure animation on the corner of a notebook. When you flip the pages rapidly, the stick figure runs across the page. 
+
+- This flipbook is how an RNN actually runs. It's **one** piece of paper (one neural network) that just keeps updating itself over time. 
+
+But if you want to find out exactly which page you drew the legs wrong, flipping it super fast doesn't help. 
+
+Instead, you would **unroll** the flipbook. You rip out every single page and lay them side-by-side on a giant table. 
+Now, instead of one moving picture, you have a **comic strip**. You can see Page 1, Page 2, and Page 3 all at the exact same time.
+
+<div style={{backgroundColor: '#e6f7ff', padding: '10px', borderRadius: '5px'}}>
+<strong>Unrolling:</strong> We pretend the RNN isn't a loop. If a sentence has 5 words, we pretend we have 5 separate neural networks standing next to each other, passing notes from left to right.
+</div>
+
+## The "Cloned" Networks
+
+When we unroll an RNN, it looks like a standard, deep neural network! 
+
+- **Step 1 Network** looks at Word 1 and passes its memory to Step 2.
+- **Step 2 Network** looks at Word 2, takes the memory from Step 1, and passes its new memory to Step 3.
+
+**But here is the absolute most important rule:**
+Even though it *looks* like 5 different neural networks on paper, **they all share the exact same weights (brain).** It’s literally the exact same blender, just drawn 5 different times to make the math easier to visualize.
+
+By laying time out flat on a table, we can finally do math on it!
+
+**Next Up:** Now that we have our comic strip laid out, how do we actually send our error corrections backward through time? Let's dive into **BPTT (Backpropagation Through Time)**!

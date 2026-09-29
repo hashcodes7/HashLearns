@@ -1,1 +1,51 @@
+---
+title: "Negative Sampling: A Shortcut to Speed"
+sidebar_position: 3
+---
 
+# Negative Sampling: A Shortcut to Speed
+
+In the last chapter, we saw how Word2Vec learns the "meaning coordinates" (vectors) of words by playing guessing games like **CBOW** and **Skip-Gram**. 
+
+But here’s the problem: playing these games with a massive dictionary is *exhausting*. 
+
+Imagine you are trying to guess the missing word in this sentence: `"The cat sat on the _____."`
+
+If your dictionary has 100,000 words, a basic AI would calculate the probability of *every single word* in the dictionary being the right answer. It would say, "Is it apple? Is it banana? Is it spaceship? Is it mat?" That means for just one blank, the AI has to update 100,000 different scores! 
+
+When you train on millions of sentences, this becomes incredibly slow, even for supercomputers. We need a shortcut. That shortcut is called **Negative Sampling**.
+
+---
+
+## The "Police Lineup" Analogy
+
+Think about how detectives catch a suspect. 
+If a witness saw a crime, the police don't line up all 1 million people in the city and ask, "Was it them?" That would take years!
+
+Instead, they use a **lineup**. They put the actual suspect (the correct answer) in a room with 4 or 5 random people who definitely didn't do it (the negative samples). The witness only has to look at these 5 or 6 people to make a choice.
+
+**Negative Sampling does the exact same thing for Word2Vec.**
+
+Instead of updating the scores for all 100,000 words in the dictionary, the AI only updates the scores for:
+1. **The Positive Word:** The actual correct word (e.g., "mat"). We want the AI to give this a high score!
+2. **A Few Negative Words:** 5 to 10 completely random words from the dictionary (e.g., "spaceship", "broccoli", "guitar"). We want the AI to give these a low score.
+
+<div style={{backgroundColor: '#e6f7ff', padding: '10px', borderRadius: '5px'}}>
+<strong>The Shortcut:</strong> Instead of doing 100,000 math calculations per guess, the AI only does about 5 to 10 calculations! It learns just as well, but <em>thousands of times faster.</em>
+</div>
+
+---
+
+## How does it pick the Negative Words?
+
+You might be wondering, "How does the AI pick the random wrong words?" 
+
+It doesn't pick them perfectly equally. In English, words like "the", "a", and "is" show up all the time, while words like "platypus" are rare. If the AI only picked totally randomly, it might pick "platypus" as a negative sample way too often compared to how often it actually sees the word in real life.
+
+To fix this, the AI uses a slightly tweaked lottery system. Words that are more common in English get more "lottery tickets" to be picked as a negative sample, but the math is adjusted slightly so rare words still have a fair chance of showing up in the lineup.
+
+## The Result
+
+By using Negative Sampling, Word2Vec went from being a cool but slow theoretical idea to a practical, blazing-fast tool that could read the entire internet in days.
+
+**Next Up:** Word2Vec is awesome, but it's not the only way to turn words into numbers. Let's look at a rival approach called **GloVe**, which uses a giant grid of words instead of guessing games!

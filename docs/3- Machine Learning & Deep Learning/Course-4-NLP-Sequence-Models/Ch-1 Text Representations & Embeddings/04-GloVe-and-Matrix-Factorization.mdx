@@ -1,0 +1,74 @@
+---
+title: "GloVe & Matrix Factorization: The Giant Spreadsheet"
+sidebar_position: 4
+---
+import MatrixVectorVisualizer from '@site/src/components/MatrixVectorVisualizer';
+
+# GloVe & Matrix Factorization: The Giant Spreadsheet
+
+So far, we've talked about **Word2Vec**, which acts like a student studying with flashcards. It reads sentences one by one, playing "fill in the blank" games, and slowly learns the meaning of words. 
+
+But what if, instead of studying sentence by sentence, you could look at the *entire English language all at once*? 
+
+That’s the idea behind **GloVe** (which stands for **Glo**bal **Ve**ctors). Developed by researchers at Stanford, GloVe is Word2Vec's biggest rival. Instead of playing guessing games, GloVe uses the power of a giant spreadsheet!
+
+---
+
+## The Co-Occurrence Matrix (The Giant Spreadsheet)
+
+Imagine you want to know how similar the words "Ice" and "Steam" are. 
+
+GloVe starts by reading millions of books and creating a massive grid—a spreadsheet called a **Co-occurrence Matrix**. 
+
+- It puts every single word in the dictionary as a row.
+- It puts every single word as a column.
+- Whenever two words show up in the same sentence, it adds a +1 in the box where they intersect.
+
+Let's say it counts how often "Ice" and "Steam" show up in sentences with other words like "Solid", "Gas", and "Water".
+
+<div style={{backgroundColor: '#f4f4f4', padding: '10px', borderRadius: '5px', marginBottom: '20px'}}>
+It might find that:
+<ul>
+<li><strong>Ice</strong> shows up with <strong>Solid</strong> 1,000 times.</li>
+<li><strong>Steam</strong> shows up with <strong>Solid</strong> only 10 times.</li>
+<li>But BOTH show up with <strong>Water</strong> 2,000 times!</li>
+</ul>
+</div>
+
+By looking at this giant spreadsheet, GloVe instantly sees the big picture: Ice and Steam are related to Water, but are opposites when it comes to being Solid or Gas.
+
+## The Problem: The Spreadsheet is Too Big!
+
+Here’s the catch: If your dictionary has 100,000 words, this spreadsheet will have **10 billion boxes** ($100,000 \times 100,000$). That takes up way too much computer memory, and most of the boxes will be empty (a zero) because most words never appear next to each other (like "platypus" and "skyscraper").
+
+## Matrix Factorization: Shrinking the Spreadsheet
+
+To fix this, GloVe uses a math trick called **Matrix Factorization**. 
+
+Think of Matrix Factorization like zipping a giant file on your computer. It takes that massive, mostly empty spreadsheet and *squishes* it down into two smaller, much denser grids. 
+
+Instead of needing 100,000 numbers to describe a word, the math squishes it down so each word is described by just 100 or 300 numbers (our vectors!). 
+
+<MatrixVectorVisualizer 
+  showMatrix={true} 
+  showVector={false} 
+  initialMatrix={[
+    [1000, 10, 2000],
+    [10, 1000, 2000],
+  ]}
+  tokens={["Ice", "Steam"]}
+  colors={["#3498db", "#e74c3c"]}
+/>
+
+*Notice how we use our special visualizer to show a tiny piece of this matrix!*
+
+## GloVe vs Word2Vec
+
+So, which one is better?
+
+- **Word2Vec** learns by zooming in on small, local sentences (predicting words). It’s great at understanding complex analogies (like King - Man + Woman = Queen).
+- **GloVe** learns by zooming out and looking at the global stats (the giant spreadsheet). It’s great at understanding how words relate to each other overall.
+
+In the real world, both are awesome and are often used to do the same job: giving our AI the "meaning coordinates" it needs to understand text!
+
+**Next Up:** We know the theory. Now, how do we actually write the code to use these vectors? Let's jump into **PyTorch's Embedding Layer**!

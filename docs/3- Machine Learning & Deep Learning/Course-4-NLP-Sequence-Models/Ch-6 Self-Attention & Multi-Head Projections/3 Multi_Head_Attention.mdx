@@ -1,0 +1,50 @@
+---
+title: "Multi-Head Attention: The Detectives"
+sidebar_position: 3
+---
+
+# Multi-Head Attention: The Detectives
+
+We just learned how a word uses its Query to search through the Keys of other words to find what it's looking for. 
+
+But words are complicated! 
+Think about the word `"bank"` in the sentence: `"He eagerly ran to the bank to deposit his check."`
+
+If `"bank"` only gets to ask one question (one Query), what should it ask? 
+- Should it look for the emotion of the sentence? (eagerly)
+- Should it look for the person involved? (He)
+- Should it look for the action happening to it? (deposit)
+
+If it only has one flashlight, it can only focus on one thing.
+
+---
+
+## The Detective Team
+
+To solve this, the creators of the Transformer gave the AI **multiple flashlights**, called **Heads**. 
+
+Instead of acting like a single security guard shining one light, **Multi-Head Attention** acts like a team of specialized detectives investigating a crime scene.
+
+If our Transformer has 8 "Heads" (which is very common), it splits the math into 8 completely separate Search Engines (Q, K, V).
+
+<div style={{backgroundColor: '#f4f4f4', padding: '10px', borderRadius: '5px'}}>
+<strong>The Squad:</strong>
+<ul>
+<li><strong>Detective 1 (Grammar Head):</strong> Shines its flashlight to figure out who is the noun and who is the verb.</li>
+<li><strong>Detective 2 (Emotion Head):</strong> Shines its flashlight looking for happy or sad words.</li>
+<li><strong>Detective 3 (Action Head):</strong> Shines its flashlight figuring out who did what to whom.</li>
+<li>...and so on!</li>
+</ul>
+</div>
+
+### Merging the Clues
+
+Because we have 8 different detectives, the word `"bank"` gets to ask 8 completely different Queries at the exact same time! 
+
+1. Once all 8 detectives find their matches (their Values), they bring all their clues back to the police station. 
+2. The AI glues all 8 of these clues together.
+3. It passes them through one final math filter (a Linear Projection) to create the ultimate, perfect summary of the word `"bank"`.
+
+By using Multi-Head Attention, the AI doesn't just learn *what* a word means; it learns the grammar, the emotion, the context, and the logic of the entire sentence in a single blistering fast step.
+
+**Next Up:** You know the theory. Now, let's see what this actually looks like in Python code! Let's build Attention from scratch in **PyTorch**.

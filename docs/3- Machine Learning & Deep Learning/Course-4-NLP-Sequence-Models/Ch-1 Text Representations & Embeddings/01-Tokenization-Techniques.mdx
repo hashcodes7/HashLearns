@@ -1,0 +1,77 @@
+---
+title: "Tokenization Techniques: How AI Reads"
+sidebar_position: 1
+---
+
+# Breaking Down Language: Tokenization
+
+Welcome to **Course 4: NLP & Sequence Models**! In our previous adventures (Course 3), we learned how Deep Learning models could "see" using things like CNNs to process images. But what happens when we want an AI to *read*? 
+
+Imagine trying to teach a baby to read an entire book at once. Impossible, right? You start with the alphabet, then small words, then sentences. AI works similarly. Before an AI can write a poem, summarize an article, or chat with you like ChatGPT, it needs to break language down into chewable bites. 
+
+This process of chopping up text into pieces the AI can digest is called **Tokenization**. 
+
+---
+
+## What is a Token?
+
+Think of a "token" as a LEGO brick. 
+If you have a massive LEGO spaceship (a full sentence or paragraph), tokenization is the act of taking it apart into individual LEGO bricks (tokens). Once the AI understands what each brick looks like, it can use math to figure out how they connect together!
+
+Tokens can be **words**, **characters**, or even **parts of words (subwords)**. Let's look at the different ways to chop up a sentence.
+
+---
+
+## 1. Word Tokenization (The "Whole Brick" Approach)
+
+This is the most obvious way to do it. You simply split the text every time you see a space or punctuation mark.
+
+**Example Sentence:** `"Machine learning is awesome!"`
+
+If we use Word Tokenization, our list of tokens looks like this:
+<div style={{backgroundColor: '#f4f4f4', padding: '10px', borderRadius: '5px'}}>
+<code>["Machine", "learning", "is", "awesome", "!"]</code>
+</div>
+
+**Pros:** It's super simple and makes intuitive sense. 
+**Cons:** Language is messy! What happens when the AI sees a new word it's never seen before, like `"awesome-ness"`? Because it only knows `"awesome"`, it will throw its hands up and say "I don't know what this is!" (This is called the **Out-Of-Vocabulary** problem).
+
+---
+
+## 2. Character Tokenization (The "Molecular" Approach)
+
+If whole words are too clunky, why not break everything down to individual letters?
+
+**Example Sentence:** `"AI is fun"`
+
+<div style={{backgroundColor: '#e6f7ff', padding: '10px', borderRadius: '5px'}}>
+<code>["A", "I", " ", "i", "s", " ", "f", "u", "n"]</code>
+</div>
+
+**Pros:** The AI never runs into a word it doesn't know because it knows all the letters! 
+**Cons:** Imagine trying to read a book letter-by-letter. *T-h-i-s i-s t-o-o s-l-o-w.* It loses the meaning of the word. The AI has to work incredibly hard just to figure out that "f-u-n" means "fun".
+
+---
+
+## 3. Subword Tokenization (The "Goldilocks" Approach)
+
+This is what modern powerhouses like **GPT-4** and **BERT** use. It's the "just right" approach. Instead of keeping whole words or breaking everything into single letters, it breaks complex words into smaller, recognizable chunks.
+
+**Example Word:** `"playing"`
+<div style={{backgroundColor: '#fffbe6', padding: '10px', borderRadius: '5px'}}>
+<code>["play", "ing"]</code>
+</div>
+
+**Example Word:** `"unbelievable"`
+<div style={{backgroundColor: '#fffbe6', padding: '10px', borderRadius: '5px'}}>
+<code>["un", "believ", "able"]</code>
+</div>
+
+**Why is this brilliant?**
+If the AI has learned the word `"play"` and the suffix `"ing"`, it can figure out `"playing"` even if it's never seen them glued together before! It's like knowing root words in English class. It keeps the vocabulary size manageable but allows the AI to understand new words easily.
+
+### The Real World
+
+In practice, you'll rarely code these from scratch. We use pre-built tokenizers from libraries like **Hugging Face** which automatically handle the heavy lifting of Subword Tokenization using clever algorithms like *Byte-Pair Encoding (BPE)* (don't worry about the scary name, just remember it's a smart way to find common subwords).
+
+**Next Up:** Now that we know how to chop words into tokens, how do we turn those tokens into math so the AI can actually calculate them? That's where **Word2Vec** and **Embeddings** come in!

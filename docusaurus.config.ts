@@ -31,12 +31,12 @@ const config: Config = {
   projectName: 'docusaurus', // Usually your repo name.
 
   onBrokenLinks: 'warn',
-  onBrokenMarkdownLinks: 'warn',
 
   markdown: {
     mermaid: true,
     hooks: {
       onBrokenMarkdownImages: 'warn',
+      onBrokenMarkdownLinks: 'warn',
     },
   },
 
@@ -57,14 +57,10 @@ const config: Config = {
         docs: {
           sidebarPath: './sidebars.ts',
           exclude: ['**/Excalidraw/**'],
-          async sidebarItemsGenerator({ defaultSidebarItemsGenerator, numberPrefixParser, item, version, options, docs }) {
+          async sidebarItemsGenerator({ defaultSidebarItemsGenerator, ...args }) {
             const defaultItems = await defaultSidebarItemsGenerator({
               defaultSidebarItemsGenerator,
-              numberPrefixParser,
-              item,
-              version,
-              options,
-              docs,
+              ...args
             });
 
             const parseNum = (str: string): number | null => {
