@@ -68,8 +68,6 @@ const config: Config = {
               if (kwMatch) return parseFloat(kwMatch[1]);
               const leadingMatch = str.match(/^\s*(\d+(?:\.\d+)?)/);
               if (leadingMatch) return parseFloat(leadingMatch[1]);
-              const anyMatch = str.match(/(\d+(?:\.\d+)?)/);
-              if (anyMatch) return parseFloat(anyMatch[1]);
               return null;
             };
 
@@ -95,7 +93,7 @@ const config: Config = {
                 return 1;
               }
 
-              return titleA.localeCompare(titleB, undefined, { numeric: true, sensitivity: 'base' });
+              return 0; // Preserve default Docusaurus ordering for everything else
             };
 
             const sortItemsRecursively = (items: any[]): any[] => {
