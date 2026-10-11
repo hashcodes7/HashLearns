@@ -57,5 +57,60 @@ def calculate_attention(query, key, value):
 Because we use Matrix Multiplication (<code>torch.matmul</code>), the GPU calculates the relationships for <em>every single word simultaneously</em> in a fraction of a millisecond! 
 </div>
 
+---
+
+## Python Code Example
+
+Here is a complete, runnable example demonstrating Scaled Dot-Product Attention end-to-end on a sequence of 3 tokens (e.g., `["The", "cat", "purred"]`):
+
+```python r
+import torch
+import torch.nn.functional as F
+import math
+
+def calculate_attention(query, key, value):
+    # 1. Figure out the scaling factor (sqrt of the vector size)
+    d_k = query.size(-1)
+    
+    # 2. THE MATCHMAKER: Multiply Queries by Keys
+    scores = torch.matmul(query, key.transpose(-2, -1))
+    
+    # 3. THE SCALER: Turn down the volume so math doesn't explode
+    scaled_scores = scores / math.sqrt(d_k)
+    
+    # 4. THE PERCENTAGES: Convert raw scores into probabilities
+    attention_weights = F.softmax(scaled_scores, dim=-1)
+    
+    # 5. THE FINAL BLEND: Multiply percentages by actual Values
+    final_output = torch.matmul(attention_weights, value)
+    
+    return final_output, attention_weights
+
+# Reproducibility
+torch.manual_seed(42)
+
+# Simulate 1 sentence of 3 tokens with embedding dimension d_k = 4
+# Tokens: ["The", "cat", "purred"]
+batch_size = 1
+seq_len = 3
+d_k = 4
+
+# Random Query, Key, and Value representations
+Q = torch.randn(batch_size, seq_len, d_k)
+K = torch.randn(batch_size, seq_len, d_k)
+V = torch.randn(batch_size, seq_len, d_k)
+
+output, weights = calculate_attention(Q, K, V)
+
+print("Attention Weights Matrix (rows sum to 1.0):")
+print(weights[0].round(decimals=3))
+
+print("\nOutput (Contextualized Representation):")
+print(output[0].round(decimals=3))
+print("\nOutput Shape:", output.shape)
+```
+
+---
+
 **Next Up:** We've built the engine of a Transformer. But there is a massive glitch! If every word can see every other word, what stops the AI from cheating on a spelling test by looking into the future? 
 Welcome to Chapter 7: **Information Visibility & Masking**.

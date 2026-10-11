@@ -47,4 +47,57 @@ Because we have 8 different detectives, the word `"bank"` gets to ask 8 complete
 
 By using Multi-Head Attention, the AI doesn't just learn *what* a word means; it learns the grammar, the emotion, the context, and the logic of the entire sentence in a single blistering fast step.
 
+---
+
+## Python Code Example
+
+Here is how Multi-Head Attention works in PyTorch—both using PyTorch's built-in `nn.MultiheadAttention` module and breaking down how the heads ("detectives") split and merge their clues under the hood:
+
+```python r
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+
+torch.manual_seed(42)
+
+# --- 1. Setup Input ---
+# Example sentence: ["He", "ran", "to", "the", "bank"]
+batch_size = 1
+seq_len = 5
+embed_dim = 16
+num_heads = 4
+head_dim = embed_dim // num_heads  # 16 // 4 = 4 dimensions per detective head
+
+x = torch.randn(batch_size, seq_len, embed_dim)
+print(f"Input shape: {list(x.shape)} (batch, seq_len, embed_dim)")
+
+# --- 2. Using PyTorch's nn.MultiheadAttention ---
+mha = nn.MultiheadAttention(embed_dim=embed_dim, num_heads=num_heads, batch_first=True)
+attn_output, attn_weights = mha(query=x, key=x, value=x)
+
+print(f"MHA output shape: {list(attn_output.shape)}")
+print(f"Attention weights shape: {list(attn_weights.shape)}")
+
+# --- 3. Under The Hood: Splitting & Merging the Clues ---
+# Step A: Split embeddings across the 4 detective heads
+q_heads = x.view(batch_size, seq_len, num_heads, head_dim).transpose(1, 2)
+k_heads = x.view(batch_size, seq_len, num_heads, head_dim).transpose(1, 2)
+v_heads = x.view(batch_size, seq_len, num_heads, head_dim).transpose(1, 2)
+print(f"Each detective head shape: {list(q_heads.shape)} (batch, heads, seq_len, head_dim)")
+
+# Step B: Scaled dot-product attention per head
+scores = torch.matmul(q_heads, k_heads.transpose(-2, -1)) / (head_dim ** 0.5)
+weights = F.softmax(scores, dim=-1)
+clues = torch.matmul(weights, v_heads)  # (batch, heads, seq_len, head_dim)
+
+# Step C: Glue clues together and apply final linear projection
+glued_clues = clues.transpose(1, 2).contiguous().view(batch_size, seq_len, embed_dim)
+linear_projection = nn.Linear(embed_dim, embed_dim)
+final_output = linear_projection(glued_clues)
+
+print(f"Glued & projected final output shape: {list(final_output.shape)}")
+```
+
+---
+
 **Next Up:** You know the theory. Now, let's see what this actually looks like in Python code! Let's build Attention from scratch in **PyTorch**.

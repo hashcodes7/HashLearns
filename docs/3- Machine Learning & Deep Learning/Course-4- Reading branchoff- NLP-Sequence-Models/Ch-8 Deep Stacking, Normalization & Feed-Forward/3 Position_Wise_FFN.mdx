@@ -40,4 +40,43 @@ When the word "Paris" goes into the FFN, the FFN network lights up with facts: "
 
 Once the FFN is done thinking, it adds its final thoughts back onto the Express Elevator, and the word rides up to the next floor to go to the next cocktail party!
 
+---
+
+## Python Code Example
+
+Here is how the Position-Wise Feed-Forward Network is implemented in PyTorch. Notice how the linear layers operate on the last dimension (`d_model`), processing each token position separately and identically:
+
+```python r
+import torch
+import torch.nn as nn
+
+class PositionWiseFeedForward(nn.Module):
+    def __init__(self, d_model: int = 512, d_ff: int = 2048, dropout: float = 0.1):
+        super().__init__()
+        # 1. Expansion: project from d_model (512) to d_ff (2048)
+        self.fc1 = nn.Linear(d_model, d_ff)
+        self.activation = nn.GELU()
+        self.dropout = nn.Dropout(dropout)
+        # 2. Squeeze: project back from d_ff (2048) to d_model (512)
+        self.fc2 = nn.Linear(d_ff, d_model)
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        # x shape: (batch_size, seq_len, d_model)
+        # Each position vector is transformed independently
+        return self.fc2(self.dropout(self.activation(self.fc1(x))))
+
+# Demo: 2 sequences of length 4, embedding dimension 512
+batch_size, seq_len, d_model = 2, 4, 512
+d_ff = 4 * d_model  # 2048
+
+ffn = PositionWiseFeedForward(d_model=d_model, d_ff=d_ff)
+x = torch.randn(batch_size, seq_len, d_model)
+out = ffn(x)
+
+print(f"Input shape:  {x.shape}")
+print(f"Output shape: {out.shape}")
+```
+
+---
+
 **Next Up:** We've built the complete architecture! But before we launch our AI to millions of users, we have a speed problem to fix. Welcome to the final lesson: **KV Caching**.

@@ -53,4 +53,51 @@ Sending error signals backwards through time works perfectly for short sentences
 
 Walking an error backwards through 1,000 steps causes the math to break down in spectacular fashion. 
 
+## Python Code Example
+
+Here is a minimal PyTorch implementation demonstrating **Backpropagation Through Time (BPTT)**. Notice how the exact same `RNNCell` (shared weights) processes each time step, and calling `loss.backward()` traces backward through the unrolled steps to accumulate gradients for the shared parameters:
+
+```python r
+import torch
+import torch.nn as nn
+
+# Set seed for reproducibility
+torch.manual_seed(42)
+
+# Sequence parameters
+seq_len = 3      # 3 time steps (e.g., words in a sequence)
+input_size = 4   # Feature size for each input word
+hidden_size = 2  # Dimension of hidden state memory
+
+# A single Vanilla RNN cell with shared weights across all steps
+rnn_cell = nn.RNNCell(input_size=input_size, hidden_size=hidden_size)
+
+# Simulated sequence: 3 time steps
+inputs = [torch.randn(1, input_size) for _ in range(seq_len)]
+target = torch.randn(1, hidden_size)  # Desired output at the final step
+
+# 1. Forward Pass: Unroll the RNN over time
+h_t = torch.zeros(1, hidden_size)  # Initial hidden state h_0
+print("--- 1. Forward Pass Across Time Steps ---")
+for t, x_t in enumerate(inputs, start=1):
+    h_t = rnn_cell(x_t, h_t)  # Reuses the exact same weights
+    print(f"Time Step {t}: Hidden State = {h_t.detach().numpy().round(3)}")
+
+# 2. Compute the error (loss) at the final step
+criterion = nn.MSELoss()
+loss = criterion(h_t, target)
+print(f"\nFinal Prediction Loss: {loss.item():.4f}")
+
+# 3. Backpropagation Through Time (BPTT)
+# PyTorch traces the computational graph backwards through each step
+loss.backward()
+
+print("\n--- 2. BPTT Gradient Accumulation ---")
+print("Gradients accumulated on shared recurrent weights (W_hh):")
+print(rnn_cell.weight_hh.grad.numpy().round(4))
+
+print("\nGradients accumulated on input weights (W_ih):")
+print(rnn_cell.weight_ih.grad.numpy().round(4))
+```
+
 **Next Up:** Let's look at why BPTT fails on long sequences by exploring the most infamous bugs in Deep Learning: **Vanishing and Exploding Gradients**.

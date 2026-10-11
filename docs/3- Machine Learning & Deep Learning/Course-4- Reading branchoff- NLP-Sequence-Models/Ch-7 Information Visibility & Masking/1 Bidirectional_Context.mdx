@@ -36,4 +36,42 @@ Models like BERT use Bidirectional Context because they aren't designed to write
 
 Because the AI has access to the future words, its understanding of the context is absolute perfection. 
 
+## Python Code Example
+
+Here is how bidirectional self-attention works in PyTorch. Notice how no causal mask is applied—every token computes attention weights across the entire sequence (both preceding and upcoming tokens):
+
+```python r
+import torch
+import torch.nn.functional as F
+
+# A toy sentence of 4 tokens
+tokens = ["The", "bank", "of", "river"]
+seq_len = len(tokens)
+d_model = 4
+
+torch.manual_seed(42)
+
+# Simulated Queries (Q), Keys (K), and Values (V)
+Q = torch.randn(seq_len, d_model)
+K = torch.randn(seq_len, d_model)
+V = torch.randn(seq_len, d_model)
+
+# 1. Compute raw attention scores: (Q @ K.T) / sqrt(d_k)
+scores = torch.matmul(Q, K.T) / (d_model ** 0.5)
+
+# 2. In Bidirectional Context (BERT style), NO mask is applied.
+# Every token attends freely to all other tokens (past and future).
+attention_weights = F.softmax(scores, dim=-1)
+
+print("--- Bidirectional Attention Matrix (Fully Visible) ---")
+print(f"{'':>8}" + "".join([f"{t:>8}" for t in tokens]))
+for i, token in enumerate(tokens):
+    weights = [f"{w:.3f}" for w in attention_weights[i].tolist()]
+    print(f"{token:>8}" + "".join([f"{w:>8}" for w in weights]))
+
+# 3. Contextual output for each word integrates info from the entire sequence
+context = torch.matmul(attention_weights, V)
+print("\nContextualized output shape:", context.shape)
+```
+
 **Next Up:** But what if we actually want our AI to *write* an essay, like ChatGPT? If we let it see the future, it will completely break! Let's explore why in **Causal Masking**.

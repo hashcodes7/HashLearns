@@ -1,0 +1,41 @@
+
+## Creating a agent
+
+![](assets/Pasted%20image%2020261009100646.png)
+
+``` python
+from google.adk.agents import Agent
+
+scriptwriter_agent = LlmAgent(
+    name="ShortsScriptwriter",
+    model="gemini-2.0-flash-001",
+    instruction=load_instruction_from_file("scriptwriter_instruction.txt"),
+    tools=[google_search],
+    output_key="generated_script",  # Save result to state
+)
+
+youtube_shorts_agent = LlmAgent(
+    name="youtube_shorts_agent",
+    model="gemini-2.0-flash-001",
+    instruction=load_instruction_from_file("shorts_agent_instruction.txt"),
+    description="You are an agent that can write scripts. You have subagents that can do this",
+    tools=[
+        AgentTool(scriptwriter_agent),
+    ],
+)
+
+
+root_agent = head_supervisor_agent
+```
+
+example of scriptwriter_instruction.txt file used by ShortsScriptwriter subagent
+``` text
+You are 'Pro Short', an expert AI video producer specializing in creating professional, informative YouTube Shorts
+
+**Process:**
+1.  **Analyze & Research (If Needed):** Evaluate if the raw idea requires specific technical details, official documentation links, code examples, comparisons, or current information not likely in your general knowledge. If so, use the `google_search` tool **FIRST** to find precise, credible information (prioritize official docs, reputable tech blogs, established developer resources). Focus on accuracy and relevance to developers.
+2.  **Scriptwriting (Professional & Informative):** Based on the idea and research (if any), write ONLY the script content. Adhere strictly to these principles:
+***Clarity & Conciseness:** Use simple, direct language suitable for technical professionals. 
+**Output:** Print ONLY the complete script text, ready for the visualizer.
+```
+

@@ -59,4 +59,69 @@ Because of the magic of trigonometry (sines and cosines), if you want to find th
 
 It gives the AI the best of both worlds: it knows exactly where the words are, but it focuses on how far apart they are from each other.
 
+## Python Code Example
+
+Here is a minimal PyTorch implementation of **Rotary Positional Embeddings (RoPE)**. Notice how rotating coordinate pairs causes the attention dot-product between two tokens to depend solely on their relative distance $(m - n)$, whether they appear early in the sentence (positions 5 and 2) or far along (positions 95 and 92):
+
+```python r
+import torch
+
+def precompute_rope_frequencies(dim: int, seq_len: int, base: float = 10000.0):
+    """
+    Computes cos and sin frequency tables for Rotary Positional Embeddings (RoPE).
+    dim: Embedding dimension (must be even).
+    seq_len: Maximum sequence length.
+    """
+    # Inverse frequencies for coordinate pairs: theta_i = 1 / (base ** (2i / dim))
+    theta = 1.0 / (base ** (torch.arange(0, dim, 2).float() / dim))
+    positions = torch.arange(seq_len).float()
+    
+    # Outer product gives angles for every (position, frequency) pair: [seq_len, dim // 2]
+    angles = torch.outer(positions, theta)
+    return torch.cos(angles), torch.sin(angles)
+
+def apply_rope(x: torch.Tensor, cos: torch.Tensor, sin: torch.Tensor):
+    """
+    Applies 2D rotary embedding to coordinate pairs of token embeddings.
+    x: Tensor of shape [..., dim]
+    cos, sin: Frequency components of shape [..., dim // 2]
+    """
+    # Pair coordinates into (x1, x2)
+    x1 = x[..., 0::2]
+    x2 = x[..., 1::2]
+    
+    # 2D Rotation:
+    # [x1']   [cos  -sin] [x1]
+    # [x2'] = [sin   cos] [x2]
+    x1_rot = x1 * cos - x2 * sin
+    x2_rot = x1 * sin + x2 * cos
+    
+    # Reassemble pairs back into original vector dimension
+    return torch.stack([x1_rot, x2_rot], dim=-1).flatten(-2)
+
+# --- Verify Relative Distance Property ---
+torch.manual_seed(42)
+dim = 64
+seq_len = 100
+cos, sin = precompute_rope_frequencies(dim, seq_len)
+
+# Create arbitrary query and key token embeddings
+query = torch.randn(dim)
+key = torch.randn(dim)
+
+# Scenario A: Query at pos 5, Key at pos 2 (relative distance = +3)
+q_pos5 = apply_rope(query, cos[5], sin[5])
+k_pos2 = apply_rope(key, cos[2], sin[2])
+score_a = torch.dot(q_pos5, k_pos2).item()
+
+# Scenario B: Same tokens at pos 95 and pos 92 (relative distance = +3)
+q_pos95 = apply_rope(query, cos[95], sin[95])
+k_pos92 = apply_rope(key, cos[92], sin[92])
+score_b = torch.dot(q_pos95, k_pos92).item()
+
+print(f"Attention dot-product (positions 5 & 2):   {score_a:.6f}")
+print(f"Attention dot-product (positions 95 & 92): {score_b:.6f}")
+print(f"Absolute Difference: {abs(score_a - score_b):.2e}")
+```
+
 **Next Up:** We've talked a lot about the flaws of the old-school "conveyor belt" (RNNs). But before we can appreciate modern AI, we need to actually build an RNN to understand its history! Welcome to Chapter 3: **Sequential Recurrence & BPTT**.

@@ -51,4 +51,52 @@ The most famous Decoder-Only model in the world? **GPT** (Generative Pre-trained
 
 By forcing the AI to guess the next word without cheating, GPT learned the deep underlying logic of human language!
 
+---
+
+## Python Code Example
+
+Here is how Causal Masking is implemented in PyTorch using `torch.triu`, `masked_fill`, and `softmax`:
+
+```python r
+import torch
+import torch.nn.functional as F
+
+# 1. Simulated sequence of 4 tokens
+tokens = ["The", "cat", "sat", "down"]
+seq_len = len(tokens)
+
+# 2. Raw attention scores (simulating Q @ K.T)
+scores = torch.tensor([
+    [2.0, 1.0, 0.5, 0.1],
+    [1.5, 2.5, 0.8, 0.3],
+    [0.7, 1.2, 3.0, 0.9],
+    [1.1, 0.4, 1.8, 2.2]
+])
+
+# 3. Create upper-triangular causal mask (diagonal=1 excludes current token)
+# True indicates future tokens that must be masked out
+causal_mask = torch.triu(torch.ones(seq_len, seq_len), diagonal=1).bool()
+
+# 4. Fill future positions with -infinity
+masked_scores = scores.masked_fill(causal_mask, float('-inf'))
+
+# 5. Softmax turns -infinity into exactly 0.0 (0% probability)
+attention_weights = F.softmax(masked_scores, dim=-1)
+
+print("Causal Mask (True = Blocked/Future):")
+print(causal_mask)
+
+print("\nMasked Attention Scores (Future positions forced to -inf):")
+print(masked_scores)
+
+print("\nFinal Attention Probabilities (Each row sums to 1.0):")
+print(attention_weights)
+
+print("\nVisible tokens per generation step:")
+for i, token in enumerate(tokens):
+    visible = [tokens[j] for j in range(seq_len) if attention_weights[i, j] > 0]
+    print(f"Step {i+1} ('{token}'): can attend to -> {visible}")
+```
+
 **Next Up:** We have Open Book (BERT) and Blindfolded (GPT). Are there any other weird ways to mask our AI? Yes! Welcome to **Prefix and Span Masking**.
+

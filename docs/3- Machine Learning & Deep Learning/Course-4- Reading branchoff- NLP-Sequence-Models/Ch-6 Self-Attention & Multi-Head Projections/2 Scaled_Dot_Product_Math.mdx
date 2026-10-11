@@ -47,4 +47,46 @@ If you multiply giant vectors together, the numbers can get so big that they bre
 To fix this, after the AI multiplies the Query and the Key, it **divides the answer by a scaling factor** (usually the square root of the vector size). 
 Think of it like turning down the volume on a speaker before it blows out your eardrums. It keeps the math stable and healthy!
 
+## Python Code Example
+
+Here is a straightforward implementation of Scaled Dot-Product Attention in PyTorch:
+
+```python r
+import torch
+import torch.nn.functional as F
+
+def scaled_dot_product_attention(Q, K, V):
+    # Dimension of key vectors (d_k)
+    d_k = Q.size(-1)
+    
+    # 1. Compute dot-product similarity scores scaled by sqrt(d_k)
+    # Shape: (seq_len, seq_len)
+    scores = torch.matmul(Q, K.transpose(-2, -1)) / (d_k ** 0.5)
+    
+    # 2. Normalize scores with Softmax to get attention weights
+    weights = F.softmax(scores, dim=-1)
+    
+    # 3. Take weighted sum over values
+    output = torch.matmul(weights, V)
+    return output, weights
+
+# Example sentence: 4 words ("The", "fluffy", "cat", "purred")
+# Each word represented by an embedding vector of dimension 8
+seq_len, d_k = 4, 8
+
+torch.manual_seed(42)
+Q = torch.randn(seq_len, d_k)
+K = torch.randn(seq_len, d_k)
+V = torch.randn(seq_len, d_k)
+
+output, weights = scaled_dot_product_attention(Q, K, V)
+
+print("Attention weights matrix (seq_len x seq_len):")
+print(weights.round(decimals=3))
+
+print("\nOutput contextual representations shape:")
+print(output.shape)
+```
+
 **Next Up:** A single library search is great. But what if we want to search for grammar, emotion, and logic all at the exact same time? We need a team of detectives: **Multi-Head Attention**!
+

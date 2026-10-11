@@ -42,4 +42,49 @@ As a word moves through the network, the AI acts like a traffic cop. It looks at
 
 These traffic cops are what allow an LSTM to remember things for hundreds of steps! If it sees the word "France" at the beginning of a paragraph, it can put "France" on the VIP Highway and protect it all the way to the end, perfectly translating the language.
 
+## Python Code Example
+
+Here is how PyTorch implements an LSTM, explicitly managing the **Two Roads**—the Local Road (Hidden State $h$) and the VIP Highway (Cell State $c$):
+
+```python r
+import torch
+import torch.nn as nn
+
+# Set seed for reproducible output
+torch.manual_seed(42)
+
+# Sequence configuration
+# 1 sequence with 5 tokens, each represented by a 4-dimensional vector
+batch_size = 1
+seq_len = 5
+input_size = 4
+hidden_size = 3
+
+# Define an LSTM layer
+lstm = nn.LSTM(input_size=input_size, hidden_size=hidden_size, batch_first=True)
+
+# Simulated input sequence: (batch_size, seq_len, input_size)
+inputs = torch.randn(batch_size, seq_len, input_size)
+
+# Initial states for the two roads:
+# 1. Local Road (Hidden State h_0)
+# 2. VIP Highway (Cell State c_0)
+h_0 = torch.zeros(1, batch_size, hidden_size)
+c_0 = torch.zeros(1, batch_size, hidden_size)
+
+# Forward pass: processes tokens and returns outputs along with the updated states
+outputs, (h_n, c_n) = lstm(inputs, (h_0, c_0))
+
+print("Input sequence shape:            ", list(inputs.shape))
+print("Outputs shape (all hidden states):", list(outputs.shape))
+print("Final Hidden State (h_n) shape:  ", list(h_n.shape))
+print("Final Cell State (c_n) shape:    ", list(c_n.shape))
+
+print("\nFinal Local Road (Hidden State):")
+print(h_n.squeeze(0))
+
+print("\nFinal VIP Highway (Cell State):")
+print(c_n.squeeze(0))
+```
+
 **Next Up:** Let's zoom in on these traffic cops. How exactly does the math inside an LSTM's "Gates" work?

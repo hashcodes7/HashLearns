@@ -56,4 +56,89 @@ Instead, it needs to figure out what tiny piece of that memory is relevant *righ
 
 By using these three simple valves (Forget, Input, Output), the LSTM became the undisputed king of AI language translation for nearly two decades!
 
+## Python Code Example
+
+Here is a step-by-step implementation of an LSTM Cell using PyTorch, explicitly demonstrating how the three Sigmoid valves (Forget, Input, and Output) control the VIP Highway:
+
+```python r
+import torch
+import torch.nn as nn
+
+torch.manual_seed(42)
+
+# Dimensions
+input_size = 4   # Dimension of incoming word vector (x_t)
+hidden_size = 3  # Dimension of cell state (c_t) and hidden state (h_t)
+
+# Step-by-step LSTM Cell matching the 3 gates & VIP Highway
+class DetailedLSTMCell(nn.Module):
+    def __init__(self, input_size, hidden_size):
+        super().__init__()
+        # Combined vector [x_t, h_{t-1}]
+        combined_size = input_size + hidden_size
+        
+        # 1. Forget Gate (The Trash Can): Sigmoid valve (0 to 1)
+        self.W_f = nn.Linear(combined_size, hidden_size)
+        
+        # 2. Input Gate (The Notebook): Valve (0 to 1) & Candidate info (-1 to 1)
+        self.W_i = nn.Linear(combined_size, hidden_size)
+        self.W_c = nn.Linear(combined_size, hidden_size)
+        
+        # 3. Output Gate (The Spokesperson): Sigmoid valve (0 to 1)
+        self.W_o = nn.Linear(combined_size, hidden_size)
+        
+    def forward(self, x_t, h_prev, c_prev):
+        # Concatenate current input and previous hidden state
+        combined = torch.cat((x_t, h_prev), dim=-1)
+        
+        # --- 1. Forget Gate (The Trash Can) ---
+        # Sigmoid valve decides what portion of old long-term memory to keep
+        f_t = torch.sigmoid(self.W_f(combined))
+        
+        # --- 2. Input Gate (The Notebook) ---
+        # i_t decides which components to update (valve 0 to 1)
+        # c_tilde generates the candidate new information (-1 to 1)
+        i_t = torch.sigmoid(self.W_i(combined))
+        c_tilde = torch.tanh(self.W_c(combined))
+        
+        # Update VIP Highway (Cell State):
+        # Erase old trash + Add new candidate info
+        c_t = (f_t * c_prev) + (i_t * c_tilde)
+        
+        # --- 3. Output Gate (The Spokesperson) ---
+        # o_t decides what part of long-term memory to emit
+        o_t = torch.sigmoid(self.W_o(combined))
+        
+        # Final short-term memory (Hidden State)
+        h_t = o_t * torch.tanh(c_t)
+        
+        return h_t, c_t, f_t, i_t, o_t
+
+# Instantiate our custom cell
+cell = DetailedLSTMCell(input_size, hidden_size)
+
+# Sample input word vector (x_t) and previous states (h_0, c_0)
+x_t = torch.randn(1, input_size)
+h_0 = torch.zeros(1, hidden_size)  # Initial short-term memory
+c_0 = torch.ones(1, hidden_size)   # Initial VIP highway with existing memory
+
+# Run one step through the cell
+h_1, c_1, f_t, i_t, o_t = cell(x_t, h_0, c_0)
+
+print("Gate Activations (Valves squished between 0 and 1):")
+print("  1. Forget Gate (f_t):", f_t.detach().squeeze().numpy())
+print("  2. Input Gate  (i_t):", i_t.detach().squeeze().numpy())
+print("  3. Output Gate (o_t):", o_t.detach().squeeze().numpy())
+
+print("\nVIP Highway (Cell State) Update:")
+print("  Previous Cell State (c_0):", c_0.detach().squeeze().numpy())
+print("  Updated Cell State  (c_1):", c_1.detach().squeeze().numpy())
+
+print("\nLocal Road (Hidden State) Output:")
+print("  Updated Hidden State (h_1):", h_1.detach().squeeze().numpy())
+```
+
+> [!NOTE]
+> In practice, PyTorch's `nn.LSTMCell(input_size, hidden_size)` performs this exact sequence of equations, combining the gate linear projections into a single fused operation for maximum performance.
+
 **Next Up:** LSTMs are amazing, but they are heavy and slow. What if we could get the exact same performance, but with less math? Enter the **GRU**!

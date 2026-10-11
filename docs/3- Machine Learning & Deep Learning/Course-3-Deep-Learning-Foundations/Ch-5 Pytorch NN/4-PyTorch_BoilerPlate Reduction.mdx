@@ -22,13 +22,13 @@ W = nn.Parameter(torch.tensor([
 ]))
 ```
 
-| Feature | `torch.tensor(..., requires_grad=True)` | `nn.Parameter(...)` |
-|---|---|---|
-| Stores gradients | ✅ | ✅ |
-| `requires_grad=True` | ✅ | ✅ Automatically |
-| Trainable model parameter | ❌ | ✅ |
-| Appears in `model.parameters()` | ❌ | ✅ |
-| Optimizer automatically updates it | ❌ | ✅ |
+| Feature                            | `torch.tensor(..., requires_grad=True)` | `nn.Parameter(...)` |
+| ---------------------------------- | --------------------------------------- | ------------------- |
+| Stores gradients                   | ✅                                       | ✅                   |
+| `requires_grad=True`               | ✅                                       | ✅ Automatically     |
+| Trainable model parameter          | ❌                                       | ✅                   |
+| Appears in `model.parameters()`    | ❌                                       | ✅                   |
+| Optimizer automatically updates it | ❌                                       | ✅                   |
 Now 
 
 In case we want to simply initialize a random layer with a particular number of neurons thats even easier

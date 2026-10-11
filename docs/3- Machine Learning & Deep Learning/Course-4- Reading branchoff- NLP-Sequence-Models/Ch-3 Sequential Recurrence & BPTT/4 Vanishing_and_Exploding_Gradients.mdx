@@ -58,4 +58,46 @@ Vanilla RNNs are broken. If the math is less than 1, it vanishes. If it's more t
 
 We need a completely new architecture. We need an AI that doesn't just blindly multiply numbers at every step. We need an AI that has a **Brain**—one that can choose what to remember, and what to forget. 
 
+---
+
+## Python Code Example
+
+Here is a PyTorch demonstration illustrating how gradients vanish when weights are less than 1, how they explode when weights exceed 1 across time steps, and how **gradient clipping** stabilizes training against exploding gradients.
+
+```python r
+import torch
+import torch.nn as nn
+
+# Sequence length
+seq_len = 50
+x = torch.tensor([1.0])
+
+# 1. Vanishing Gradients (weights < 1.0)
+w_vanish = torch.tensor([0.5], requires_grad=True)
+h = x
+for _ in range(seq_len):
+    h = h * w_vanish
+
+loss = h
+loss.backward()
+print(f"Vanishing gradient after {seq_len} steps: {w_vanish.grad.item():.6e}")
+# Gradients shrink to near zero (~8.88e-14), preventing early steps from learning
+
+# 2. Exploding Gradients (weights > 1.0)
+w_explode = torch.tensor([1.5], requires_grad=True)
+h = x
+for _ in range(seq_len):
+    h = h * w_explode
+
+loss = h
+loss.backward()
+print(f"Exploding gradient after {seq_len} steps: {w_explode.grad.item():.6e}")
+# Gradients blow up (~2.12e+10), leading to numerical instability
+
+# 3. Mitigation: Gradient Clipping
+# Caps the gradient norm so parameters do not explode during optimization
+torch.nn.utils.clip_grad_norm_([w_explode], max_norm=1.0)
+print(f"Gradient after clipping: {w_explode.grad.item():.4f}")
+```
+
 **Next Up:** Welcome to Chapter 4, where we introduce the savior of Recurrent Neural Networks: the **LSTM (Long Short-Term Memory)**!

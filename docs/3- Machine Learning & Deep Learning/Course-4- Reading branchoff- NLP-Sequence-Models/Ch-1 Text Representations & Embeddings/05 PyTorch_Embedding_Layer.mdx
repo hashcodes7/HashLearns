@@ -69,4 +69,36 @@ This is a huge milestone! We have officially learned how to take messy human tex
 But text isn't just a random pile of words. The *order* of the words matters. 
 "The dog bit the man" is very different from "The man bit the dog." 
 
+## Python Code Example
+
+Here is a runnable example of creating and querying a PyTorch `nn.Embedding` layer with a batch of token sequences:
+
+```python r
+import torch
+import torch.nn as nn
+
+# 1. Define vocabulary size and embedding dimension
+vocab_size = 10        # Total unique tokens in vocabulary
+embedding_dim = 4      # Dimensionality of the dense vector
+
+# 2. Initialize the PyTorch Embedding Layer
+embedding = nn.Embedding(num_embeddings=vocab_size, embedding_dim=embedding_dim)
+
+# 3. Create a batch of token IDs (batch_size=2, sequence_length=3)
+# Sentence 1: tokens [1, 4, 7]
+# Sentence 2: tokens [0, 3, 9]
+input_ids = torch.tensor([
+    [1, 4, 7],
+    [0, 3, 9]
+], dtype=torch.long)
+
+# 4. Perform the lookup
+output = embedding(input_ids)
+
+print(f"Input shape:  {input_ids.shape}  # (batch_size, sequence_length)")
+print(f"Output shape: {output.shape} # (batch_size, sequence_length, embedding_dim)")
+print("\nEmbedding vector for token ID 4:")
+print(embedding.weight[4].detach())
+```
+
 **Next Up:** How do we teach our AI to understand the *order* of words? Welcome to Chapter 2, where we will inject time and position into our math!

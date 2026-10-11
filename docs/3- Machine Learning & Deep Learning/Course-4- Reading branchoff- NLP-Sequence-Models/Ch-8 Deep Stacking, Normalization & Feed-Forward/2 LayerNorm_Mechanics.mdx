@@ -32,4 +32,32 @@ Neural networks are like delicate engines. They run best when the math is hoveri
 
 By putting a LayerNorm "volume knob" at every single floor of the skyscraper, we guarantee that the math never explodes, no matter how deep the neural network gets. The Attention flashlights can do their jobs smoothly and predictably!
 
+## Python Code Example
+
+Here is how Layer Normalization operates on token embedding vectors in PyTorch, standardizing each token vector to have a mean of $0$ and a standard deviation of $1$:
+
+```python r
+import torch
+import torch.nn as nn
+
+# A batch of 2 tokens with embedding dimension d_model = 4
+# Prior layers may produce large, unnormalized values
+x = torch.tensor([
+    [10.0, 50.0, -20.0, 40.0],    # Token 1
+    [200.0, -150.0, 300.0, 50.0]  # Token 2
+])
+
+print("--- Before LayerNorm ---")
+print("Raw token vectors:\n", x)
+print(f"Token 1 -> Mean: {x[0].mean().item():.2f}, Std: {x[0].std(unbiased=False).item():.2f}")
+
+# Apply LayerNorm across the last dimension (d_model = 4)
+layer_norm = nn.LayerNorm(normalized_shape=4)
+normalized_x = layer_norm(x)
+
+print("\n--- After LayerNorm ---")
+print("Normalized token vectors:\n", torch.round(normalized_x, decimals=4))
+print(f"Token 1 -> Mean: {normalized_x[0].mean().item():.4f}, Std: {normalized_x[0].std(unbiased=False).item():.4f}")
+```
+
 **Next Up:** The Attention room isn't the only room on the floor of our skyscraper. Every floor also has a private processing room called the **Feed-Forward Network (FFN)**. Let's see what happens inside!

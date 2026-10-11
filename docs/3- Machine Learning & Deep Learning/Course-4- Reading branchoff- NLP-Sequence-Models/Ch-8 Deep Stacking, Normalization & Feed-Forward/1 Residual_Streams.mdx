@@ -39,4 +39,60 @@ If Floor 5 does terrible math and completely messes up its Attention calculation
 
 This allows the AI to become incredibly deep and smart without ever losing track of the original sentence. 
 
+---
+
+## Python Code Example
+
+Here is how a Residual Stream (Skip Connection) is implemented in PyTorch. Notice how each sublayer computes an update ($\Delta x$) and adds it to the existing stream:
+
+```python r
+import torch
+import torch.nn as nn
+
+class ResidualBlock(nn.Module):
+    """
+    A Transformer layer demonstrating the Residual Stream (Skip Connection).
+    Formula: Output = x + SubLayer(x)
+    """
+    def __init__(self, d_model):
+        super().__init__()
+        # Represents an Attention or Feed-Forward sublayer
+        self.sublayer = nn.Sequential(
+            nn.Linear(d_model, d_model),
+            nn.ReLU(),
+            nn.Linear(d_model, d_model)
+        )
+
+    def forward(self, x):
+        # The Express Elevator: Add sublayer updates directly to the stream
+        return x + self.sublayer(x)
+
+# 1. Initial word vectors entering the skyscraper (Floor 1)
+torch.manual_seed(42)
+batch_size, seq_len, d_model = 1, 3, 4
+x = torch.randn(batch_size, seq_len, d_model)
+
+print("--- Original Input (Floor 1) ---")
+print(x)
+
+# 2. Pass through a Residual Block
+layer = ResidualBlock(d_model)
+output = layer(x)
+
+print("\n--- After Sublayer Addition (Floor 2) ---")
+print(output)
+
+# 3. Simulating stacking through multiple floors along the Express Elevator
+stream = x
+num_floors = 5
+for floor in range(1, num_floors + 1):
+    sublayer = nn.Linear(d_model, d_model)
+    # Each floor only computes a delta and adds it to the stream
+    delta = sublayer(stream)
+    stream = stream + delta
+    print(f"Floor {floor} -> Residual Stream shape: {stream.shape}")
+
+print("\nPackage safely delivered across floors without destroying the original signal!")
+```
+
 **Next Up:** We've protected our vectors from being destroyed by bad math. But what happens if the numbers in the elevator get too big? Let's look at **Layer Normalization**!

@@ -48,4 +48,43 @@ The answer is: **It's a tie.**
 
 Usually, developers will try a GRU first. If it works, great! If they need a little more power, they switch to an LSTM.
 
+---
+
+## Python Code Example
+
+Here is how you can use a **GRU** in PyTorch. Notice that unlike an LSTM, which returns both a hidden state and a separate cell state `(h_n, c_n)`, the GRU only maintains a single hidden state `h_n`—merging short-term and long-term memory into one!
+
+```python r
+import torch
+import torch.nn as nn
+
+# Hyperparameters
+batch_size = 2       # Number of sentences processed together
+seq_len = 5          # Number of words (tokens) per sentence
+embedding_dim = 16   # Size of each word vector
+hidden_dim = 32      # Size of the GRU's memory state
+
+# Simulated sequence of word embeddings: (batch_size, seq_len, embedding_dim)
+torch.manual_seed(42)
+inputs = torch.randn(batch_size, seq_len, embedding_dim)
+
+# Define a GRU layer
+# Notice how simple this is: only input_size and hidden_size needed!
+gru = nn.GRU(
+    input_size=embedding_dim,
+    hidden_size=hidden_dim,
+    batch_first=True
+)
+
+# Forward pass through the GRU
+# output: hidden states for each time step (batch_size, seq_len, hidden_dim)
+# h_n: final hidden state (num_layers, batch_size, hidden_dim)
+output, h_n = gru(inputs)
+
+print("Input shape:       ", inputs.shape)
+print("Output shape:      ", output.shape)
+print("Final hidden state:", h_n.shape)
+print("\nNotice: No separate Cell State (c_n) returned—just the merged Hidden State (h_n)!")
+```
+
 **Next Up:** We've solved the memory problem. But what if the AI needs to look into the *future* to understand the *past*? Let's bend time with **Bidirectional Recurrence**!

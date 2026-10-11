@@ -68,5 +68,52 @@ my_bilstm = nn.LSTM(input_size=300, hidden_size=128, bidirectional=True)
 
 PyTorch automatically clones the network, runs one forward, runs one backward, and glues the outputs together for you. It feels almost like cheating!
 
+---
+
+## Python Code Example
+
+Here is a complete, runnable example putting all three models together—LSTM, GRU, and Bidirectional LSTM—with dummy sequential data showing how the tensor dimensions work:
+
+```python r
+import torch
+import torch.nn as nn
+
+# Set seed for reproducible results
+torch.manual_seed(42)
+
+# Dimensions: batch of 2 sentences, 5 tokens each, 300-dim word vectors
+seq_len = 5
+batch_size = 2
+input_size = 300
+hidden_size = 128
+
+# Input tensor shape: (seq_len, batch_size, input_size)
+sentence_tensor = torch.randn(seq_len, batch_size, input_size)
+
+# --- 1. Standard LSTM ---
+lstm = nn.LSTM(input_size=input_size, hidden_size=hidden_size)
+lstm_out, (lstm_h, lstm_c) = lstm(sentence_tensor)
+print("=== LSTM ===")
+print("Output shape:     ", lstm_out.shape)  # [5, 2, 128]
+print("Final Hidden shape:", lstm_h.shape)   # [1, 2, 128]
+print("Final Cell shape:  ", lstm_c.shape)   # [1, 2, 128]
+
+# --- 2. Standard GRU ---
+gru = nn.GRU(input_size=input_size, hidden_size=hidden_size)
+gru_out, gru_h = gru(sentence_tensor)
+print("\n=== GRU ===")
+print("Output shape:     ", gru_out.shape)   # [5, 2, 128]
+print("Final Hidden shape:", gru_h.shape)     # [1, 2, 128]
+
+# --- 3. Bidirectional LSTM ---
+bilstm = nn.LSTM(input_size=input_size, hidden_size=hidden_size, bidirectional=True)
+bilstm_out, (bilstm_h, bilstm_c) = bilstm(sentence_tensor)
+print("\n=== Bidirectional LSTM ===")
+print("Output shape:     ", bilstm_out.shape) # [5, 2, 256] -> hidden_size * 2
+print("Final Hidden shape:", bilstm_h.shape)  # [2, 2, 128] -> num_directions = 2
+```
+
+---
+
 **Next Up:** We've pushed Recurrent Neural Networks to their absolute limits. But what happens when we try to use an LSTM to translate a massive, 1,000-word essay? We hit a wall. 
 Welcome to Chapter 5, where we break that wall by inventing **Attention**!

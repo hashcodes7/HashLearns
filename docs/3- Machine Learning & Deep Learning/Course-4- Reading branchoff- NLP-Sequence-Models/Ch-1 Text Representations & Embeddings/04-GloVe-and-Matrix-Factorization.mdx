@@ -71,4 +71,76 @@ So, which one is better?
 
 In the real world, both are awesome and are often used to do the same job: giving our AI the "meaning coordinates" it needs to understand text!
 
+## Python Code Example
+
+Here is how to build a co-occurrence matrix ("the spreadsheet"), factorize it into dense word embeddings using Singular Value Decomposition (SVD), and formulate GloVe's weighted loss objective in PyTorch:
+
+```python r
+import torch
+
+# 1. Small corpus and vocabulary
+corpus = [
+    ["ice", "is", "solid", "water"],
+    ["steam", "is", "gas", "water"],
+    ["ice", "and", "steam", "are", "water"],
+]
+vocab = ["ice", "steam", "solid", "gas", "water"]
+word2idx = {w: i for i, w in enumerate(vocab)}
+
+# 2. Build the Co-occurrence Matrix (The "Giant Spreadsheet")
+window_size = 2
+co_matrix = torch.zeros((len(vocab), len(vocab)))
+
+for sentence in corpus:
+    for i, target in enumerate(sentence):
+        if target not in word2idx:
+            continue
+        start = max(0, i - window_size)
+        end = min(len(sentence), i + window_size + 1)
+        for j in range(start, end):
+            if i != j and sentence[j] in word2idx:
+                co_matrix[word2idx[target], word2idx[sentence[j]]] += 1.0
+
+print("Co-occurrence Matrix:")
+print(co_matrix)
+
+# 3. Matrix Factorization via SVD (Squishing into dense vectors)
+# Decompose matrix into U, S, Vh. Truncating to 2 dimensions:
+U, S, Vh = torch.linalg.svd(co_matrix)
+embedding_dim = 2
+dense_embeddings = U[:, :embedding_dim] * torch.sqrt(S[:embedding_dim])
+
+print("\nDense Word Embeddings (2D):")
+for word, idx in word2idx.items():
+    coords = [round(val, 3) for val in dense_embeddings[idx].tolist()]
+    print(f"{word:6s} -> {coords}")
+
+# 4. GloVe Weighting & Loss Formulation
+def glove_loss(w_i, w_j, b_i, b_j, X_ij, x_max=100.0, alpha=0.75):
+    """
+    GloVe loss: weights co-occurrences so frequent words don't overpower rare ones.
+    """
+    # Weighting function f(X_ij) = (X_ij / x_max)^alpha if X_ij < x_max else 1
+    weights = torch.where(X_ij < x_max, (X_ij / x_max) ** alpha, torch.ones_like(X_ij))
+    
+    # GloVe objective: w_i^T * w_j + b_i + b_j ≈ log(X_ij)
+    prediction = (w_i * w_j).sum(dim=-1) + b_i + b_j
+    loss = weights * ((prediction - torch.log(X_ij)) ** 2)
+    return loss.sum()
+
+# Extract non-zero co-occurrences
+mask = co_matrix > 0
+i_indices, j_indices = torch.where(mask)
+X_values = co_matrix[mask]
+
+# Compute loss with initialized embeddings and zero biases
+w_i = dense_embeddings[i_indices]
+w_j = dense_embeddings[j_indices]
+b_i = torch.zeros(len(X_values))
+b_j = torch.zeros(len(X_values))
+
+loss = glove_loss(w_i, w_j, b_i, b_j, X_values)
+print(f"\nGloVe Loss on Embeddings: {loss.item():.4f}")
+```
+
 **Next Up:** We know the theory. Now, how do we actually write the code to use these vectors? Let's jump into **PyTorch's Embedding Layer**!

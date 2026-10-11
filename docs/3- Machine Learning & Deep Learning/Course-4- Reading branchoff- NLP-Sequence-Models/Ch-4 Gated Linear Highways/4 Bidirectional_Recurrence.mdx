@@ -52,4 +52,55 @@ Because they require the **entire sentence** to be finished before they can work
 - If you are translating a PDF document, Bi-LSTMs are perfect because the whole document is already written.
 - If you are building a speech-recognition AI for a smart speaker (like Alexa or Siri), you can't use a Bi-LSTM! The AI can't read the end of your sentence because you haven't spoken it yet! It would have to wait in awkward silence for you to finish talking before it could start processing.
 
+## Python Code Example
+
+Here is a runnable PyTorch example showing how a **Bidirectional LSTM** processes the sentence from the lesson. Notice how PyTorch glues the forward and backward hidden states together for each token:
+
+```python r
+import torch
+import torch.nn as nn
+
+# Set seed for reproducible results
+torch.manual_seed(42)
+
+# Sample sentence from the lesson
+words = ["I", "went", "to", "the", "bank", "to", "deposit", "my", "paycheck"]
+seq_len = len(words)
+embedding_dim = 16
+hidden_dim = 8
+
+# Simulated word embeddings: shape (batch_size=1, seq_len=9, embedding_dim=16)
+inputs = torch.randn(1, seq_len, embedding_dim)
+
+# Define a Bidirectional LSTM (bidirectional=True creates both forward and backward paths)
+bilstm = nn.LSTM(
+    input_size=embedding_dim,
+    hidden_size=hidden_dim,
+    batch_first=True,
+    bidirectional=True
+)
+
+# Forward pass through the entire sequence
+# output shape: (batch_size, seq_len, hidden_dim * 2)
+output, (h_n, c_n) = bilstm(inputs)
+
+# For every token, output contains [forward_hidden, backward_hidden] glued together
+forward_states = output[0, :, :hidden_dim]     # Left-to-right context (past)
+backward_states = output[0, :, hidden_dim:]   # Right-to-left context (future)
+
+# Examine the representation for the ambiguous word "bank"
+bank_idx = words.index("bank")
+bank_combined = output[0, bank_idx]
+
+print(f"Sentence tokens: {words}")
+print(f"Output shape (batch, seq_len, hidden_dim * 2): {list(output.shape)}")
+print(f"\nContext breakdown for '{words[bank_idx]}' (index {bank_idx}):")
+print(f"  - Forward memory (past: 'I went to the bank'):       {forward_states[bank_idx].shape}")
+print(f"  - Backward memory (future: 'paycheck ... to bank'): {backward_states[bank_idx].shape}")
+print(f"  - Glued representation (full 360-degree context):    {bank_combined.shape}")
+```
+
+> [!NOTE]
+> Because PyTorch runs both directions over the sequence, the output dimension is doubled (`hidden_dim * 2`). At any index $t$, the state contains both the preceding history and the succeeding context.
+
 **Next Up:** Theory is great, but code is better. Let's see how incredibly easy it is to summon an LSTM or a GRU using PyTorch!

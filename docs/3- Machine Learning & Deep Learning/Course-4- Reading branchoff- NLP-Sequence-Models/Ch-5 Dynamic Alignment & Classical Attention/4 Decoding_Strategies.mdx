@@ -56,4 +56,68 @@ To make the AI more creative, we add **Temperature**.
 - **Low Temperature (0.1):** The AI is strictly logical. It only picks top words. (Boring but accurate).
 - **High Temperature (0.9):** The AI acts a little crazy! It flattens the percentages, giving weird, rare words (like "Apple" at 5%) a much higher chance of being picked. This creates incredibly creative, unpredictable text!
 
+---
+
+## Python Code Example
+
+Here is how to implement Greedy Search, Temperature-scaled Sampling, and Beam Search in PyTorch:
+
+```python r
+import torch
+import torch.nn.functional as F
+
+# 1. Greedy Search: Always pick the token with the highest logit
+def greedy_decode(logits):
+    token_id = torch.argmax(logits, dim=-1).item()
+    return token_id
+
+# 2. Temperature Sampling: Scale logits to control randomness/creativity
+def sample_with_temperature(logits, temperature=1.0):
+    scaled_logits = logits / temperature
+    probs = F.softmax(scaled_logits, dim=-1)
+    token_id = torch.multinomial(probs, num_samples=1).item()
+    return token_id, probs
+
+# 3. Beam Search: Track top-k sequence candidates over decoding steps
+def beam_search_step(beams, next_step_logits, beam_width=2):
+    # beams: list of tuples (sequence, cumulative_log_prob)
+    candidates = []
+    log_probs = F.log_softmax(next_step_logits, dim=-1)
+    
+    for seq, score in beams:
+        topk_log_probs, topk_indices = torch.topk(log_probs, beam_width)
+        for i in range(beam_width):
+            next_token = topk_indices[i].item()
+            cand_score = score + topk_log_probs[i].item()
+            candidates.append((seq + [next_token], cand_score))
+            
+    # Sort candidates by cumulative score and select top beam_width
+    candidates.sort(key=lambda x: x[1], reverse=True)
+    return candidates[:beam_width]
+
+# --- Demo with a Toy Vocabulary ---
+vocab = {0: "<pad>", 1: "The", 2: "dog", 3: "hound", 4: "runs"}
+logits_step1 = torch.tensor([0.1, 8.0, 1.2, 0.5, 0.2])  # Predicts "The"
+logits_step2 = torch.tensor([0.1, 0.2, 4.0, 3.8, 0.5])  # "dog" vs "hound"
+
+# 1. Test Greedy Search
+greedy_id = greedy_decode(logits_step2)
+print(f"Greedy choice: '{vocab[greedy_id]}'")
+
+# 2. Test Temperature Sampling
+torch.manual_seed(42)
+_, low_temp_probs = sample_with_temperature(logits_step2, temperature=0.1)
+_, high_temp_probs = sample_with_temperature(logits_step2, temperature=1.5)
+print(f"Low Temp (0.1) 'dog' vs 'hound' probs: {low_temp_probs[2]:.3f} vs {low_temp_probs[3]:.3f} (sharp)")
+print(f"High Temp (1.5) 'dog' vs 'hound' probs: {high_temp_probs[2]:.3f} vs {high_temp_probs[3]:.3f} (creative)")
+
+# 3. Test Beam Search
+initial_beams = [([1], 0.0)]  # Start with sequence ["The"]
+top_beams = beam_search_step(initial_beams, logits_step2, beam_width=2)
+print("\nTop Beams after step 2:")
+for seq, score in top_beams:
+    words = " ".join([vocab[t] for t in seq])
+    print(f"  Sequence: '{words}' (Log Prob: {score:.2f})")
+```
+
 **Next Up:** We've reached the end of an era. RNNs, LSTMs, and Seq2Seq were amazing, but they were about to be destroyed by a single research paper in 2017. Welcome to Chapter 6: **Self-Attention and the Transformer**!

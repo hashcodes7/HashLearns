@@ -48,4 +48,71 @@ To fix this, the AI uses a slightly tweaked lottery system. Words that are more 
 
 By using Negative Sampling, Word2Vec went from being a cool but slow theoretical idea to a practical, blazing-fast tool that could read the entire internet in days.
 
+---
+
+## Python Code Example
+
+Here is a minimal PyTorch implementation demonstrating both parts of Negative Sampling:
+1. **$3/4$ Power Unigram Distribution:** Giving rare words a slightly higher chance of being drawn as negative samples.
+2. **Skip-Gram Negative Sampling (SGNS) Loss:** Computing binary logistic regression for the positive context word and $k$ negative samples.
+
+```python r
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+
+# 1. Negative Sampling "Lottery" Distribution (3/4 Power)
+# Word counts for: ["the" (common), "cat" (medium), "platypus" (rare)]
+word_counts = torch.tensor([1000.0, 50.0, 2.0])
+raw_probs = word_counts / word_counts.sum()
+neg_probs = (word_counts ** 0.75) / (word_counts ** 0.75).sum()
+
+print("--- 3/4 Power Probability Adjustment ---")
+print("Raw probabilities:       ", [round(p, 4) for p in raw_probs.tolist()])
+print("Adjusted (0.75 power):   ", [round(p, 4) for p in neg_probs.tolist()])
+
+# 2. Skip-Gram Negative Sampling (SGNS) Loss
+class NegativeSampling(nn.Module):
+    def __init__(self, vocab_size, embed_dim):
+        super().__init__()
+        self.target_embed = nn.Embedding(vocab_size, embed_dim)
+        self.context_embed = nn.Embedding(vocab_size, embed_dim)
+
+    def forward(self, target, positive, negatives):
+        # target: [batch_size], positive: [batch_size], negatives: [batch_size, k]
+        v_target = self.target_embed(target)        # [batch, embed_dim]
+        v_pos = self.context_embed(positive)        # [batch, embed_dim]
+        v_neg = self.context_embed(negatives)       # [batch, k, embed_dim]
+
+        # 1. Positive pair: maximize sigmoid(v_target · v_pos)
+        pos_dot = torch.sum(v_target * v_pos, dim=-1)
+        pos_loss = -F.logsigmoid(pos_dot)
+
+        # 2. Negative pairs: maximize sigmoid(-v_target · v_neg)
+        neg_dot = torch.bmm(v_neg, v_target.unsqueeze(2)).squeeze(2)
+        neg_loss = -torch.sum(F.logsigmoid(-neg_dot), dim=-1)
+
+        total_loss = (pos_loss + neg_loss).mean()
+        return total_loss, torch.sigmoid(pos_dot), torch.sigmoid(neg_dot)
+
+# Demonstration
+torch.manual_seed(42)
+vocab_size = 1000
+embed_dim = 16
+
+model = NegativeSampling(vocab_size=vocab_size, embed_dim=embed_dim)
+
+# target="cat", positive="mat", 4 negative words (e.g., "spaceship", "broccoli", ...)
+target_word = torch.tensor([42])
+pos_word = torch.tensor([88])
+neg_words = torch.tensor([[105, 312, 540, 789]])
+
+loss, pos_prob, neg_probs = model(target_word, pos_word, neg_words)
+
+print("\n--- Model Output ---")
+print(f"Total SGNS Loss: {loss.item():.4f}")
+print(f"P(True Context | Target): {pos_prob.item():.4f}")
+print(f"P(Negative Words | Target): {[round(p, 4) for p in neg_probs.squeeze().tolist()]}")
+```
+
 **Next Up:** Word2Vec is awesome, but it's not the only way to turn words into numbers. Let's look at a rival approach called **GloVe**, which uses a giant grid of words instead of guessing games!

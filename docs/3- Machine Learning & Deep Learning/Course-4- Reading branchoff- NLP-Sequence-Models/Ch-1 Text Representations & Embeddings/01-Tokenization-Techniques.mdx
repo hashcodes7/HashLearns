@@ -74,4 +74,55 @@ If the AI has learned the word `"play"` and the suffix `"ing"`, it can figure ou
 
 In practice, you'll rarely code these from scratch. We use pre-built tokenizers from libraries like **Hugging Face** which automatically handle the heavy lifting of Subword Tokenization using clever algorithms like *Byte-Pair Encoding (BPE)* (don't worry about the scary name, just remember it's a smart way to find common subwords).
 
+---
+
+## Python Code Example
+
+Here is how tokenization works in Python—from basic word and character splitting to building a vocabulary with numerical IDs:
+
+```python r
+import re
+
+text = "Machine learning is awesome! AI is fun."
+
+# 1. Word Tokenization (capturing words and punctuation)
+word_tokens = re.findall(r"\w+|[^\w\s]", text)
+print("--- Word Tokens ---")
+print(word_tokens)
+
+# 2. Character Tokenization
+char_tokens = list("AI is fun")
+print("\n--- Character Tokens ---")
+print(char_tokens)
+
+# 3. Numericalization: Converting tokens to unique IDs
+vocab = {token: idx for idx, token in enumerate(sorted(set(word_tokens)))}
+token_ids = [vocab[token] for token in word_tokens]
+
+print("\n--- Vocabulary Mapping ---")
+print(vocab)
+
+print("\n--- Numerical Token IDs ---")
+print(token_ids)
+```
+
+In modern NLP, production models use pre-trained subword tokenizers (like Hugging Face `transformers`):
+
+```python
+from transformers import AutoTokenizer
+
+# Load a pre-trained subword tokenizer (BERT WordPiece)
+tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
+
+text = "Machine learning is unbelievable!"
+tokens = tokenizer.tokenize(text)
+token_ids = tokenizer.encode(text)
+
+print("Subwords:", tokens)
+# Output: ['machine', 'learning', 'is', 'un', '##believ', '##able', '!']
+print("Token IDs:", token_ids)
+```
+
+---
+
 **Next Up:** Now that we know how to chop words into tokens, how do we turn those tokens into math so the AI can actually calculate them? That's where **Word2Vec** and **Embeddings** come in!

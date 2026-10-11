@@ -43,4 +43,55 @@ Imagine reading a 1,000-page book, and your only memory is a tiny clipboard that
 
 This is called the **Long-Term Dependency** problem. RNNs act like goldfish; they are great at remembering the last 5 words, but terrible at remembering a word from a paragraph ago.
 
+## Python Code Example
+
+Here is how recurrent sequential processing works in PyTorch. Notice how processing words one-by-one updates the "clipboard" (`hidden_state`), allowing the model to naturally distinguish between "the dog bit the man" and "the man bit the dog" without explicit position IDs:
+
+```python r
+import torch
+import torch.nn as nn
+
+# Set seed for reproducible outputs
+torch.manual_seed(42)
+
+# 1. Simple vocabulary and embedding layer
+vocab = {"the": 0, "dog": 1, "bit": 2, "man": 3}
+embed_dim = 4
+hidden_dim = 4
+
+embedding = nn.Embedding(num_embeddings=len(vocab), embedding_dim=embed_dim)
+
+# 2. Recurrent Cell (The Worker updating the Clipboard)
+# h_t = tanh(W_ih * x_t + W_hh * h_{t-1} + bias)
+rnn_cell = nn.RNNCell(input_size=embed_dim, hidden_size=hidden_dim)
+
+def process_sentence(words):
+    token_ids = torch.tensor([vocab[w] for w in words])
+    word_vectors = embedding(token_ids)
+    
+    # Initial empty clipboard (hidden state initialized to zeros)
+    h_t = torch.zeros(1, hidden_dim)
+    
+    print(f"\nProcessing sentence: '{' '.join(words)}'")
+    for step, (word, x_t) in enumerate(zip(words, word_vectors)):
+        # Worker looks at the new word box AND previous clipboard notes
+        h_t = rnn_cell(x_t.unsqueeze(0), h_t)
+        print(f"  Step {step + 1} ('{word}'): Clipboard -> {h_t.detach().squeeze().round(decimals=3).tolist()}")
+    
+    return h_t
+
+# Sentence 1: "the dog bit the man"
+h_dog = process_sentence(["the", "dog", "bit", "the", "man"])
+
+# Sentence 2: "the man bit the dog" (same words, different sequential order)
+h_man = process_sentence(["the", "man", "bit", "the", "dog"])
+
+# Even though both sentences share the exact same words, 
+# sequential recurrence produces distinct summary vectors!
+print("\nFinal representations:")
+print("Sentence 1 summary:", h_dog.detach().squeeze().round(decimals=3).tolist())
+print("Sentence 2 summary:", h_man.detach().squeeze().round(decimals=3).tolist())
+print("Are representations different?", not torch.allclose(h_dog, h_man))
+```
+
 **Next Up:** How do we fix the goldfish memory and the slow speed? We throw away the conveyor belt entirely and invent a wild new trick: **Absolute Positional Encodings**.

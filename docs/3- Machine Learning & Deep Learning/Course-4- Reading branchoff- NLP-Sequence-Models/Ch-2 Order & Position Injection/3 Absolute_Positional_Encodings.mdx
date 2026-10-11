@@ -53,4 +53,54 @@ Not quite. If a sentence has 1,000 words, adding the number 1,000 to a vector mi
 
 Think of it like a clock. The minute hand goes in a circle from 1 to 60. Even though 60 is a big number, it stays on the clock face and doesn't explode. The wavy math acts like a bunch of spinning clock hands that uniquely identify every position in the sentence without breaking the neural network.
 
+---
+
+## Python Code Example
+
+Here is how you can implement classic Transformer sinusoidal positional encoding in PyTorch and add it to token embeddings:
+
+```python r
+import torch
+import torch.nn as nn
+import math
+
+class SinusoidalPositionalEncoding(nn.Module):
+    def __init__(self, d_model: int, max_len: int = 5000):
+        super().__init__()
+        
+        # Matrix to hold positional encodings
+        pe = torch.zeros(max_len, d_model)
+        
+        # Position indices: [0, 1, 2, ..., max_len - 1]
+        position = torch.arange(0, max_len, dtype=torch.float).unsqueeze(1)
+        
+        # Scaling factor based on frequencies
+        div_term = torch.exp(torch.arange(0, d_model, 2).float() * (-math.log(10000.0) / d_model))
+        
+        # Apply sine to even indices, cosine to odd indices
+        pe[:, 0::2] = torch.sin(position * div_term)
+        pe[:, 1::2] = torch.cos(position * div_term)
+        
+        # Add batch dimension: (1, max_len, d_model)
+        pe = pe.unsqueeze(0)
+        self.register_buffer('pe', pe)
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        # Final Vector = (Word Meaning Vector) + (Position Vector)
+        seq_len = x.size(1)
+        return x + self.pe[:, :seq_len]
+
+# Example: batch of 2 sentences, 5 tokens each, embedding size of 16
+batch_size, seq_len, d_model = 2, 5, 16
+word_embeddings = torch.randn(batch_size, seq_len, d_model)
+
+pos_encoder = SinusoidalPositionalEncoding(d_model=d_model, max_len=100)
+final_embeddings = pos_encoder(word_embeddings)
+
+print("Input word embeddings shape:", word_embeddings.shape)
+print("Final combined embeddings shape:", final_embeddings.shape)
+```
+
+---
+
 **Next Up:** Absolute positions are great, but what if the AI only cares about how far apart two words are, rather than their exact page numbers? Let's explore the cutting edge: **Relative and Rotary Encodings**.

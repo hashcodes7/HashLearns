@@ -41,4 +41,58 @@ Bahdanau used a clever trick called **Additive Attention**. He literally built a
 
 These percentages control the brightness of the flashlight! The Decoder then blends the English words together based on these percentages and uses that perfectly customized blend to guess the next Spanish word.
 
+---
+
+## Python Code Example
+
+Here is a clean PyTorch implementation of Bahdanau (Additive) Attention:
+
+```python r
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+
+class BahdanauAttention(nn.Module):
+    def __init__(self, hidden_dim):
+        super().__init__()
+        # Linear layers for decoder hidden state and encoder outputs
+        self.W_s = nn.Linear(hidden_dim, hidden_dim, bias=False)
+        self.W_h = nn.Linear(hidden_dim, hidden_dim, bias=False)
+        # Learnable vector v to compute the alignment score
+        self.v = nn.Linear(hidden_dim, 1, bias=False)
+
+    def forward(self, query, keys):
+        """
+        query: Decoder hidden state (batch_size, hidden_dim)
+        keys:  Encoder hidden states (batch_size, seq_len, hidden_dim)
+        """
+        # Expand query to (batch_size, 1, hidden_dim) for broadcasting
+        query = query.unsqueeze(1)
+        
+        # Additive score: v^T * tanh(W_s * query + W_h * keys)
+        # Shape: (batch_size, seq_len, 1)
+        score = self.v(torch.tanh(self.W_s(query) + self.W_h(keys)))
+        
+        # Squeeze to (batch_size, seq_len) and normalize with softmax (the percentages)
+        weights = F.softmax(score.squeeze(-1), dim=-1)
+        
+        # Weighted blend of encoder states (context vector): (batch_size, hidden_dim)
+        context = torch.bmm(weights.unsqueeze(1), keys).squeeze(1)
+        
+        return context, weights
+
+# Example usage:
+batch_size, seq_len, hidden_dim = 2, 5, 16
+decoder_hidden = torch.randn(batch_size, hidden_dim)
+encoder_outputs = torch.randn(batch_size, seq_len, hidden_dim)
+
+attention = BahdanauAttention(hidden_dim)
+context, weights = attention(decoder_hidden, encoder_outputs)
+
+print("Attention weights shape:", weights.shape)
+print("Context vector shape:", context.shape)
+print("Attention weights for first sample (sums to 1.0):", weights[0].detach().numpy().round(3))
+```
+
 **Next Up:** Bahdanau's Flashlight was a massive breakthrough, but having a "mini neural network" inside your main neural network is incredibly slow. Can we point the flashlight faster? Enter **Luong Attention**!
+

@@ -38,4 +38,67 @@ Under the rules of Seq2Seq, you (the Encoder) have to read the entire 1,000-page
 
 Because of this bottleneck, standard Seq2Seq models are terrible at translating long sentences. They get confused, drop words, and hallucinate.
 
+---
+
+## Python Code Example
+
+Here is a simple PyTorch implementation demonstrating the classical Seq2Seq architecture and its information bottleneck:
+
+```python r
+import torch
+import torch.nn as nn
+
+class Seq2SeqEncoder(nn.Module):
+    def __init__(self, vocab_size, embed_dim, hidden_dim):
+        super().__init__()
+        self.embedding = nn.Embedding(vocab_size, embed_dim)
+        self.lstm = nn.LSTM(embed_dim, hidden_dim, batch_first=True)
+
+    def forward(self, src):
+        # src shape: (batch_size, seq_len)
+        embedded = self.embedding(src)
+        outputs, (hidden, cell) = self.lstm(embedded)
+        # The Bottleneck: All intermediate outputs are discarded.
+        # Only the final hidden & cell states (context vector) are passed on.
+        return hidden, cell
+
+class Seq2SeqDecoder(nn.Module):
+    def __init__(self, vocab_size, embed_dim, hidden_dim):
+        super().__init__()
+        self.embedding = nn.Embedding(vocab_size, embed_dim)
+        self.lstm = nn.LSTM(embed_dim, hidden_dim, batch_first=True)
+        self.fc_out = nn.Linear(hidden_dim, vocab_size)
+
+    def forward(self, tgt_token, hidden, cell):
+        # tgt_token shape: (batch_size, 1) - generating one token at a time
+        embedded = self.embedding(tgt_token)
+        output, (hidden, cell) = self.lstm(embedded, (hidden, cell))
+        prediction = self.fc_out(output)
+        return prediction, hidden, cell
+
+# Demonstration of the Information Bottleneck
+batch_size, seq_len = 1, 8
+vocab_size = 50
+embed_dim = 16
+hidden_dim = 32
+
+encoder = Seq2SeqEncoder(vocab_size, embed_dim, hidden_dim)
+decoder = Seq2SeqDecoder(vocab_size, embed_dim, hidden_dim)
+
+# Input sentence (8 tokens)
+src_sentence = torch.randint(0, vocab_size, (batch_size, seq_len))
+
+# 1. The Encoder crushes all 8 tokens into a single context vector
+context_h, context_c = encoder(src_sentence)
+
+print("Input sequence shape:", src_sentence.shape)
+print("Context vector shape (The Bottleneck):", context_h.shape)
+
+# 2. The Decoder generates output tokens starting from that single summary vector
+sos_token = torch.tensor([[1]])  # <SOS> token
+prediction, dec_h, dec_c = decoder(sos_token, context_h, context_c)
+
+print("Decoder prediction shape for step 1:", prediction.shape)
+```
+
 **Next Up:** How do we fix the bottleneck? What if we didn't force the Encoder to write a summary at all? What if we just let the Decoder look at the original book? Welcome to the magic of **Attention**!

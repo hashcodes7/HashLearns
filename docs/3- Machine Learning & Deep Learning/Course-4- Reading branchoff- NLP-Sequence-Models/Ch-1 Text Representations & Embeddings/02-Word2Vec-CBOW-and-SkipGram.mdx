@@ -76,4 +76,37 @@ If you take the coordinates for **"King"**, subtract the coordinates for **"Man"
 
 The AI learned gender, royalty, and relationships entirely on its own, just by playing "fill in the blank" games with text!
 
+---
+
+## Python Code Example: Word2Vec in Action
+
+While the concept is brilliant, training Word2Vec in Python is surprisingly easy using a library called `gensim`. 
+Here is a complete, runnable example where we train a mini Word2Vec model on a few sentences and look at the vectors!
+
+```python r
+import re
+from gensim.models import Word2Vec
+
+# 1. Our tiny dataset (in real life, this would be millions of articles)
+text = "The king is a man who rules the kingdom. The queen is a woman who rules the kingdom. " \
+       "A king is to a queen as a man is to a woman."
+
+# 2. Tokenize the text (break it into words)
+sentences = [re.findall(r'\w+', text.lower())]
+print("Tokenized:", sentences[0][:8], "...\n")
+
+# 3. Train the Word2Vec model
+# vector_size=5 -> our "GPS coordinates" will be 5 numbers long
+# sg=1 -> We are playing the Skip-Gram game!
+model = Word2Vec(sentences, min_count=1, vector_size=5, window=3, sg=1)
+
+# 4. Check out the math! Let's see the numbers for 'king'
+print("Vector for 'king':")
+print(model.wv['king'])
+
+# 5. What does the AI think is similar to 'king'?
+print("\nMost similar to 'king':")
+print(model.wv.most_similar('king', topn=2))
+```
+
 **Next Up:** How exactly does the AI evaluate if it's winning or losing these games? Let's dive into the math behind the scenes with **Negative Sampling**.

@@ -46,4 +46,57 @@ This new squished vector becomes the *new* Hidden State, ready for the next word
 
 At any point, if we want the AI to make a guess (like translating the word into French, or guessing if the sentence is positive or negative), we just take the current Hidden State puree, pass it through one final math layer, and spit out an answer!
 
+## Python Code Example
+
+Here is a simple implementation of a Vanilla RNN Cell using PyTorch, demonstrating how the hidden state is updated step-by-step:
+
+```python r
+import torch
+import torch.nn as nn
+
+# Define dimensions
+input_size = 4    # Dimension of each word vector
+hidden_size = 3   # Dimension of the hidden state (the blender's puree)
+output_size = 2   # Dimension of prediction (e.g., sentiment logits)
+
+# 1. Building a Vanilla RNN Cell from scratch
+class SimpleVanillaRNNCell(nn.Module):
+    def __init__(self, input_size, hidden_size):
+        super().__init__()
+        # Weights for incoming word (x_t) and previous hidden state (h_{t-1})
+        self.W_xh = nn.Linear(input_size, hidden_size)
+        self.W_hh = nn.Linear(hidden_size, hidden_size, bias=False)
+        self.tanh = nn.Tanh()
+
+    def forward(self, x_t, h_prev):
+        # Blend current word vector and previous memory vector
+        return self.tanh(self.W_xh(x_t) + self.W_hh(h_prev))
+
+# Initialize cell and output projection layer
+rnn_cell = SimpleVanillaRNNCell(input_size, hidden_size)
+out_layer = nn.Linear(hidden_size, output_size)
+
+# Simulated sequence of 3 words: ["The", "dog", "bit"]
+words = torch.randn(3, 1, input_size)
+word_labels = ["The", "dog", "bit"]
+
+# Initial hidden state (empty blender before adding any ingredients)
+h_t = torch.zeros(1, hidden_size)
+
+print("Processing words sequentially through the Vanilla RNN Cell:")
+for i, word_vec in enumerate(words):
+    # Step: Blend new input with previous memory
+    h_t = rnn_cell(word_vec, h_t)
+    # Output: Generate prediction from current hidden state
+    y_t = out_layer(h_t)
+    
+    print(f"\nWord: '{word_labels[i]}'")
+    print(f"  -> Hidden State: {h_t.detach().squeeze().numpy()}")
+    print(f"  -> Output:       {y_t.detach().squeeze().numpy()}")
+```
+
+> [!NOTE]
+> In production code, PyTorch provides `nn.RNNCell(input_size, hidden_size)` out of the box, which executes this exact mathematical operation under the hood.
+
 **Next Up:** It's easy to visualize a blender mixing one step at a time. But how do we train an AI when time is involved? To figure that out, we have to learn how to freeze time with **Unrolling**!
+

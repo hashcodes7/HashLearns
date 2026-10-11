@@ -39,4 +39,84 @@ While Bahdanau's method required feeding data through a complex neural network o
 
 Because it was so fast, Luong's Dot-Product math became the absolute foundation for the future of AI. In fact, this exact multiplication trick is what powers the modern Transformers inside ChatGPT today!
 
+---
+
+## Python Code Example
+
+Here is how simple Luong (Dot-Product) Attention is in PyTorch—just a single batch matrix multiplication (`torch.bmm`) replaces Bahdanau's entire mini neural network:
+
+```python r
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+
+class LuongAttention(nn.Module):
+    """
+    Luong (Multiplicative) Attention Layer.
+    Supports 'dot' and 'general' scoring:
+      - dot:     score(h_t, h_s) = h_t^T * h_s
+      - general: score(h_t, h_s) = h_t^T * W * h_s
+    """
+    def __init__(self, hidden_dim, method="dot"):
+        super().__init__()
+        self.method = method
+        self.hidden_dim = hidden_dim
+        
+        if self.method == "general":
+            self.linear = nn.Linear(hidden_dim, hidden_dim, bias=False)
+        elif self.method != "dot":
+            raise ValueError("Method must be 'dot' or 'general'")
+
+    def forward(self, decoder_hidden, encoder_outputs):
+        # decoder_hidden:  [batch_size, hidden_dim]
+        # encoder_outputs: [batch_size, seq_len, hidden_dim]
+        
+        if self.method == "dot":
+            # Fast dot product between decoder query and all encoder words:
+            # [batch, seq_len, hidden] x [batch, hidden, 1] -> [batch, seq_len]
+            scores = torch.bmm(encoder_outputs, decoder_hidden.unsqueeze(2)).squeeze(2)
+        elif self.method == "general":
+            # Multiplicative scoring with learnable matrix W
+            projected = self.linear(decoder_hidden).unsqueeze(2)
+            scores = torch.bmm(encoder_outputs, projected).squeeze(2)
+
+        # Softmax turns raw dot products into percentage weights (sum to 1)
+        attention_weights = F.softmax(scores, dim=-1)
+
+        # Context vector: weighted sum of encoder hidden states
+        # [batch, 1, seq_len] x [batch, seq_len, hidden] -> [batch, hidden]
+        context = torch.bmm(attention_weights.unsqueeze(1), encoder_outputs).squeeze(1)
+
+        return context, attention_weights
+
+
+# --- Example Usage ---
+if __name__ == "__main__":
+    torch.manual_seed(42)
+
+    batch_size = 1
+    seq_len = 4       # e.g., ["The", "black", "cat", "slept"]
+    hidden_dim = 3    # Representation vector size
+    
+    # Encoder representations for each word
+    encoder_outputs = torch.randn(batch_size, seq_len, hidden_dim)
+    
+    # Decoder state representing current word to translate
+    decoder_hidden = torch.randn(batch_size, hidden_dim)
+
+    # Compute Luong dot-product attention
+    attention = LuongAttention(hidden_dim=hidden_dim, method="dot")
+    context, weights = attention(decoder_hidden, encoder_outputs)
+
+    words = ["The", "black", "cat", "slept"]
+    print("Attention Weights (how much flashlight each word gets):")
+    for word, weight in zip(words, weights[0].tolist()):
+        print(f"  {word:6s} -> {weight:.4f} ({weight * 100:.1f}%)")
+
+    print("\nResulting Context Vector shape:", context.shape)
+    print("Context Vector:", context.squeeze(0).tolist())
+```
+
+---
+
 **Next Up:** We've taught the Decoder how to pay attention. But how does it actually *choose* the final word to write down? It's harder than it looks! Let's explore **Decoding Strategies**.

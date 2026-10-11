@@ -45,6 +45,73 @@ KV Caching makes AI models generate text lightning fast. It is the reason ChatGP
 But there is a catch: Memory. 
 Saving millions of math vectors on a notepad takes up a lot of RAM. If 100,000 users are talking to ChatGPT at the same time, OpenAI has to store 100,000 different KV Caches! This is why AI companies spend billions of dollars buying giant server farms with massive amounts of memory.
 
+## Python Code Example
+
+Here is a simplified demonstration of how **KV Caching** avoids recomputing past tokens during autoregressive inference:
+
+```python r
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+
+class CausalSelfAttentionWithCache(nn.Module):
+    def __init__(self, d_model):
+        super().__init__()
+        self.d_model = d_model
+        self.q_proj = nn.Linear(d_model, d_model)
+        self.k_proj = nn.Linear(d_model, d_model)
+        self.v_proj = nn.Linear(d_model, d_model)
+        self.out_proj = nn.Linear(d_model, d_model)
+
+    def forward(self, x, kv_cache=None):
+        # x shape: (batch_size, seq_len, d_model)
+        # Project only the incoming token(s)
+        q = self.q_proj(x)
+        k = self.k_proj(x)
+        v = self.v_proj(x)
+
+        # If cache exists, concatenate previous keys/values with the new ones
+        if kv_cache is not None:
+            prev_k, prev_v = kv_cache
+            k = torch.cat([prev_k, k], dim=1)
+            v = torch.cat([prev_v, v], dim=1)
+
+        # Save updated keys and values into the cache
+        kv_cache = (k, v)
+
+        # Scaled dot-product attention
+        scores = torch.matmul(q, k.transpose(-2, -1)) / (self.d_model ** 0.5)
+
+        # Apply causal mask during the multi-token prefill phase
+        seq_len, total_len = x.shape[1], k.shape[1]
+        if seq_len > 1:
+            mask = torch.triu(torch.full((seq_len, total_len), float('-inf')), diagonal=1)
+            scores = scores + mask
+
+        weights = F.softmax(scores, dim=-1)
+        out = torch.matmul(weights, v)
+        return self.out_proj(out), kv_cache
+
+
+# ---------------- Example Usage ----------------
+torch.manual_seed(42)
+d_model = 16
+attention_layer = CausalSelfAttentionWithCache(d_model)
+
+# 1. Prefill Phase: Process initial prompt of 3 tokens ("Once upon a")
+prompt_tokens = torch.randn(1, 3, d_model)
+out, kv_cache = attention_layer(prompt_tokens)
+print("Prefill output shape:", out.shape)           # (1, 3, 16)
+print("Cached K shape:", kv_cache[0].shape)         # (1, 3, 16)
+
+# 2. Decoding Phase: Generate next token ("time")
+# Only feed the single newest token into the layer alongside cached KV!
+new_token = torch.randn(1, 1, d_model)
+out_step, kv_cache = attention_layer(new_token, kv_cache=kv_cache)
+print("Decode step output shape:", out_step.shape)  # (1, 1, 16)
+print("Updated cached K shape:", kv_cache[0].shape) # (1, 4, 16)
+```
+
 ---
 
 ## You Did It!

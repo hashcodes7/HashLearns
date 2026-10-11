@@ -43,4 +43,64 @@ The AI has to read the beginning and the end of the sentence, and then use its D
 
 This forces the AI to understand deep context (like BERT) while simultaneously practicing how to generate multi-word phrases (like GPT). Google's T5 model was trained entirely using this Mad Libs strategy!
 
+## Python Code Example
+
+Here is how both **Prefix Masking** (building an attention mask where prefix tokens have bidirectional visibility and generated tokens have causal visibility) and **Span Masking** (corrupting token spans with sentinel tokens) are implemented in Python and PyTorch:
+
+```python r
+import torch
+
+def create_prefix_lm_mask(prefix_len: int, target_len: int) -> torch.Tensor:
+    """
+    Constructs a 2D attention mask for Prefix Language Modeling.
+    - Prefix tokens attend bidirectionally to all prefix tokens.
+    - Target tokens attend to all prefix tokens, plus preceding target tokens causally.
+    """
+    total_len = prefix_len + target_len
+    mask = torch.zeros((total_len, total_len), dtype=torch.bool)
+    
+    # 1. Prefix tokens have full bidirectional attention across the prefix
+    mask[:prefix_len, :prefix_len] = True
+    
+    # 2. Target (generated) tokens can see all prefix tokens
+    mask[prefix_len:, :prefix_len] = True
+    
+    # 3. Target tokens attend causally to previous target tokens (lower triangular)
+    mask[prefix_len:, prefix_len:] = torch.tril(torch.ones((target_len, target_len), dtype=torch.bool))
+    
+    return mask
+
+# 1. Demonstrate Prefix LM Mask
+prefix_tokens = ["Write", "a", "story", "about"]
+target_tokens = ["a", "brave", "knight"]
+all_tokens = prefix_tokens + target_tokens
+
+mask = create_prefix_lm_mask(prefix_len=len(prefix_tokens), target_len=len(target_tokens))
+
+print("=== 1. Prefix LM Attention Matrix ===")
+print("Tokens:", all_tokens)
+print(mask.int())  # 1 means token can attend, 0 means masked out
+
+
+# 2. Demonstrate Span Masking (T5-Style Corrupted Spans)
+def apply_span_mask(tokens: list, span_start: int, span_len: int, sentinel_token: str):
+    """
+    Replaces a contiguous span of tokens with a single sentinel token (Mad Libs style).
+    """
+    corrupted_input = tokens[:span_start] + [sentinel_token] + tokens[span_start + span_len:]
+    target_span = tokens[span_start : span_start + span_len]
+    return corrupted_input, target_span
+
+sentence_tokens = ["The", "quick", "brown", "fox", "jumps", "high", "over", "the", "lazy", "dog"]
+corrupted, target = apply_span_mask(sentence_tokens, span_start=4, span_len=2, sentinel_token="<extra_id_0>")
+
+print("\n=== 2. Span Masking (T5 / BART) ===")
+print("Original sentence :", " ".join(sentence_tokens))
+print("Corrupted input   :", " ".join(corrupted))
+print("Target to predict :", " ".join(target))
+```
+
+---
+
 **Next Up:** We've mastered Attention and Masking. But a single Attention layer isn't enough to build ChatGPT. We need to stack them! Welcome to Chapter 8: **Deep Stacking, Normalization & Feed-Forward**.
+
