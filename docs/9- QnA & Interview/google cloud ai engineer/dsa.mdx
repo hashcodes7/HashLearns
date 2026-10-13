@@ -1,140 +1,180 @@
-## Google
+# Google Interview Preparation — DSA & System Design
 
-[](https://github.com/ombharatiya/FAANG-Coding-Interview-Questions/blob/main/FAANG-Recent-Questions.md#google)
-> **2025-2026 Trends**: Graphs appear in 76% of onsite loops at L4+. Sliding window and binary search on answer are top-tier patterns. Trie and Union-Find questions rising. Roughly 19% of reported problems are Hard. Follow-up questions are standard. **New in 2026**: AI-assisted "Code Comprehension" round piloting. Candidates read, debug, and optimize an existing codebase with **Gemini available** in a CoderPad-style environment (file explorer + editor + AI chat); interviewers explicitly score "AI fluency": prompt engineering, output validation, and debugging of AI output. Pilot started in H2 2026 for junior/mid-level roles on select US teams, with expansion to other teams and regions planned if it succeeds (context: Pichai's April 22, 2026 blog post that 75% of new Google code is AI-generated, up from 50% in fall 2025). **In-person round reinstated** for technical hires to combat AI-assisted cheating. Google Hiring Assessment (GHA) mandatory before the phone screen. The Googleyness & Leadership round is now part-technical. A design conversation about a real system you built, defended under scrutiny. **Third change, early-career only**: one traditional technical round is replaced by an open-ended engineering problem session, closer to a discussion of approach than a single correct answer. Reports emphasize deliberately ambiguous problem framing (you must derive the problem structure) and strict production-ready-code grading at L4. No system design round below L5. **Reported July-September 2026**: the code comprehension round is reaching L5 loops, not only junior and mid-level ones; an August 2026 L5 candidate describes it as unfamiliar, Gemini-generated code where you explain what it does, find the bug, and explain how you would refactor it. Late-September L4 reports describe a hybrid loop: two virtual rounds, recruiter feedback within a day, then two in-person rounds (one was a medium-hard stack problem). A September technical screen opened with about ten minutes of resume deep-dive (Kafka, Redis, a Go API gateway) before the coding problem.
+> **Curated Question Bank & 2025–2026 Interview Intelligence**  
+> Comprehensive compilation of recent high-frequency LeetCode questions, real Google onsite custom problems, system design rounds, and 2025–2026 loop trends for Google Cloud AI Engineer & SWE candidates.  
+> *Source reference: [FAANG Recent Coding Questions](https://github.com/ombharatiya/FAANG-Coding-Interview-Questions/blob/main/FAANG-Recent-Questions.md#google)*
 
-### Google Arrays and Strings
+---
 
-[](https://github.com/ombharatiya/FAANG-Coding-Interview-Questions/blob/main/FAANG-Recent-Questions.md#google-arrays-and-strings)
+## 1. 2025–2026 Interview Trends & Format Changes
 
-|No.|Question|Difficulty|
-|---|---|---|
-|1|[Two Sum](https://leetcode.com/problems/two-sum)|Easy|
-|2|[Longest Substring Without Repeating Characters](https://leetcode.com/problems/longest-substring-without-repeating-characters)|Medium|
-|3|[Container With Most Water](https://leetcode.com/problems/container-with-most-water)|Medium|
-|4|[3Sum](https://leetcode.com/problems/3sum)|Medium|
-|5|[Group Anagrams](https://leetcode.com/problems/group-anagrams)|Medium|
-|6|[Product of Array Except Self](https://leetcode.com/problems/product-of-array-except-self)|Medium|
-|7|[Merge Intervals](https://leetcode.com/problems/merge-intervals)|Medium|
-|8|[Minimum Window Substring](https://leetcode.com/problems/minimum-window-substring)|Hard|
-|9|[Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water)|Hard|
-|10|[Find And Replace in String](https://leetcode.com/problems/find-and-replace-in-string)|Medium|
-|11|[Maximum Points You Can Obtain from Cards](https://leetcode.com/problems/maximum-points-you-can-obtain-from-cards)|Medium|
-|12|[Longest String Chain](https://leetcode.com/problems/longest-string-chain)|Medium|
-|13|[Minimum Area Rectangle](https://leetcode.com/problems/minimum-area-rectangle)|Medium|
-|14|[Detect Squares](https://leetcode.com/problems/detect-squares)|Medium|
-|15|[Number of Unequal Triplets in Array](https://leetcode.com/problems/number-of-unequal-triplets-in-array)|Easy|
-|16|[Pour Water](https://leetcode.com/problems/pour-water)|Medium|
-|17|[Best Meeting Point](https://leetcode.com/problems/best-meeting-point)|Hard|
-|18|[Decode String](https://leetcode.com/problems/decode-string)|Medium|
-|19|[H-Index](https://leetcode.com/problems/h-index)|Medium|
-|20|[Amount of New Area Painted Each Day](https://leetcode.com/problems/amount-of-new-area-painted-each-day)|Hard|
-|21|[First Missing Positive](https://leetcode.com/problems/first-missing-positive)|Hard|
-|22|[Jump Game](https://leetcode.com/problems/jump-game)|Medium|
+:::info Key Algorithmic Trends
+- **Graphs Dominance**: Graph algorithms appear in **76% of onsite loops** at L4+.
+- **Top-Tier Patterns**: Sliding window and binary search on answer space are top-tier recurring patterns.
+- **Rising Topics**: Trie and Union-Find (Disjoint Set Union) questions are steadily rising.
+- **Difficulty Distribution**: Approximately **19%** of reported onsite problems are LeetCode Hard. Follow-up extensions are standard across all interviews.
+- **Google Distinctive Topics**: Segment Tree and Fenwick Tree (Binary Indexed Tree / BIT) problems remain a Google-distinctive category rarely seen at other FAANG companies.
+:::
 
-### Google Trees and Graphs
+:::tip 2026 Interview Process Evolution
+- **AI-Assisted "Code Comprehension" Round (Piloting in 2026)**:
+  - Candidates read, debug, and optimize an existing codebase with **Gemini available** in a CoderPad-style environment (file explorer + code editor + AI chat).
+  - Interviewers explicitly evaluate and score **AI fluency**: prompt engineering quality, output validation, and debugging/refactoring AI-generated code.
+  - Piloted in H2 2026 for junior/mid-level roles on select US teams, expanding to L5 loops (*reported August 2026: candidates explain what unfamiliar Gemini-generated code does, isolate bugs, and propose architectural refactors*).
+  - *Context*: Over 75% of new internal Google code is AI-assisted.
+- **In-Person Rounds Reinstated**:
+  - Reinstated for technical hires to combat AI-assisted screening fraud.
+  - Hybrid loop structure reported for L4: 2 virtual rounds $\to$ rapid recruiter feedback $\to$ 2 in-person rounds.
+- **Google Hiring Assessment (GHA)**:
+  - Mandatory online assessment prior to the technical phone screen.
+- **Technical Deep-Dive in Googleyness & Leadership (G&L)**:
+  - Now includes a part-technical architecture defense: candidates defend the technical decisions and trade-offs of a real production system they built under rigorous interviewer scrutiny.
+- **Early-Career Format Shift (L3/L4)**:
+  - One traditional coding round is replaced by an open-ended engineering problem session focusing on approach, trade-offs, and ambiguous problem derivation over a single rigid answer.
+  - Strict production-ready code grading at L4. No dedicated System Design round below L5.
+  - Screens often open with a 10-minute resume architecture deep-dive (e.g., Kafka, Redis, API gateways, streaming systems) prior to coding.
+:::
 
-[](https://github.com/ombharatiya/FAANG-Coding-Interview-Questions/blob/main/FAANG-Recent-Questions.md#google-trees-and-graphs)
+---
 
-|No.|Question|Difficulty|
-|---|---|---|
-|1|[Number of Islands](https://leetcode.com/problems/number-of-islands)|Medium|
-|2|[Course Schedule II](https://leetcode.com/problems/course-schedule-ii)|Medium|
-|3|[Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree)|Medium|
-|4|[Binary Tree Maximum Path Sum](https://leetcode.com/problems/binary-tree-maximum-path-sum)|Hard|
-|5|[Word Ladder](https://leetcode.com/problems/word-ladder)|Hard|
-|6|[Clone Graph](https://leetcode.com/problems/clone-graph)|Medium|
-|7|[Serialize and Deserialize Binary Tree](https://leetcode.com/problems/serialize-and-deserialize-binary-tree)|Hard|
-|8|[Accounts Merge](https://leetcode.com/problems/accounts-merge)|Medium|
-|9|[Evaluate Division](https://leetcode.com/problems/evaluate-division)|Medium|
-|10|[Alien Dictionary](https://leetcode.com/problems/alien-dictionary)|Hard|
-|11|[The Earliest Moment When Everyone Become Friends](https://leetcode.com/problems/the-earliest-moment-when-everyone-become-friends)|Medium|
-|12|[Checking Existence of Edge Length Limited Paths](https://leetcode.com/problems/checking-existence-of-edge-length-limited-paths)|Hard|
-|13|[Step-By-Step Directions From a Binary Tree Node to Another](https://leetcode.com/problems/step-by-step-directions-from-a-binary-tree-node-to-another)|Medium|
-|14|[Swim in Rising Water](https://leetcode.com/problems/swim-in-rising-water)|Hard|
-|15|[Path With Minimum Effort](https://leetcode.com/problems/path-with-minimum-effort)|Medium|
-|16|[Find Leaves of Binary Tree](https://leetcode.com/problems/find-leaves-of-binary-tree)|Medium|
-|17|[Pacific Atlantic Water Flow](https://leetcode.com/problems/pacific-atlantic-water-flow)|Medium|
-|18|[Longest Word in Dictionary](https://leetcode.com/problems/longest-word-in-dictionary)|Medium|
-|19|[Delete Leaves With a Given Value](https://leetcode.com/problems/delete-leaves-with-a-given-value)|Medium|
+## 2. High-Frequency LeetCode Questions
 
-### Google Dynamic Programming
+### 2.1 Arrays and Strings
 
-[](https://github.com/ombharatiya/FAANG-Coding-Interview-Questions/blob/main/FAANG-Recent-Questions.md#google-dynamic-programming)
+| # | Problem | Difficulty | Key Pattern / Topic |
+|---|---|:---:|---|
+| 1 | [Two Sum](https://leetcode.com/problems/two-sum) | 🟢 Easy | Hash Map lookup |
+| 2 | [Longest Substring Without Repeating Characters](https://leetcode.com/problems/longest-substring-without-repeating-characters) | 🟡 Medium | Sliding Window / Hash Set |
+| 3 | [Container With Most Water](https://leetcode.com/problems/container-with-most-water) | 🟡 Medium | Two Pointers (Greedy contraction) |
+| 4 | [3Sum](https://leetcode.com/problems/3sum) | 🟡 Medium | Two Pointers + Sorting |
+| 5 | [Group Anagrams](https://leetcode.com/problems/group-anagrams) | 🟡 Medium | Hash Map / Character Frequency count |
+| 6 | [Product of Array Except Self](https://leetcode.com/problems/product-of-array-except-self) | 🟡 Medium | Prefix & Suffix Products |
+| 7 | [Merge Intervals](https://leetcode.com/problems/merge-intervals) | 🟡 Medium | Interval Sorting & Merging |
+| 8 | [Minimum Window Substring](https://leetcode.com/problems/minimum-window-substring) | 🔴 Hard | Sliding Window + Frequency Map |
+| 9 | [Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water) | 🔴 Hard | Two Pointers / Monotonic Stack |
+| 10 | [Find And Replace in String](https://leetcode.com/problems/find-and-replace-in-string) | 🟡 Medium | String Manipulation / Sorting offsets |
+| 11 | [Maximum Points You Can Obtain from Cards](https://leetcode.com/problems/maximum-points-you-can-obtain-from-cards) | 🟡 Medium | Fixed Sliding Window |
+| 12 | [Longest String Chain](https://leetcode.com/problems/longest-string-chain) | 🟡 Medium | Hash Map DP / Predecessor lookup |
+| 13 | [Minimum Area Rectangle](https://leetcode.com/problems/minimum-area-rectangle) | 🟡 Medium | Coordinate Hash Set / Diagonal search |
+| 14 | [Detect Squares](https://leetcode.com/problems/detect-squares) | 🟡 Medium | Hash Map frequency / Geometry lookup |
+| 15 | [Number of Unequal Triplets in Array](https://leetcode.com/problems/number-of-unequal-triplets-in-array) | 🟢 Easy | Combinatorics / Prefix frequency counts |
+| 16 | [Pour Water](https://leetcode.com/problems/pour-water) | 🟡 Medium | Simulation / Two Pointers |
+| 17 | [Best Meeting Point](https://leetcode.com/problems/best-meeting-point) | 🔴 Hard | Median minimization / Manhattan distance |
+| 18 | [Decode String](https://leetcode.com/problems/decode-string) | 🟡 Medium | Stack / Recursive parsing |
+| 19 | [H-Index](https://leetcode.com/problems/h-index) | 🟡 Medium | Bucket Sort / Counting Sort |
+| 20 | [Amount of New Area Painted Each Day](https://leetcode.com/problems/amount-of-new-area-painted-each-day) | 🔴 Hard | Interval Map / Union-Find jump pointers |
+| 21 | [First Missing Positive](https://leetcode.com/problems/first-missing-positive) | 🔴 Hard | Cyclic Sort / In-place array hashing |
+| 22 | [Jump Game](https://leetcode.com/problems/jump-game) | 🟡 Medium | Greedy maximum reach |
 
-|No.|Question|Difficulty|
-|---|---|---|
-|1|[Coin Change](https://leetcode.com/problems/coin-change)|Medium|
-|2|[Edit Distance](https://leetcode.com/problems/edit-distance)|Medium|
-|3|[Longest Palindromic Substring](https://leetcode.com/problems/longest-palindromic-substring)|Medium|
-|4|[Longest Increasing Subsequence](https://leetcode.com/problems/longest-increasing-subsequence)|Medium|
-|5|[Longest Increasing Path in a Matrix](https://leetcode.com/problems/longest-increasing-path-in-a-matrix)|Hard|
-|6|[Burst Balloons](https://leetcode.com/problems/burst-balloons)|Hard|
-|7|[Split Array Largest Sum](https://leetcode.com/problems/split-array-largest-sum)|Hard|
-|8|[Longest Arithmetic Subsequence of Given Difference](https://leetcode.com/problems/longest-arithmetic-subsequence-of-given-difference)|Medium|
-|9|[Maximum Number of Points with Cost](https://leetcode.com/problems/maximum-number-of-points-with-cost)|Medium|
-|10|[Count Square Submatrices with All Ones](https://leetcode.com/problems/count-square-submatrices-with-all-ones)|Medium|
+---
 
-### Google Binary Search and Special Topics
+### 2.2 Trees and Graphs
 
-[](https://github.com/ombharatiya/FAANG-Coding-Interview-Questions/blob/main/FAANG-Recent-Questions.md#google-binary-search-and-special-topics)
+| # | Problem | Difficulty | Key Pattern / Topic |
+|---|---|:---:|---|
+| 1 | [Number of Islands](https://leetcode.com/problems/number-of-islands) | 🟡 Medium | BFS / DFS / Matrix Flood Fill |
+| 2 | [Course Schedule II](https://leetcode.com/problems/course-schedule-ii) | 🟡 Medium | Topological Sort (Kahn's / DFS) |
+| 3 | [Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree) | 🟡 Medium | BST In-order Traversal / Range validation |
+| 4 | [Binary Tree Maximum Path Sum](https://leetcode.com/problems/binary-tree-maximum-path-sum) | 🔴 Hard | Post-order DFS / Subtree contribution |
+| 5 | [Word Ladder](https://leetcode.com/problems/word-ladder) | 🔴 Hard | Bi-directional BFS / Shortest Path |
+| 6 | [Clone Graph](https://leetcode.com/problems/clone-graph) | 🟡 Medium | Graph DFS/BFS + Hash Map memoization |
+| 7 | [Serialize and Deserialize Binary Tree](https://leetcode.com/problems/serialize-and-deserialize-binary-tree) | 🔴 Hard | Pre-order Traversal / String encoding |
+| 8 | [Accounts Merge](https://leetcode.com/problems/accounts-merge) | 🟡 Medium | Disjoint Set Union (DSU / Union-Find) |
+| 9 | [Evaluate Division](https://leetcode.com/problems/evaluate-division) | 🟡 Medium | Weighted Directed Graph BFS/DFS / DSU |
+| 10 | [Alien Dictionary](https://leetcode.com/problems/alien-dictionary) | 🔴 Hard | Character Graph + Topological Sort |
+| 11 | [The Earliest Moment When Everyone Become Friends](https://leetcode.com/problems/the-earliest-moment-when-everyone-become-friends) | 🟡 Medium | Union-Find with Connected Component count |
+| 12 | [Checking Existence of Edge Length Limited Paths](https://leetcode.com/problems/checking-existence-of-edge-length-limited-paths) | 🔴 Hard | Offline Queries + Union-Find |
+| 13 | [Step-By-Step Directions From a Binary Tree Node to Another](https://leetcode.com/problems/step-by-step-directions-from-a-binary-tree-node-to-another) | 🟡 Medium | Lowest Common Ancestor (LCA) + Path reconstruction |
+| 14 | [Swim in Rising Water](https://leetcode.com/problems/swim-in-rising-water) | 🔴 Hard | Dijkstra (Min-Heap) / Binary Search on Answer |
+| 15 | [Path With Minimum Effort](https://leetcode.com/problems/path-with-minimum-effort) | 🟡 Medium | Dijkstra / Modified BFS with Priority Queue |
+| 16 | [Find Leaves of Binary Tree](https://leetcode.com/problems/find-leaves-of-binary-tree) | 🟡 Medium | Post-order DFS Height calculation |
+| 17 | [Pacific Atlantic Water Flow](https://leetcode.com/problems/pacific-atlantic-water-flow) | 🟡 Medium | Multi-source BFS/DFS from ocean borders |
+| 18 | [Longest Word in Dictionary](https://leetcode.com/problems/longest-word-in-dictionary) | 🟡 Medium | Trie / Hash Set prefix validation |
+| 19 | [Delete Leaves With a Given Value](https://leetcode.com/problems/delete-leaves-with-a-given-value) | 🟡 Medium | Post-order DFS bottom-up pruning |
 
-|No.|Question|Difficulty|
-|---|---|---|
-|1|[Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array)|Medium|
-|2|[Koko Eating Bananas](https://leetcode.com/problems/koko-eating-bananas)|Medium|
-|3|[Median of Two Sorted Arrays](https://leetcode.com/problems/median-of-two-sorted-arrays)|Hard|
-|4|[Implement Trie (Prefix Tree)](https://leetcode.com/problems/implement-trie-prefix-tree)|Medium|
-|5|[LRU Cache](https://leetcode.com/problems/lru-cache)|Medium|
-|6|[Kth Largest Element in an Array](https://leetcode.com/problems/kth-largest-element-in-an-array)|Medium|
-|7|[Find Median from Data Stream](https://leetcode.com/problems/find-median-from-data-stream)|Hard|
-|8|[Task Scheduler](https://leetcode.com/problems/task-scheduler)|Medium|
-|9|[Logger Rate Limiter](https://leetcode.com/problems/logger-rate-limiter)|Easy|
-|10|[Range Sum Query - Mutable](https://leetcode.com/problems/range-sum-query-mutable)|Medium|
-|11|[Count of Range Sum](https://leetcode.com/problems/count-of-range-sum)|Hard|
+---
 
-Segment tree / BIT problems are a Google-distinctive category rarely seen at other FAANG companies.
+### 2.3 Dynamic Programming
 
-### Google Custom Problems
+| # | Problem | Difficulty | Key Pattern / Topic |
+|---|---|:---:|---|
+| 1 | [Coin Change](https://leetcode.com/problems/coin-change) | 🟡 Medium | Unbounded Knapsack / 1D Bottom-up DP |
+| 2 | [Edit Distance](https://leetcode.com/problems/edit-distance) | 🟡 Medium | 2D String Alignment DP |
+| 3 | [Longest Palindromic Substring](https://leetcode.com/problems/longest-palindromic-substring) | 🟡 Medium | Expand Around Center / 2D DP |
+| 4 | [Longest Increasing Subsequence](https://leetcode.com/problems/longest-increasing-subsequence) | 🟡 Medium | Patience Sorting + Binary Search ($O(N \log N)$) |
+| 5 | [Longest Increasing Path in a Matrix](https://leetcode.com/problems/longest-increasing-path-in-a-matrix) | 🔴 Hard | Memoized DFS / Topological Sort on DAG |
+| 6 | [Burst Balloons](https://leetcode.com/problems/burst-balloons) | 🔴 Hard | Interval / Range DP |
+| 7 | [Split Array Largest Sum](https://leetcode.com/problems/split-array-largest-sum) | 🔴 Hard | Binary Search on Answer / Greedy validation |
+| 8 | [Longest Arithmetic Subsequence of Given Difference](https://leetcode.com/problems/longest-arithmetic-subsequence-of-given-difference) | 🟡 Medium | Hash Map DP |
+| 9 | [Maximum Number of Points with Cost](https://leetcode.com/problems/maximum-number-of-points-with-cost) | 🟡 Medium | 2D Grid DP with Left/Right rolling max |
+| 10 | [Count Square Submatrices with All Ones](https://leetcode.com/problems/count-square-submatrices-with-all-ones) | 🟡 Medium | 2D Grid DP prefix squares |
 
-[](https://github.com/ombharatiya/FAANG-Coding-Interview-Questions/blob/main/FAANG-Recent-Questions.md#google-custom-problems)
+---
 
-|No.|Problem|Round|Description|
+### 2.4 Binary Search & Advanced Structures
+
+| # | Problem | Difficulty | Key Pattern / Topic |
+|---|---|:---:|---|
+| 1 | [Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array) | 🟡 Medium | Modified Binary Search on sorted half |
+| 2 | [Koko Eating Bananas](https://leetcode.com/problems/koko-eating-bananas) | 🟡 Medium | Binary Search on Answer space |
+| 3 | [Median of Two Sorted Arrays](https://leetcode.com/problems/median-of-two-sorted-arrays) | 🔴 Hard | Binary Search partition ($O(\log(\min(M, N)))$) |
+| 4 | [Implement Trie (Prefix Tree)](https://leetcode.com/problems/implement-trie-prefix-tree) | 🟡 Medium | Trie node implementation |
+| 5 | [LRU Cache](https://leetcode.com/problems/lru-cache) | 🟡 Medium | Doubly Linked List + Hash Map |
+| 6 | [Kth Largest Element in an Array](https://leetcode.com/problems/kth-largest-element-in-an-array) | 🟡 Medium | Quickselect / Min-Heap |
+| 7 | [Find Median from Data Stream](https://leetcode.com/problems/find-median-from-data-stream) | 🔴 Hard | Two Balanced Heaps (Max-Heap + Min-Heap) |
+| 8 | [Task Scheduler](https://leetcode.com/problems/task-scheduler) | 🟡 Medium | Greedy Frequency formula / Max-Heap |
+| 9 | [Logger Rate Limiter](https://leetcode.com/problems/logger-rate-limiter) | 🟢 Easy | Hash Map with Timestamp window |
+| 10 | [Range Sum Query - Mutable](https://leetcode.com/problems/range-sum-query-mutable) | 🟡 Medium | Segment Tree / Fenwick Tree (Binary Indexed Tree) |
+| 11 | [Count of Range Sum](https://leetcode.com/problems/count-of-range-sum) | 🔴 Hard | Merge Sort / Fenwick Tree on Prefix Sums |
+
+:::info Google Distinctive Topic: Segment Trees & Fenwick Trees (BIT)
+**Segment Tree & Fenwick Tree (Binary Indexed Tree / BIT)** problems are heavily favored at Google compared to other FAANG companies. If interviewing for L4/L5+, ensure you understand range queries and point/range updates with logarithmic time complexity.
+:::
+
+---
+
+## 3. Google Custom & Real Onsite Interview Problems
+
+The following problems were reported directly from Google onsite, technical screening, and OA loops (including 2025–2026 reports). They emphasize deliberate ambiguity, production-ready edge cases, and scalable algorithmic design.
+
+| # | Problem Title | Interview Round | Core Concept & Description |
 |---|---|---|---|
-|1|Restaurant waitlist data structure|L4 phone screen|addGroup, group leaves anytime, seat best group for a table size by arrival order + size|
-|2|Number of lakes on an island|L4 phone screen|Grid of water/land; given one land coordinate, count enclosed lakes (flood-fill variant)|
-|3|Root an undirected acyclic graph as a binary tree|Phone screen|Nodes have <=3 edges; find a node that, when rooted, yields a valid binary tree|
-|4|Alternating-color tree root|Phone screen|Graph nodes colored black/white; choose root so colors alternate per layer|
-|5|Top-K most talkative users|L4 onsite|Parse chat-log files at given paths, return K users by word count|
-|6|Network of teleporters|L4 onsite|Graph reachability over teleporter nodes/connections|
-|7|Car rental bookings overlap|Coding|Batch of pickup/return times; find peak concurrent bookings|
-|8|Guess-the-word sequence validation|Coding|Decide if guessed sequences produce a valid ordering (topological sort / cycle detection)|
-|9|Coin collection on a board|2026 OA|Grid DP / simulation|
-|10|Text editor / book-keeping system|Phone screen|Implementation + language-fundamentals problem|
-|11|Lines needed to write a string at a given width|L3 new grad, 2026|"Given a string and an integer width, return how many lines you can write the string in." Phrasing is vague on purpose: wrapping rules, word breaks and whitespace are all unstated, and asking beats coding|
-|12|URL router with placeholder patterns|Onsite, Sep 2026|processHandler registers patterns such as /users/{userId}/photo/{photoId}; getHandler takes a concrete path and returns the matching pattern. Trie with literal and placeholder children, precedence when both match, follow-ups on wildcards, HTTP methods and concurrent registration|
-|13|Timed-out RPC calls from paired log records|Onsite, Sep 2026|Start and end records arrive in time order with a timeout; return calls whose duration exceeds it, measure open calls against the last timestamp, sort by start time then call id|
-|14|Dependency-safe deletion order|Onsite, Aug 2026|parents[] gives a forest, plus extra [a before b] constraints; return the lexicographically smallest child-before-parent order, or an empty list on a cycle (topological sort with a min-heap)|
-|15|Trimmed sliding-window means|Technical screen, Sep 2026|For each window of fixed size drop the k largest values by multiplicity and return the mean of the rest as a reduced fraction; two balanced heaps or an ordered multiset|
-|16|Group courses into earliest possible rounds|L4 onsite, Sep 2026|Round 1 has no prerequisites, a course goes in round r+1 where r is its latest prerequisite's round; nested lists sorted within rounds, empty on a cycle (Parallel Courses variant)|
-|17|Deduplicate and order batch and streaming logs|Phone screen, Jul 2026|Deterministic dedup under first-seen and latest-seen policies; late events, stale versions, state expiry, up to 200k operations|
-|18|Connected clusters of 2D points|Technical screen, Jul 2026|Points within a radius are linked, transitively; duplicate coordinates, exact integer distance comparison, overflow safety; Union-Find|
-|19|Prefix-matching simple paths in a labeled graph|Senior onsite, Aug 2026|Count simple paths whose labels spell every nonempty prefix of a query word; paths start anywhere and never revisit a vertex; DFS with pruning|
-|20|Players with fixed rankings|Coding, Aug 2026|N players and directed match results; return the players whose rank is fully determined by transitive wins and losses; transitive closure or bitsets, plus the correctness argument|
-|21|Rectangle increments on a grid|Coding, Jul 2026|Apply many inclusive rectangle +1 updates to an n x n grid and return final counts per cell; 2D difference array then prefix sums|
-|22|Three path tasks on a weighted binary grid|Senior onsite, Jul 2026|Top-to-bottom reachability, deterministic enumeration of simple paths, then minimum-cost weighted path on a blocked grid (BFS, backtracking, Dijkstra)|
+| 1 | **Restaurant Waitlist Data Structure** | L4 Phone Screen | Design an interactive waitlist supporting `addGroup`, group departure anytime, and seating the best group for an available table size by arrival order and capacity. *(Balanced BST / Ordered Map / Priority Queue)* |
+| 2 | **Number of Lakes on an Island** | L4 Phone Screen | Given a 2D grid of water and land, plus a specific starting land coordinate, count fully enclosed lakes inside the island. *(Multi-source Flood-Fill / Grid BFS)* |
+| 3 | **Root an Undirected Acyclic Graph as a Binary Tree** | Phone Screen | Given a graph where each node has `degree <= 3`, determine which node can serve as the root such that the entire tree forms a valid binary tree. *(Tree Degree & Center / Layer BFS)* |
+| 4 | **Alternating-Color Tree Root** | Phone Screen | Graph vertices are colored black/white. Find an optimal root vertex such that node colors strictly alternate on every layer/depth. *(Bipartite Graph validation / Tree BFS)* |
+| 5 | **Top-K Most Talkative Users** | L4 Onsite | Ingest chat-log files at arbitrary paths and return top $K$ users ranked by total word count. Focus on memory limits and streaming execution. *(Streaming I/O + Hash Map + Min-Heap)* |
+| 6 | **Network of Teleporters** | L4 Onsite | Determine graph reachability and optimal paths over teleporter portals with directed/bidirectional jumps. *(BFS / Shortest Path / Graph Traversal)* |
+| 7 | **Car Rental Bookings Overlap** | Coding Round | Given a batch of rental pickup and return timestamps, find the peak number of concurrent bookings. *(Sweep-Line / Difference Array)* |
+| 8 | **Guess-the-Word Sequence Validation** | Coding Round | Given an ordered set of word guesses and character constraints, decide if the sequences form a mutually consistent global ordering. *(Topological Sort / Cycle Detection)* |
+| 9 | **Coin Collection on a Board** | 2026 Online Assessment | Maximize coins collected across a grid with obstacles, dynamic movement bounds, and turn penalties. *(Grid Dynamic Programming / State Simulation)* |
+| 10 | **Text Editor / Book-Keeping System** | Phone Screen | Implement core text buffer actions: typing, cursor displacement, selection range, and multi-step undo/redo. *(Stack / Gap Buffer / Two-Stack Design)* |
+| 11 | **Lines Needed to Write a String at Given Width** | L3 New Grad (2026) | *"Given a string and an integer width, return how many lines you can write the string in."* Intentionally ambiguous: candidate must proactively clarify wrapping policies, hyphens, word boundaries, and whitespace. *(String Greedy / Clarification-First)* |
+| 12 | **URL Router with Placeholder Patterns** | Onsite (Sep 2026) | `processHandler` registers path patterns (e.g., `/users/{userId}/photo/{photoId}`); `getHandler` matches an exact request path to the registered pattern. Handle literal vs wildcard precedence and concurrency. *(Trie with Wildcard Nodes)* |
+| 13 | **Timed-out RPC Calls from Paired Logs** | Onsite (Sep 2026) | Start and end RPC log events arrive chronologically with timeout $T$. Identify expired calls, measure open calls against the final recorded timestamp, and sort by start time then call ID. *(Hash Map + Priority Queue / Sweep)* |
+| 14 | **Dependency-Safe Deletion Order** | Onsite (Aug 2026) | `parents[]` specifies a forest, augmented with additional `[a before b]` ordering constraints. Return the lexicographically smallest child-before-parent sequence, or empty on cycle. *(Topological Sort with Min-Heap)* |
+| 15 | **Trimmed Sliding-Window Means** | Technical Screen (Sep 2026) | For each sliding window of fixed size, trim the $k$ largest values (accounting for duplicate counts) and output the remaining mean as an irreducible fraction. *(Two Balanced Heaps / Ordered Multiset)* |
+| 16 | **Group Courses into Earliest Possible Rounds** | L4 Onsite (Sep 2026) | Round 1 has no prerequisites; course goes in round $r+1$ where $r$ is its latest prerequisite's round. Return nested lists sorted within rounds, or empty on cycle. *(Parallel Courses / Kahn's Algorithm)* |
+| 17 | **Deduplicate & Order Batch and Streaming Logs** | Phone Screen (Jul 2026) | Deterministic deduplication under `first-seen` and `latest-seen` semantics; handles out-of-order records, stale timestamps, and window expiry up to 200,000 ops. *(Ordered Dict / LRU Cache / Sliding Window)* |
+| 18 | **Connected Clusters of 2D Points** | Technical Screen (Jul 2026) | Points within Euclidean distance $R$ are transitively linked. Must handle duplicate coordinates, exact integer squared distance comparison, and integer overflow. *(Union-Find with Spatial Grid Hashing)* |
+| 19 | **Prefix-Matching Simple Paths in a Labeled Graph** | Senior Onsite (Aug 2026) | Count all simple paths whose edge labels spell every non-empty prefix of a query string. Paths may originate at any vertex and must not revisit vertices. *(DFS Backtracking with Trie Pruning)* |
+| 20 | **Players with Fixed Rankings** | Coding Round (Aug 2026) | Given $N$ players and directed match outcomes, identify all players whose exact global ranking is deterministically fixed by transitive wins and losses. *(Transitive Closure / Bitsets / Floyd-Warshall)* |
+| 21 | **Rectangle Increments on a Grid** | Coding Round (Jul 2026) | Apply a large batch of inclusive rectangle $+1$ updates to an $n \times n$ matrix and return the final values for all cells in optimal time. *(2D Difference Array + 2D Prefix Sums)* |
+| 22 | **Three Path Tasks on a Weighted Binary Grid** | Senior Onsite (Jul 2026) | Three progressive tasks: (1) Top-to-bottom reachability, (2) Deterministic enumeration of all simple paths, and (3) Minimum-cost path through blocked/weighted cells. *(BFS $\to$ Backtracking $\to$ Dijkstra)* |
 
-### Google System Design
+---
 
-[](https://github.com/ombharatiya/FAANG-Coding-Interview-Questions/blob/main/FAANG-Recent-Questions.md#google-system-design)
+## 4. Google System Design Topics
 
-|No.|Question|Key Focus|
+System design rounds appear at L5+ (and are increasingly woven into senior AI/Cloud engineering loops). These problems demand high-scale distributed systems thinking, failure domains, and modern AI/LLM serving architectures.
+
+| # | System Design Problem | Key Architecture & Focus Areas |
 |---|---|---|
-|1|Connection-degree system for a social network|Degrees of separation, graph scale|
-|2|Near-real-time logs and metrics pipeline|Streaming ingestion|
-|3|Task scheduler for long-running opaque video-generation jobs ("Design Sora")|Async jobs, queuing|
-|4|Security monitoring framework for cloud infrastructure|Detection, scale|
-|5|Design Google Drive / Maps / YouTube / Search|Classics still rotating (crawl/index/serve)|
-|6|AI/ML system design|Increasingly woven into L5+ loops|
-|7|Polite distributed web crawler for ~10B pages with periodic recrawl|Host-aware frontier, robots.txt, dedup, politeness limits (Senior, Aug 2026)|
-|8|Music recommendation system with an LLM agent in the loop|Candidate generation, ranking, feedback loops, cold start, diversity, offline and online evaluation (Aug 2026)
+| 1 | **Connection-Degree System for a Social Network** | Graph partitioning at scale, degrees of separation ($N$-hop BFS), bi-directional search, caching hot nodes, graph databases. |
+| 2 | **Near-Real-Time Logs & Metrics Pipeline** | High-throughput distributed ingestion (Kafka/PubSub), stream processing (Flink/Beam), LSM-tree storage, distributed aggregation, query latency SLAs. |
+| 3 | **Task Scheduler for Opaque Video-Generation Jobs ("Design Sora")** | Asynchronous job queues, GPU worker orchestration, execution timeouts, idempotent retries, backpressure, progress streaming. |
+| 4 | **Security Monitoring Framework for Cloud Infrastructure** | Real-time threat detection, anomaly detection at multi-petabyte scale, audit trail ingestion, fan-out event routing, alert deduplication. |
+| 5 | **Design Google Drive / Maps / YouTube / Search** | Distributed blob storage and deduplication, geospatial quadtrees/tile serving, video chunking/CDN delivery, crawler/indexer/ranking pipeline. |
+| 6 | **Enterprise AI / ML System Design** | LLM inference gateway, dynamic model batching (vLLM/Triton), semantic caching, RAG retrieval pipelines, rate-limiting, and evaluation telemetry. |
+| 7 | **Polite Distributed Web Crawler (~10B Pages)** | Host-aware crawl frontier, DNS caching, `robots.txt` enforcement, content fingerprinting/dedup, politeness rate limits, distributed recrawl schedule *(Senior Onsite, Aug 2026)*. |
+| 8 | **Music Recommendation System with LLM Agent in the Loop** | Multi-stage candidate retrieval (vector similarity + collaborative filtering), cross-encoder re-ranking, LLM conversational agent feedback loop, cold-start handling, offline vs. online A/B testing *(Aug 2026)*. |
