@@ -21,10 +21,10 @@ flowchart LR
 
 | Main concept                     | set timeout for everything API timeout: 30 sec Retriever timeout: 2 sec LLM timeout: 20 sec                                                                                                                                                                                                                                                                                 |
 | -------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| fallback models<br>(generation)  | have high quality primary model and low quality secondary model which can scale a lot in case primary model is overloaded                                                                                                                                                                                                                                                   |
-| graceful failure<br>(retreival)  | specially important in case <span style="color:#e0313a">retreival</span> side failed this means that generation side will have to handle it. Instead of having a hallucinated answer being generated, generate a fallback.<br><br>lets say vector db crashed so entire retreival crashed. <br>Retrieval failed -> Don't generate unsupported answer -> Safe response        |
-| circuit breakers                 | if multiple services access a dependency which is failing, to prevent cascading failures, use CB, here we open the CB to make the request reroute to other channel, After some time: make it half open, test the request and close it only if the dependency starts working. <br>CB Open state -> dependency wont be used.  reroute<br>CB Closed state -> dep will be used. |
-| Bounded Retries<br>(API Failure) | Use **bounded retries with exponential backoff**. (explained above)                                                                                                                                                                                                                                                                                                         |
+| fallback models<br />(generation)  | have high quality primary model and low quality secondary model which can scale a lot in case primary model is overloaded                                                                                                                                                                                                                                                   |
+| graceful failure<br />(retreival)  | specially important in case <span style="color:#e0313a">retreival</span> side failed this means that generation side will have to handle it. Instead of having a hallucinated answer being generated, generate a fallback.<br /><br />lets say vector db crashed so entire retreival crashed. <br />Retrieval failed -> Don't generate unsupported answer -> Safe response        |
+| circuit breakers                 | if multiple services access a dependency which is failing, to prevent cascading failures, use CB, here we open the CB to make the request reroute to other channel, After some time: make it half open, test the request and close it only if the dependency starts working. <br />CB Open state -> dependency wont be used.  reroute<br />CB Closed state -> dep will be used. |
+| Bounded Retries<br />(API Failure) | Use **bounded retries with exponential backoff**. (explained above)                                                                                                                                                                                                                                                                                                         |
 
 ## <span style="color:#e0313a">2 Security</span>
 
@@ -42,7 +42,7 @@ flowchart LR
 | asynchronous ingestion | Let background workers handle the async ingestion process while the RAG can still be used                                                                                                                        |
 | caching                | cache the input-output pair for next time same input, but keep authorization in mind.                                                                                                                            |
 | batch embedding        | instead of feeding each chunk at a time to become a vector, feed multiple chunks in a single batch to become vector at once, that is better coz less network call, lower cost.                                   |
-| scalable vector search | This is in case the RAG is too big like 100 M documents solutions -><br>- approximate nearest-neighbor indexes<br>- sharding<br>- filtering<br>- partitioning<br>- replication<br>- distributed vector databases |
+| scalable vector search | This is in case the RAG is too big like 100 M documents solutions -><br />- approximate nearest-neighbor indexes<br />- sharding<br />- filtering<br />- partitioning<br />- replication<br />- distributed vector databases |
 
 
 ## <span style="color:#e0313a">4 Observability</span>
@@ -52,9 +52,9 @@ flowchart LR
 | end-to-end latency                      | used for model performance, prompt size, api load                                                                                              |
 | token usage                             |                                                                                                                                                |
 | cost/request                            |                                                                                                                                                |
-| retrieval relevance                     | - Precision@K<br>- Recall@K<br>- MRR<br>- NDCG<br><span style="color:#2f9e44">know Precision@K and Recall@K</span>                             |
-| error rate                              | instead of error req % of total req, segregate it further like -><br><br>retrieval error<br>authentication error<br>rate limit<br>tool failure |
-| Answer Quality & <br>hallucination rate | this is passed req but is wrong factually. thumbs up and down helps gather the data. Reduce by prompting                                       |
+| retrieval relevance                     | - Precision@K<br />- Recall@K<br />- MRR<br />- NDCG<br /><span style="color:#2f9e44">know Precision@K and Recall@K</span>                             |
+| error rate                              | instead of error req % of total req, segregate it further like -><br /><br />retrieval error<br />authentication error<br />rate limit<br />tool failure |
+| Answer Quality & <br />hallucination rate | this is passed req but is wrong factually. thumbs up and down helps gather the data. Reduce by prompting                                       |
 
 ## <span style="color:#e0313a">5 Evaluation</span>
 

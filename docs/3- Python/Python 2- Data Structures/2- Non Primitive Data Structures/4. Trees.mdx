@@ -4,19 +4,27 @@
 
 ## Interactive BST Search & Traversal
 
-<TreeVisualizer 
-  algorithm="bstSearch" 
-  initialData={[15, 10, 20, 8, 12, 17, 25]} 
-  target={12} 
-  title="Interactive BST Search & Traversal Visualizer"
-  description="Play, pause, or step through Binary Search Tree traversal. You can modify node values to test custom tree structures."
-/>
+``` python r 
+class node:
+    def _init_(self,data):
+        self.data = data
+        self.left = None
+        self.right = None
 
-## Tree In-Order Traversal
+def insert(root,data):
+    if root is None:
+        return node(data)
+    if data < root.data:
+        root.left = insert(root.left,data)
+    else:
+        root.right = insert(root.right,data)
+    return root
 
-<TreeVisualizer 
-  algorithm="inOrder" 
-  initialData={[15, 10, 20, 8, 12, 17, 25]} 
-  title="In-Order Traversal (Left -> Root -> Right)"
-  description="Watch how nodes are visited sequentially in In-Order traversal."
-/>
+def search(root,data):
+    if root is None or root.data == data:
+        return root
+    if data < root.data:
+        return search(root.left,data)
+    else:
+        return search(root.right,data)
+```
