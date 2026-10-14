@@ -160,11 +160,49 @@ html:has(.index-grid-bg) .footer {
   transition: background-color var(--transition), border-color var(--transition);
 }
 
-/* Sidebar & Doc Page consistency */
+/* Sidebar & Doc Page consistency: Continue sidebar cleanly into footer */
 .theme-doc-sidebar-container {
   border-right: 1px solid var(--border) !important;
   background-color: var(--ifm-navbar-background-color) !important;
   backdrop-filter: blur(8px) !important;
+  margin-top: 0 !important;
+  min-height: 100% !important;
+  height: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+@media (min-width: 997px) {
+  /* Ensure full height chaining from main-wrapper down to sidebar and footer */
+  .main-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: calc(100vh - var(--ifm-navbar-height));
+  }
+
+  div[class*='docsWrapper'] {
+    display: flex;
+    flex: 1 1 auto;
+    width: 100%;
+    min-height: 100%;
+  }
+
+  div[class*='docRoot'] {
+    display: flex;
+    flex: 1 1 auto;
+    width: 100%;
+    min-height: 100%;
+  }
+
+  div[class*='sidebarViewport'] {
+    top: var(--ifm-navbar-height) !important;
+    height: 100% !important;
+    max-height: calc(100vh - var(--ifm-navbar-height)) !important;
+    position: sticky !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
 }
 
 .pagination-nav__link {
@@ -907,10 +945,10 @@ footer {
 
 /* --- CUSTOM FOOTER FIX --- */
 .custom-footer {
-  background-color: transparent;
+  background-color: var(--bg-page) !important;
   padding: 3rem 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  margin-top: 4rem;
+  border-top: 1px solid var(--border) !important;
+  margin-top: 0 !important;
 }
 
 .custom-footer__row {

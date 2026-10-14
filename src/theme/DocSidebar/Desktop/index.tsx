@@ -2,9 +2,9 @@ import React from 'react';
 import clsx from 'clsx';
 import {useThemeConfig} from '@docusaurus/theme-common';
 import Logo from '@theme/Logo';
-import CollapseButton from '@theme/DocSidebar/Desktop/CollapseButton';
 import Content from '@theme/DocSidebar/Desktop/Content';
 import type {Props} from '@theme/DocSidebar/Desktop';
+import CollapseButton from './CollapseButton';
 import styles from './styles.module.css';
 
 function DocSidebarDesktop({path, sidebar, onCollapse, isHidden}: Props) {
@@ -24,7 +24,7 @@ function DocSidebarDesktop({path, sidebar, onCollapse, isHidden}: Props) {
       )}>
       {hideOnScroll && <Logo tabIndex={-1} className={styles.sidebarLogo} />}
 
-      {onCollapse && (
+      {hideable && onCollapse && (
         <div className={styles.topCollapseContainer}>
           <button
             type="button"
