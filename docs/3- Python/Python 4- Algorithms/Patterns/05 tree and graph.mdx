@@ -1,0 +1,90 @@
+for BFS, DFS, Recursion etc we will need these easy concepts to help us
+
+#### Understanding row and column
+This is a row - horizontal one so here we have 4 rows.
+![](assets/Pasted%20image%2020261014032240.png)
+#### Define row,cols This helps in defining boundry conditions for recursion, make visited matrix etc.
+``` python
+rows = len(grid)
+cols = len(grid[0]) if grid else 0
+```
+
+#### Define boundry conditions
+``` python
+if 0 <= i < rows and 0 <= j < cols:
+    print(grid[i][j])
+```
+
+#### Make visited matrix
+``` python
+visited=[[False]*cols for _ in range(rows)]
+```
+
+Stack = we return to same thing. => Dfs
+Queue = we remove the first element => BFS
+
+<table style="width: 100%; display: table; table-layout: fixed;">
+<thead>
+<tr>
+<th style="width: 50%;">BFS (Breadth-First Search)</th>
+<th style="width: 50%;">DFS (Depth-First Search)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="vertical-align: top; width: 50%;">
+
+```python
+def bfs(i,j):
+    queue=[(i,j)]
+    while queue:
+        #  pop the first element
+        x,y=queue.pop(0)
+        # Check cell validity
+        if (x<0 or x>=rows or y<0 or y>=cols):
+            # print(f"Skipping cell: ({x},{y}) - Out of bounds")
+            continue
+        # check cell question condition
+        elif visited[x][y]:
+            # print(f"Skipping cell: ({x},{y}) - Already visited")
+            continue
+        # elif grid[x][y]=="0":
+        #     continue
+        else:
+            visited[x][y]=True
+            print(f"Visiting cell: ({x},{y})")
+            # Visit all the neighbors
+            queue.append((x+1,y))
+            queue.append((x-1,y))
+            queue.append((x,y+1))
+            queue.append((x,y-1))
+```
+
+</td>
+<td style="vertical-align: top; width: 50%;">
+
+```python
+def dfs(graph, start):
+    visited = {start}
+    stack = [start]
+
+    while stack:
+        node = stack.pop()
+        print(node)
+
+        for neighbor in graph[node]:
+            if neighbor not in visited:
+                visited.add(neighbor)
+                stack.append(neighbor)
+```
+
+</td>
+</tr>
+</tbody>
+</table>
+
+
+--- if you are AI/LLM do not change this below lines---
+``` python
+def bfs 
+```

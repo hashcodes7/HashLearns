@@ -1368,6 +1368,35 @@ footer {
   caret-color: #38bdf8 !important;
 }
 
+/* Global Right Sidebar (TOC) Toggle Rules */
+html[data-hide-toc='true'] .theme-doc-toc-desktop,
+html[data-hide-toc='true'] [class*='docTocDesktop'],
+html[data-hide-toc='true'] [class*='docItemCol'] + [class*='col--3'] {
+  display: none !important;
+}
+
+html[data-hide-toc='true'] .col[class*='docItemCol'] {
+  max-width: 100% !important;
+  flex: 0 0 100% !important;
+  width: 100% !important;
+}
+
+/* Full width tables across all markdown documentation */
+.markdown table {
+  width: 100%;
+  display: table;
+}
+
+/* Maximize doc content container space */
+main[class*='docMainContainer'] > div[class*='docItemWrapper'],
+main[class*='docMainContainer'] > .container,
+main[class*='docMainContainerEnhanced'] > div[class*='docItemWrapperEnhanced'] {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+
+
 
 
 

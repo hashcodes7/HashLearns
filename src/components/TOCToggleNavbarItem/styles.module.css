@@ -1,0 +1,39 @@
+.toggleWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  margin-right: 0.5rem;
+}
+
+.toggleBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: var(--ifm-navbar-link-color, var(--ifm-color-emphasis-700));
+  transition: background var(--ifm-transition-fast), color var(--ifm-transition-fast);
+  padding: 0;
+}
+
+.toggleBtn:hover {
+  background: var(--ifm-color-emphasis-200);
+  color: var(--ifm-color-primary);
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--ifm-transition-fast) ease;
+}
+
+.toggleBtn:hover .icon {
+  transform: scale(1.08);
+}

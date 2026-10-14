@@ -148,6 +148,12 @@ const config: Config = {
     colorMode: {
       respectPrefersColorScheme: true,
     },
+    docs: {
+      sidebar: {
+        hideable: true,
+        autoCollapseCategories: true,
+      },
+    },
     navbar: {
       title: 'HashLearns',
       logo: {
@@ -164,6 +170,10 @@ const config: Config = {
         {
           href: 'https://github.com/hashcodes7',
           label: 'GitHub',
+          position: 'right',
+        },
+        {
+          type: 'custom-tocToggle',
           position: 'right',
         },
       ],

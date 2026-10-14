@@ -96,11 +96,6 @@ try {
         
         sidebars[sidebarKey] = [
           {
-            type: 'link',
-            label: '← Back to Main Docs',
-            href: '/'
-          },
-          {
             type: 'category',
             label: course,
             link: {
