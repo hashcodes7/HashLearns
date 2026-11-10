@@ -67,3 +67,108 @@ Add all these 4 information into the repository secrets in github as these names
 | `AWS_REGION`            |
 | `EC2_INSTANCE_ID`       |
 and run your deployment pipeline with additional info to fetch from dockerhub 
+
+# Sample codes
+## Deployment Pipeline
+```python
+name: 2. Deploy to EC2 via SSM
+
+on:
+  workflow_run:
+    workflows: [ "1. Test & Build Docker Image" ]
+    types:
+      - completed
+  workflow_dispatch:
+
+jobs:
+  deploy-to-ec2-ssm:
+    name: Deploy to EC2 via AWS Session Manager (Docker Compose)
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION || 'us-east-1' }}
+
+      - name: Execute Deployment Commands via SSM Run Command
+        run: |
+          echo "🚀 Deploying to EC2 via AWS SSM Run Command..."
+
+          INSTANCE_ID=$(echo "${{ secrets.EC2_INSTANCE_ID }}" | tr -d '[:space:]')
+          REGION=$(echo "${{ secrets.AWS_REGION || 'us-east-1' }}" | tr -d '[:space:]')
+          DOCKERHUB_USER=$(echo "${{ secrets.DOCKERHUB_USERNAME }}" | tr -d '[:space:]')
+
+          echo "Target Instance ID: [$INSTANCE_ID]"
+          echo "Target Region:      [$REGION]"
+
+          # Read local deployment script and encode as base64 to avoid all YAML escaping issues
+          SCRIPT_B64=$(base64 -w 0 scripts/deploy_remote.sh)
+          COMPOSE_B64=$(base64 -w 0 docker-compose.yml)
+
+          # Prepare SSM commands array using jq cleanly
+          SSM_PARAMS=$(jq -n \
+            --arg s_b64 "$SCRIPT_B64" \
+            --arg c_b64 "$COMPOSE_B64" \
+            --arg user "$DOCKERHUB_USER" \
+            '{"commands": [
+              "mkdir -p /home/ssm-user/apps/gadk-backend",
+              "echo \"" + $c_b64 + "\" | base64 -d > /home/ssm-user/apps/gadk-backend/docker-compose.yml",
+              "echo \"" + $s_b64 + "\" | base64 -d > /tmp/deploy_remote.sh",
+              "chmod +x /tmp/deploy_remote.sh",
+              "/tmp/deploy_remote.sh \"" + $user + "\""
+            ]}')
+
+          # Send the command via AWS SSM Run Command
+          COMMAND_ID=$(aws ssm send-command \
+            --region "$REGION" \
+            --instance-ids "$INSTANCE_ID" \
+            --document-name "AWS-RunShellScript" \
+            --comment "Deploy gadk-backend via Docker Compose" \
+            --parameters "$SSM_PARAMS" \
+            --output text \
+            --query "Command.CommandId")
+
+          echo "SSM Command ID: $COMMAND_ID"
+          echo "Waiting for deployment to complete..."
+
+          aws ssm wait command-executed \
+            --region "$REGION" \
+            --command-id "$COMMAND_ID" \
+            --instance-id "$INSTANCE_ID" || true
+
+          STATUS=$(aws ssm get-command-invocation \
+            --region "$REGION" \
+            --command-id "$COMMAND_ID" \
+            --instance-id "$INSTANCE_ID" \
+            --query "Status" \
+            --output text)
+
+          echo "Deployment Status: $STATUS"
+
+          echo "--- STDOUT ---"
+          aws ssm get-command-invocation \
+            --region "$REGION" \
+            --command-id "$COMMAND_ID" \
+            --instance-id "$INSTANCE_ID" \
+            --query "StandardOutputContent" \
+            --output text
+
+          echo "--- STDERR ---"
+          aws ssm get-command-invocation \
+            --region "$REGION" \
+            --command-id "$COMMAND_ID" \
+            --instance-id "$INSTANCE_ID" \
+            --query "StandardErrorContent" \
+            --output text
+
+          if [ "$STATUS" != "Success" ]; then
+            exit 1
+          fi
+```
